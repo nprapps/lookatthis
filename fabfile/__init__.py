@@ -15,7 +15,7 @@ import utils
 
 if app_config.DEPLOY_TO_SERVERS:
     import servers
-    
+
 if app_config.DEPLOY_CRONTAB:
     import cron_jobs
 
@@ -168,6 +168,23 @@ def deploy(remote='origin'):
     render.render_all()
     _gzip('www', '.gzip')
     _deploy_to_s3()
+
+"""
+App-specific commands
+"""
+
+@task
+def post(slug):
+    env.post = slug
+
+@task
+def new():
+    require('post', provided_by=[post])
+    print env.post
+    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
+    local('cp -r new_post %s' % post_path)
+    # TODO
+    # download_copy(slug)
 
 """
 Destruction

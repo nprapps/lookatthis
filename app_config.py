@@ -29,6 +29,8 @@ REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME
 # Should stay the same, even if PROJECT_SLUG changes
 ASSETS_SLUG = 'lookatthis'
 
+POST_PATH = 'posts'
+
 """
 DEPLOYMENT
 """
