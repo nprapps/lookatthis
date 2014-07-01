@@ -3,7 +3,9 @@
 import json
 
 import argparse
-from flask import Flask, render_template
+import copytext
+import imp
+from flask import Flask, render_template, render_template_string
 
 import app_config
 from render_utils import make_context, smarty_filter, urlencode_filter
@@ -27,26 +29,28 @@ def index():
 
     return render_template('index.html', **context)
 
-@app.route('/comments/')
-def comments():
+@app.route('/posts/<slug>/')
+def _post(slug):
     """
-    Full-page comments view.
+    Renders a post without the tumblr wrapper.
     """
-    return render_template('comments.html', **make_context())
+    post_path = '%s/%s' % (app_config.POST_PATH, slug)
 
-@app.route('/widget.html')
-def widget():
-    """
-    Embeddable widget example page.
-    """
-    return render_template('widget.html', **make_context())
+    context = make_context()
+    context['slug'] = slug
+    # TODO
+    context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
 
-@app.route('/test_widget.html')
-def test_widget():
-    """
-    Example page displaying widget at different embed sizes.
-    """
-    return render_template('test_widget.html', **make_context())
+    try:
+        post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+        context.update(post_config.__dict__)
+    except IOError:
+        pass
+
+    with open('%s/templates/index.html' % post_path) as f:
+        template = f.read().decode('utf-8')
+
+    return render_template_string(template, **context)
 
 app.register_blueprint(static.static)
 

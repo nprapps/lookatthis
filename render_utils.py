@@ -34,7 +34,7 @@ class Includer(object):
 
     def _relativize_path(self, path):
         relative_path = path
-        depth = len(request.path.split('/')) - (2 + self.asset_depth) 
+        depth = len(request.path.split('/')) - (2 + self.asset_depth)
 
         while depth > 0:
             relative_path = '../%s' % relative_path
@@ -172,7 +172,7 @@ def make_context(asset_depth=0):
     """
     context = flatten_app_config()
 
-    context['COPY'] = copytext.Copy(app_config.COPY_PATH)
+    # context['COPY'] = copytext.Copy(app_config.COPY_PATH)
     context['JS'] = JavascriptIncluder(asset_depth=asset_depth)
     context['CSS'] = CSSIncluder(asset_depth=asset_depth)
 
