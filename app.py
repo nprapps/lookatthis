@@ -38,7 +38,6 @@ def _post(slug):
 
     context = make_context()
     context['slug'] = slug
-    # TODO
     context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
 
     try:
