@@ -169,8 +169,8 @@ def _init_tumblr():
 
 
     return client
-
-def _post_to_tumblr():
+@task
+def post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
@@ -187,10 +187,11 @@ def _post_to_tumblr():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
+    print app_config.TUMBLR_NAME
 
     if post_config.ID != '':
         client.edit_post(
-            'tylertesting',
+            app_config.TUMBLR_NAME,
             id=post_config.ID,
             state='draft',
             type='photo',
@@ -203,7 +204,7 @@ def _post_to_tumblr():
     else:
         # create the photo post as a draft
         client.create_photo(
-            'tylertesting',
+            app_config.TUMBLR_NAME,
             state='draft',
             tags=post_config.TAGS,
             format='html',
@@ -211,7 +212,8 @@ def _post_to_tumblr():
             caption=post_config.CAPTION
         )
 
-        drafts = client.drafts('tylertesting')
+        drafts = client.drafts(app_config.TUMBLR_NAME)
+        print drafts
         most_recent_draft = drafts['posts'][0]['id']
 
         with open('%s/post_config.py' % post_path, 'a') as f:
@@ -255,8 +257,8 @@ def deploy(slug=''):
         utils.confirm('You are about about to deploy ALL posts. Are you sure you want to do this? (Deploy a single post with "deploy:SLUG".)')
 
 
-    # update()
-    # render.render_all()
+    update()
+    render.render_all()
     _gzip('www', '.gzip')
     _gzip(app_config.POST_PATH, '.gzip/posts')
     _post_to_tumblr()

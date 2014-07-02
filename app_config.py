@@ -143,6 +143,7 @@ def configure_targets(deployment_target):
     global DEPLOYMENT_TARGET
     global APP_LOG_PATH
     global DISQUS_SHORTNAME
+    global TUMBLR_NAME
 
 
     if deployment_target == 'production':
@@ -152,6 +153,7 @@ def configure_targets(deployment_target):
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'npr-news'
         DEBUG = False
+        TUMBLR_NAME = 'nprlookatthis'
     elif deployment_target == 'staging':
         S3_BUCKETS = STAGING_S3_BUCKETS
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
@@ -159,6 +161,7 @@ def configure_targets(deployment_target):
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
+        TUMBLR_NAME = 'stage-lookatthis'
     else:
         S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'
@@ -167,6 +170,8 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         APP_LOG_PATH = '/tmp/%s.app.log' % PROJECT_SLUG
+        TUMBLR_NAME = 'stage-lookatthis'
+
 
     DEPLOYMENT_TARGET = deployment_target
 
