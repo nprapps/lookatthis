@@ -20,7 +20,7 @@ app.jinja_env.filters['urlencode'] = urlencode_filter
 
 # Example application views
 @app.route('/')
-def _graphics_list():
+def _posts_list():
     """
     Renders a list of all posts for local testing.
     """

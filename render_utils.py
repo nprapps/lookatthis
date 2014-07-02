@@ -161,7 +161,7 @@ def flatten_app_config():
 
     return config
 
-def make_context(asset_depth=0):
+def make_context(asset_depth=2):
     """
     Create a base-context for rendering views.
     Includes app_config and JS/CSS includers.
