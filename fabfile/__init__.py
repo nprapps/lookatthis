@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
+import imp
+import os
+
 from fabric.api import local, require, settings, task
 from fabric.state import env
+import pytumblr
 
 import app_config
 
@@ -130,6 +134,12 @@ def _gzip(in_path='www', out_path='.gzip'):
     """
     local('python gzip_assets.py %s %s' % (in_path, out_path))
 
+def _get_post():
+    """
+    Get the current post we are working on
+    """
+
+
 @task
 def update():
     """
@@ -139,34 +149,77 @@ def update():
     assets.sync()
     data.update()
 
+def _init_tumblr():
+    """
+    Initialize the tumblr API
+    """
+
+
+    return client
+
+@task
+def post_to_tumblr():
+    """
+    Push the currently active post as a draft to the site
+
+    TODO: Tweet in the post body
+    """
+    require('post', provided_by=[post])
+
+    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
+    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+    client = pytumblr.TumblrRestClient(
+        os.environ.get('TUMBLR_CONSUMER_KEY', None),
+        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
+        os.environ.get('TUMBLR_TOKEN', None),
+        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+    )
+
+    # create the photo post as a draft
+    client.create_photo(
+        'tylertesting',
+        state='draft',
+        tags=post_config.TAGS,
+        format='html',
+        source=post_config.PROMO_PHOTO,
+        caption=post_config.CAPTION
+    )
+@task
+def publish():
+    """
+    Publish the currently active post
+    """
+
+    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
+    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+    client = pytumblr.TumblrRestClient(
+        os.environ.get('TUMBLR_CONSUMER_KEY', None),
+        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
+        os.environ.get('TUMBLR_TOKEN', None),
+        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+    )
+
+    drafts = client.drafts('tylertesting')
+    most_recent_draft = drafts['posts'][0]['id']
+
+    client.edit_post(
+        'tylertesting',
+        id=most_recent_draft,
+        state='published'
+    )
+
 @task
 def deploy(remote='origin'):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
-
-    if app_config.DEPLOY_TO_SERVERS:
-        require('branch', provided_by=[stable, master, branch])
-
-        if (app_config.DEPLOYMENT_TARGET == 'production' and env.branch != 'stable'):
-            utils.confirm("You are trying to deploy the '%s' branch to production.\nYou should really only deploy a stable branch.\nDo you know what you're doing?" % env.branch)
-
-        servers.checkout_latest(remote)
-
-        servers.fabcast('text.update')
-        servers.fabcast('assets.sync')
-        servers.fabcast('data.update')
-
-        if app_config.DEPLOY_CRONTAB:
-            servers.install_crontab()
-
-        if app_config.DEPLOY_SERVICES:
-            servers.deploy_confs()
+    require('post', provided_by=[post])
 
     update()
     render.render_all()
     _gzip('www', '.gzip')
+    _post_to_tumblr()
     _deploy_to_s3()
 
 """
