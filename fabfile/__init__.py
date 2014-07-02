@@ -234,12 +234,9 @@ def publish():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
-    drafts = client.drafts('tylertesting')
-    most_recent_draft = drafts['posts'][0]['id']
-
     client.edit_post(
         'tylertesting',
-        id=most_recent_draft,
+        id=post_config.ID,
         state='published'
     )
 
