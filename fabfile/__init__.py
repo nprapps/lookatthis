@@ -175,15 +175,35 @@ def post_to_tumblr():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
-    # create the photo post as a draft
-    client.create_photo(
-        'tylertesting',
-        state='draft',
-        tags=post_config.TAGS,
-        format='html',
-        source=post_config.PROMO_PHOTO,
-        caption=post_config.CAPTION
-    )
+
+    if post_config.ID != '':
+        client.edit_post(
+            'tylertesting',
+            id=post_config.ID,
+            state='draft',
+            type='photo',
+            tags=post_config.TAGS,
+            format='html',
+            source=post_config.PROMO_PHOTO,
+            caption=post_config.CAPTION
+        )
+    else:
+        # create the photo post as a draft
+        client.create_photo(
+            'tylertesting',
+            state='draft',
+            tags=post_config.TAGS,
+            format='html',
+            source=post_config.PROMO_PHOTO,
+            caption=post_config.CAPTION
+        )
+
+        drafts = client.drafts('tylertesting')
+        most_recent_draft = drafts['posts'][0]['id']
+
+        with open('%s/post_config.py' % post_path, 'a') as f:
+            f.writelines('\n' 'ID = %s' % most_recent_draft)
+
 @task
 def publish():
     """
