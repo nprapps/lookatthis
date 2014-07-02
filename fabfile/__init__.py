@@ -162,14 +162,6 @@ def update():
     assets.sync()
     data.update()
 
-def _init_tumblr():
-    """
-    Initialize the tumblr API
-    """
-
-
-    return client
-
 def _post_to_tumblr():
     """
     Push the currently active post as a draft to the site
@@ -187,10 +179,11 @@ def _post_to_tumblr():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
-
+    # if the post already exists and has an ID,
+    # update the existing post on Tumblr.
     if post_config.ID != '':
         client.edit_post(
-            'tylertesting',
+            app_config.TUMBLR_NAME,
             id=post_config.ID,
             state='draft',
             type='photo',
@@ -200,10 +193,10 @@ def _post_to_tumblr():
             caption=post_config.CAPTION
         )
 
+    # if the post has a no ID, create the new post.
     else:
-        # create the photo post as a draft
         client.create_photo(
-            'tylertesting',
+            app_config.TUMBLR_NAME,
             state='draft',
             tags=post_config.TAGS,
             format='html',
@@ -211,9 +204,11 @@ def _post_to_tumblr():
             caption=post_config.CAPTION
         )
 
-        drafts = client.drafts('tylertesting')
+        # find the ID of what we just posted
+        drafts = client.drafts(app_config.TUMBLR_NAME)
         most_recent_draft = drafts['posts'][0]['id']
 
+        # write the ID to post_config
         with open('%s/post_config.py' % post_path, 'a') as f:
             f.writelines('\n' 'ID = %s' % most_recent_draft)
 
@@ -232,12 +227,9 @@ def publish():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
-    drafts = client.drafts('tylertesting')
-    most_recent_draft = drafts['posts'][0]['id']
-
     client.edit_post(
         'tylertesting',
-        id=most_recent_draft,
+        id=post_config.ID,
         state='published'
     )
 
@@ -255,8 +247,8 @@ def deploy(slug=''):
         utils.confirm('You are about about to deploy ALL posts. Are you sure you want to do this? (Deploy a single post with "deploy:SLUG".)')
 
 
-    # update()
-    # render.render_all()
+    update()
+    render.render_all()
     _gzip('www', '.gzip')
     _gzip(app_config.POST_PATH, '.gzip/posts')
     _post_to_tumblr()
