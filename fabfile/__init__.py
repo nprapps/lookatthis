@@ -169,8 +169,8 @@ def _init_tumblr():
 
 
     return client
-@task
-def post_to_tumblr():
+
+def _post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
