@@ -162,14 +162,6 @@ def update():
     assets.sync()
     data.update()
 
-def _init_tumblr():
-    """
-    Initialize the tumblr API
-    """
-
-
-    return client
-
 def _post_to_tumblr():
     """
     Push the currently active post as a draft to the site
@@ -187,8 +179,8 @@ def _post_to_tumblr():
         os.environ.get('TUMBLR_TOKEN_SECRET', None)
     )
 
-    print app_config.TUMBLR_NAME
-
+    # if the post already exists and has an ID,
+    # update the existing post on Tumblr.
     if post_config.ID != '':
         client.edit_post(
             app_config.TUMBLR_NAME,
@@ -201,8 +193,8 @@ def _post_to_tumblr():
             caption=post_config.CAPTION
         )
 
+    # if the post has a no ID, create the new post.
     else:
-        # create the photo post as a draft
         client.create_photo(
             app_config.TUMBLR_NAME,
             state='draft',
@@ -212,10 +204,11 @@ def _post_to_tumblr():
             caption=post_config.CAPTION
         )
 
+        # find the ID of what we just posted
         drafts = client.drafts(app_config.TUMBLR_NAME)
-        print drafts
         most_recent_draft = drafts['posts'][0]['id']
 
+        # write the ID to post_config
         with open('%s/post_config.py' % post_path, 'a') as f:
             f.writelines('\n' 'ID = %s' % most_recent_draft)
 
