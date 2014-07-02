@@ -124,9 +124,22 @@ def _deploy_to_s3(path='.gzip'):
     sync_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
 
     for bucket in app_config.S3_BUCKETS:
-        local(sync % (path, 's3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
-        local(sync_gzip % (path, 's3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
-        local(sync_assets % ('www/assets/', 's3://%s/%s/assets/' % (bucket, app_config.PROJECT_SLUG)))
+        local(sync % (path, 's3://%s/%s/%s' % (
+            bucket,
+            app_config.PROJECT_SLUG,
+            path.split('.gzip/')[1]
+        )))
+
+        local(sync_gzip % (path, 's3://%s/%s/%s' % (
+            bucket,
+            app_config.PROJECT_SLUG,
+            path.split('.gzip/')[1]
+        )))
+
+        local(sync_assets % ('www/assets/', 's3://%s/%s/assets/' % (
+            bucket,
+            app_config.PROJECT_SLUG
+        )))
 
 def _gzip(in_path='www', out_path='.gzip'):
     """
@@ -157,8 +170,7 @@ def _init_tumblr():
 
     return client
 
-@task
-def post_to_tumblr():
+def _post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
@@ -187,6 +199,7 @@ def post_to_tumblr():
             source=post_config.PROMO_PHOTO,
             caption=post_config.CAPTION
         )
+
     else:
         # create the photo post as a draft
         client.create_photo(
@@ -229,18 +242,25 @@ def publish():
     )
 
 @task
-def deploy(remote='origin'):
+def deploy(slug=''):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
     require('post', provided_by=[post])
 
-    update()
-    render.render_all()
+    slug = env.post
+
+    if not slug:
+        utils.confirm('You are about about to deploy ALL posts. Are you sure you want to do this? (Deploy a single post with "deploy:SLUG".)')
+
+
+    # update()
+    # render.render_all()
     _gzip('www', '.gzip')
+    _gzip(app_config.POST_PATH, '.gzip/posts')
     _post_to_tumblr()
-    _deploy_to_s3()
+    _deploy_to_s3('.gzip/posts/%s' % slug)
 
 """
 App-specific commands
