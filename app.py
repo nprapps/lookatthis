@@ -4,7 +4,9 @@ import json
 
 import argparse
 import copytext
+from glob import glob
 import imp
+
 from flask import Flask, render_template, render_template_string
 
 import app_config
@@ -18,14 +20,20 @@ app.jinja_env.filters['urlencode'] = urlencode_filter
 
 # Example application views
 @app.route('/')
-def index():
+def _graphics_list():
     """
-    Example view demonstrating rendering a simple HTML page.
+    Renders a list of all posts for local testing.
     """
     context = make_context()
+    context['posts'] = []
 
-    with open('data/featured.json') as f:
-        context['featured'] = json.load(f)
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for post in posts:
+        name = post.split('%s/' % app_config.POST_PATH)[1]
+        context['posts'].append(name)
+        print name
+
+    context['posts_count'] = len(context['posts'])
 
     return render_template('index.html', **context)
 
