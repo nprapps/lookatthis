@@ -97,6 +97,15 @@ Hide project secrets
 
 Project secrets should **never** be stored in ``app_config.py`` or anywhere else in the repository. They will be leaked to the client if you do. Instead, always store passwords, keys, etc. in environment variables and document that they are needed here in the README.
 
+### Tumblr Secrets
+
+Tumblr tokens and secrets should be stored as environment variables as follows:
+
+* `export TUMBLR_CONSUMER_KEY=whateveritis`
+* `export TUMBLR_CONSUMER_SECRET=whateveritis`
+* `export TUMBLR_TOKEN=whateveritis`
+* `export TUMBLR_TOKEN_SECRET=whateveritis`
+
 Save media assets
 -----------------
 
@@ -155,7 +164,7 @@ The app template is outfitted with a few ``fab`` utility functions that make pul
 To update the latest document, simply run:
 
 ```
-fab copytext.update 
+fab copytext.update
 ```
 
 Note: ``copytext.update`` runs automatically whenever ``fab render`` is called.
@@ -313,7 +322,7 @@ Install cron jobs
 Cron jobs are defined in the file `crontab`. Each task should use the `cron.sh` shim to ensure the project's virtualenv is properly activated prior to execution. For example:
 
 ```
-* * * * * ubuntu bash /home/ubuntu/apps/lookatthis/repository/cron.sh fab $DEPLOYMENT_TARGET cron_jobs.test 
+* * * * * ubuntu bash /home/ubuntu/apps/lookatthis/repository/cron.sh fab $DEPLOYMENT_TARGET cron_jobs.test
 ```
 
 To install your crontab set `INSTALL_CRONTAB` to `True` in `app_config.py`. Cron jobs will be automatically installed each time you deploy to EC2.
