@@ -4,6 +4,7 @@ var $commentCount = null;
 
 // Global state
 var firstShareLoad = true;
+var pymChild = null;
 
 /*
  * Run on page load.
@@ -17,24 +18,25 @@ var onDocumentLoad = function(e) {
     $shareModal.on('shown.bs.modal', onShareModalShown);
     $shareModal.on('hidden.bs.modal', onShareModalHidden);
 
-    renderExampleTemplate();
     getCommentCount(showCommentCount);
+
+    pymChild = new pym.Child();
 }
 
 /*
  * Basic templating example.
  */
-var renderExampleTemplate = function() {
-    var context = $.extend(APP_CONFIG, {
-        'template_path': 'jst/example.html',
-        'config': JSON.stringify(APP_CONFIG, null, 4),
-        'copy': JSON.stringify(COPY, null, 4)
-    });
+// var renderExampleTemplate = function() {
+//     var context = $.extend(APP_CONFIG, {
+//         'template_path': 'jst/example.html',
+//         'config': JSON.stringify(APP_CONFIG, null, 4),
+//         'copy': JSON.stringify(COPY, null, 4)
+//     });
 
-    var html = JST.example(context);
+//     var html = JST.example(context);
 
-    $('#template-example').html(html);
-}
+//     $('#template-example').html(html);
+// }
 
 /*
  * Display the comment count.

@@ -26,9 +26,10 @@
              });
         </script>
 
-        <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js"></script>
+        <script src="http://localhost:8000/js/lib/modernizr.js"></script>
 
         <!-- Project CSS -->
+        <link rel="stylesheet" type="text/css" href="http://localhost:8000/less/app.less">
 
         <!-- GOOGLE ANALYTICS -->
         <!-- <script>
@@ -125,9 +126,10 @@
         </div> <!-- #container -->
 
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        {{ static(file_path='app.js') }}
-        {{ static(file_path='jquery.fitvids.js') }}
+        <script src="http://localhost:8000/js/lib/jquery.js"></script>
+        <script src="http://localhost:8000/js/lib/pym.js"></script>
+        <script src="http://localhost:8000/js/app.js"></script>
+
 
         <script type="text/javascript">
             var Tumblelog = {};
@@ -330,75 +332,14 @@
     <!-- Post template -->
     {block:PermalinkPage}
     <body class="permalink-page">
-        <div id="content">
-            <header>
-                <div id="blog_info">
-                    <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
-                    <h1><a href="/">Look At This</a></h1>
-                </div>
-            </header>
-
-            <section class="post-wrap">
-                {block:Posts}
-                <article class="post">
-
-                    <h4 class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></h4>
-
-                    <div class="row">
-                        {block:Text}
-                            <a href="{Permalink}" class="permalink">
-                            <h3>{Title}</h3>
-                            </a>
-                            <div class="text-wrapper">
-                                {Body}
-                            </div>
-                        {/block:Text}
-                        {block:Photo}
-                                {LinkOpenTag}<img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/>{LinkCloseTag}
-                                {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-                        {/block:Photo}
-
-                        <div class="post-meta">
-
-                            <div class="post-author">
-                                Posted by <a href="{PostAuthorURL}">{PostAuthorName} <img src="{PostAuthorPortraitURL-64}"></a>
-                            </div>
-
-                            {block:HasTags}
-                            <div class="tags">
-                                {block:Tags}<a href="{TagURL}" class="tag">{Tag}<span class="triangle"></span></a>{/block:Tags}
-                            </div>
-                            {/block:HasTags}
-
-                            <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
+        <div id="post"></div>
 
 
 
-                            <div class="sharing">
-                                <ul class="list-unstyled">
-                                    <li>{LikeButton color="grey"}</li>
-                                    <li>{ReblogButton color="grey"}</li>
-                                    <li><a rel="external" href="http://twitter.com/share?text=The+latest+from+NPR+Plays&amp;url={Permalink}" alt="Share on Twitter" target="_blank" title="Share This Page On Twitter"><i class="icon icon-twitter"></i></a></li>
-                                    <li><a rel="external" href="https://www.facebook.com/dialog/feed?app_id=138837436154588&amp;link={Permalink}" target="_blank" title="Like This Page On Facebook"><i class="icon icon-facebook"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div><!-- end .row -->
 
-                    {block:PostNotes}
-                    <div class="post-notes">
-                        <h3>Notes</h3>
-                        {PostNotes}
-                    </div>
-                    {/block:PostNotes}
-                </article>
-                {/block:Posts}
-            </section> <!-- .post-wrap -->
-        </div> <!-- end #content -->
-
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="/js/post.js"></script>
+        <script src="http://localhost:8000/js/lib/jquery.js"></script>
+        <script src="http://localhost:8000/js/lib/pym.js"></script>
+        <script src="http://localhost:8000/js/post.js"></script>
 
         <!-- CHARTBEAT -->
         <script type="text/javascript">

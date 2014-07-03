@@ -4,6 +4,7 @@ var $commentCount = null;
 
 // Global state
 var firstShareLoad = true;
+var pymChild = null;
 
 /*
  * Run on page load.
@@ -19,6 +20,8 @@ var onDocumentLoad = function(e) {
 
     renderExampleTemplate();
     getCommentCount(showCommentCount);
+
+    pymChild = new pym.Child();
 }
 
 /*
