@@ -31,8 +31,6 @@ def _theme_less(filename):
 
     r = envoy.run('node_modules/less/bin/lessc -rp=tumblr/less/ tumblr/less/%s' % filename)
 
-    print r.std_out
-
     return r.std_out, 200, { 'Content-Type': 'text/css' }
 
 # Render application configuration
@@ -53,14 +51,13 @@ def _post_config_js(slug):
 # render copytext
 @static.route('/posts/<string:slug>/js/copy.js')
 def _copy_js(slug):
-    copy = 'window.copy = ' + copytext.copy(app_config.copy_path).json()
+    copy = 'window.copy = ' + copytext.Copy('data/%s.xlsx' % slug).json()
     return copy, 200, { 'content-type': 'application/javascript' }
 
 # server arbitrary static files on-demand
 @static.route('/posts/<string:slug>/<path:path>')
 def _post_static(slug, path):
     real_path = 'posts/%s/www/%s' % (slug, path)
-    print real_path
 
     try:
         with open('%s' % real_path) as f:

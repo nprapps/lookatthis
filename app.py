@@ -7,16 +7,18 @@ import copytext
 from glob import glob
 import imp
 
-from flask import Flask, render_template, render_template_string
+from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
-from render_utils import make_context, smarty_filter, urlencode_filter
+from render_utils import make_context, smarty_filter, urlencode_filter, Includer, CSSIncluder, JavascriptIncluder
 import static
 
 app = Flask(__name__)
 
 app.jinja_env.filters['smarty'] = smarty_filter
 app.jinja_env.filters['urlencode'] = urlencode_filter
+
+posts = Blueprint('posts', __name__, template_folder='posts/')
 
 # Example application views
 @app.route('/')
@@ -37,7 +39,7 @@ def _posts_list():
 
     return render_template('index.html', **context)
 
-@app.route('/posts/<slug>/')
+@posts.route('/posts/<slug>/')
 def _post(slug):
     """
     Renders a post without the tumblr wrapper.
@@ -47,6 +49,9 @@ def _post(slug):
     context = make_context()
     context['slug'] = slug
     context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
+
+    context['JS'] = JavascriptIncluder(asset_depth=2, slug=slug)
+    context['CSS'] = CSSIncluder(asset_depth=2, slug=slug)
 
     try:
         post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
@@ -61,6 +66,7 @@ def _post(slug):
     return render_template_string(template, **context)
 
 app.register_blueprint(static.static)
+app.register_blueprint(posts)
 
 # Boilerplate
 if __name__ == '__main__':

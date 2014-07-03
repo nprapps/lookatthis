@@ -40,6 +40,17 @@ www/js/*.min.js
 www/js/templates.js
 www/js/app_config.js
 www/js/copy.js
+
+posts/*/www/*.html
+posts/*/www/css/*.min.*.css
+posts/*/www/css/*.min.css
+posts/*/www/css/*.less.css
+posts/*/www/js/*.min.*.js
+posts/*/www/js/*.min.js
+posts/*/www/js/templates.js
+posts/*/www/js/app_config.js
+posts/*/www/js/copy.js
+
 confs/rendered/*
 data/copy.xls
 data/copy.xlsx
