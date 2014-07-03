@@ -60,10 +60,19 @@ def _post(slug):
         pass
 
     with open('%s/templates/index.html' % post_path) as f:
-        print post_path
         template = f.read().decode('utf-8')
 
     return render_template_string(template, **context)
+
+@app.route('/posts/<slug>/preview')
+def _post_preview(slug):
+    """
+    Renders a post with the Tumblr wrapper.
+    """
+    context = make_context()
+    context['slug'] = slug
+
+    return render_template('parent.html', **context)
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
