@@ -9,17 +9,19 @@ import os
 
 import boto
 from fabric.api import prompt, task
+from fabric.state import env
 import app_config
 from fnmatch import fnmatch
 import utils
-
-ASSETS_ROOT = 'www/assets'
 
 @task
 def sync():
     """
     Intelligently synchronize assets between S3 and local folder.
     """
+    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
+    ASSETS_ROOT = '%s/www/assets' % post_path
+
     ignore_globs = []
 
     with open('%s/.assetsignore' % ASSETS_ROOT, 'r') as f:
@@ -140,6 +142,9 @@ def rm(path):
     """
     Remove an asset from s3 and locally
     """
+    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
+    ASSETS_ROOT = '%s/www/assets' % post_path
+
     bucket = _assets_get_bucket()
 
     file_list = glob(path)
