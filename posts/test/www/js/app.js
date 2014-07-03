@@ -18,7 +18,7 @@ var onDocumentLoad = function(e) {
     $shareModal.on('shown.bs.modal', onShareModalShown);
     $shareModal.on('hidden.bs.modal', onShareModalHidden);
 
-    getCommentCount(showCommentCount);
+    // getCommentCount(showCommentCount);
 
     pymChild = new pym.Child();
 }

@@ -334,7 +334,14 @@
     <body class="permalink-page">
         <div id="post"></div>
 
+        <div class="post-fixed-menu">
+            <h2>You're looking at <a href="#">Fringe Photography</a></h2>
 
+            <ul>
+                <li class="button-menu"><a href="#">Menu <i class="fa fa-th"></i></a></li>
+                <li class="button-share"><a href="#">Share <i class="fa fa-share"></i></a></li>
+            </ul>
+        </div>
 
 
         <script src="http://localhost:8000/js/lib/jquery.js"></script>
