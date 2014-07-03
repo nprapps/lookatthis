@@ -1,6 +1,7 @@
 var $window = null;
 var $document = null;
 
+var POST_ID = document.location.href.split('/')[4];
 var pymParent = null;
 
 /*
@@ -11,7 +12,8 @@ var onDocumentLoad = function(e) {
     $window = $(window);
     $document = $(document);
 
-    pymParent = new pym.Parent('post', 'http://localhost:8000/posts/test/', {});
+    // pymParent = new pym.Parent('post', 'http://localhost:8000/posts/test/', {});
+    pymParent = new pym.Parent('post', 'http://localhost:8000/posts/' + POST_ID + '/', {});
 }
 
 $(onDocumentLoad);
