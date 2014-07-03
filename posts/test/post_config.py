@@ -1,4 +1,4 @@
-COPY_GOOGLE_DOC_KEY = '0AqjLQISCZzBkdDJxTl82S2k5QkE2RTBNNm15dDF6dXc'
+COPY_GOOGLE_DOC_KEY = '0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc'
 
 # post metadata
 PROMO_PHOTO = 'http://apps.npr.org/wolves/img/wolves/INTRO02x_1500.jpg'

@@ -1,0 +1,1 @@
+window.COPY = {"Sheet1": []}
