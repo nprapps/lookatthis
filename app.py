@@ -55,6 +55,7 @@ def _post(slug):
         pass
 
     with open('%s/templates/index.html' % post_path) as f:
+        print post_path
         template = f.read().decode('utf-8')
 
     return render_template_string(template, **context)
