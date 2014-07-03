@@ -5,13 +5,13 @@
     <title>{{ COPY.content.project_name }}</title>
 
     <!-- META TAGS -->
-    {% include '_meta.html' %}
+    {% include '%s/templates/_meta.html' % slug %}
 
     <!-- CHARTBEAT -->
     <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
 
     <!-- FONTS -->
-    {% include '_fonts.html' %}
+    {% include '%s/templates/_fonts.html' % slug %}
 
     <!-- CSS -->
     {{ CSS.push('less/app.less') }}
@@ -22,7 +22,7 @@
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.render('js/app-header.min.js') }}
 
-    {% include '_social_tags.html' %}
+    {% include '%s/templates/_social_tags.html' % slug %}
 
     {% block extra_head %}
     {% endblock extra_head %}
@@ -109,7 +109,7 @@
     {% endblock %}
 
     {{ JS.push('js/lib/jquery.js') }}
-    {{ JS.push('js/lib/fail.js') }}
+    {{ JS.push('js/lib/underscore.js') }}
     {{ JS.push('js/lib/bootstrap.js') }}
     {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/pym.js') }}
