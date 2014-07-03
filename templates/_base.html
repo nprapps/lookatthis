@@ -112,11 +112,12 @@
     {{ JS.push('js/lib/underscore.js') }}
     {{ JS.push('js/lib/bootstrap.js') }}
     {{ JS.push('js/lib/moment.js') }}
+    {{ JS.push('js/lib/pym.js') }}
     {{ JS.push('js/app_config.js') }}
-    {{ JS.push('js/copy.js') }}
+    {#{ JS.push('js/copy.js') }#}
     {{ JS.push('js/console.js') }}
     {{ JS.push('js/ads.js') }}
-    {{ JS.push('js/templates.js') }}
+    {#{ JS.push('js/templates.js') }#}
     {{ JS.push('js/comments.js') }}
     {{ JS.push('js/app.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}

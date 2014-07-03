@@ -15,9 +15,23 @@ static = Blueprint('static', __name__)
 
 # Render LESS files on-demand
 @static.route('/posts/<string:slug>/less/<string:filename>')
-def _less(slug, filename):
+def _post_less(slug, filename):
 
     r = envoy.run('node_modules/less/bin/lessc -rp=posts/%s/less/ posts/%s/less/%s' % (slug, slug, filename))
+
+    return r.std_out, 200, { 'Content-Type': 'text/css' }
+
+@static.route('/less/<string:filename>')
+def _theme_less(filename):
+    try:
+        with open('tumblr/less/%s' % filename) as f:
+            less = f.read()
+    except IOError:
+        abort(404)
+
+    r = envoy.run('node_modules/less/bin/lessc -rp=tumblr/less/ tumblr/less/%s' % filename)
+
+    print r.std_out
 
     return r.std_out, 200, { 'Content-Type': 'text/css' }
 
@@ -36,21 +50,29 @@ def _post_config_js(slug):
 
     return js, 200, { 'Content-Type': 'application/javascript' }
 
-# Render copytext
+# render copytext
 @static.route('/posts/<string:slug>/js/copy.js')
 def _copy_js(slug):
-    copy = 'window.COPY = ' + copytext.Copy('data/%s.xlsx' % slug).json()
+    copy = 'window.copy = ' + copytext.copy(app_config.copy_path).json()
+    return copy, 200, { 'content-type': 'application/javascript' }
 
-    return copy, 200, { 'Content-Type': 'application/javascript' }
-
-# Server arbitrary static files on-demand
+# server arbitrary static files on-demand
 @static.route('/posts/<string:slug>/<path:path>')
-def _static(slug, path):
+def _post_static(slug, path):
     real_path = 'posts/%s/www/%s' % (slug, path)
     print real_path
 
     try:
         with open('%s' % real_path) as f:
             return f.read(), 200, { 'Content-Type': guess_type(real_path)[0] }
+    except IOError:
+        abort(404)
+
+# Server arbitrary static files on-demand
+@static.route('/<path:path>')
+def _theme_static(path):
+    try:
+        with open('tumblr/www/%s' % path) as f:
+            return f.read(), 200, { 'Content-Type': guess_type(path)[0] }
     except IOError:
         abort(404)
