@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import glob
+import imp
 import os
 import time
 import urllib
@@ -58,7 +59,7 @@ class Includer(object):
                 for f in old_versions:
                     os.remove(f)
 
-            out_path = 'www/%s' % timestamp_path
+            out_path = 'posts/test/www/%s' % timestamp_path
 
             if path not in g.compiled_includes:
                 print 'Rendering %s' % out_path
@@ -134,7 +135,7 @@ class CSSIncluder(Includer):
             else:
                 src_paths.append('www/%s' % src)
 
-            with open('www/%s' % src) as f:
+            with open('posts/test/www/%s' % src) as f:
                 print '- compressing %s' % src
                 output.append(cssmin(f.read().encode('utf-8')))
 
@@ -156,6 +157,22 @@ def flatten_app_config():
 
     # Only all-caps [constant] vars get included
     for k, v in app_config.__dict__.items():
+        if k.upper() == k:
+            config[k] = v
+
+    return config
+
+def flatten_post_config(slug):
+    """
+    Returns a copy of post_config containing only
+    configuration variables.
+    """
+    config = {}
+
+    post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+
+    # Only all-caps [constant] vars get included
+    for k, v in post_config.__dict__.items():
         if k.upper() == k:
             config[k] = v
 

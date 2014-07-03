@@ -250,7 +250,7 @@ def deploy(slug=''):
     update()
     render.render_all()
     _gzip('www', '.gzip')
-    _gzip(app_config.POST_PATH, '.gzip/posts')
+    _gzip('%s/%s/www/' % (app_config.POST_PATH, slug), '.gzip/posts/%s' % slug)
     _post_to_tumblr()
     _deploy_to_s3('.gzip/posts/%s' % slug)
 

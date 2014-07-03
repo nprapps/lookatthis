@@ -9,7 +9,7 @@ import app_config
 import copytext
 import envoy
 from flask import Blueprint
-from render_utils import flatten_app_config
+from render_utils import flatten_app_config, flatten_post_config
 
 static = Blueprint('static', __name__)
 
@@ -22,17 +22,24 @@ def _less(slug, filename):
     return r.std_out, 200, { 'Content-Type': 'text/css' }
 
 # Render application configuration
-@static.route('/posts/<string:slug>/js/app_config.js')
-def _app_config_js(slug):
+@static.route('/js/app_config.js')
+def _app_config_js():
     config = flatten_app_config()
     js = 'window.APP_CONFIG = ' + json.dumps(config)
+
+    return js, 200, { 'Content-Type': 'application/javascript' }
+
+@static.route('/posts/<string:slug>/js/post_config.js')
+def _post_config_js(slug):
+    config = flatten_post_config(slug)
+    js = 'window.POST_CONFIG = ' + json.dumps(config)
 
     return js, 200, { 'Content-Type': 'application/javascript' }
 
 # Render copytext
 @static.route('/posts/<string:slug>/js/copy.js')
 def _copy_js(slug):
-    copy = 'window.COPY = ' + copytext.Copy(app_config.COPY_PATH).json()
+    copy = 'window.COPY = ' + copytext.Copy('data/%s.xlsx' % slug).json()
 
     return copy, 200, { 'Content-Type': 'application/javascript' }
 

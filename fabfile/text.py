@@ -3,10 +3,10 @@
 """
 Commands related to syncing copytext from Google Docs.
 """
+import imp
 
 from fabric.api import require, task
 from fabric.state import env
-import imp
 
 import app_config
 from etc.gdocs import GoogleDoc
