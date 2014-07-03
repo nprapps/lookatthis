@@ -100,7 +100,7 @@ class JavascriptIncluder(Includer):
         for src in self.includes:
             src_paths.append('www/%s' % src)
 
-            with open('www/%s' % src) as f:
+            with open('posts/test/www/%s' % src) as f:
                 print '- compressing %s' % src
                 output.append(minify(f.read().encode('utf-8')))
 
@@ -189,7 +189,6 @@ def make_context(asset_depth=2):
     """
     context = flatten_app_config()
 
-    # context['COPY'] = copytext.Copy(app_config.COPY_PATH)
     context['JS'] = JavascriptIncluder(asset_depth=asset_depth)
     context['CSS'] = CSSIncluder(asset_depth=asset_depth)
 
