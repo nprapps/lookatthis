@@ -1,0 +1,43 @@
+<body class="permalink-page">
+    <div id="post"></div>
+
+    <div class="post-fixed-menu">
+        <h2>You're looking at <a href="#">Fringe Photography</a></h2>
+
+        <ul>
+            <li class="button-menu"><a href="#">Menu <i class="fa fa-th"></i></a></li>
+            <li class="button-share"><a href="#">Share <i class="fa fa-share"></i></a></li>
+        </ul>
+    </div>
+
+
+    <script src="http://localhost:8000/js/lib/jquery.js"></script>
+    <script src="http://localhost:8000/js/lib/pym.js"></script>
+    <script src="http://localhost:8000/js/post.js"></script>
+
+    <!-- CHARTBEAT -->
+    <script type="text/javascript">
+        var _sf_async_config={};
+        /** CONFIGURATION START **/
+        _sf_async_config.uid = 18888;
+        _sf_async_config.domain = "npr.org";
+        /** CONFIGURATION END **/
+        (function(){
+            function loadChartbeat() {
+                window._sf_endpt=(new Date()).getTime();
+                var e = document.createElement("script");
+                e.setAttribute("language", "javascript");
+                e.setAttribute("type", "text/javascript");
+                e.setAttribute("src",
+                    (("https:" == document.location.protocol) ?
+                     "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" :
+                     "http://static.chartbeat.com/") +
+                    "js/chartbeat.js");
+                document.body.appendChild(e);
+            }
+            var oldonload = window.onload;
+            window.onload = (typeof window.onload != "function") ?
+                loadChartbeat : function() { oldonload(); loadChartbeat(); };
+        })();
+    </script>
+</body>
