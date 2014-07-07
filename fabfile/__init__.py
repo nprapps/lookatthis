@@ -62,39 +62,6 @@ def staging():
     env.hosts = app_config.SERVERS
 
 """
-Branches
-
-Changing branches requires deploying that branch to a host.
-"""
-@task
-def stable():
-    """
-    Work on stable branch.
-    """
-    env.branch = 'stable'
-
-@task
-def master():
-    """
-    Work on development branch.
-    """
-    env.branch = 'master'
-
-@task
-def branch(branch_name):
-    """
-    Work on any specified branch.
-    """
-    env.branch = branch_name
-
-@task
-def tests():
-    """
-    Run Python unit tests.
-    """
-    local('nosetests')
-
-"""
 Deployment
 
 Changes to deployment requires a full-stack test. Deployment
@@ -281,7 +248,6 @@ def post(slug):
         env.copytext_key = None
 
     env.copytext_file_name = slug
-
 
 @task
 def new():
