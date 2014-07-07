@@ -332,6 +332,11 @@
     <!-- Post template -->
     {block:PermalinkPage}
     <body class="permalink-page">
+    {block:Posts}
+        <div class="text-wrapper">
+            {Body}
+        </div>
+    
         <div id="post"></div>
 
         <div class="post-fixed-menu">
@@ -384,8 +389,15 @@
 
         <script src="http://localhost:8000/js/lib/jquery.js"></script>
         <script src="http://localhost:8000/js/lib/bootstrap.js"></script>
-        <script src="http://localhost:8000/js/lib/pym.js"></script>
-        <script src="http://localhost:8000/js/post.js"></script>
+    
+        {block:Photo} 
+            <script src="http://localhost:8000/js/lib/pym.js"></script>
+            <script src="http://localhost:8000/js/post.js"></script>
+        {/block:Photo}
+    {/block:Posts}
+        
+       
+        
         
 
         <!-- CHARTBEAT -->
