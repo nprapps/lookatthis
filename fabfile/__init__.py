@@ -147,12 +147,6 @@ def _gzip(in_path='www', out_path='.gzip'):
     """
     local('python gzip_assets.py %s %s' % (in_path, out_path))
 
-def _get_post():
-    """
-    Get the current post we are working on
-    """
-
-
 @task
 def update():
     """
@@ -161,22 +155,23 @@ def update():
     text.update()
     assets.sync()
     data.update()
-
-def _post_to_tumblr():
+@task
+def post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
     TODO: Tweet in the post body
     """
-    require('post', provided_by=[post])
-
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+
+    secrets = app_config.get_secrets()
+    print secrets
     client = pytumblr.TumblrRestClient(
-        os.environ.get('TUMBLR_CONSUMER_KEY', None),
-        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
-        os.environ.get('TUMBLR_TOKEN', None),
-        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+        secrets.get('TUMBLR_CONSUMER_KEY'),
+        secrets.get('TUMBLR_CONSUMER_SECRET'),
+        secrets.get('TUMBLR_TOKEN'),
+        secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
     # if the post already exists and has an ID,
@@ -219,14 +214,15 @@ def publish():
     """
     Publish the currently active post
     """
-
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+
+    secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
-        os.environ.get('TUMBLR_CONSUMER_KEY', None),
-        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
-        os.environ.get('TUMBLR_TOKEN', None),
-        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+        secrets.get('lookatthis_TUMBLR_CONSUMER_KEY'),
+        secrets.get('lookatthis_TUMBLR_CONSUMER_SECRET'),
+        secrets.get('lookatthis_TUMBLR_TOKEN'),
+        secrets.get('lookatthis_TUMBLR_TOKEN_SECRET')
     )
 
     client.edit_post(
@@ -265,14 +261,23 @@ App-specific commands
 @task
 def post(slug):
     env.post = slug
+    env.static_path = '%s/%s' % (app_config.POST_PATH, env.post)
+    env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
+    env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
+    env.copytext_file_name = slug
+
 
 @task
 def new():
     require('post', provided_by=[post])
-    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     local('cp -r new_post %s' % post_path)
-    # TODO
-    # download_copy(slug)
+    text.update()
+
+@task
+def tumblr():
+    env.static_path = 'tumblr'
+    env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
+    env.copytext_file_name = 'data/theme.xlsx'
 
 """
 Destruction

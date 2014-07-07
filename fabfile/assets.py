@@ -19,21 +19,20 @@ def sync():
     """
     Intelligently synchronize assets between S3 and local folder.
     """
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-    ASSETS_ROOT = '%s/www/assets' % post_path
+    assets_root = '%s/www/assets' % env.static_path
 
     ignore_globs = []
 
-    with open('%s/.assetsignore' % ASSETS_ROOT, 'r') as f:
+    with open('%s/.assetsignore' % assets_root, 'r') as f:
         ignore_globs = [l.strip() for l in f]
 
     local_paths = []
     not_lowercase = []
 
-    for local_path, subdirs, filenames in os.walk(ASSETS_ROOT):
+    for local_path, subdirs, filenames in os.walk(assets_root):
         for name in filenames:
             full_path = os.path.join(local_path, name)
-            glob_path = full_path.split(ASSETS_ROOT)[1].strip('/')
+            glob_path = full_path.split(assets_root)[1].strip('/')
 
             ignore = False
 
@@ -70,10 +69,10 @@ def sync():
         download = False
         upload = False
 
-        local_path = key.name.replace(app_config.ASSETS_SLUG, ASSETS_ROOT, 1)
+        local_path = key.name.replace(app_config.ASSETS_SLUG, assets_root, 1)
 
         # Skip root key
-        if local_path == '%s/' % ASSETS_ROOT:
+        if local_path == '%s/' % assets_root:
             continue
 
         print local_path
@@ -119,7 +118,7 @@ def sync():
 
     # Iterate over files that didn't exist on S3
     for local_path in local_paths:
-        key_name = local_path.replace(ASSETS_ROOT, app_config.ASSETS_SLUG, 1)
+        key_name = local_path.replace(assets_root, app_config.ASSETS_SLUG, 1)
         key = bucket.get_key(key_name, validate=False)
 
         print local_path
@@ -142,8 +141,7 @@ def rm(path):
     """
     Remove an asset from s3 and locally
     """
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-    ASSETS_ROOT = '%s/www/assets' % post_path
+    assets_root = '%s/www/assets' % env.static_path
 
     bucket = _assets_get_bucket()
 
@@ -175,7 +173,7 @@ def rm(path):
 
                 continue
 
-            key_name = local_path.replace(ASSETS_ROOT, app_config.ASSETS_SLUG, 1)
+            key_name = local_path.replace(assets_root, app_config.ASSETS_SLUG, 1)
             key = bucket.get_key(key_name)
 
             _assets_delete(local_path, key)

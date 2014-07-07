@@ -119,7 +119,10 @@ def get_secrets():
     A method for accessing our secrets.
     """
     secrets = [
-        'EXAMPLE_SECRET'
+        'TUMBLR_CONSUMER_KEY',
+        'TUMBLR_CONSUMER_SECRET',
+        'TUMBLR_TOKEN',
+        'TUMBLR_TOKEN_SECRET'
     ]
 
     secrets_dict = {}
