@@ -338,15 +338,50 @@
             <h2>You're looking at <a href="#">Fringe Photography</a></h2>
 
             <ul>
-                <li class="button-menu"><a href="#">Menu <i class="fa fa-th"></i></a></li>
+                <li class="button-menu"><a href="#" data-toggle="modal" data-target="#main-menu">Menu <i class="fa fa-th"></i></a></li>
                 <li class="button-share"><a href="#">Share <i class="fa fa-share"></i></a></li>
             </ul>
         </div>
+        
+       <!-- Modal -->
+        <div class="modal" id="main-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                
+                <div class="inner-menu">
+                    <a href="#" class="npr-logo">
+                        <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
+                    </a>
+                    <h3><a href="/">Look At This</a></h3>
+                    <h4>An awesome tagline</h4>
+                    <ul>
+                        <li><a href="#">View all stories</a></li>
+                        <li><a href="#">Topics</a></li>
+                        <li><a href="#">What's this about?</a></li>
+                        <li><a href="#">Send us something weird</a></li>
+                        <li><a href="#">Search</a></li>
+                    </ul>
+                    <div class="follow-us">
+                        <p class="twitter">
+                            <em><a href="#">@LookAtThisNPR</a></em> 
+                            <a href="#">#looksGoodNPR</a>
+                        </p>
+                    </div><!--follow-us-->
+                </div><!--inner-menu-->
+                    
+              </div>
+            </div>
+          </div>
+        </div><!--modal-->
 
 
         <script src="http://localhost:8000/js/lib/jquery.js"></script>
+        <script src="http://localhost:8000/js/lib/bootstrap.js"></script>
         <script src="http://localhost:8000/js/lib/pym.js"></script>
         <script src="http://localhost:8000/js/post.js"></script>
+        
 
         <!-- CHARTBEAT -->
         <script type="text/javascript">
