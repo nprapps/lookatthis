@@ -31,15 +31,15 @@ pip-log.txt
 .gzip
 
 node_modules
-www/*.html
-www/css/*.min.*.css
-www/css/*.min.css
-www/css/*.less.css
-www/js/*.min.*.js
-www/js/*.min.js
-www/js/templates.js
-www/js/app_config.js
-www/js/copy.js
+tumblr/www/*.html
+tumblr/www/css/*.min.*.css
+tumblr/www/css/*.min.css
+tumblr/www/css/*.less.css
+tumblr/www/js/*.min.*.js
+tumblr/www/js/*.min.js
+tumblr/www/js/templates.js
+tumblr/www/js/app_config.js
+tumblr/www/js/copy.js
 
 posts/*/www/*.html
 posts/*/www/css/*.min.*.css
@@ -64,3 +64,4 @@ data/gdoc*.csv
 www/comments/index.html
 analytics.json
 analytics.txt
+

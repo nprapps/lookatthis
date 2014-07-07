@@ -96,4 +96,3 @@ class GoogleDoc(object):
 
             with open('data/%s.%s' % (self.file_name, self.file_format), 'wb') as writefile:
                 writefile.write(r.content)
-
