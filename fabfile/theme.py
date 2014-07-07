@@ -9,6 +9,8 @@ from fabric.state import env
 from render import less
 import utils
 
+import app_config
+
 @task(default=True)
 def render():
     require('static_path', provided_by=['tumblr'])
@@ -26,7 +28,6 @@ def deploy():
     render()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
     utils._deploy_to_s3('.gzip/tumblr/')
-
-@task
-def copy():
     local('pbcopy < tumblr/theme.html.tpl')
+    print 'The Tumblr theme HTML has been copied to your clipboard.'
+    local('open https://www.tumblr.com/customize/%s' % app_config.TUMBLR_NAME)
