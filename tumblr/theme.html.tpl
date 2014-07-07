@@ -362,10 +362,10 @@
                     <h3><a href="/">look at this</a></h3>
                     <h4>An awesome tagline</h4>
                     <ul>
-                        <li><a href="#">View all stories</a></li>
+                        <li><a href="/">View all stories</a></li>
                         <li><a href="#">Topics</a></li>
-                        <li><a href="#">What's this about?</a></li>
-                        <li><a href="#">Send us something weird</a></li>
+                        <li><a href="/about">What's this about?</a></li>
+                        <li><a href="/weird">Send us something weird</a></li>
                         <li><a href="#">Search</a></li>
                         
                         <!--<form id="search" action="/search" method="get" name="search">
