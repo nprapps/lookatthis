@@ -18,7 +18,7 @@ def update():
     """
     doc = {}
     doc['key'] = env.copytext_key
-    doc['file_name'] = env.copytext_file_name
+    doc['file_name'] = env.copytext_slug
 
     g = GoogleDoc(**doc)
     g.get_auth()

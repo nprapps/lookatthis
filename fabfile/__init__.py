@@ -69,51 +69,6 @@ Changes to deployment requires a full-stack test. Deployment
 has two primary functions: Pushing flat files to S3 and deploying
 code to a remote server if required.
 """
-def _deploy_to_s3(path='.gzip'):
-    """
-    Deploy the gzipped stuff to S3.
-    """
-    # Clear files that should never be deployed
-    local('rm -rf %s/live-data' % path)
-    local('rm -rf %s/sitemap.xml' % path)
-
-    exclude_flags = ''
-    include_flags = ''
-
-    with open('gzip_types.txt') as f:
-        for line in f:
-            exclude_flags += '--exclude "%s" ' % line.strip()
-            include_flags += '--include "%s" ' % line.strip()
-
-    exclude_flags += '--exclude "www/assets" '
-
-    sync = 'aws s3 sync %s/ %s --acl "public-read" ' + exclude_flags + ' --cache-control "max-age=5" --region "us-east-1"'
-    sync_gzip = 'aws s3 sync %s/ %s --acl "public-read" --content-encoding "gzip" --exclude "*" ' + include_flags + ' --cache-control "max-age=5" --region "us-east-1"'
-    sync_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
-
-    for bucket in app_config.S3_BUCKETS:
-        local(sync % (path, 's3://%s/%s/%s' % (
-            bucket,
-            app_config.PROJECT_SLUG,
-            path.split('.gzip/')[1]
-        )))
-
-        local(sync_gzip % (path, 's3://%s/%s/%s' % (
-            bucket,
-            app_config.PROJECT_SLUG,
-            path.split('.gzip/')[1]
-        )))
-
-        local(sync_assets % ('www/assets/', 's3://%s/%s/assets/' % (
-            bucket,
-            app_config.PROJECT_SLUG
-        )))
-
-def _gzip(in_path='www', out_path='.gzip'):
-    """
-    Gzips everything in www and puts it all in gzip
-    """
-    local('python gzip_assets.py %s %s' % (in_path, out_path))
 
 @task
 def update():
@@ -227,10 +182,9 @@ def deploy(slug=''):
 
     update()
     render.render_all()
-    _gzip('www', '.gzip')
-    _gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
     _post_to_tumblr()
-    _deploy_to_s3('.gzip/posts/%s' % slug)
+    utils._deploy_to_s3('.gzip/posts/%s' % slug)
 
 """
 App-specific commands
@@ -248,7 +202,7 @@ def post(slug):
         env.post_config = None
         env.copytext_key = None
 
-    env.copytext_file_name = slug
+    env.copytext_slug = slug
 
 @task
 def new():
@@ -261,7 +215,7 @@ def new():
 def tumblr():
     env.static_path = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
-    env.copytext_file_name = 'data/theme.xlsx'
+    env.copytext_slug = 'theme'
 
 """
 Destruction
