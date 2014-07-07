@@ -161,8 +161,8 @@ def update():
     text.update()
     assets.sync()
     data.update()
-
-def _post_to_tumblr():
+@task
+def post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
@@ -170,11 +170,14 @@ def _post_to_tumblr():
     """
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+
+    secrets = app_config.get_secrets()
+    print secrets
     client = pytumblr.TumblrRestClient(
-        os.environ.get('TUMBLR_CONSUMER_KEY', None),
-        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
-        os.environ.get('TUMBLR_TOKEN', None),
-        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+        secrets.get('TUMBLR_CONSUMER_KEY'),
+        secrets.get('TUMBLR_CONSUMER_SECRET'),
+        secrets.get('TUMBLR_TOKEN'),
+        secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
     # if the post already exists and has an ID,
@@ -217,14 +220,15 @@ def publish():
     """
     Publish the currently active post
     """
-
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
+
+    secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
-        os.environ.get('TUMBLR_CONSUMER_KEY', None),
-        os.environ.get('TUMBLR_CONSUMER_SECRET', None),
-        os.environ.get('TUMBLR_TOKEN', None),
-        os.environ.get('TUMBLR_TOKEN_SECRET', None)
+        secrets.get('lookatthis_TUMBLR_CONSUMER_KEY'),
+        secrets.get('lookatthis_TUMBLR_CONSUMER_SECRET'),
+        secrets.get('lookatthis_TUMBLR_TOKEN'),
+        secrets.get('lookatthis_TUMBLR_TOKEN_SECRET')
     )
 
     client.edit_post(
@@ -259,6 +263,11 @@ def deploy(slug=''):
 """
 App-specific commands
 """
+
+@task
+def get_post(slug):
+    env.post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
+    env.post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
 
 @task
 def post(slug):
