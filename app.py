@@ -11,7 +11,9 @@ from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
 from render_utils import make_context, smarty_filter, urlencode_filter, Includer, CSSIncluder, JavascriptIncluder
+import post
 import static
+import theme
 
 app = Flask(__name__)
 
@@ -76,6 +78,8 @@ def _post_preview(slug):
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
+app.register_blueprint(post.post)
+app.register_blueprint(theme.theme)
 
 # Boilerplate
 if __name__ == '__main__':

@@ -26,10 +26,10 @@
              });
         </script>
 
-        <script src="http://localhost:8000/js/lib/modernizr.js"></script>
+        <script src="http://localhost:8000/tumblr/js/lib/modernizr.js"></script>
 
         <!-- Project CSS -->
-        <link rel="stylesheet" type="text/css" href="http://localhost:8000/less/app.less">
+        <link rel="stylesheet" type="text/css" href="http://localhost:8000/tumblr/less/app.less">
 
         <!-- GOOGLE ANALYTICS -->
         <!-- <script>
@@ -126,9 +126,9 @@
         </div> <!-- #container -->
 
 
-        <script src="http://localhost:8000/js/lib/jquery.js"></script>
-        <script src="http://localhost:8000/js/lib/pym.js"></script>
-        <script src="http://localhost:8000/js/app.js"></script>
+        <script src="http://localhost:8000/tumblr/js/lib/jquery.js"></script>
+        <script src="http://localhost:8000/tumblr/js/lib/pym.js"></script>
+        <script src="http://localhost:8000/tumblr/js/app.js"></script>
 
 
         <script type="text/javascript">
@@ -336,7 +336,7 @@
         <div class="text-wrapper">
             {Body}
         </div>
-    
+
         <div id="post"></div>
 
         <div class="post-fixed-menu">
@@ -347,14 +347,14 @@
                 <li class="button-share"><a href="#">Share <i class="fa fa-share"></i></a></li>
             </ul>
         </div>
-        
+
        <!-- Modal -->
         <div class="modal" id="main-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                
+
                 <div class="inner-menu">
                     <a href="#" class="npr-logo">
                         <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
@@ -367,7 +367,7 @@
                         <li><a href="/about">What's this about?</a></li>
                         <li><a href="/weird">Send us something weird</a></li>
                         <li><a href="#">Search</a></li>
-                        
+
                         <!--<form id="search" action="/search" method="get" name="search">
             <div id="input"><input placeholder="{lang:Search}" type="text" name="q" value="{SearchQuery}" id="search-terms" /></div>
             <input class="search-submit" type="submit" value="Search"/>
@@ -375,30 +375,30 @@
                     </ul>
                     <div class="follow-us">
                         <p class="twitter">
-                            <em><a href="#">@LookAtThisNPR</a></em> 
+                            <em><a href="#">@LookAtThisNPR</a></em>
                             <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
                         </p>
                     </div><!--follow-us-->
                 </div><!--inner-menu-->
-                    
+
               </div>
             </div>
           </div>
         </div><!--modal-->
 
 
-        <script src="http://localhost:8000/js/lib/jquery.js"></script>
-        <script src="http://localhost:8000/js/lib/bootstrap.js"></script>
-    
-        {block:Photo} 
-            <script src="http://localhost:8000/js/lib/pym.js"></script>
-            <script src="http://localhost:8000/js/post.js"></script>
+        <script src="http://localhost:8000/tumblr/js/lib/jquery.js"></script>
+        <script src="http://localhost:8000/tumblr/js/lib/bootstrap.js"></script>
+
+        {block:Photo}
+            <script src="http://localhost:8000/tumblr/js/lib/pym.js"></script>
+            <script src="http://localhost:8000/tumblr/js/post.js"></script>
         {/block:Photo}
     {/block:Posts}
-        
-       
-        
-        
+
+
+
+
 
         <!-- CHARTBEAT -->
         <script type="text/javascript">
