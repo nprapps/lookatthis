@@ -125,7 +125,6 @@ def _post_to_tumblr():
     else:
         params = {
             'id' : env.post_config.ID,
-            'state': 'draft',
             'type' :'photo',
             'format' : 'html',
             'source' : env.post_config.PROMO_PHOTO,
