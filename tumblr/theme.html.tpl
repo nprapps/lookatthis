@@ -354,7 +354,7 @@
                     <a href="#" class="npr-logo">
                         <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
                     </a>
-                    <h3><a href="/">Look At This</a></h3>
+                    <h3><a href="/">look at this</a></h3>
                     <h4>An awesome tagline</h4>
                     <ul>
                         <li><a href="#">View all stories</a></li>
@@ -362,11 +362,16 @@
                         <li><a href="#">What's this about?</a></li>
                         <li><a href="#">Send us something weird</a></li>
                         <li><a href="#">Search</a></li>
+                        
+                        <!--<form id="search" action="/search" method="get" name="search">
+            <div id="input"><input placeholder="{lang:Search}" type="text" name="q" value="{SearchQuery}" id="search-terms" /></div>
+            <input class="search-submit" type="submit" value="Search"/>
+        </form>-->
                     </ul>
                     <div class="follow-us">
                         <p class="twitter">
                             <em><a href="#">@LookAtThisNPR</a></em> 
-                            <a href="#">#looksGoodNPR</a>
+                            <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
                         </p>
                     </div><!--follow-us-->
                 </div><!--inner-menu-->
