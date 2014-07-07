@@ -177,7 +177,8 @@ def deploy(slug=''):
 
     slug = env.post
     if not slug:
-        utils.confirm('You are about about to deploy ALL posts. Are you sure you want to do this? (Deploy a single post with "deploy:SLUG".)')
+        print 'You must specify a slug in order to deploy.'
+        return
 
     update()
     render.render_all()
