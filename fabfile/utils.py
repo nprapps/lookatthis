@@ -14,4 +14,3 @@ def confirm(message):
 
     if answer.lower() not in ('y', 'yes', 'buzz off', 'screw you'):
         exit()
-

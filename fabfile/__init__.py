@@ -147,12 +147,6 @@ def _gzip(in_path='www', out_path='.gzip'):
     """
     local('python gzip_assets.py %s %s' % (in_path, out_path))
 
-def _get_post():
-    """
-    Get the current post we are working on
-    """
-
-
 @task
 def update():
     """
@@ -265,20 +259,25 @@ App-specific commands
 """
 
 @task
-def get_post(slug):
-    env.post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
-    env.post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
-
-@task
 def post(slug):
     env.post = slug
+    env.static_path = '%s/%s' % (app_config.POST_PATH, env.post)
+    env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
+    env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
+    env.copytext_file_name = slug
+
 
 @task
 def new():
     require('post', provided_by=[post])
-    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     local('cp -r new_post %s' % post_path)
     text.update()
+
+@task
+def tumblr():
+    env.static_path = 'tumblr'
+    env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
+    env.copytext_file_name = 'data/theme.xlsx'
 
 """
 Destruction

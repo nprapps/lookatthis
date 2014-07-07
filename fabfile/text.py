@@ -16,14 +16,10 @@ def update():
     """
     Downloads a Google Doc as an Excel file.
     """
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
-
     doc = {}
-    doc['key'] = post_config.COPY_GOOGLE_DOC_KEY
-    doc['file_name'] = env.post
+    doc['key'] = env.copytext_key
+    doc['file_name'] = env.copytext_file_name
 
     g = GoogleDoc(**doc)
     g.get_auth()
     g.get_document()
-

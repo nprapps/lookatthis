@@ -16,21 +16,20 @@ import app_config
 
 @task
 def less():
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-
     """
     Render LESS files to CSS.
     """
-    for path in glob('%s/less/*.less' % post_path):
+    for path in glob('%s/less/*.less' % env.static_path):
         filename = os.path.split(path)[-1]
         name = os.path.splitext(filename)[0]
-        out_path = '%s/www/css/%s.less.css' % (post_path, name)
+        out_path = '%s/www/css/%s.less.css' % (env.static_path, name)
 
         try:
             local('node_modules/less/bin/lessc %s %s' % (path, out_path))
         except:
             print 'It looks like "lessc" isn\'t installed. Try running: "npm install"'
             raise
+
 
 @task
 def app_config_js():
@@ -52,12 +51,11 @@ def post_config_js():
     """
     from static import _post_config_js
 
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
 
     response = _post_config_js(env.post)
     js = response[0]
 
-    with open('%s/www/js/post_config.js' % post_path, 'w') as f:
+    with open('%s/www/js/post_config.js' % env.static_path, 'w') as f:
         f.write(js)
 
 @task
@@ -67,12 +65,10 @@ def copytext_js():
     """
     from static import _copy_js
 
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-
     response = _copy_js(env.post)
     js = response[0]
 
-    with open('%s/www/js/copy.js' % post_path, 'w') as f:
+    with open('%s/www/js/copy.js' % env.static_path, 'w') as f:
         f.write(js)
 
 @task(default=True)
@@ -82,6 +78,8 @@ def render_all():
     """
     from flask import g, url_for
 
+    require('post', provided_by=['post'])
+
     less()
     post_config_js()
     copytext_js()
@@ -90,21 +88,17 @@ def render_all():
 
     app_config.configure_targets(env.get('settings', None))
 
-    post_path = '%s/%s' % (app_config.POST_PATH, env.post)
-
-    slug = post_path.split('%s/' % app_config.POST_PATH)[1].split('/')[0]
-
     with app.app.test_request_context():
-        path = 'posts/%s/www/index.html' % slug
+        path = 'posts/%s/www/index.html' % env.post
 
-    with app.app.test_request_context(path=post_path):
+    with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
 
         g.compile_includes = True
         g.compiled_includes = compiled_includes
 
         view = app.__dict__['_post']
-        content = view(slug)
+        content = view(env.post)
 
     with open(path, 'w') as f:
         f.write(content.encode('utf-8'))
