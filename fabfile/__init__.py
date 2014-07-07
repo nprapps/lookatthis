@@ -15,6 +15,7 @@ import data
 import issues
 import render
 import text
+import theme
 import utils
 
 if app_config.DEPLOY_TO_SERVERS:
