@@ -155,6 +155,7 @@ def update():
     text.update()
     assets.sync()
     data.update()
+
 @task
 def post_to_tumblr():
     """
@@ -162,8 +163,6 @@ def post_to_tumblr():
 
     TODO: Tweet in the post body
     """
-    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
-    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
 
     secrets = app_config.get_secrets()
     print secrets
@@ -174,40 +173,57 @@ def post_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    # if the post has a no ID, create the new post.
+    if env.post_config.ID == '$NEW_POST_ID':
+        params = {
+            'state': 'draft',
+            'format' : 'html',
+            'source' : env.post_config.PROMO_PHOTO,
+            'caption' : env.post_config.CAPTION,
+            'slug' : env.post
+        }
+
+        if env.post_config.TAGS:
+            params['tags'] = env.post_config.TAGS
+
+        response = client.create_photo(
+            app_config.TUMBLR_NAME,
+            **params
+        )
+
+        if 'id' not in response:
+            print 'Error creating new tumblr post'
+            print response
+            return
+
+        post_config_path = '%s/post_config.py' % env.static_path
+        local('sed -i "" \'s|%s|%s|g\' %s' % ('$NEW_POST_ID', response['id'], post_config_path))
+
     # if the post already exists and has an ID,
     # update the existing post on Tumblr.
-    if post_config.ID != '':
-        client.edit_post(
-            app_config.TUMBLR_NAME,
-            id=post_config.ID,
-            state='draft',
-            type='photo',
-            tags=post_config.TAGS,
-            format='html',
-            source=post_config.PROMO_PHOTO,
-            caption=post_config.CAPTION,
-            slug=env.post
-        )
-
-    # if the post has a no ID, create the new post.
     else:
-        client.create_photo(
+        params = {
+            'id' : env.post_config.ID,
+            'state': 'draft',
+            'type' :'photo',
+            'format' : 'html',
+            'source' : env.post_config.PROMO_PHOTO,
+            'caption' : env.post_config.CAPTION,
+            'slug' : env.post
+        }
+
+        if env.post_config.TAGS:
+            params['tags'] = env.post_config.TAGS
+
+        response = client.edit_post(
             app_config.TUMBLR_NAME,
-            state='draft',
-            tags=post_config.TAGS,
-            format='html',
-            source=post_config.PROMO_PHOTO,
-            caption=post_config.CAPTION,
-            slug=env.post
+            **params
         )
 
-        # find the ID of what we just posted
-        drafts = client.drafts(app_config.TUMBLR_NAME)
-        most_recent_draft = drafts['posts'][0]['id']
-
-        # write the ID to post_config
-        with open('%s/post_config.py' % post_path, 'a') as f:
-            f.writelines('\n' 'ID = %s' % most_recent_draft)
+        if 'id' not in response:
+            print 'Error editing tumblr post'
+            print response
+            return
 
 @task
 def publish():
@@ -262,15 +278,22 @@ App-specific commands
 def post(slug):
     env.post = slug
     env.static_path = '%s/%s' % (app_config.POST_PATH, env.post)
-    env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
-    env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
+
+    if os.path.exists ('%s/post_config.py' % env.static_path):
+        env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
+        env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
+    else:
+        env.post_config = None
+        env.copytext_key = None
+
     env.copytext_file_name = slug
 
 
 @task
 def new():
     require('post', provided_by=[post])
-    local('cp -r new_post %s' % post_path)
+    local('cp -r new_post %s' % env.static_path)
+    post(env.post)
     text.update()
 
 @task
