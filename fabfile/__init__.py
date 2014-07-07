@@ -234,10 +234,10 @@ def publish():
 
     secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
-        secrets.get('lookatthis_TUMBLR_CONSUMER_KEY'),
-        secrets.get('lookatthis_TUMBLR_CONSUMER_SECRET'),
-        secrets.get('lookatthis_TUMBLR_TOKEN'),
-        secrets.get('lookatthis_TUMBLR_TOKEN_SECRET')
+        secrets.get('TUMBLR_CONSUMER_KEY'),
+        secrets.get('TUMBLR_CONSUMER_SECRET'),
+        secrets.get('TUMBLR_TOKEN'),
+        secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
     client.edit_post(
