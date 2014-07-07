@@ -168,8 +168,6 @@ def _post_to_tumblr():
 
     TODO: Tweet in the post body
     """
-    require('post', provided_by=[post])
-
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
     client = pytumblr.TumblrRestClient(
@@ -271,8 +269,7 @@ def new():
     require('post', provided_by=[post])
     post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
     local('cp -r new_post %s' % post_path)
-    # TODO
-    # download_copy(slug)
+    text.update()
 
 """
 Destruction
