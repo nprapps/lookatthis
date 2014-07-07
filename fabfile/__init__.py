@@ -164,7 +164,6 @@ def _post_to_tumblr():
     """
 
     secrets = app_config.get_secrets()
-    print secrets
     client = pytumblr.TumblrRestClient(
         secrets.get('TUMBLR_CONSUMER_KEY'),
         secrets.get('TUMBLR_CONSUMER_SECRET'),
@@ -254,18 +253,14 @@ def deploy(slug=''):
     require('settings', provided_by=[production, staging])
     require('post', provided_by=[post])
 
-    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
-    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
     slug = env.post
-
     if not slug:
         utils.confirm('You are about about to deploy ALL posts. Are you sure you want to do this? (Deploy a single post with "deploy:SLUG".)')
-
 
     update()
     render.render_all()
     _gzip('www', '.gzip')
-    _gzip('%s/%s/www/' % (app_config.POST_PATH, slug), '.gzip/posts/%s' % slug)
+    _gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
     _post_to_tumblr()
     _deploy_to_s3('.gzip/posts/%s' % slug)
 
