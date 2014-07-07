@@ -73,6 +73,20 @@ The project contains the following folders and important files:
 Bootstrap the project
 ---------------------
 
+Before you bootstrap this project, you need to clone the [posts repository](https://github.com/nprapps/posts) into its own directory:
+
+```
+cd ~/src
+git clone git@github.com:nprapps/posts.git
+```
+
+Now you may return to this project and create your posts symlink:
+
+```
+cd ~/src/lookatthis
+ln -s ~/src/posts posts
+```
+
 Node.js is required for the static asset pipeline. If you don't already have it, get it like this:
 
 ```
