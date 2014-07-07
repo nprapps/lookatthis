@@ -32,7 +32,7 @@ requests==1.1.0
 rsa==3.1.2
 six==1.5.2
 slimit==0.7.4
-smartypants==1.8.4
+#smartypants==1.8.4
 ssh==1.7.14
 twitter==1.14.3
 urllib3==1.7.1
