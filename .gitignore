@@ -41,15 +41,7 @@ tumblr/www/js/templates.js
 tumblr/www/js/app_config.js
 tumblr/www/js/copy.js
 
-posts/*/www/*.html
-posts/*/www/css/*.min.*.css
-posts/*/www/css/*.min.css
-posts/*/www/css/*.less.css
-posts/*/www/js/*.min.*.js
-posts/*/www/js/*.min.js
-posts/*/www/js/templates.js
-posts/*/www/js/app_config.js
-posts/*/www/js/copy.js
+posts
 
 confs/rendered/*
 data/copy.xls

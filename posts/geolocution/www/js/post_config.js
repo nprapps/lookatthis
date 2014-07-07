@@ -1,1 +1,0 @@
-window.POST_CONFIG = {"CAPTION": "This is a caption.", "TAGS": ["tag", "another tag"], "ID": "", "PROMO_PHOTO": "http://apps.npr.org/borderland/assets/img/intro02.jpg", "COPY_GOOGLE_DOC_KEY": "0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc"}
