@@ -156,8 +156,7 @@ def update():
     assets.sync()
     data.update()
 
-@task
-def post_to_tumblr():
+def _post_to_tumblr():
     """
     Push the currently active post as a draft to the site
 
