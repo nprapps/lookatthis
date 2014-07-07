@@ -4,7 +4,7 @@
 Commands that render and copy the theme
 """
 
-from fabric.api import execute, task, require
+from fabric.api import execute, local, task, require
 from fabric.state import env
 from render import less
 import utils
@@ -26,3 +26,7 @@ def deploy():
     render()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
     utils._deploy_to_s3('.gzip/tumblr/')
+
+@task
+def copy():
+    local('pbcopy < tumblr/theme.html.tpl')
