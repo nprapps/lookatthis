@@ -23,14 +23,6 @@ if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
     import bootstrap
 
 """
-Base configuration
-"""
-env.user = app_config.SERVER_USER
-env.forward_agent = True
-
-env.hosts = []
-
-"""
 Environments
 
 Changing environment requires a full-stack test.
@@ -44,7 +36,6 @@ def production():
     """
     env.settings = 'production'
     app_config.configure_targets(env.settings)
-    env.hosts = app_config.SERVERS
 
 @task
 def staging():
@@ -53,7 +44,6 @@ def staging():
     """
     env.settings = 'staging'
     app_config.configure_targets(env.settings)
-    env.hosts = app_config.SERVERS
 
 """
 Deployment
