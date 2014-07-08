@@ -67,20 +67,19 @@
                     {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
                 </header>
                 
-                <div class="first-post col-md-6">
-                <h2>First post</h2>
-                </div><!-- /first-post -->
             </div><!-- /row -->
-            <div class="row">
+            
+            
+            
 
                 <section class="posts-wrapper">
-
+    
                     <div id="posts" class="posts">
+                        <div class="row">
                         <!-- START POSTS -->
                         {block:Posts} 
+                            
                         <article class="post col-md-3">
-
-                            <h4 class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></h4>
 
                             {block:Text}
                                 <a href="{Permalink}" class="permalink">
@@ -98,21 +97,25 @@
 
                                 <div class="post-meta">
 
-                                    <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
+                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
                                 </div>
-
-                            {block:PostNotes}
-                                <div class="post-notes">
-                                    <h3>Notes</h3>
-                                    {PostNotes}
-                                </div>
-                            {/block:PostNotes}
-                        </article>
+                        
+                        
+                            {block:Post1}
+                                </article>
+                                <article class="post col-md-3">
+                                    <h2>after the first post</h2>
+                            {/block:Post1}
+                            </article>
                         {/block:Posts}
+                         </div><!-- /row-->
                         <!-- END POSTS -->
-                    </div>
-                </section> <!-- #post-wrap -->
+                    </div><!-- /#posts-->
 
+                </section> <!-- #post-wrap -->
+                
+                
+                <div class="row">
                 <footer>
                     {block:Pagination}
                         <nav class="pagination">
