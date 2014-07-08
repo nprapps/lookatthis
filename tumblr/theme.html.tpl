@@ -59,23 +59,29 @@
     <body class="index-page">
         <div id="content" class="container">
             <div class="row">
-                <header>
+            
+                <header class="col-md-6">
                     <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
                     <h1><a href="/">Look At This</a></h1>
+                    
+                    {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
                 </header>
+                
+                <div class="first-post col-md-6">
+                <h2>First post</h2>
+                </div><!-- /first-post -->
+            </div><!-- /row -->
+            <div class="row">
 
                 <section class="posts-wrapper">
 
-                    {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
-
                     <div id="posts" class="posts">
                         <!-- START POSTS -->
-                        {block:Posts}
-                        <article class="post">
+                        {block:Posts} 
+                        <article class="post col-md-3">
 
                             <h4 class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></h4>
 
-                            <div class="row">
                             {block:Text}
                                 <a href="{Permalink}" class="permalink">
                                 <h3>{Title}</h3>
@@ -85,7 +91,8 @@
                                 </div>
                             {/block:Text}
                             {block:Photo}
-                                    {LinkOpenTag}<img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/>{LinkCloseTag}
+                            <a href="{Permalink}">
+                                    <img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/></a>
                                     {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
                             {/block:Photo}
 
@@ -93,7 +100,6 @@
 
                                     <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
                                 </div>
-                            </div> <!-- end .row -->
 
                             {block:PostNotes}
                                 <div class="post-notes">
@@ -122,7 +128,7 @@
                         </nav>
                     {/block:Pagination}
                 </footer>
-            </div>
+            </div><!-- /row -->
         </div> <!-- #container -->
 
 
