@@ -73,6 +73,11 @@ def _post_preview(slug):
 
     return render_template('parent.html', **context)
 
+@app.route('/posts_index.json')
+def _posts_index():
+    with open('posts_index.json') as f:
+        return f.read()
+
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
 app.register_blueprint(static_post.post)
