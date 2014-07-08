@@ -68,9 +68,6 @@
                 </header>
                 
             </div><!-- /row -->
-            
-            
-            
 
                 <section class="posts-wrapper">
     
@@ -89,6 +86,7 @@
                                     {Body}
                                 </div>
                             {/block:Text}
+                            
                             {block:Photo}
                             <a href="{Permalink}">
                                     <img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/></a>
@@ -106,6 +104,8 @@
                                 <article class="post col-md-3">
                                     <h2>after the first post</h2>
                             {/block:Post1}
+                            
+                            
                             </article>
                         {/block:Posts}
                          </div><!-- /row-->
@@ -132,6 +132,8 @@
                     {/block:Pagination}
                 </footer>
             </div><!-- /row -->
+            
+            
         </div> <!-- #container -->
 
 
