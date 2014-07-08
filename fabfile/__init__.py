@@ -204,6 +204,15 @@ def new():
     text.update()
 
 @task
+def rename(slug):
+    new_path = '%s/%s' % (app_config.POST_PATH, slug)
+    require('post', provided_by=[post])
+    local('mv %s %s' % (env.static_path, new_path))
+    local('rm data/%s.xlsx' % env.post)
+    post(slug)
+    text.update()
+
+@task
 def tumblr():
     env.static_path = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
