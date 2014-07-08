@@ -39,7 +39,7 @@ def _posts_list():
 
     context['posts_count'] = len(context['posts'])
 
-    return render_template('index.html', **context)
+    return render_template('post_list.html', **context)
 
 @posts.route('/posts/<slug>/')
 def _post(slug):

@@ -44,7 +44,7 @@ def _theme():
     context = make_context()
     context['COPY'] = copytext.Copy(filename='data/theme.xlsx')
 
-    context['JS'] = JavascriptIncluder(asset_depth=0, static_path='tumblr')
-    context['CSS'] = CSSIncluder(asset_depth=0, static_path='tumblr')
+    context['JS'] = JavascriptIncluder(asset_depth=0, static_path='tumblr', absolute=True)
+    context['CSS'] = CSSIncluder(asset_depth=0, static_path='tumblr', absolute=True)
 
     return render_template('theme.html', **context)

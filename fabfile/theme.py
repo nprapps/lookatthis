@@ -6,7 +6,7 @@ Commands that render and copy the theme
 
 from fabric.api import execute, local, task, require
 from fabric.state import env
-import render
+from render import less, copytext_js
 import utils
 
 import app
@@ -14,13 +14,13 @@ import app_config
 import static_theme
 
 @task(default=True)
-def render_theme():
+def render():
     from flask import g
 
     require('static_path', provided_by=['tumblr'])
-    render.less()
+    less()
     app_config_js()
-    render.copytext_js('theme')
+    copytext_js('theme')
 
     compiled_includes = {}
 
@@ -32,7 +32,11 @@ def render_theme():
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
 
-        g.compile_includes = True
+        if env.settings == 'production':
+            g.compile_includes = True
+        else:
+            g.compile_includes = False
+
         g.compiled_includes = compiled_includes
 
         view = static_theme.__dict__['_theme']
@@ -65,6 +69,6 @@ def deploy():
     render()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
     utils._deploy_to_s3('.gzip/tumblr/')
-    local('pbcopy < tumblr/theme.html.tpl')
+    local('pbcopy < tumblr/www/index.html')
     print 'The Tumblr theme HTML has been copied to your clipboard.'
     local('open https://www.tumblr.com/customize/%s' % app_config.TUMBLR_NAME)
