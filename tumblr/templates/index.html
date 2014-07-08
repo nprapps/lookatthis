@@ -2,79 +2,88 @@
 {% block index %}
 {block:IndexPage}
 <body class="index-page">
-    <div id="content" class="container">
-        <div class="row">
-            <header>
-                <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
-                <h1><a href="/">Look At This</a></h1>
-            </header>
+        <div id="content" class="container">
+            <div class="row">
 
-            <section class="posts-wrapper">
+                <header class="col-md-6">
+                    <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
+                    <h1><a href="/">Look At This</a></h1>
 
-                {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
+                    {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
+                </header>
 
-                <div id="posts" class="posts">
-                    <!-- START POSTS -->
-                    {block:Posts}
-                    <article class="post">
+            </div><!-- /row -->
 
-                        <h4 class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></h4>
 
+
+
+                <section class="posts-wrapper">
+
+                    <div id="posts" class="posts">
                         <div class="row">
-                        {block:Text}
-                            <a href="{Permalink}" class="permalink">
-                            <h3>{Title}</h3>
-                            </a>
-                            <div class="text-wrapper">
-                                {Body}
-                            </div>
-                        {/block:Text}
-                        {block:Photo}
-                                {LinkOpenTag}<img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/>{LinkCloseTag}
-                                {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-                        {/block:Photo}
+                        <!-- START POSTS -->
+                        {block:Posts}
 
-                            <div class="post-meta">
+                        <article class="post col-md-3">
 
-                                <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
-                            </div>
-                        </div> <!-- end .row -->
+                            {block:Text}
+                                <a href="{Permalink}" class="permalink">
+                                <h3>{Title}</h3>
+                                </a>
+                                <div class="text-wrapper">
+                                    {Body}
+                                </div>
+                            {/block:Text}
+                            {block:Photo}
+                            <a href="{Permalink}">
+                                    <img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/></a>
+                                    {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
+                            {/block:Photo}
 
-                        {block:PostNotes}
-                            <div class="post-notes">
-                                <h3>Notes</h3>
-                                {PostNotes}
-                            </div>
-                        {/block:PostNotes}
-                    </article>
-                    {/block:Posts}
-                    <!-- END POSTS -->
-                </div>
-            </section> <!-- #post-wrap -->
+                                <div class="post-meta">
 
-            <footer>
-                {block:Pagination}
-                    <nav class="pagination">
-                        <section class="buttons">
-                            {block:PreviousPage}<a href="{PreviousPage}" class="left">{lang:Previous page}<span class="arrow"></span></a>{/block:PreviousPage}
-                            {block:NextPage}<a href="{NextPage}" class="right">{lang:Next page}<span class="arrow"></span></a>{block:NextPage}
-                        </section>
-                        <section class="disabled buttons">
-                            <li class="left"><span class="arrow"></span></li>
-                            <li class="right"><span class="arrow"></span></li>
-                        </section>
-                        <section class="count">Page  {CurrentPage} / {TotalPages}</section>
-                    </nav>
-                {/block:Pagination}
-            </footer>
-        </div>
-    </div> <!-- #container -->
+                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
+                                </div>
+
+
+                            {block:Post1}
+                                </article>
+                                <article class="post col-md-3">
+                                    <h2>after the first post</h2>
+                            {/block:Post1}
+                            </article>
+                        {/block:Posts}
+                         </div><!-- /row-->
+                        <!-- END POSTS -->
+                    </div><!-- /#posts-->
+
+                </section> <!-- #post-wrap -->
+
+
+                <div class="row">
+                <footer>
+                    {block:Pagination}
+                        <nav class="pagination">
+                            <section class="buttons">
+                                {block:PreviousPage}<a href="{PreviousPage}" class="left">{lang:Previous page}<span class="arrow"></span></a>{/block:PreviousPage}
+                                {block:NextPage}<a href="{NextPage}" class="right">{lang:Next page}<span class="arrow"></span></a>{block:NextPage}
+                            </section>
+                            <section class="disabled buttons">
+                                <li class="left"><span class="arrow"></span></li>
+                                <li class="right"><span class="arrow"></span></li>
+                            </section>
+                            <section class="count">Page  {CurrentPage} / {TotalPages}</section>
+                        </nav>
+                    {/block:Pagination}
+                </footer>
+            </div><!-- /row -->
+        </div> <!-- #container -->
 
 
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/pym.js') }}
     {{ JS.push('js/app.js') }}
-    {{ JS.render('js/app-footer.js') }}
+    {{ JS.render('js/app-footer.min.js') }}
 
     <script type="text/javascript">
         var Tumblelog = {};
