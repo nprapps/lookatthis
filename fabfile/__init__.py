@@ -146,7 +146,7 @@ def publish():
     )
 
     response = client.edit_post(
-        'tylertesting',
+        app_config.TUMBLR_NAME,
         id=post_config.ID,
         state='published'
     )
@@ -158,6 +158,23 @@ def publish():
 
     post_config_path = '%s/post_config.py' % env.static_path
     local('sed -i "" \'s|%s|%s|g\' %s' % (post_config.ID, response['id'], post_config_path))
+
+def _delete_tumblr_post():
+    """
+    Delete a post on Tumblr
+    """
+    secrets = app_config.get_secrets()
+    client = pytumblr.TumblrRestClient(
+        secrets.get('TUMBLR_CONSUMER_KEY'),
+        secrets.get('TUMBLR_CONSUMER_SECRET'),
+        secrets.get('TUMBLR_TOKEN'),
+        secrets.get('TUMBLR_TOKEN_SECRET')
+    )
+
+    client.delete_post(
+        app_config.TUMBLR_NAME,
+        env.post_config.ID
+    )
 
 @task
 def deploy(slug=''):
@@ -205,13 +222,22 @@ def new():
 
 @task
 def rename(slug):
-    new_path = '%s/%s' % (app_config.POST_PATH, slug)
     require('post', provided_by=[post])
+
+    new_path = '%s/%s' % (app_config.POST_PATH, slug)
     local('mv %s %s' % (env.static_path, new_path))
     local('rm data/%s.xlsx' % env.post)
     post(slug)
     text.update()
 
+@task
+def delete():
+    require('post', provided_by=[post])
+    require('settings', provided_by=[staging, production])
+
+    _delete_tumblr_post()
+    local('rm -r %s' % env.static_path)
+    local('rm data/%s.xlsx' % env.post)
 @task
 def tumblr():
     env.static_path = 'tumblr'
