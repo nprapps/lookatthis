@@ -177,7 +177,7 @@ def deploy(slug=''):
     update()
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
-    _post_to_tumblr()
+    post_to_tumblr()
     utils._deploy_to_s3('.gzip/posts/%s' % slug)
 
 """

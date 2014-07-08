@@ -5,7 +5,6 @@ Commands for rendering various parts of the app stack.
 """
 
 from glob import glob
-import imp
 import os
 
 from fabric.api import local, require, task
@@ -35,8 +34,7 @@ def post_config_js():
     """
     Render app_config.js to file.
     """
-    from static import _post_config_js
-
+    from static_post import _post_config_js
 
     response = _post_config_js(env.post)
     js = response[0]
