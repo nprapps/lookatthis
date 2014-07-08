@@ -132,8 +132,7 @@ def post_to_tumblr():
             print response
             return
 
-@task
-def publish():
+def _publish_to_tumblr():
     """
     Publish the currently active post
     """
@@ -161,6 +160,7 @@ def publish():
 
     post_config_path = '%s/post_config.py' % env.static_path
     local('sed -i "" \'s|%s|%s|g\' %s' % (post_config.ID, response['id'], post_config_path))
+    local('sed -i "" \'s|%s|%s|g\' %s' % ('IS_PUBLISHED = False', 'IS_PUBLISHED = True', post_config_path))
 
 def _delete_tumblr_post():
     """
@@ -187,16 +187,11 @@ def deploy(slug=''):
     require('settings', provided_by=[production, staging])
     require('post', provided_by=[post])
 
-    slug = env.post
-    if not slug:
-        print 'You must specify a slug in order to deploy.'
-        return
-
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
     post_to_tumblr()
-    utils._deploy_to_s3('.gzip/posts/%s' % slug)
 
 """
 App-specific commands
@@ -233,14 +228,33 @@ def rename(slug):
     post(slug)
     text.update()
 
+    generate_index()
+
+@task
+def publish():
+    require('post', provided_by=[post])
+    require('settings', provided_by=[staging, production])
+
+    update()
+    render.render_all()
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
+    _publish_to_tumblr()
+
+    generate_index()
+
+
 @task
 def delete():
     require('post', provided_by=[post])
     require('settings', provided_by=[staging, production])
 
     _delete_tumblr_post()
+
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.post)
+
+    generate_index()
 
 @task
 def generate_index():
@@ -252,8 +266,13 @@ def generate_index():
         post_metadata = {}
 
         slug = post.split('%s/' % app_config.POST_PATH)[1]
-        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
         post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+
+        if not post_config.IS_PUBLISHED:
+            continue
+
+        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
+
 
         post_metadata['slug'] = slug
         post_metadata['title'] = unicode(copy['content']['project_name'])
