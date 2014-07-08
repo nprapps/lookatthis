@@ -33,7 +33,6 @@ def _posts_list():
     for post in posts:
         name = post.split('%s/' % app_config.POST_PATH)[1]
         context['posts'].append(name)
-        print name
 
     context['posts_count'] = len(context['posts'])
 

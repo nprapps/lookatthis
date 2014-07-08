@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
+from glob import glob
 import imp
+import json
 import os
 
+import copytext
 from fabric.api import local, require, settings, task
 from fabric.state import env
 import pytumblr
@@ -238,6 +241,33 @@ def delete():
     _delete_tumblr_post()
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.post)
+
+@task
+def generate_index():
+    require('settings', provided_by=[staging, production])
+
+    output = []
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for post in posts:
+        post_metadata = {}
+
+        slug = post.split('%s/' % app_config.POST_PATH)[1]
+        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
+        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+
+        post_metadata['slug'] = slug
+        post_metadata['title'] = unicode(copy['content']['project_name'])
+        post_metadata['image'] = post_config.PROMO_PHOTO
+        post_metadata['url'] = 'http://www.tumblr.com/post/%s/%s' % (post_config.ID, slug)
+
+        output.append(post_metadata)
+
+    with open('posts_index.json', 'w') as f:
+        json.dump(output, f)
+
+        for bucket in app_config.S3_BUCKETS:
+            local('aws s3 cp posts_index.json s3://%s/%s/posts_index.json --acl "public-read" --cache-control "max-age=5" --region "us-east-1"' % (bucket, app_config.PROJECT_SLUG))
+
 @task
 def tumblr():
     env.static_path = 'tumblr'
