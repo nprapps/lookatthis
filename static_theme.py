@@ -1,15 +1,10 @@
 #!/usr/bin/env python
 
 import json
-from mimetypes import guess_type
 
-from flask import abort
-
-import app_config
 import copytext
-import envoy
 from flask import Blueprint, render_template
-from render_utils import flatten_app_config, flatten_post_config
+from render_utils import flatten_app_config
 from render_utils import make_context, CSSIncluder, JavascriptIncluder
 import static
 

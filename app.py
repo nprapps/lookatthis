@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import json
-
 import argparse
 import copytext
 from glob import glob
@@ -10,7 +8,7 @@ import imp
 from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
-from render_utils import make_context, smarty_filter, urlencode_filter, Includer, CSSIncluder, JavascriptIncluder
+from render_utils import make_context, smarty_filter, urlencode_filter, CSSIncluder, JavascriptIncluder
 import static
 import static_post
 import static_theme

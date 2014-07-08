@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 
-import json
 from mimetypes import guess_type
 
 from flask import abort
 
-import app_config
 import copytext
 import envoy
 from flask import Blueprint
-from render_utils import flatten_app_config, flatten_post_config
 
 static = Blueprint('static', __name__)
 
