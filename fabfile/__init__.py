@@ -145,11 +145,19 @@ def publish():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
-    client.edit_post(
+    response = client.edit_post(
         'tylertesting',
         id=post_config.ID,
         state='published'
     )
+
+    if 'id' not in response:
+        print 'Error publishing tumblr post'
+        print response
+        return
+
+    post_config_path = '%s/post_config.py' % env.static_path
+    local('sed -i "" \'s|%s|%s|g\' %s' % (post_config.ID, response['id'], post_config_path))
 
 @task
 def deploy(slug=''):
