@@ -23,7 +23,6 @@ PROJECT_FILENAME = 'lookatthis'
 # The name of the repository containing the source
 REPOSITORY_NAME = 'lookatthis'
 REPOSITORY_URL = 'git@github.com:nprapps/%s.git' % REPOSITORY_NAME
-REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
 
 # Project name used for assets rig
 # Should stay the same, even if PROJECT_SLUG changes
@@ -37,9 +36,6 @@ DEPLOYMENT
 PRODUCTION_S3_BUCKETS = ['apps.npr.org', 'apps2.npr.org']
 STAGING_S3_BUCKETS = ['stage-apps.npr.org']
 ASSETS_S3_BUCKET = 'assets.apps.npr.org'
-
-PRODUCTION_SERVERS = ['cron.nprapps.org']
-STAGING_SERVERS = ['50.112.92.131']
 
 # These variables will be set at runtime. See configure_targets() below
 S3_BUCKETS = []
@@ -114,7 +110,6 @@ def configure_targets(deployment_target):
     global DISQUS_SHORTNAME
     global TUMBLR_NAME
 
-
     if deployment_target == 'production':
         S3_BUCKETS = PRODUCTION_S3_BUCKETS
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
@@ -134,7 +129,6 @@ def configure_targets(deployment_target):
         DEBUG = True
         APP_LOG_PATH = '/tmp/%s.app.log' % PROJECT_SLUG
         TUMBLR_NAME = 'stage-lookatthis'
-
 
     DEPLOYMENT_TARGET = deployment_target
 
