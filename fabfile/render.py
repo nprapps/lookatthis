@@ -30,20 +30,6 @@ def less():
             print 'It looks like "lessc" isn\'t installed. Try running: "npm install"'
             raise
 
-
-@task
-def app_config_js():
-    """
-    Render app_config.js to file.
-    """
-    from static import _app_config_js
-
-    response = _app_config_js()
-    js = response[0]
-
-    with open('www/js/app_config.js', 'w') as f:
-        f.write(js)
-
 @task
 def post_config_js():
     """
@@ -59,13 +45,13 @@ def post_config_js():
         f.write(js)
 
 @task
-def copytext_js():
+def copytext_js(slug):
     """
     Render COPY to copy.js.
     """
-    from static import _copy_js
+    from static import copy_js
 
-    response = _copy_js(env.post)
+    response = copy_js(slug)
     js = response[0]
 
     with open('%s/www/js/copy.js' % env.static_path, 'w') as f:
@@ -82,7 +68,7 @@ def render_all():
 
     less()
     post_config_js()
-    copytext_js()
+    copytext_js(env.post)
 
     compiled_includes = {}
 

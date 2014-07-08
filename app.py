@@ -11,9 +11,9 @@ from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
 from render_utils import make_context, smarty_filter, urlencode_filter, Includer, CSSIncluder, JavascriptIncluder
-import post
 import static
-import theme
+import static_post
+import static_theme
 
 app = Flask(__name__)
 
@@ -52,8 +52,8 @@ def _post(slug):
     context['slug'] = slug
     context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
 
-    context['JS'] = JavascriptIncluder(asset_depth=2, slug=slug)
-    context['CSS'] = CSSIncluder(asset_depth=2, slug=slug)
+    context['JS'] = JavascriptIncluder(asset_depth=2, static_path=post_path)
+    context['CSS'] = CSSIncluder(asset_depth=2, static_path=post_path)
 
     try:
         post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
@@ -78,8 +78,8 @@ def _post_preview(slug):
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
-app.register_blueprint(post.post)
-app.register_blueprint(theme.theme)
+app.register_blueprint(static_post.post)
+app.register_blueprint(static_theme.theme)
 
 # Boilerplate
 if __name__ == '__main__':

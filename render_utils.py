@@ -20,11 +20,11 @@ class Includer(object):
 
     See `make_context` for an explanation of `asset_depth`.
     """
-    def __init__(self, asset_depth=0, slug=''):
+    def __init__(self, asset_depth=0, static_path=''):
         self.includes = []
         self.tag_string = None
         self.asset_depth = asset_depth
-        self.slug = slug
+        self.static_path = static_path
 
     def push(self, path):
         self.includes.append(path)
@@ -55,12 +55,12 @@ class Includer(object):
                 timestamp_path = '%s.%i.%s' % (front, timestamp, back)
 
                 # Delete old rendered versions, just to be tidy
-                old_versions = glob.glob('posts/%s/www/%s.*.%s' % (self.slug, front, back))
+                old_versions = glob.glob('%s/www/%s.*.%s' % (self.static_path, front, back))
 
                 for f in old_versions:
                     os.remove(f)
 
-            out_path = 'posts/%s/www/%s' % (self.slug, timestamp_path)
+            out_path = '%s/www/%s' % (self.static_path, timestamp_path)
 
             if path not in g.compiled_includes:
                 print 'Rendering %s' % out_path
@@ -101,7 +101,7 @@ class JavascriptIncluder(Includer):
         for src in self.includes:
             src_paths.append('www/%s' % src)
 
-            with open('posts/%s/www/%s' % (self.slug, src)) as f:
+            with open('%s/www/%s' % (self.static_path, src)) as f:
                 print '- compressing %s' % src
                 output.append(minify(f.read().encode('utf-8')))
 
@@ -136,7 +136,7 @@ class CSSIncluder(Includer):
             else:
                 src_paths.append('www/%s' % src)
 
-            with open('posts/%s/www/%s' % (self.slug, src)) as f:
+            with open('%s/www/%s' % (self.static_path, src)) as f:
                 print '- compressing %s' % src
                 output.append(cssmin(f.read().encode('utf-8')))
 

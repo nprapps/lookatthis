@@ -159,7 +159,7 @@ def configure_targets(deployment_target):
         TUMBLR_NAME = 'nprlookatthis'
     elif deployment_target == 'staging':
         S3_BUCKETS = STAGING_S3_BUCKETS
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        S3_BASE_URL = 'http://127.0.0.1:8000'
         SERVERS = STAGING_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'nprviz-test'
