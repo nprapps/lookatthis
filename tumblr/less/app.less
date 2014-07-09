@@ -10,8 +10,70 @@ h1,h2,h3,h4,h5,h6 {
 	margin-top: 0;
 }
 
+.container-fluid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 @grid-gutter-width;
+}
+
 #post {
 	margin-bottom: 75px;
+}
+
+#posts {
+    padding-top: @grid-gutter-width;
+
+    header,
+    .post {
+        .make-md-column(4);
+    }
+
+    header + .post {
+        .make-md-column(8);
+    }
+
+    .header-wrapper {
+        padding-bottom: 137.922%;
+        position: relative;
+        margin-bottom: @grid-gutter-width;
+
+        .header-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: @brand-primary;
+            padding: @grid-gutter-width / 2;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
+
+    .post-wrapper {
+        position: relative;
+        padding-bottom: 66.66666%;
+        margin-bottom: @grid-gutter-width;
+
+        a {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .caption,
+        .post-meta {
+            display: none;
+        }
+    }
 }
 
 #main-menu {

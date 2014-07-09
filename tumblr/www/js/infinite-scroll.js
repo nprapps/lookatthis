@@ -129,10 +129,11 @@ Tumblelog.Infinite = (function() {
         // Fetch
         _Ajax(_url, function(data) {
             var new_posts_html = data.split('<!-- START' + ' POSTS -->')[1].split('<!-- END' + ' POSTS -->')[0];
+            var $new_posts_html = $(new_posts_html).filter('.post');
             var $new_posts = $('#posts', data);
             var new_post_div = '.page' + _current_page;
             // Insert posts and update counters
-            $('#posts').append('<div class="page' + _current_page + '">' + new_posts_html + '</div>');
+            $('#posts .row').append('<div class="page' + _current_page + '"></div>').append($new_posts_html);
 
             _posts_loaded = $new_posts.find('article.post').length;
 
