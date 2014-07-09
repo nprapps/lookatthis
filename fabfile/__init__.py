@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import datetime
 from glob import glob
 import imp
 import json
@@ -199,7 +200,23 @@ App-specific commands
 
 @task
 def post(slug):
-    env.post = slug
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for folder in posts:
+        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
+        if len(folder_name.split('-')) > 2:
+            folder_slug = folder_name.split('-')[3]
+        else:
+            folder_slug = folder_name
+
+        if slug == folder_slug:
+            env.post = folder_name
+            break
+        else:
+            utils.confirm('This post does not exist. Do you want to create a new post called %s?' % slug)
+            _new(slug)
+            return
+
+    env.slug = slug
     env.static_path = '%s/%s' % (app_config.POST_PATH, env.post)
 
     if os.path.exists ('%s/post_config.py' % env.static_path):
@@ -209,20 +226,36 @@ def post(slug):
         env.post_config = None
         env.copytext_key = None
 
-    env.copytext_slug = slug
+    env.copytext_slug = env.post
 
-@task
-def new():
-    require('post', provided_by=[post])
-    local('cp -r new_post %s' % env.static_path)
-    post(env.post)
-    text.update()
+def _new(slug):
+    require
+
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for folder in posts:
+        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
+        if len(folder_name.split('-')) > 2:
+            folder_slug = folder_name.split('-')[3]
+        else:
+            folder_slug = folder_name
+
+        today = datetime.date.today()
+
+        local('cp -r new_post %s/%s-%s' % (app_config.POST_PATH, today, slug))
+        post(slug)
+        text.update()
+
+        break
 
 @task
 def rename(slug):
     require('post', provided_by=[post])
+    require('settings', provided_by=[staging, production])
 
-    new_path = '%s/%s' % (app_config.POST_PATH, slug)
+    today = datetime.date.today()
+    timestamp_path = '%s-%s' % (today, slug)
+
+    new_path = '%s/%s' % (app_config.POST_PATH, timestamp_path)
     local('mv %s %s' % (env.static_path, new_path))
     local('rm data/%s.xlsx' % env.post)
     post(slug)
