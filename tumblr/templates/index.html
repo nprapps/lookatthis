@@ -2,64 +2,64 @@
 {% block index %}
 {block:IndexPage}
 <body class="index-page">
-        <div id="content" class="container">
-            <div class="row">
-            
-                <header class="col-md-6">
-                    <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
-                    <h1><a href="/">Look At This</a></h1>
-                    
-                    {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
-                </header>
-                
-            </div><!-- /row -->
-
+        <div id="content" class="container-fluid">
                 <section class="posts-wrapper">
-    
+
                     <div id="posts" class="posts">
                         <div class="row">
                         <!-- START POSTS -->
-                        {block:Posts} 
-                            
-                        <article class="post col-md-3">
+                        {block:Posts}
 
-                            {block:Text}
-                                <a href="{Permalink}" class="permalink">
-                                <h3>{Title}</h3>
-                                </a>
-                                <div class="text-wrapper">
-                                    {Body}
-                                </div>
-                            {/block:Text}
-                            
-                            {block:Photo}
-                            <a href="{Permalink}">
-                                    <img src="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/></a>
-                                    {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-                            {/block:Photo}
-
-                                <div class="post-meta">
-
-                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
-                                </div>
-                        
-                        
                             {block:Post1}
-                            </article>
-                            <article class="col-md-3">
-                                <h2>after the first post</h2>
+                            <header>
+                                <div class="header-wrapper">
+                                    <div class="header-content">
+                                        <h2 class="npr"><a href="http://npr.org"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif" alt="NPR" /></a></h2>
+                                        <h1><a href="/">Look At This</a></h1>
+                                    </div>
+                                </div>
+
+                                {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
+                            </header>
                             {/block:Post1}
-                            
-                            
+
+                            <article class="post">
+
+                                <div class="post-wrapper">
+
+                                    {block:Text}
+                                    <a href="{Permalink}" class="permalink">
+                                        <h3>{Title}</h3>
+                                    </a>
+                                    <div class="text-wrapper">
+                                        {Body}
+                                    </div>
+                                    {/block:Text}
+
+                                    {block:Photo}
+                                    <a href="{Permalink}">
+                                        <img src="{PhotoURL-500}" data-highres-image="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/>
+                                    </a>
+                                    {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
+                                    {/block:Photo}
+
+                                    <div class="post-meta">
+
+                                        <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
+                                    </div>
+
+                                </div>
+
                             </article>
+
                         {/block:Posts}
-                         </div><!-- /row-->
                         <!-- END POSTS -->
+                         </div><!-- /row-->
                     </div><!-- /#posts-->
 
                 </section> <!-- #post-wrap -->
-                
-                
+
+
                 <div class="row">
                 <footer>
                     {block:Pagination}
