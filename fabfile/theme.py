@@ -45,6 +45,10 @@ def render():
     with open(path, 'w') as f:
         f.write(content.encode('utf-8'))
 
+    local('pbcopy < tumblr/www/index.html')
+    print 'The Tumblr theme HTML has been copied to your clipboard.'
+    local('open https://www.tumblr.com/customize/%s' % app_config.TUMBLR_NAME)
+
 def app_config_js():
     """
     Render app_config.js to file.
@@ -69,6 +73,3 @@ def deploy():
     render()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
     utils._deploy_to_s3('.gzip/tumblr/')
-    local('pbcopy < tumblr/www/index.html')
-    print 'The Tumblr theme HTML has been copied to your clipboard.'
-    local('open https://www.tumblr.com/customize/%s' % app_config.TUMBLR_NAME)
