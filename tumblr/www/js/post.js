@@ -14,19 +14,34 @@ var onDocumentLoad = function(e) {
     $window = $(window);
     $document = $(document);
 
-    $.getJSON(APP_CONFIG.S3_BASE_URL+'/posts_index.json', function(data) {
-        for (var i=0; i<data.length; i++) {
-            var post=data[i];
-            if (post.slug==slug){
+    pymParent = new pym.Parent('post', 'http://localhost:8000/posts/' + slug + '/', {});
+
+    pymParent.on('handshake', getIndex);
+}
+
+var getIndex = function() {
+    $.getJSON(APP_CONFIG.S3_BASE_URL + '/posts_index.json', function(data) {
+        var next_post = null;
+        var post_index = null;
+        for (var i = 0; i < data.length; i++) {
+            var post = data[i];
+            if (post.slug == slug) {
+                post_index = i;
                 break;
             }
         }
 
+        var data = {
+            next_post: null
+        }
 
-    })
+        if (post_index !== null && post_index < data.length - 1) {
+            next_post = data[post_index + 1];
+        }
 
-    // pymParent = new pym.Parent('post', 'http://localhost:8000/posts/test/', {});
-    pymParent = new pym.Parent('post', 'http://localhost:8000/posts/' + slug + '/', {});
-}
+        pymParent.sendMessageToChild('post', JSON.stringify(data));
+
+    });
+};
 
 $(onDocumentLoad);
