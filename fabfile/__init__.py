@@ -277,7 +277,7 @@ def generate_index():
         post_metadata['slug'] = slug
         post_metadata['title'] = unicode(copy['content']['project_name'])
         post_metadata['image'] = post_config.PROMO_PHOTO
-        post_metadata['url'] = 'http://www.tumblr.com/post/%s/%s' % (post_config.ID, slug)
+        post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (app_config.TUMBLR_NAME, post_config.ID, slug)
 
         output.append(post_metadata)
 

@@ -21,6 +21,7 @@ var onDocumentLoad = function(e) {
 
 var getIndex = function() {
     $.getJSON(APP_CONFIG.S3_BASE_URL + '/posts_index.json', function(data) {
+        console.log(data);
         var next_post = null;
         var post_index = null;
         for (var i = 0; i < data.length; i++) {
@@ -31,15 +32,15 @@ var getIndex = function() {
             }
         }
 
-        var data = {
+        var post_data = {
             next_post: null
         }
 
-        if (post_index !== null && post_index < data.length - 1) {
-            next_post = data[post_index + 1];
+        if (post_index !== null && post_index !== data.length - 1) {
+            post_data['next_post'] = data[post_index + 1];
         }
 
-        pymParent.sendMessageToChild('post', JSON.stringify(data));
+        pymParent.sendMessageToChild('post', JSON.stringify(post_data));
 
     });
 };
