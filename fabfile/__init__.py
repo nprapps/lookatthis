@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
+from glob import glob
 import imp
+import json
 import os
 
+import copytext
 from fabric.api import local, require, settings, task
 from fabric.state import env
 import pytumblr
@@ -129,8 +132,7 @@ def post_to_tumblr():
             print response
             return
 
-@task
-def publish():
+def _publish_to_tumblr():
     """
     Publish the currently active post
     """
@@ -158,6 +160,7 @@ def publish():
 
     post_config_path = '%s/post_config.py' % env.static_path
     local('sed -i "" \'s|%s|%s|g\' %s' % (post_config.ID, response['id'], post_config_path))
+    local('sed -i "" \'s|%s|%s|g\' %s' % ('IS_PUBLISHED = False', 'IS_PUBLISHED = True', post_config_path))
 
 def _delete_tumblr_post():
     """
@@ -184,16 +187,11 @@ def deploy(slug=''):
     require('settings', provided_by=[production, staging])
     require('post', provided_by=[post])
 
-    slug = env.post
-    if not slug:
-        print 'You must specify a slug in order to deploy.'
-        return
-
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % slug)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
     post_to_tumblr()
-    utils._deploy_to_s3('.gzip/posts/%s' % slug)
 
 """
 App-specific commands
@@ -230,14 +228,65 @@ def rename(slug):
     post(slug)
     text.update()
 
+    generate_index()
+
+@task
+def publish():
+    require('post', provided_by=[post])
+    require('settings', provided_by=[staging, production])
+
+    update()
+    render.render_all()
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
+    _publish_to_tumblr()
+
+    generate_index()
+
+
 @task
 def delete():
     require('post', provided_by=[post])
     require('settings', provided_by=[staging, production])
 
     _delete_tumblr_post()
+
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.post)
+
+    generate_index()
+
+@task
+def generate_index():
+    require('settings', provided_by=[staging, production])
+
+    output = []
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for post in posts:
+        post_metadata = {}
+
+        slug = post.split('%s/' % app_config.POST_PATH)[1]
+        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+
+        if not post_config.IS_PUBLISHED:
+            continue
+
+        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
+
+
+        post_metadata['slug'] = slug
+        post_metadata['title'] = unicode(copy['content']['project_name'])
+        post_metadata['image'] = post_config.PROMO_PHOTO
+        post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (app_config.TUMBLR_NAME, post_config.ID, slug)
+
+        output.append(post_metadata)
+
+    with open('posts_index.json', 'w') as f:
+        json.dump(output, f)
+
+        for bucket in app_config.S3_BUCKETS:
+            local('aws s3 cp posts_index.json s3://%s/%s/posts_index.json --acl "public-read" --cache-control "max-age=5" --region "us-east-1"' % (bucket, app_config.PROJECT_SLUG))
+
 @task
 def tumblr():
     env.static_path = 'tumblr'

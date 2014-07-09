@@ -1,71 +1,43 @@
-// Global jQuery references
-var $shareModal = null;
-var $commentCount = null;
-
 // Global state
-var firstShareLoad = true;
 var pymChild = null;
+var $reblog = null;
+var $like = null;
+var $share = null;
+var $notes = null;
+var $nextPostTitle = null;
+var $nextPostImage = null;
+var $nextPostURL = null;
 
 /*
  * Run on page load.
  */
 var onDocumentLoad = function(e) {
-    // Cache jQuery references
-    $shareModal = $('#share-modal');
-    $commentCount = $('.comment-count');
 
-    // Bind events
-    $shareModal.on('shown.bs.modal', onShareModalShown);
-    $shareModal.on('hidden.bs.modal', onShareModalHidden);
-
-    renderExampleTemplate();
-    getCommentCount(showCommentCount);
+    $reblog = $('.reblog');
+    $like = $('.like');
+    $share = $('.share');
+    $notes = $('.notes');
+    $nextPostTitle = $('.next-post-title');
+    $nextPostImage = $('.next-post-image');
+    $nextPostURL = $('.next-post-url');
 
     pymChild = new pym.Child();
-}
 
-/*
- * Display the comment count.
- */
-var showCommentCount = function(count) {
-    $commentCount.text(count);
+    pymChild.on('post', onParentPost);
+    pymChild.sendMessageToParent('handshake', 'b');
+};
 
-    if (count > 0) {
-        $commentCount.addClass('has-comments');
-    }
+var onParentPost = function(data) {
+    data = JSON.parse(data);
 
-    if (count > 1) {
-        $commentCount.next('.comment-label').text('Comments');
-    }
-}
+    var nextPost = data.next_post;
 
-/*
- * Share modal opened.
- */
-var onShareModalShown = function(e) {
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'open-share-discuss']);
+    console.log(data);
 
-    if (firstShareLoad) {
-        loadComments();
+    $nextPostTitle.text(nextPost.title);
+    $nextPostImage.attr('src', nextPost.image);
+    $nextPostURL.attr('href', nextPost.url);
 
-        firstShareLoad = false;
-    }
-}
-
-/*
- * Share modal closed.
- */
-var onShareModalHidden = function(e) {
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'close-share-discuss']);
-}
-
-/*
- * Text copied to clipboard.
- */
-var onClippyCopy = function(e) {
-    alert('Copied to your clipboard!');
-
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'summary-copied']);
 }
 
 $(onDocumentLoad);

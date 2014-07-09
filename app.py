@@ -33,7 +33,6 @@ def _posts_list():
     for post in posts:
         name = post.split('%s/' % app_config.POST_PATH)[1]
         context['posts'].append(name)
-        print name
 
     context['posts_count'] = len(context['posts'])
 
@@ -73,6 +72,11 @@ def _post_preview(slug):
     context['slug'] = slug
 
     return render_template('parent.html', **context)
+
+@app.route('/posts_index.json')
+def _posts_index():
+    with open('posts_index.json') as f:
+        return f.read()
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
