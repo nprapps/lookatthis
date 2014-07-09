@@ -160,7 +160,7 @@ Visit [localhost:8000](http://localhost:8000) in your browser.
 Starting a new post
 -------------------
 
-* `fab post:$SLUG new`: This function will create a new post and place it in the `posts` folder.
+* `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
 * Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``. 
 
 Publishing a post
