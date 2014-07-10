@@ -1,8 +1,4 @@
 // Global state
-var $reblog = null;
-var $like = null;
-var $share = null;
-var $notes = null;
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
@@ -543,6 +539,17 @@ var loadSectionNavImages = function() {
     });
 }
 
+var receiveMessage = function(e) {
+    var head = e.data.substr(0, 5);
+    var tail = e.data.substr(5, e.data.length);
+    if (head == 'post-') {
+        var post = JSON.parse(tail);
+
+        $nextPostTitle.text(post.title);
+        $nextPostImage.attr('src', post.image);
+        $nextPostURL.attr('href', post.url);
+    }
+}
 $(document).ready(function() {
     $slides = $('.slide');
     $playVideo = $('.btn-video');
@@ -558,10 +565,6 @@ $(document).ready(function() {
     $titleCardButton = $('.btn-play');
     $arrows = $('.controlArrow');
     $closeNavButton = $nav.find('.back');
-    $reblog = $('.reblog');
-    $like = $('.like');
-    $share = $('.share');
-    $notes = $('.notes');
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
@@ -603,4 +606,8 @@ $(document).ready(function() {
     $(document).keydown(onDocumentKeyDown);
 
     loadSectionNavImages();
+
+    window.addEventListener('message', receiveMessage, false);
+
+    window.top.postMessage('handshake', '*');
 });
