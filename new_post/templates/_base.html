@@ -39,11 +39,11 @@
     {% endblock content %}
     {% block wide_content %}
     {% endblock wide_content %}
+    {% include "%s/templates/_share_modal.html" % slug %}
+
     {% endblock outer_content %}
 
-    {% block comments %}
-    <!-- <div id="comments" class="comments-container comments-panel"></div> -->
-    {% endblock %}
+
 
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/jquery.fullpage.js') }}

@@ -19,6 +19,7 @@ def _post_less(slug, filename):
 
 @post.route('/<string:slug>/js/post_config.js')
 def _post_config_js(slug):
+    print slug
     folder_name = _get_folder_for_slug(slug)
     
     config = flatten_post_config(folder_name)

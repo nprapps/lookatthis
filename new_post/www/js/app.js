@@ -95,7 +95,7 @@ var setUpFullPage = function() {
         anchors: anchors,
         menu: '.nav',
         verticalCentered: false,
-        fixedElements: '.primary-navigation, .nav',
+        fixedElements: '.primary-navigation, .nav, #share-modal',
         resize: false,
         css3: true,
         loopHorizontal: false,

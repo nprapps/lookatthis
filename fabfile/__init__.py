@@ -51,6 +51,14 @@ def staging():
     env.settings = 'staging'
     app_config.configure_targets(env.settings)
 
+@task
+def development():
+    """
+    Run as though on development.
+    """
+    env.settings = 'development'
+    app_config.configure_targets(env.settings)
+
 """
 Deployment
 
@@ -188,7 +196,7 @@ def deploy(slug=''):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
-    require('settings', provided_by=[production, staging])
+    require('settings', provided_by=[development, staging, production])
     require('folder_name', provided_by=[post])
 
     update()
@@ -264,7 +272,7 @@ def rename(slug, check_exists=True):
 @task
 def publish():
     require('folder_name', provided_by=[post])
-    require('settings', provided_by=[staging, production])
+    require('settings', provided_by=[development, staging, production])
 
     # update the timestamp in slug
     rename(env.slug, False)
@@ -281,7 +289,7 @@ def publish():
 @task
 def delete():
     require('folder_name', provided_by=[post])
-    require('settings', provided_by=[staging, production])
+    require('settings', provided_by=[development, staging, production])
 
     _delete_tumblr_post()
 

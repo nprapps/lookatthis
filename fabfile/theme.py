@@ -32,7 +32,7 @@ def render():
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
 
-        if env.settings == 'production':
+        if env.settings == 'production' or 'staging':
             g.compile_includes = True
         else:
             g.compile_includes = False

@@ -66,6 +66,11 @@ def _deploy_to_s3(path='.gzip'):
             app_config.PROJECT_SLUG
         )))
 def _get_folder_for_slug(slug):
+    regex = re.compile('^\d+-\d+-\d+-(.*)$')
+
+    if regex.match(slug):
+        return slug
+
     posts = glob('%s/*' % app_config.POST_PATH)
 
     for folder in posts:
