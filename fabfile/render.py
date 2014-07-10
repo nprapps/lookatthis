@@ -36,20 +36,20 @@ def post_config_js():
     """
     from static_post import _post_config_js
 
-    response = _post_config_js(env.folder_name)
+    response = _post_config_js(env.slug)
     js = response[0]
 
     with open('%s/www/js/post_config.js' % env.static_path, 'w') as f:
         f.write(js)
 
 @task
-def copytext_js(slug):
+def copytext_js(folder_name):
     """
     Render COPY to copy.js.
     """
     from static import copy_js
 
-    response = copy_js(slug)
+    response = copy_js(folder_name)
     js = response[0]
 
     with open('%s/www/js/copy.js' % env.static_path, 'w') as f:
@@ -82,7 +82,7 @@ def render_all():
         g.compiled_includes = compiled_includes
 
         view = app.__dict__['_post']
-        content = view(env.folder_name)
+        content = view(env.slug)
 
     with open(path, 'w') as f:
         f.write(content.encode('utf-8'))

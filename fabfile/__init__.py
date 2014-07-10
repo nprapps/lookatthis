@@ -84,18 +84,21 @@ def post_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+
     # if the post has a no ID, create the new post.
     if env.post_config.ID == '$NEW_POST_ID':
         params = {
             'state': 'draft',
             'format' : 'html',
-            'source' : env.post_config.PROMO_PHOTO,
-            'caption' : env.post_config.CAPTION,
+            'source' : unicode(COPY['tumblr']['promo_photo']),
+            'caption' : unicode(COPY['tumblr']['caption']),
             'slug' : env.folder_name
         }
 
+
         if env.post_config.TAGS:
-            params['tags'] = env.post_config.TAGS
+            params['tags'] = unicode(COPY['tumblr']['tags']).split(',')
 
         response = client.create_photo(
             app_config.TUMBLR_NAME,
@@ -117,13 +120,13 @@ def post_to_tumblr():
             'id' : env.post_config.ID,
             'type' :'photo',
             'format' : 'html',
-            'source' : env.post_config.PROMO_PHOTO,
-            'caption' : env.post_config.CAPTION,
+            'source' : unicode(COPY['tumblr']['promo_photo']),
+            'caption' : unicode(COPY['tumblr']['caption']),
             'slug' : env.folder_name
         }
 
         if env.post_config.TAGS:
-            params['tags'] = env.post_config.TAGS
+            params['tags'] = unicode(COPY['tumblr']['tags']).split(',')
 
         response = client.edit_post(
             app_config.TUMBLR_NAME,
