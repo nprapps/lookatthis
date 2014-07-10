@@ -9,6 +9,7 @@ import os
 import copytext
 from fabric.api import local, require, settings, task
 from fabric.state import env
+from jinja2 import Template
 import pytumblr
 
 import app_config
@@ -93,6 +94,10 @@ def post_to_tumblr():
     )
 
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+    
+    with open('%s/templates/caption.html' % env.static_path) as f:
+        template = Template(f.read())
+    caption = template.render(COPY=COPY)
 
     # if the post has a no ID, create the new post.
     if env.post_config.ID == '$NEW_POST_ID':
@@ -100,7 +105,7 @@ def post_to_tumblr():
             'state': 'draft',
             'format' : 'html',
             'source' : unicode(COPY['tumblr']['promo_photo']),
-            'caption' : unicode(COPY['tumblr']['caption']),
+            'caption' : caption,
             'slug' : env.folder_name
         }
 
@@ -129,7 +134,7 @@ def post_to_tumblr():
             'type' :'photo',
             'format' : 'html',
             'source' : unicode(COPY['tumblr']['promo_photo']),
-            'caption' : unicode(COPY['tumblr']['caption']),
+            'caption' : caption,
             'slug' : env.folder_name
         }
 
