@@ -1,5 +1,4 @@
 // Global state
-var pymChild = null;
 var $reblog = null;
 var $like = null;
 var $share = null;
@@ -7,23 +6,68 @@ var $notes = null;
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
+var NAV_HEIGHT = 75;
+var EVENT_CATEGORY = 'Borderland';
 
 var $w;
 var $h;
 var $slides;
+var $components;
+var $portraits;
+var $video;
+var $primaryNav;
+var $navButton;
+var $nav;
+var $navItems;
+var $secondaryNav;
+var $arrows;
+var $sectionNav;
+var $closeNavButton;
+var currentSection = '_'
+var currentSectionIndex = 0;
+var anchors;
+var mobileSuffix;
+var player;
+var isTouch = Modernizr.touch;
+var isIPhone = false;
+var active_counter = null;
+var begin = moment();
+var aspectWidth = 16;
+var aspectHeight = 9;
+var optimalWidth;
+var optimalHeight;
+var w;
+var h;
+var $jplayer = null;
+var hasTrackedKeyboardNav = false;
+var hasTrackedSlideNav = false;
+var hasTrackedSectionNav = false;
+var slideStartTime = moment();
 
-var onParentPost = function(data) {
-    data = JSON.parse(data);
+var onTitleCardButtonClick = function() {
+    $.fn.fullpage.moveSlideRight();
 
-    var nextPost = data.next_post;
-
-    console.log(data);
-
-    $nextPostTitle.text(nextPost.title);
-    $nextPostImage.attr('src', nextPost.image);
-    $nextPostURL.attr('href', nextPost.url);
-
+    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
 }
+
+var resize = function() {
+
+    $w = $(window).width();
+    $h = $(window).height();
+
+    $slides.width($w);
+
+    optimalWidth = ($h * aspectWidth) / aspectHeight;
+    optimalHeight = ($w * aspectHeight) / aspectWidth;
+
+    w = $w;
+    h = optimalHeight;
+
+    if (optimalWidth > $w) {
+        w = optimalWidth;
+        h = $h;
+    }
+};
 
 var setUpFullPage = function() {
     anchors = [];
@@ -65,24 +109,6 @@ var setUpFullPage = function() {
     });
 };
 
-var resize = function() {
-
-    $w = $(window).width();
-    $h = $(window).height();
-
-    $slides.width($w);
-
-    optimalWidth = ($h * aspectWidth) / aspectHeight;
-    optimalHeight = ($w * aspectHeight) / aspectWidth;
-
-    w = $w;
-    h = optimalHeight;
-
-    if (optimalWidth > $w) {
-        w = optimalWidth;
-        h = $h;
-    }
-};
 
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
@@ -94,10 +120,12 @@ var onPageLoad = function() {
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
 
+    showNavigation();
+
     slideStartTime = moment();
 
     if ($slides.last().hasClass('active')) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
+        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
     }
 };
 
@@ -176,6 +204,72 @@ var getBackgroundImage = function(container) {
      }
 };
 
+var showNavigation = function() {
+    /*
+    * Nav doesn't exist by default.
+    * This function loads it up.
+    */
+
+    if ($slides.first().hasClass('active')) {
+        /*
+        * Title card gets no arrows and no nav.
+        */
+        $arrows.removeClass('active');
+        $arrows.css({
+            'opacity': 0,
+            'display': 'none'
+        });
+        $primaryNav.css('opacity', '0');
+    } else if ($slides.last().hasClass('active')) {
+        /*
+        * Last card gets no next arrow but does have the nav.
+        */
+        if (!$arrows.hasClass('active')) {
+            animateArrows();
+        }
+
+        var $nextArrow = $arrows.filter('.next');
+
+        $nextArrow.removeClass('active');
+        $nextArrow.css({
+            'opacity': 0,
+            'display': 'none'
+        });
+
+        $primaryNav.css('opacity', '1');
+    } else {
+        /*
+        * All of the other cards? Arrows and navs.
+        */
+        if ($arrows.filter('active').length != $arrows.length) {
+            animateArrows();
+        }
+
+        $primaryNav.css('opacity', '1');
+    }
+}
+
+var animateArrows = function() {
+    /*
+    * Everything looks better faded. Hair; jeans; arrows.
+    */
+    $arrows.addClass('active');
+
+    if ($arrows.hasClass('active')) {
+        $arrows.css('display', 'block');
+        var fade = _.debounce(fadeInArrows, 1);
+        fade();
+    }
+};
+
+var fadeInArrows = function() {
+    /*
+    * Debounce makes you do crazy things.
+    */
+    $arrows.css('opacity', 1)
+};
+
+
 var setImages = function(container) {
     /*
     * Image resizer from the Wolves lightbox + sets background image on a div.
@@ -246,8 +340,135 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
         hash = hash.substring(1);
     }
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', hash, timeOnSlide]);
+    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', hash, timeOnSlide]);
 }
+
+var animateNav = function() {
+    $nav.toggleClass('active');
+    if ($nav.hasClass('active')) {
+        $nav.css('display', 'block');
+        var fade = _.debounce(fadeInNav, 1);
+        fade();
+    }
+    else {
+        $nav.css('opacity', 0);
+        var fade = _.debounce(fadeOutNav, 500);
+        fade();
+    }
+}
+
+var fadeInNav = function() {
+    /*
+    * Separate function because you can't pass an argument to a debounced function.
+    */
+    $nav.css('opacity', 1);
+};
+
+var fadeOutNav = function() {
+    /*
+    * Separate function because you can't pass an argument to a debounced function.
+    */
+    $nav.css('display', 'none');
+};
+
+var setupVideoPlayer = function() {
+    /*
+    * Setup jPlayer.
+    */
+    var computePlayerHeight = function() {
+        return ($h - ($('.jp-interface').height() + NAV_HEIGHT))
+    }
+
+    $jplayer = $('.jp-jplayer').jPlayer({
+        ready: function () {
+            $(this).jPlayer('setMedia', {
+                poster: '../assets/img/junior/junior.jpg',
+                m4v: 'http://pd.npr.org/npr-mp4/npr/nprvid/2014/03/20140328_nprvid_junior-n-600000.mp4',
+                webmv: '../assets/img/junior/junior-final.webm'
+            });
+        },
+        play: function (){
+            if (!isIPhone) {
+                $('.jp-current-time').removeClass('hide');
+                $('.jp-duration').addClass('hide');
+            }
+
+            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Video - Play']);
+        },
+        ended: function(){
+            if (!isIPhone) {
+                $('.jp-current-time').addClass('hide');
+                $('.jp-duration').removeClass('hide');
+            }
+
+            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Video - Ended']);
+        },
+        size: {
+            width: $w,
+            height: computePlayerHeight() + 'px'
+        },
+        swfPath: 'js/lib',
+        supplied: 'm4v, webmv',
+        loop: false
+    });
+
+    $(window).resize(function() {
+        $jplayer.jPlayer('option', { 'size': {
+            width: $w,
+            height: computePlayerHeight() + 'px'
+        }});
+    });
+};
+
+var startVideo = function() {
+    if (!isIPhone) {
+        $(this).parents('.slide.video').addClass('video-playing');
+    }
+    $('.jp-jplayer').jPlayer('play');
+}
+
+var stopVideo = function() {
+    $('.jp-jplayer').jPlayer('stop');
+}
+
+var setTimeOnSite = function(e) {
+    /*
+    * Differrence between now and when you loaded the page, formatted all nice.
+    */
+    var now = moment();
+    var miliseconds = (now - begin);
+
+    var minutes = humanize.numberFormat(Math.floor(miliseconds/1000/60), decimals=0);
+    var seconds = humanize.numberFormat(Math.floor((miliseconds/1000) % 60), decimals=0);
+
+    $('div.stats h3 span.minutes').html(minutes);
+    $('div.stats h3 span.seconds').html(seconds);
+}
+
+var onUpdateCounts = function(e) {
+    /*
+    * Updates the count based on elapsed time and known rates.
+    */
+    var now = moment();
+    var elapsed_seconds = (now - begin) / 1000;
+    var RATES = [
+        ['marijuana', 0.08844],
+        ['cocaine', 0.01116],
+        ['illegal-entry', 0.01065],
+        ['vehicles', 2.15096],
+        ['pedestrians', 1.30102]
+    ]
+
+    _.each(RATES, function(count, i){
+        var count_category = count[0];
+        var count_number = count[1];
+        var count_unit = count[2];
+        var number = humanize.numberFormat(count_number * elapsed_seconds, decimals=0, thousandsSep = ',');
+        $('#' + count_category + ' span.number').html(number);
+    });
+
+    setTimeOnSite();
+};
 
 var onResize = function(e) {
     if ($('.slide.active').hasClass('image-split')) {
@@ -267,7 +488,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
+            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -278,16 +499,65 @@ var onDocumentKeyDown = function(e) {
 
     }
 
-
     // jquery.fullpage handles actual scrolling
     return true;
 }
 
-/*
- * Run on page load.
- */
-var onDocumentLoad = function(e) {
+var onSectionNavClick = function(e) {
+    if (!hasTrackedSectionNav) {
+        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Section Nav']);
+        hasTrackedSectionNav = true;
+    }
 
+    return true;
+}
+
+var onControlArrowClick = function(e) {
+    if (!hasTrackedSlideNav) {
+        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
+        hasTrackedSlideNav = true;
+    }
+
+    return true;
+}
+
+var loadSectionNavImages = function() {
+    $('.section-tease').each(function(i, el) {
+        var $el = $(el);
+        var small = $el.data('menu-image-small');
+        var large = $el.data('menu-image-large');
+
+
+        var css = "url('assets/img/";
+
+        // Tablets get larger images
+        if ($w <= 991 && $w >= 768) {
+            css += large;
+        } else {
+            css += small;
+        }
+
+        css += "')";
+
+        $el.css('background-image', css);
+    });
+}
+
+$(document).ready(function() {
+    $slides = $('.slide');
+    $playVideo = $('.btn-video');
+    $video = $('.video');
+    $components = $('.component');
+    $portraits = $('.section[data-anchor="people"] .slide')
+    $navButton = $('.primary-navigation-btn');
+    $primaryNav = $('.primary-navigation');
+    $nav = $('.nav');
+    $navItems = $('.nav .section-tease');
+    $secondaryNav = $('.secondary-nav-btn');
+    $sectionNav = $('.section-nav');
+    $titleCardButton = $('.btn-play');
+    $arrows = $('.controlArrow');
+    $closeNavButton = $nav.find('.back');
     $reblog = $('.reblog');
     $like = $('.like');
     $share = $('.share');
@@ -296,21 +566,41 @@ var onDocumentLoad = function(e) {
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
 
-    $slides = $('.slide');
-    $components = $('.component');
+    var hash = window.location.hash;
 
-    pymChild = new pym.Child();
+    if (hash) {
+        if (hash[0] == '#') {
+            hash = hash.substring(1);
+        }
 
-    pymChild.on('post', onParentPost);
-    pymChild.sendMessageToParent('handshake', 'b');
+        if (hash && hash != '_' && hash != '_/') {
+            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Arrived via Deep Link', hash]);
+        }
+    }
+
+    // Special case iphone for handling video
+    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+        isIPhone = true;
+    }
 
     setUpFullPage();
     resize();
+
+    $playVideo.on('click', startVideo);
+    $navButton.on('click', animateNav);
+    $navItems.on('click', animateNav);
+    $secondaryNav.on('click', animateNav);
+    $sectionNav.on('click', onSectionNavClick);
+    $titleCardButton.on('click', onTitleCardButtonClick);
+    $arrows.on('click', onControlArrowClick);
+    $closeNavButton.on('click', animateNav);
+
+    active_counter = setInterval(onUpdateCounts,500);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
-};
 
-$(onDocumentLoad);
+    loadSectionNavImages();
+});

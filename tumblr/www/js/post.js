@@ -1,11 +1,11 @@
 var $window = null;
 var $document = null;
+var $iframe = null;
+var $post = null;
 
 if (!window.slug) {
     var slug = document.location.href.split('/')[5];
 }
-var pymParent = null;
-
 /*
  * Run on page load.
  */
@@ -14,14 +14,32 @@ var onDocumentLoad = function(e) {
     $window = $(window);
     $document = $(document);
 
-    pymParent = new pym.Parent('post', 'http://localhost:8000/posts/' + slug + '/', {});
+    $iframe = $('<iframe/>');
+    $post = $('#post');
 
-    pymParent.on('handshake', getIndex);
+    $iframe.attr('src', APP_CONFIG.S3_BASE_URL + '/posts/' + slug)
+
+    // Set some attributes to this proto-iframe.
+    $iframe.attr('width', '100%');
+    $iframe.attr('height', '100%');
+    $iframe.attr('scrolling', 'no');
+    $iframe.attr('marginheight', '0');
+    $iframe.attr('frameborder', '0');
+
+    // Append the iframe to our element.
+    $post.append($iframe);
+
+    window.addEventListener('message', receiveMessage, false);
+}
+
+var receiveMessage = function(e) {
+    if (e.data == 'handshake') {
+        getIndex();
+    }
 }
 
 var getIndex = function() {
     $.getJSON(APP_CONFIG.S3_BASE_URL + '/posts_index.json', function(data) {
-        console.log(data);
         var next_post = null;
         var post_index = null;
         for (var i = 0; i < data.length; i++) {
@@ -32,15 +50,13 @@ var getIndex = function() {
             }
         }
 
-        var post_data = {
-            next_post: null
+        var post_data = {};
+
+        if (post_index !== null && post_index !== 0) {
+            post_data = data[post_index - 1];
         }
 
-        if (post_index !== null && post_index !== data.length - 1) {
-            post_data['next_post'] = data[post_index + 1];
-        }
-
-        pymParent.sendMessageToChild('post', JSON.stringify(post_data));
+        $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), '*');
 
     });
 };

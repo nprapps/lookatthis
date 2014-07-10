@@ -5,6 +5,7 @@ Utilities used by multiple commands.
 """
 
 from glob import glob
+import re
 
 from fabric.api import local, prompt
 import app_config
@@ -78,3 +79,7 @@ def _get_folder_for_slug(slug):
             return folder_name
 
     return
+
+def _get_slug_for_folder(folder_name):
+    regex = re.compile('^\d+-\d+-\d+-(.*)$')
+    return regex.match(folder_name).groups(1);

@@ -296,19 +296,21 @@ def generate_index():
     for post in reversed(posts):
         post_metadata = {}
 
-        slug = post.split('%s/' % app_config.POST_PATH)[1]
-        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+        folder_name = post.split('%s/' % app_config.POST_PATH)[1]
+        slug = utils._get_slug_for_folder(folder_name)
+
+        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % folder_name)
 
         if not post_config.IS_PUBLISHED:
             continue
 
-        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
+        copy = copytext.Copy(filename='data/%s.xlsx' % folder_name)
 
 
         post_metadata['slug'] = slug
         post_metadata['title'] = unicode(copy['content']['project_name'])
         post_metadata['image'] = post_config.PROMO_PHOTO
-        post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (app_config.TUMBLR_NAME, post_config.ID, slug)
+        post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (app_config.TUMBLR_NAME, post_config.ID, folder_name)
 
         output.append(post_metadata)
 
