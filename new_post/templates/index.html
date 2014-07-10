@@ -17,34 +17,20 @@
 {% block content %}
 <h1>{{ COPY.content.project_name }}</h1>
 
-<div id="story-meta">
-    <p class="byline">by <span>{{ COPY.content.byline }}</span></p>
-    <p class="dateblock">
-        <span class="date">{{ COPY.content.pubdate }}</span>
-        <span class="time"> {{ COPY.content.pubtime }}</span>
-    </p>
+<h2>Share and next stuff</h2>
+
+<div class="reblog"></div>
+<div class="like"></div>
+<div class="share"></div>
+<div class="notes"></div>
+<div class="next-post">
+    <a class="next-post-url">
+        <p class="next-post-title"></p>
+        <img class="next-post-image">
+    </a>
 </div>
 
-<a class="comment-button comment-button-bubble comment-drawer-toggle" href="javascript:">
-    <span class="comment-count"></span>
-</a>
-
-<a class="comment-button comment-button-article comment-drawer-toggle" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-    <span class="comment-count"></span>
-    <span class="comment-label">Share / Discuss</span>
-</a>
-
-<h2>Example COPY list</h2>
-<dl>
-    {% for row in COPY.example_list %}
-    <dt>{{ row.term }}</dt><dd>{{ row.definition }}</dd>
-    {% endfor %}
-</dl>
-
-<h2>JST example</h2>
-<p id="template-example"></p>
 {% endblock %}
-
 
 {% block wide_content %}
 <div class="row">
