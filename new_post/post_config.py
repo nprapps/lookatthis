@@ -5,6 +5,13 @@ DO NOT EDIT THESE
 
 DO. NOT. EDIT. THESE.
 """
-
-ID = '$NEW_POST_ID'
-IS_PUBLISHED = False
+TARGET_IDS = {
+    'development': None,
+    'staging': None,
+    'production': None,
+}
+IS_PUBLISHED = {
+    'development': False,
+    'staging': False,
+    'production': False
+}

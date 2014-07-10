@@ -94,13 +94,15 @@ def post_to_tumblr():
     )
 
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
-    
+
     with open('%s/templates/caption.html' % env.static_path) as f:
         template = Template(f.read())
     caption = template.render(COPY=COPY)
 
+    id_target = env.post_config.TARGET_IDS[env.settings]
+
     # if the post has a no ID, create the new post.
-    if env.post_config.ID == '$NEW_POST_ID':
+    if not id_target:
         params = {
             'state': 'draft',
             'format' : 'html',
@@ -109,9 +111,10 @@ def post_to_tumblr():
             'slug' : env.folder_name
         }
 
+        tags = unicode(COPY['tumblr']['tags']).split(',')
 
-        if env.post_config.TAGS:
-            params['tags'] = unicode(COPY['tumblr']['tags']).split(',')
+        if tags:
+            params['tags'] = tags
 
         response = client.create_photo(
             app_config.TUMBLR_NAME,
@@ -124,7 +127,15 @@ def post_to_tumblr():
             return
 
         post_config_path = '%s/post_config.py' % env.static_path
-        local('sed -i "" \'s|%s|%s|g\' %s' % ('$NEW_POST_ID', response['id'], post_config_path))
+
+        find = "'%s': None," % env.settings
+        replace = "'%s': '%s'," % (env.settings, response['id'])
+
+        utils.replace_in_file(
+            post_config_path,
+            find,
+            replace
+        )
 
     # if the post already exists and has an ID,
     # update the existing post on Tumblr.
@@ -138,8 +149,10 @@ def post_to_tumblr():
             'slug' : env.folder_name
         }
 
-        if env.post_config.TAGS:
-            params['tags'] = unicode(COPY['tumblr']['tags']).split(',')
+        tags = unicode(COPY['tumblr']['tags']).split(',')
+
+        if tags:
+            params['tags'] = tags
 
         response = client.edit_post(
             app_config.TUMBLR_NAME,
@@ -155,7 +168,6 @@ def _publish_to_tumblr():
     """
     Publish the currently active post
     """
-
     secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
         secrets.get('TUMBLR_CONSUMER_KEY'),
@@ -164,9 +176,11 @@ def _publish_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    id_target = env.post_config.TARGET_IDS[env.settings]
+
     response = client.edit_post(
         app_config.TUMBLR_NAME,
-        id=env.post_config.ID,
+        id=id_target,
         state='published'
     )
 
@@ -176,8 +190,24 @@ def _publish_to_tumblr():
         return
 
     post_config_path = '%s/post_config.py' % env.static_path
-    local('sed -i "" \'s|%s|%s|g\' %s' % (env.post_config.ID, response['id'], post_config_path))
-    local('sed -i "" \'s|%s|%s|g\' %s' % ('IS_PUBLISHED = False', 'IS_PUBLISHED = True', post_config_path))
+
+    find = "'%s': None" % env.settings
+    replace = "'%s': '%s'" % (env.settings, response['id'])
+
+    utils.replace_in_file(
+        post_config_path,
+        find,
+        replace
+    )
+
+    find = "'%s': False" % env.settings
+    replace = "'%s': True" % env.settings
+
+    utils.replace_in_file(
+        post_config_path,
+        find,
+        replace
+    )
 
 def _delete_tumblr_post():
     """
@@ -191,9 +221,11 @@ def _delete_tumblr_post():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    id_target = env.post_config.TARGET_IDS[env.settings]
+
     client.delete_post(
         app_config.TUMBLR_NAME,
-        env.post_config.ID
+        id_target
     )
 
 @task
