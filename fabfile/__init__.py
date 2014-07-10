@@ -26,6 +26,8 @@ import utils
 if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
     import bootstrap
 
+env.folder_name = None
+
 """
 Environments
 
@@ -89,7 +91,7 @@ def post_to_tumblr():
             'format' : 'html',
             'source' : env.post_config.PROMO_PHOTO,
             'caption' : env.post_config.CAPTION,
-            'slug' : env.post
+            'slug' : env.folder_name
         }
 
         if env.post_config.TAGS:
@@ -117,7 +119,7 @@ def post_to_tumblr():
             'format' : 'html',
             'source' : env.post_config.PROMO_PHOTO,
             'caption' : env.post_config.CAPTION,
-            'slug' : env.post
+            'slug' : env.folder_name
         }
 
         if env.post_config.TAGS:
@@ -137,8 +139,6 @@ def _publish_to_tumblr():
     """
     Publish the currently active post
     """
-    post_path = '%s/%s/' % (app_config.POST_PATH, env.post)
-    post_config = imp.load_source('post_config', '%s/post_config.py' % post_path)
 
     secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
@@ -150,7 +150,7 @@ def _publish_to_tumblr():
 
     response = client.edit_post(
         app_config.TUMBLR_NAME,
-        id=post_config.ID,
+        id=env.post_config.ID,
         state='published'
     )
 
@@ -160,7 +160,7 @@ def _publish_to_tumblr():
         return
 
     post_config_path = '%s/post_config.py' % env.static_path
-    local('sed -i "" \'s|%s|%s|g\' %s' % (post_config.ID, response['id'], post_config_path))
+    local('sed -i "" \'s|%s|%s|g\' %s' % (env.post_config.ID, response['id'], post_config_path))
     local('sed -i "" \'s|%s|%s|g\' %s' % ('IS_PUBLISHED = False', 'IS_PUBLISHED = True', post_config_path))
 
 def _delete_tumblr_post():
@@ -186,21 +186,21 @@ def deploy(slug=''):
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
-    require('post', provided_by=[post])
+    require('folder_name', provided_by=[post])
 
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.folder_name)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.folder_name)
     post_to_tumblr()
 
 """
 App-specific commands
 """
 
-@task
-def post(slug):
+def _get_folder_for_slug(slug):
     posts = glob('%s/*' % app_config.POST_PATH)
+
     for folder in posts:
         folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
         if len(folder_name.split('-')) > 2:
@@ -209,15 +209,21 @@ def post(slug):
             folder_slug = folder_name
 
         if slug == folder_slug:
-            env.post = folder_name
-            break
-        else:
-            utils.confirm('This post does not exist. Do you want to create a new post called %s?' % slug)
-            _new(slug)
-            return
+            return folder_name
+
+    return
+
+@task
+def post(slug):
+    env.folder_name = _get_folder_for_slug(slug)
+
+    if not env.folder_name:
+        utils.confirm('This post does not exist. Do you want to create a new post called %s?' % slug)
+        _new(slug)
+        return
 
     env.slug = slug
-    env.static_path = '%s/%s' % (app_config.POST_PATH, env.post)
+    env.static_path = '%s/%s' % (app_config.POST_PATH, env.folder_name)
 
     if os.path.exists ('%s/post_config.py' % env.static_path):
         env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
@@ -226,11 +232,9 @@ def post(slug):
         env.post_config = None
         env.copytext_key = None
 
-    env.copytext_slug = env.post
+    env.copytext_slug = env.folder_name
 
 def _new(slug):
-    require
-
     posts = glob('%s/*' % app_config.POST_PATH)
     for folder in posts:
         folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
@@ -248,30 +252,39 @@ def _new(slug):
         break
 
 @task
-def rename(slug):
-    require('post', provided_by=[post])
-    require('settings', provided_by=[staging, production])
+def rename(slug, check_exists=True):
+    require('folder_name', provided_by=[post])
+
+    exists = _get_folder_for_slug(slug)
+
+    if check_exists:
+        if exists:
+            print 'A post with this name already exists.'
+            return
 
     today = datetime.date.today()
     timestamp_path = '%s-%s' % (today, slug)
 
+    if exists == timestamp_path:
+        return
+
     new_path = '%s/%s' % (app_config.POST_PATH, timestamp_path)
     local('mv %s %s' % (env.static_path, new_path))
-    local('rm data/%s.xlsx' % env.post)
+    local('mv data/%s.xlsx data/%s.xlsx' % (env.folder_name, timestamp_path))
     post(slug)
-    text.update()
-
-    generate_index()
 
 @task
 def publish():
-    require('post', provided_by=[post])
+    require('folder_name', provided_by=[post])
     require('settings', provided_by=[staging, production])
+
+    # update the timestamp in slug
+    rename(env.slug, False)
 
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.post)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.post)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.folder_name)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.folder_name)
     _publish_to_tumblr()
 
     generate_index()
@@ -279,13 +292,13 @@ def publish():
 
 @task
 def delete():
-    require('post', provided_by=[post])
+    require('folder_name', provided_by=[post])
     require('settings', provided_by=[staging, production])
 
     _delete_tumblr_post()
 
     local('rm -r %s' % env.static_path)
-    local('rm data/%s.xlsx' % env.post)
+    local('rm data/%s.xlsx' % env.folder_name)
 
     generate_index()
 
@@ -295,7 +308,7 @@ def generate_index():
 
     output = []
     posts = glob('%s/*' % app_config.POST_PATH)
-    for post in posts:
+    for post in reversed(posts):
         post_metadata = {}
 
         slug = post.split('%s/' % app_config.POST_PATH)[1]

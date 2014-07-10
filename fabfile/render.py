@@ -36,7 +36,7 @@ def post_config_js():
     """
     from static_post import _post_config_js
 
-    response = _post_config_js(env.post)
+    response = _post_config_js(env.folder_name)
     js = response[0]
 
     with open('%s/www/js/post_config.js' % env.static_path, 'w') as f:
@@ -62,18 +62,18 @@ def render_all():
     """
     from flask import g, url_for
 
-    require('post', provided_by=['post'])
+    require('folder_name', provided_by=['post'])
 
     less()
     post_config_js()
-    copytext_js(env.post)
+    copytext_js(env.folder_name)
 
     compiled_includes = {}
 
     app_config.configure_targets(env.get('settings', None))
 
     with app.app.test_request_context():
-        path = 'posts/%s/www/index.html' % env.post
+        path = 'posts/%s/www/index.html' % env.folder_name
 
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
@@ -82,7 +82,7 @@ def render_all():
         g.compiled_includes = compiled_includes
 
         view = app.__dict__['_post']
-        content = view(env.post)
+        content = view(env.folder_name)
 
     with open(path, 'w') as f:
         f.write(content.encode('utf-8'))
