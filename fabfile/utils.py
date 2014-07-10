@@ -4,6 +4,8 @@
 Utilities used by multiple commands.
 """
 
+from glob import glob
+
 from fabric.api import local, prompt
 import app_config
 
@@ -62,3 +64,17 @@ def _deploy_to_s3(path='.gzip'):
             bucket,
             app_config.PROJECT_SLUG
         )))
+def _get_folder_for_slug(slug):
+    posts = glob('%s/*' % app_config.POST_PATH)
+
+    for folder in posts:
+        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
+        if len(folder_name.split('-')) > 2:
+            folder_slug = folder_name.split('-')[3]
+        else:
+            folder_slug = folder_name
+
+        if slug == folder_slug:
+            return folder_name
+
+    return

@@ -5,6 +5,8 @@ import copytext
 from glob import glob
 import imp
 
+from fabfile.utils import _get_folder_for_slug
+
 from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
@@ -43,11 +45,13 @@ def _post(slug):
     """
     Renders a post without the tumblr wrapper.
     """
-    post_path = '%s/%s' % (app_config.POST_PATH, slug)
+    folder_name = _get_folder_for_slug(slug)
+
+    post_path = '%s/%s' % (app_config.POST_PATH, folder_name)
 
     context = make_context()
-    context['slug'] = slug
-    context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
+    context['slug'] = folder_name
+    context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % folder_name)
 
     context['JS'] = JavascriptIncluder(asset_depth=2, static_path=post_path)
     context['CSS'] = CSSIncluder(asset_depth=2, static_path=post_path)

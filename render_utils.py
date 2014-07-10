@@ -172,14 +172,14 @@ def flatten_app_config():
 
     return config
 
-def flatten_post_config(slug):
+def flatten_post_config(folder_name):
     """
     Returns a copy of post_config containing only
     configuration variables.
     """
     config = {}
 
-    post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
+    post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % folder_name)
 
     # Only all-caps [constant] vars get included
     for k, v in post_config.__dict__.items():

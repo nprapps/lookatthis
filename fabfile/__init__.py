@@ -198,24 +198,9 @@ def deploy(slug=''):
 App-specific commands
 """
 
-def _get_folder_for_slug(slug):
-    posts = glob('%s/*' % app_config.POST_PATH)
-
-    for folder in posts:
-        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
-        if len(folder_name.split('-')) > 2:
-            folder_slug = folder_name.split('-')[3]
-        else:
-            folder_slug = folder_name
-
-        if slug == folder_slug:
-            return folder_name
-
-    return
-
 @task
 def post(slug):
-    env.folder_name = _get_folder_for_slug(slug)
+    env.folder_name = utils._get_folder_for_slug(slug)
 
     if not env.folder_name:
         utils.confirm('This post does not exist. Do you want to create a new post called %s?' % slug)
@@ -255,7 +240,7 @@ def _new(slug):
 def rename(slug, check_exists=True):
     require('folder_name', provided_by=[post])
 
-    exists = _get_folder_for_slug(slug)
+    exists = utils._get_folder_for_slug(slug)
 
     if check_exists:
         if exists:
