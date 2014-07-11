@@ -1,0 +1,11 @@
+<div class="slide titlecard" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.image %} data-bgimage="{{ row.image }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                <h2>{{ row.text1 }}</h2>
+                <h3>{{ row.text2 }}</h3>
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+    </div><!--full-block-->
+</div><!--slide-->
