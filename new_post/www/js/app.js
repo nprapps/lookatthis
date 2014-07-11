@@ -8,25 +8,13 @@ var EVENT_CATEGORY = 'Borderland';
 var $w;
 var $h;
 var $slides;
-var $components;
-var $portraits;
 var $video;
 var $primaryNav;
-var $navButton;
-var $nav;
-var $navItems;
-var $secondaryNav;
 var $arrows;
-var $sectionNav;
-var $closeNavButton;
-var currentSection = '_'
-var currentSectionIndex = 0;
-var anchors;
 var mobileSuffix;
 var player;
 var isTouch = Modernizr.touch;
 var isIPhone = false;
-var active_counter = null;
 var begin = moment();
 var aspectWidth = 16;
 var aspectHeight = 9;
@@ -37,7 +25,6 @@ var h;
 var $jplayer = null;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
-var hasTrackedSectionNav = false;
 var slideStartTime = moment();
 
 var onTitleCardButtonClick = function() {
@@ -66,36 +53,10 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
-    anchors = [];
-    var anchor_count = 0;
-    var bad_sections = [undefined, 'introduction'];
-
-   _.each($slides, function(section, index, list) {
-        /*
-        * Sets up the anchor list, used elsewhere for navigation and such.
-        */
-        var anchor = $(section).data('anchor');
-        if (bad_sections.indexOf(anchor) > -1) {
-            return false;
-        }
-        anchors.push(anchor);
-
-        /*
-        * Numbers the stories according to their position.
-        * Automates the appearance of the story numbers in the HTML.
-        */
-        var story_number = 'Story ' + anchor_count;
-        $($(section).find('h4.story-number')[0]).html(story_number);
-        $($('div.nav div.' + anchor + ' h4 em')[0]).html(story_number);
-        anchor_count = anchor_count + 1;
-    });
-
     $.fn.fullpage({
         autoScrolling: false,
-        anchors: anchors,
-        menu: '.nav',
         verticalCentered: false,
-        fixedElements: '.primary-navigation, .nav, #share-modal',
+        fixedElements: '.primary-navigation, #share-modal',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -132,15 +93,6 @@ var setSlidesForLazyLoading = function(slideIndex) {
     */
     var thisSlide = $slides[slideIndex];
     var nextSlide = $slides[slideIndex + 1]
-
-    if ($(thisSlide).data('anchor')) {
-        currentSection = $(thisSlide).data('anchor');
-        for (i=0; i < anchors.length; i++) {
-            if (anchors[i] === currentSection) {
-                currentSectionIndex = i;
-            }
-        }
-    };
 
     var slides = [
         $slides[slideIndex - 2],
@@ -339,34 +291,6 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', hash, timeOnSlide]);
 }
 
-var animateNav = function() {
-    $nav.toggleClass('active');
-    if ($nav.hasClass('active')) {
-        $nav.css('display', 'block');
-        var fade = _.debounce(fadeInNav, 1);
-        fade();
-    }
-    else {
-        $nav.css('opacity', 0);
-        var fade = _.debounce(fadeOutNav, 500);
-        fade();
-    }
-}
-
-var fadeInNav = function() {
-    /*
-    * Separate function because you can't pass an argument to a debounced function.
-    */
-    $nav.css('opacity', 1);
-};
-
-var fadeOutNav = function() {
-    /*
-    * Separate function because you can't pass an argument to a debounced function.
-    */
-    $nav.css('display', 'none');
-};
-
 var setupVideoPlayer = function() {
     /*
     * Setup jPlayer.
@@ -441,31 +365,6 @@ var setTimeOnSite = function(e) {
     $('div.stats h3 span.seconds').html(seconds);
 }
 
-var onUpdateCounts = function(e) {
-    /*
-    * Updates the count based on elapsed time and known rates.
-    */
-    var now = moment();
-    var elapsed_seconds = (now - begin) / 1000;
-    var RATES = [
-        ['marijuana', 0.08844],
-        ['cocaine', 0.01116],
-        ['illegal-entry', 0.01065],
-        ['vehicles', 2.15096],
-        ['pedestrians', 1.30102]
-    ]
-
-    _.each(RATES, function(count, i){
-        var count_category = count[0];
-        var count_number = count[1];
-        var count_unit = count[2];
-        var number = humanize.numberFormat(count_number * elapsed_seconds, decimals=0, thousandsSep = ',');
-        $('#' + count_category + ' span.number').html(number);
-    });
-
-    setTimeOnSite();
-};
-
 var onResize = function(e) {
     if ($('.slide.active').hasClass('image-split')) {
         setImages($('.slide.active').find('.contained-image-container')[0]);
@@ -499,15 +398,6 @@ var onDocumentKeyDown = function(e) {
     return true;
 }
 
-var onSectionNavClick = function(e) {
-    if (!hasTrackedSectionNav) {
-        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Section Nav']);
-        hasTrackedSectionNav = true;
-    }
-
-    return true;
-}
-
 var onControlArrowClick = function(e) {
     if (!hasTrackedSlideNav) {
         // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
@@ -515,28 +405,6 @@ var onControlArrowClick = function(e) {
     }
 
     return true;
-}
-
-var loadSectionNavImages = function() {
-    $('.section-tease').each(function(i, el) {
-        var $el = $(el);
-        var small = $el.data('menu-image-small');
-        var large = $el.data('menu-image-large');
-
-
-        var css = "url('assets/img/";
-
-        // Tablets get larger images
-        if ($w <= 991 && $w >= 768) {
-            css += large;
-        } else {
-            css += small;
-        }
-
-        css += "')";
-
-        $el.css('background-image', css);
-    });
 }
 
 var receiveMessage = function(e) {
@@ -554,32 +422,14 @@ $(document).ready(function() {
     $slides = $('.slide');
     $playVideo = $('.btn-video');
     $video = $('.video');
-    $components = $('.component');
-    $portraits = $('.section[data-anchor="people"] .slide')
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    $nav = $('.nav');
-    $navItems = $('.nav .section-tease');
-    $secondaryNav = $('.secondary-nav-btn');
-    $sectionNav = $('.section-nav');
     $titleCardButton = $('.btn-play');
     $arrows = $('.controlArrow');
-    $closeNavButton = $nav.find('.back');
+
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
-
-    var hash = window.location.hash;
-
-    if (hash) {
-        if (hash[0] == '#') {
-            hash = hash.substring(1);
-        }
-
-        if (hash && hash != '_' && hash != '_/') {
-            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Arrived via Deep Link', hash]);
-        }
-    }
 
     // Special case iphone for handling video
     if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
@@ -590,22 +440,13 @@ $(document).ready(function() {
     resize();
 
     $playVideo.on('click', startVideo);
-    $navButton.on('click', animateNav);
-    $navItems.on('click', animateNav);
-    $secondaryNav.on('click', animateNav);
-    $sectionNav.on('click', onSectionNavClick);
     $titleCardButton.on('click', onTitleCardButtonClick);
     $arrows.on('click', onControlArrowClick);
-    $closeNavButton.on('click', animateNav);
-
-    active_counter = setInterval(onUpdateCounts,500);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
-
-    loadSectionNavImages();
 
     window.addEventListener('message', receiveMessage, false);
 

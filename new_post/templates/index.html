@@ -6,45 +6,14 @@
 
 {% block content %}
 
-{% for row in COPY.content %}
-    {% include "%s/templates/%s.html" % (slug, row.template) ignore missing %}
-{% endfor %}
-
+<div class="section">
+    {% for row in COPY.content %}
+        {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
+    {% endfor %}
 </div>
 <div class="primary-navigation" style="opacity:0;">
-    <div class="primary-navigation-btn"><i class="fa fa-th"></i> <span>All Stories</span></div>
     <div class="controlArrow prev"></div>
     <div class="controlArrow next"></div>
-</div>
-
-<div class="nav">
-    <div class="container-fluid">
-        <div class="row secondary-nav">
-            <div class="col-md-12">
-                <ul>
-                    <a data-menuanchor="home" href="#_"><li class="secondary-nav-btn">Home</li></a>
-                    <a data-menuanchor="about" href="#_/about"><li class="secondary-nav-btn">About</li></a>
-                </ul>
-            </div>
-        </div>
-        {% for row in nav %}
-        <div class="row">
-            {% for item in row %}
-            <a class="section-nav" data-menuanchor="{{ item.data_panel.lower() }}" href="#_/{{ item.data_panel.lower() }}">
-                <div class="section-tease col-md-3 col-sm-12" data-menu-image-small="{{ item.menu_image_small }}" data-menu-image-large="{{ item.menu_image_large }}">
-                    <div class="row">
-                        <div class="mask col-md-12 {{ item.data_panel.lower().replace('_', '') }}">
-                            {{ item.chapter_title|safe }}
-                        </div>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-        {% endfor %}
-        <!-- Hiding this while Wes decides if this should exist and how. -JB    -->
-        <!-- <a class="back">&laquo; Return to where you were</a>               -->
-    </div>
 </div>
 
 {% endblock %}

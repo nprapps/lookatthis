@@ -1,0 +1,10 @@
+<div class="slide {% if row.slide_class %} {{ row.slide_class }} {% endif %}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.image %} data-bgimage="{{ row.image }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                {{ row.text }}
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+    </div><!--full-block-->
+</div><!--slide-->
