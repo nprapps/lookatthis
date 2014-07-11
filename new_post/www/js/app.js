@@ -3,31 +3,25 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'Borderland';
 
 var $w;
 var $h;
 var $slides;
-var $video;
 var $primaryNav;
 var $arrows;
+var $startCardButton;
 var mobileSuffix;
-var player;
 var isTouch = Modernizr.touch;
-var isIPhone = false;
-var begin = moment();
 var aspectWidth = 16;
 var aspectHeight = 9;
 var optimalWidth;
 var optimalHeight;
 var w;
 var h;
-var $jplayer = null;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
-var slideStartTime = moment();
 
-var onTitleCardButtonClick = function() {
+var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
 
     // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
@@ -91,22 +85,17 @@ var setSlidesForLazyLoading = function(slideIndex) {
     * Sets up a list of slides based on your position in the deck.
     * Lazy-loads images in future slides because of reasons.
     */
-    var thisSlide = $slides[slideIndex];
-    var nextSlide = $slides[slideIndex + 1]
 
     var slides = [
         $slides[slideIndex - 2],
         $slides[slideIndex - 1],
-        thisSlide,
-        nextSlide,
+        $slides[slideIndex],
+        $slides[slideIndex + 1],
         $slides[slideIndex + 2]
     ];
 
     findImages(slides);
 
-    if (!$jplayer && $(thisSlide).hasClass('video')) {
-        setupVideoPlayer();
-    }
 }
 
 var findImages = function(slides) {
@@ -205,17 +194,16 @@ var animateArrows = function() {
 
     if ($arrows.hasClass('active')) {
         $arrows.css('display', 'block');
-        var fade = _.debounce(fadeInArrows, 1);
-        fade();
+        fadeInArrows();
     }
 };
 
-var fadeInArrows = function() {
+var fadeInArrows = _.debounce(function() {
     /*
     * Debounce makes you do crazy things.
     */
     $arrows.css('opacity', 1)
-};
+}, 1);
 
 
 var setImages = function(container) {
@@ -272,97 +260,8 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-    var thisSlide = $slides[slideIndex];
-
-    if ($jplayer && $(thisSlide).hasClass('video')) {
-        $(thisSlide).removeClass('video-playing');
-        stopVideo();
-    }
-
-    var now = moment();
-    var timeOnSlide = (now - slideStartTime);
-
-    var hash = window.location.hash;
-
-    if (hash[0] == '#') {
-        hash = hash.substring(1);
-    }
 
     // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', hash, timeOnSlide]);
-}
-
-var setupVideoPlayer = function() {
-    /*
-    * Setup jPlayer.
-    */
-    var computePlayerHeight = function() {
-        return ($h - ($('.jp-interface').height() + NAV_HEIGHT))
-    }
-
-    $jplayer = $('.jp-jplayer').jPlayer({
-        ready: function () {
-            $(this).jPlayer('setMedia', {
-                poster: '../assets/img/junior/junior.jpg',
-                m4v: 'http://pd.npr.org/npr-mp4/npr/nprvid/2014/03/20140328_nprvid_junior-n-600000.mp4',
-                webmv: '../assets/img/junior/junior-final.webm'
-            });
-        },
-        play: function (){
-            if (!isIPhone) {
-                $('.jp-current-time').removeClass('hide');
-                $('.jp-duration').addClass('hide');
-            }
-
-            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Video - Play']);
-        },
-        ended: function(){
-            if (!isIPhone) {
-                $('.jp-current-time').addClass('hide');
-                $('.jp-duration').removeClass('hide');
-            }
-
-            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Video - Ended']);
-        },
-        size: {
-            width: $w,
-            height: computePlayerHeight() + 'px'
-        },
-        swfPath: 'js/lib',
-        supplied: 'm4v, webmv',
-        loop: false
-    });
-
-    $(window).resize(function() {
-        $jplayer.jPlayer('option', { 'size': {
-            width: $w,
-            height: computePlayerHeight() + 'px'
-        }});
-    });
-};
-
-var startVideo = function() {
-    if (!isIPhone) {
-        $(this).parents('.slide.video').addClass('video-playing');
-    }
-    $('.jp-jplayer').jPlayer('play');
-}
-
-var stopVideo = function() {
-    $('.jp-jplayer').jPlayer('stop');
-}
-
-var setTimeOnSite = function(e) {
-    /*
-    * Differrence between now and when you loaded the page, formatted all nice.
-    */
-    var now = moment();
-    var miliseconds = (now - begin);
-
-    var minutes = humanize.numberFormat(Math.floor(miliseconds/1000/60), decimals=0);
-    var seconds = humanize.numberFormat(Math.floor((miliseconds/1000) % 60), decimals=0);
-
-    $('div.stats h3 span.minutes').html(minutes);
-    $('div.stats h3 span.seconds').html(seconds);
 }
 
 var onResize = function(e) {
@@ -389,7 +288,6 @@ var onDocumentKeyDown = function(e) {
 
         // escape
         case 27:
-            animateNav();
             break;
 
     }
@@ -418,29 +316,22 @@ var receiveMessage = function(e) {
         $nextPostURL.attr('href', post.url);
     }
 }
+
 $(document).ready(function() {
     $slides = $('.slide');
-    $playVideo = $('.btn-video');
-    $video = $('.video');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    $titleCardButton = $('.btn-play');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
 
-    // Special case iphone for handling video
-    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-        isIPhone = true;
-    }
-
     setUpFullPage();
     resize();
 
-    $playVideo.on('click', startVideo);
-    $titleCardButton.on('click', onTitleCardButtonClick);
+    $startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
 
     // Redraw slides if the window resizes
