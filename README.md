@@ -161,7 +161,9 @@ Starting a new post
 -------------------
 
 * `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
-* Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``. 
+* Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``.
+
+Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
 
 Publishing a post
 -----------------
