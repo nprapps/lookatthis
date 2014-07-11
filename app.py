@@ -4,10 +4,11 @@ import argparse
 import copytext
 from glob import glob
 import imp
+import json
 
-from fabfile.utils import _get_folder_for_slug
+from fabfile.utils import _get_folder_for_slug, _get_slug_for_folder
 
-from flask import Blueprint, Flask, render_template, render_template_string
+from flask import Blueprint, Flask, render_template, render_template_string, url_for
 
 import app_config
 from render_utils import make_context, smarty_filter, urlencode_filter, CSSIncluder, JavascriptIncluder
@@ -77,10 +78,39 @@ def _post_preview(slug):
 
     return render_template('parent.html', **context)
 
-@app.route('/<target>_posts_index.json')
-def _posts_index(target):
-    with open('%s_posts_index.json' % target) as f:
-        return f.read()
+@app.route('/posts_index.json')
+def _posts_index():
+    output = []
+    posts = glob('%s/*' % app_config.POST_PATH)
+    for post in reversed(posts):
+        post_metadata = {}
+
+        folder_name = post.split('%s/' % app_config.POST_PATH)[1]
+        slug = _get_slug_for_folder(folder_name)
+
+        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % folder_name)
+
+        if app_config.DEPLOYMENT_TARGET and not post_config.IS_PUBLISHED[app_config.DEPLOYMENT_TARGET]:
+            continue
+
+        copy = copytext.Copy(filename='data/%s.xlsx' % folder_name)
+
+        post_metadata['slug'] = slug
+        post_metadata['title'] = unicode(copy['tumblr']['title'])
+        post_metadata['image'] = unicode(copy['tumblr']['promo_photo'])
+
+        if app_config.DEPLOYMENT_TARGET:
+            post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (
+                app_config.TUMBLR_NAME,
+                post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET],
+                folder_name
+            )
+        else:
+            post_metadata['url'] = url_for('_post_preview', slug=slug)
+
+        output.append(post_metadata)
+
+    return json.dumps(output)
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)

@@ -268,21 +268,13 @@ def post(slug):
     env.copytext_slug = env.folder_name
 
 def _new(slug):
-    posts = glob('%s/*' % app_config.POST_PATH)
-    for folder in posts:
-        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
-        if len(folder_name.split('-')) > 2:
-            folder_slug = folder_name.split('-')[3]
-        else:
-            folder_slug = folder_name
 
-        today = datetime.date.today()
+    today = datetime.date.today()
 
-        local('cp -r new_post %s/%s-%s' % (app_config.POST_PATH, today, slug))
-        post(slug)
-        text.update()
+    local('cp -r new_post %s/%s-%s' % (app_config.POST_PATH, today, slug))
+    post(slug)
+    text.update()
 
-        break
 
 @task
 def rename(slug, check_exists=True):
@@ -339,34 +331,17 @@ def delete():
 def generate_index():
     require('settings', provided_by=[development, staging, production])
 
-    output = []
-    posts = glob('%s/*' % app_config.POST_PATH)
-    for post in reversed(posts):
-        post_metadata = {}
+    from app import _posts_index
 
-        folder_name = post.split('%s/' % app_config.POST_PATH)[1]
-        slug = utils._get_slug_for_folder(folder_name)
+    response = _posts_index()
 
-        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % folder_name)
+    with open('.posts_index.json', 'w') as f:
+        f.write(response)
 
-        if not post_config.IS_PUBLISHED[env.settings]:
-            continue
+    for bucket in app_config.S3_BUCKETS:
+        local('aws s3 cp .posts_index.json s3://%s/%s/posts_index.json --acl "public-read" --cache-control "max-age=5" --region "us-east-1"' % (bucket, app_config.PROJECT_SLUG))
 
-        copy = copytext.Copy(filename='data/%s.xlsx' % folder_name)
-
-
-        post_metadata['slug'] = slug
-        post_metadata['title'] = unicode(copy['content']['project_name'])
-        post_metadata['image'] = post_config.PROMO_PHOTO
-        post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (app_config.TUMBLR_NAME, post_config.ID, folder_name)
-
-        output.append(post_metadata)
-
-    with open('%s_posts_index.json' % env.settings, 'w') as f:
-        json.dump(output, f)
-
-        for bucket in app_config.S3_BUCKETS:
-            local('aws s3 cp %s_posts_index.json s3://%s/%s/%s_posts_index.json --acl "public-read" --cache-control "max-age=5" --region "us-east-1"' % (env.settings, bucket, app_config.PROJECT_SLUG, env.settings))
+    local('rm .posts_index.json')
 
 @task
 def tumblr():

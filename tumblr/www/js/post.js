@@ -41,7 +41,8 @@ var receiveMessage = function(e) {
 var getIndex = function() {
     var deployment_target = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.DEPLOYMENT_TARGET : 'development';
 
-    $.getJSON(APP_CONFIG.S3_BASE_URL + '/' + deployment_target + '_posts_index.json', function(data) {
+    $.getJSON(APP_CONFIG.S3_BASE_URL + '/posts_index.json', function(data) {
+
         var next_post = null;
         var post_index = null;
         for (var i = 0; i < data.length; i++) {
