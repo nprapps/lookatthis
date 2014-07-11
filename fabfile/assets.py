@@ -8,7 +8,7 @@ from glob import glob
 import os
 
 import boto
-from fabric.api import prompt, task
+from fabric.api import prompt, task, require
 from fabric.state import env
 import app_config
 from fnmatch import fnmatch
@@ -19,11 +19,14 @@ def sync():
     """
     Intelligently synchronize assets between S3 and local folder.
     """
+    require('folder_name', provided_by=['post'])
+
     assets_root = '%s/www/assets' % env.static_path
+    s3_root = '%s/%s' % (app_config.ASSETS_SLUG, env.folder_name)
 
     ignore_globs = []
 
-    with open('%s/.assetsignore' % assets_root, 'r') as f:
+    with open('%s/assetsignore' % assets_root, 'r') as f:
         ignore_globs = [l.strip() for l in f]
 
     local_paths = []
@@ -60,7 +63,7 @@ def sync():
         return
 
     bucket = _assets_get_bucket()
-    keys = bucket.list(app_config.ASSETS_SLUG)
+    keys = bucket.list(s3_root)
 
     which = None
     always = False
@@ -69,7 +72,7 @@ def sync():
         download = False
         upload = False
 
-        local_path = key.name.replace(app_config.ASSETS_SLUG, assets_root, 1)
+        local_path = key.name.replace(s3_root, assets_root, 1)
 
         # Skip root key
         if local_path == '%s/' % assets_root:
@@ -118,7 +121,7 @@ def sync():
 
     # Iterate over files that didn't exist on S3
     for local_path in local_paths:
-        key_name = local_path.replace(assets_root, app_config.ASSETS_SLUG, 1)
+        key_name = local_path.replace(assets_root, s3_root, 1)
         key = bucket.get_key(key_name, validate=False)
 
         print local_path
