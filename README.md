@@ -14,6 +14,8 @@ lookatthis
 * [Save media assets](#save-media-assets)
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
+* [Starting a new post](#starting-a-new-post)
+* [Publishing a post](#publishing-a-post)
 * [COPY editing](#copy-editing)
 * [Arbitrary Google Docs](#arbitrary-google-docs)
 * [Run Python tests](#run-python-tests)
