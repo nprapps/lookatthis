@@ -75,10 +75,8 @@ def _get_folder_for_slug(slug):
 
     for folder in posts:
         folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
-        if len(folder_name.split('-')) > 2:
-            folder_slug = folder_name.split('-')[3]
-        else:
-            folder_slug = folder_name
+        regex = re.compile('^\d+-\d+-\d+-(.*)$')
+        folder_slug = regex.match(folder_name).group(1);
 
         if slug == folder_slug:
             return folder_name
