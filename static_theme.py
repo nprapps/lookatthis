@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import imp
 import json
 
 import copytext
@@ -41,5 +42,10 @@ def _theme():
 
     context['JS'] = JavascriptIncluder(asset_depth=0, static_path='tumblr', absolute=True)
     context['CSS'] = CSSIncluder(asset_depth=0, static_path='tumblr', absolute=True)
+
+    app_config = imp.load_source('app_config', 'app_config.py')
+    context.update(app_config.__dict__)
+
+    print context
 
     return render_template('theme.html', **context)
