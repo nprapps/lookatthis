@@ -318,8 +318,14 @@ def publish():
 @task
 def delete():
     require('folder_name', provided_by=[post])
-    require('settings', provided_by=[development, staging, production])
 
+    env.settings = 'development'
+    _delete_tumblr_post()
+
+    env.settings = 'staging'
+    _delete_tumblr_post()
+
+    env.settings = 'production'
     _delete_tumblr_post()
 
     local('rm -r %s' % env.static_path)
