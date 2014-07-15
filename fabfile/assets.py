@@ -148,7 +148,7 @@ def rm(path):
 
     bucket = _assets_get_bucket()
 
-    file_list = glob(path)
+    file_list = glob('%s/%s' % (assets_root, path))
 
     found_folder = True
 
@@ -176,7 +176,10 @@ def rm(path):
 
                 continue
 
-            key_name = local_path.replace(assets_root, app_config.ASSETS_SLUG, 1)
+            assets_slug = '%s/%s' % (app_config.ASSETS_SLUG, env.folder_name)
+
+            key_name = local_path.replace(assets_root, assets_slug, 1)
+
             key = bucket.get_key(key_name)
 
             _assets_delete(local_path, key)
