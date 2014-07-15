@@ -245,7 +245,11 @@ def _delete_tumblr_post():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    app_config.configure_targets(env.get('settings', None))
+
     id_target = env.post_config.TARGET_IDS[env.settings]
+    print id_target
+    print app_config.TUMBLR_NAME
 
     client.delete_post(
         app_config.TUMBLR_NAME,
