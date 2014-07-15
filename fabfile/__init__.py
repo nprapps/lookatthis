@@ -175,7 +175,7 @@ def post_to_tumblr():
 
         post_config_path = '%s/post_config.py' % env.static_path
 
-        find = "'%s': None," % env.settings
+        find = "'%s': '%s'," % env.settings, id_target
         replace = "'%s': '%s'," % (env.settings, response['id'])
 
         utils.replace_in_file(
@@ -213,7 +213,7 @@ def _publish_to_tumblr():
 
     post_config_path = '%s/post_config.py' % env.static_path
 
-    find = "'%s': None" % env.settings
+    find = "'%s': '%s'" % (env.settings, id_target)
     replace = "'%s': '%s'" % (env.settings, response['id'])
 
     utils.replace_in_file(
