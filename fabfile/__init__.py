@@ -175,7 +175,7 @@ def post_to_tumblr():
 
         post_config_path = '%s/post_config.py' % env.static_path
 
-        find = "'%s': '%s'," % env.settings, id_target
+        find = "'%s': '%s'," % (env.settings, id_target)
         replace = "'%s': '%s'," % (env.settings, response['id'])
 
         utils.replace_in_file(
@@ -376,8 +376,11 @@ def delete():
     env.settings = 'production'
     _delete_tumblr_post()
 
+    local('fab post:%s assets.rm:"*"' % env.slug)
+
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.folder_name)
+
 
     generate_index()
 
