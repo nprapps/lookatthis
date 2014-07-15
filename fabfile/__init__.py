@@ -166,6 +166,15 @@ def post_to_tumblr():
             print response
             return
 
+        find = "'%s': None," % env.settings
+        replace = "'%s': '%s'," % (env.settings, response['id'])
+
+        utils.replace_in_file(
+            post_config_path,
+            find,
+            replace
+        )
+
 def _publish_to_tumblr():
     """
     Publish the currently active post
