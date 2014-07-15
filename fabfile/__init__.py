@@ -101,6 +101,9 @@ def post_to_tumblr():
         template = Template(f.read())
     caption = template.render(COPY=COPY)
 
+    tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
+    tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
+
     id_target = env.post_config.TARGET_IDS[env.settings]
 
     # if the post has a no ID, create the new post.
@@ -108,7 +111,7 @@ def post_to_tumblr():
         params = {
             'state': 'draft',
             'format' : 'html',
-            'source' : unicode(COPY['tumblr']['tumblr_dashboard_photo']),
+            'data' : str(tumblr_photo_path),
             'caption' : caption,
             'slug' : env.folder_name
         }
@@ -146,7 +149,7 @@ def post_to_tumblr():
             'id' : id_target,
             'type' :'photo',
             'format' : 'html',
-            'source' : unicode(COPY['tumblr']['tumblr_dashboard_photo']),
+            'data' : str(tumblr_photo_path),
             'caption' : caption,
             'slug' : env.folder_name
         }
@@ -174,6 +177,8 @@ def post_to_tumblr():
             find,
             replace
         )
+
+    _deploy_promo_photo(response['id'])
 
 def _publish_to_tumblr():
     """
@@ -261,7 +266,8 @@ def _deploy_promo_photo(id):
         local(sync_homepage_assets % ('tumblr/www/assets/homepage', 's3://%s/%s/tumblr/assets/homepage' % (
                 bucket,
                 app_config.PROJECT_SLUG
-            )))
+            )
+        ))
 @task
 def deploy(slug=''):
     """
