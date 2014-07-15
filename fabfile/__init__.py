@@ -96,10 +96,14 @@ def post_to_tumblr():
     # get the copytext spreadsheet so we can parse some tumblr variables
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
 
+    title = unicode(COPY['tumblr']['title'])
+    subtitle = unicode(COPY['tumblr']['subtitle'])
+    date = unicode(COPY['tumblr']['date'])
+
     # read the caption template and write the caption based on variables in the copytext spreadsheet
     with open('%s/templates/caption.html' % env.static_path) as f:
         template = Template(f.read())
-    caption = template.render(COPY=COPY)
+    caption = template.render(title=title, subtitle=subtitle, date=date)
 
     tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
     tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
@@ -168,6 +172,8 @@ def post_to_tumblr():
             print 'Error editing tumblr post'
             print response
             return
+
+        post_config_path = '%s/post_config.py' % env.static_path
 
         find = "'%s': None," % env.settings
         replace = "'%s': '%s'," % (env.settings, response['id'])
@@ -254,7 +260,7 @@ def _deploy_promo_photo(id):
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
 
     # Find the promo photo
-    post_assets = '%s/www/assets/' % env.static_path
+    post_assets = '%s/www/assets' % env.static_path
     promo_photo = unicode(COPY['tumblr']['thumbnail_photo'])
 
     # Rename that file

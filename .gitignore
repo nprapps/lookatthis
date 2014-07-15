@@ -32,7 +32,6 @@ pip-log.txt
 
 node_modules
 tumblr/www/*.html
-tumblr/www/assets/*
 tumblr/www/css/*.min.*.css
 tumblr/www/css/*.min.css
 tumblr/www/css/*.less.css
