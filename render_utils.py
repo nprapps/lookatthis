@@ -178,7 +178,7 @@ def flatten_post_config(folder_name):
     configuration variables.
     """
     config = {}
-    
+
 
     post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % folder_name)
 

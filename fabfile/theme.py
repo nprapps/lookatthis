@@ -18,6 +18,7 @@ def render():
     from flask import g
 
     require('static_path', provided_by=['tumblr'])
+    require('settings', provided_by=['development', 'staging', 'production'])
     less()
     app_config_js()
     copytext_js('theme')
@@ -66,7 +67,7 @@ def deploy():
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
-    require('settings', provided_by=['production', 'staging'])
+    require('settings', provided_by=['production', 'staging', 'development'])
     require('static_path', provided_by=['tumblr'])
 
     execute('update')

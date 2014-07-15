@@ -2,99 +2,100 @@
 {% block index %}
 {block:IndexPage}
 <body class="index-page">
-        <div id="content" class="container-fluid">
-                <section class="posts-wrapper">
+    <div id="content" class="container-fluid">
+            <section class="posts-wrapper">
 
-                    <div id="posts" class="posts">
-                        <div class="row">
-                        <!-- START POSTS -->
-                        {block:Posts}
+                <div id="posts" class="posts">
+                    <div class="row">
+                    <!-- START POSTS -->
+                    {block:Posts}
 
-                            {block:Post1}
-                            <header>
-                                <div class="header-wrapper">
-                                    <div class="header-content">
-                                        <div class="inner-menu">
-                                            <a href="http://npr.org" class="npr-logo">
-                                                <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
-                                            </a>
-                                            <h3><a href="/">Look At This</a></h3>
-                                            <h4>An awesome tagline</h4>
-                                            <ul>
-                                                <li><a href="/about">What's this about?</a></li>
-                                                <li><a href="/weird">Send us something weird</a></li>
-                                            </ul>
-                                            <div class="follow-us">
-                                                <p class="twitter">
-                                                    <em><a href="#">@LookAtThisNPR</a></em>
-                                                    <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
-                                                </p>
-                                            </div><!--follow-us-->
-                                        </div><!--inner-menu-->
-                                    </div>
+                        {block:Post1}
+                        <header>
+                            <div class="header-wrapper">
+                                <div class="header-content">
+                                    <div class="inner-menu">
+                                        <a href="http://npr.org" class="npr-logo">
+                                            <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
+                                        </a>
+                                        <h3><a href="/">Look At This</a></h3>
+                                        <h4>An awesome tagline</h4>
+                                        <ul>
+                                            <li><a href="/about">What's this about?</a></li>
+                                            <li><a href="/weird">Send us something weird</a></li>
+                                        </ul>
+                                        <div class="follow-us">
+                                            <p class="twitter">
+                                                <em><a href="#">@LookAtThisNPR</a></em>
+                                                <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
+                                            </p>
+                                        </div><!--follow-us-->
+                                    </div><!--inner-menu-->
+                                </div>
+                            </div>
+
+                            {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
+                        </header>
+                        {/block:Post1}
+
+                        <article class="post">
+
+                            <div class="post-wrapper">
+
+                                {block:Text}
+                                <a href="{Permalink}" class="permalink">
+                                    <h3>{Title}</h3>
+                                </a>
+                                <div class="text-wrapper">
+                                    {Body}
+                                </div>
+                                {/block:Text}
+
+                                {block:Photo}
+                                <a href="{Permalink}">
+
+                                <img src="{{ S3_BASE_URL }}/tumblr/assets/homepage/{PostID}.jpg" class="img-responsive" alt="{PhotoAlt}"/>
+
+                                </a>
+                                {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
+                                {/block:Photo}
+
+                                <div class="post-meta">
+
+                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
                                 </div>
 
-                                {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
-                            </header>
-                            {/block:Post1}
+                            </div>
 
-                            <article class="post">
+                        </article>
 
-                                <div class="post-wrapper">
+                    {/block:Posts}
+                    <!-- END POSTS -->
+                     </div><!-- /row-->
+                </div><!-- /#posts-->
 
-                                    {block:Text}
-                                    <a href="{Permalink}" class="permalink">
-                                        <h3>{Title}</h3>
-                                    </a>
-                                    <div class="text-wrapper">
-                                        {Body}
-                                    </div>
-                                    {/block:Text}
-
-                                    {block:Photo}
-                                    <a href="{Permalink}">
-
-                                        <img src="{PhotoURL-500}" data-highres-image="{PhotoURL-HighRes}" class="img-responsive" alt="{PhotoAlt}"/>
-                                    </a>
-                                    {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
-                                    {/block:Photo}
-
-                                    <div class="post-meta">
-
-                                        <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
-                                    </div>
-
-                                </div>
-
-                            </article>
-
-                        {/block:Posts}
-                        <!-- END POSTS -->
-                         </div><!-- /row-->
-                    </div><!-- /#posts-->
-
-                </section> <!-- #post-wrap -->
+            </section> <!-- #post-wrap -->
 
 
-                <div class="row">
-                <footer>
-                    {block:Pagination}
-                        <nav class="pagination">
-                            <section class="buttons">
-                                {block:PreviousPage}<a href="{PreviousPage}" class="left">{lang:Previous page}<span class="arrow"></span></a>{/block:PreviousPage}
-                                {block:NextPage}<a href="{NextPage}" class="right">{lang:Next page}<span class="arrow"></span></a>{block:NextPage}
-                            </section>
-                            <section class="disabled buttons">
-                                <li class="left"><span class="arrow"></span></li>
-                                <li class="right"><span class="arrow"></span></li>
-                            </section>
-                            <section class="count">Page  {CurrentPage} / {TotalPages}</section>
-                        </nav>
-                    {/block:Pagination}
-                </footer>
-            </div><!-- /row -->
+            <div class="row">
+            <footer>
+                {block:Pagination}
+                    <nav class="pagination">
+                        <section class="buttons">
+                            {block:PreviousPage}<a href="{PreviousPage}" class="left">{lang:Previous page}<span class="arrow"></span></a>{/block:PreviousPage}
+                            {block:NextPage}<a href="{NextPage}" class="right">{lang:Next page}<span class="arrow"></span></a>{block:NextPage}
+                        </section>
+                        <section class="disabled buttons">
+                            <li class="left"><span class="arrow"></span></li>
+                            <li class="right"><span class="arrow"></span></li>
+                        </section>
+                        <section class="count">Page  {CurrentPage} / {TotalPages}</section>
+                    </nav>
+                {/block:Pagination}
+            </footer>
+        </div><!-- /row -->
 
-        </div> <!-- #container -->
+    </div> <!-- #container -->
 
     <script>
         var CURRENT_PAGE = {CurrentPage};

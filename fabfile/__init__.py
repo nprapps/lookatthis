@@ -84,7 +84,7 @@ def post_to_tumblr():
 
     TODO: Tweet in the post body
     """
-
+    # authenticate
     secrets = app_config.get_secrets()
     client = pytumblr.TumblrRestClient(
         secrets.get('TUMBLR_CONSUMER_KEY'),
@@ -93,11 +93,20 @@ def post_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    # get the copytext spreadsheet so we can parse some tumblr variables
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
 
+    # read the caption template and write the caption based on variables in the copytext spreadsheet
     with open('%s/templates/caption.html' % env.static_path) as f:
         template = Template(f.read())
     caption = template.render(COPY=COPY)
+
+    # set the tumblr photo path to the proper S3 bucket
+
+    tumblr_photo_path = '%s/www/assets/%s' % (
+        env.static_path,
+        unicode(COPY['tumblr']['tumblr_dashboard_photo'])
+    )
 
     id_target = env.post_config.TARGET_IDS[env.settings]
 
@@ -106,7 +115,7 @@ def post_to_tumblr():
         params = {
             'state': 'draft',
             'format' : 'html',
-            'source' : unicode(COPY['tumblr']['promo_photo']),
+            'source' : unicode(COPY['tumblr']['tumblr_dashboard_photo']),
             'caption' : caption,
             'slug' : env.folder_name
         }
@@ -144,7 +153,7 @@ def post_to_tumblr():
             'id' : env.post_config.ID,
             'type' :'photo',
             'format' : 'html',
-            'source' : unicode(COPY['tumblr']['promo_photo']),
+            'source' : unicode(COPY['tumblr']['tumblr_dashboard_photo']),
             'caption' : caption,
             'slug' : env.folder_name
         }
@@ -209,6 +218,8 @@ def _publish_to_tumblr():
         replace
     )
 
+    _deploy_promo_photo(response['id'])
+
 def _delete_tumblr_post():
     """
     Delete a post on Tumblr
@@ -228,6 +239,27 @@ def _delete_tumblr_post():
         id_target
     )
 
+def _deploy_promo_photo(id):
+    """
+    Rename the promo photo to the post ID and deploy it
+    """
+
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+
+    # Find the promo photo
+    post_assets = '%s/www/assets/' % env.static_path
+    promo_photo = unicode(COPY['tumblr']['promo_photo'])
+
+    # Rename that file
+    local('cp %s/%s tumblr/www/assets/homepage/%s.jpg' % (post_assets, promo_photo, id))
+
+    sync_homepage_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
+
+    for bucket in app_config.S3_BUCKETS:
+        local(sync_homepage_assets % ('tumblr/www/assets/homepage', 's3://%s/%s/tumblr/assets/homepage' % (
+                bucket,
+                app_config.PROJECT_SLUG
+            )))
 @task
 def deploy(slug=''):
     """
@@ -351,6 +383,8 @@ def generate_index():
 
 @task
 def tumblr():
+    require('settings', provided_by=[development, staging, production])
+
     env.static_path = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
     env.copytext_slug = 'theme'
