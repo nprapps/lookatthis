@@ -98,12 +98,16 @@ def post_to_tumblr():
 
     title = unicode(COPY['tumblr']['title'])
     subtitle = unicode(COPY['tumblr']['subtitle'])
-    date = unicode(COPY['tumblr']['date'])
+    description = unicode(COPY['tumblr']['description'])
 
     # read the caption template and write the caption based on variables in the copytext spreadsheet
     with open('%s/templates/caption.html' % env.static_path) as f:
         template = Template(f.read())
-    caption = template.render(title=title, subtitle=subtitle, date=date)
+    caption = template.render(
+        title=title,
+        subtitle=subtitle,
+        description=description
+    )
 
     tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
     tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
