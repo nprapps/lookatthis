@@ -3,6 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
 var NAV_HEIGHT = 75;
+var EVENT_CATEGORY = 'lookatthis';
 
 var $w;
 var $h;
@@ -24,7 +25,7 @@ var hasTrackedSlideNav = false;
 var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
 
-    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
 }
 
 var resize = function() {
@@ -76,7 +77,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     slideStartTime = moment();
 
     if ($slides.last().hasClass('active')) {
-        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
     }
 };
 
@@ -261,7 +262,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     * Called when leaving a slide.
     */
 
-    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', hash, timeOnSlide]);
+    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -282,7 +283,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
+            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -298,7 +299,7 @@ var onDocumentKeyDown = function(e) {
 
 var onControlArrowClick = function(e) {
     if (!hasTrackedSlideNav) {
-        // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
         hasTrackedSlideNav = true;
     }
 
