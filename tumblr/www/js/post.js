@@ -59,7 +59,7 @@ var getIndex = function() {
             post_data = data[post_index - 1];
         }
 
-        $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), '*');
+        $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), APP_CONFIG.S3_BASE_URL);
 
     });
 };
