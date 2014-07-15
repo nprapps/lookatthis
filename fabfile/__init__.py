@@ -101,13 +101,6 @@ def post_to_tumblr():
         template = Template(f.read())
     caption = template.render(COPY=COPY)
 
-    # set the tumblr photo path to the proper S3 bucket
-
-    tumblr_photo_path = '%s/www/assets/%s' % (
-        env.static_path,
-        unicode(COPY['tumblr']['tumblr_dashboard_photo'])
-    )
-
     id_target = env.post_config.TARGET_IDS[env.settings]
 
     # if the post has a no ID, create the new post.
@@ -150,7 +143,7 @@ def post_to_tumblr():
     # update the existing post on Tumblr.
     else:
         params = {
-            'id' : env.post_config.ID,
+            'id' : id_target,
             'type' :'photo',
             'format' : 'html',
             'source' : unicode(COPY['tumblr']['tumblr_dashboard_photo']),
