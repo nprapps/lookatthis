@@ -129,7 +129,7 @@ var getBackgroundImage = function(container) {
 
         var image_filename = $(container).data('bgimage').split('.')[0];
         var image_extension = '.' + $(container).data('bgimage').split('.')[1];
-        var image_path = 'assets/img/' + image_filename + mobileSuffix + image_extension;
+        var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
         if ($(container).css('background-image') === 'none') {
             $(container).css('background-image', 'url(' + image_path + ')');
