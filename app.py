@@ -110,7 +110,8 @@ def _posts_index():
 
         output.append(post_metadata)
 
-    return json.dumps(output)
+    data=json.dumps(output)
+    return 'dataHandler(%s);' % data
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
