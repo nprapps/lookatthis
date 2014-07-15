@@ -248,7 +248,7 @@ def _deploy_promo_photo(id):
 
     # Find the promo photo
     post_assets = '%s/www/assets/' % env.static_path
-    promo_photo = unicode(COPY['tumblr']['promo_photo'])
+    promo_photo = unicode(COPY['tumblr']['thumbnail_photo'])
 
     # Rename that file
     local('cp %s/%s tumblr/www/assets/homepage/%s.jpg' % (post_assets, promo_photo, id))
