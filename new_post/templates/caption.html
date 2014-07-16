@@ -1,4 +1,11 @@
 <blockquote>{{ description }}</blockquote>
 
-<h2>{{ title }}</h2>
-<h3>{{ subtitle }}</h3>
+{% if link %}
+    <a href="{{ link }}">
+        <h2>{{ title }}</h2> </br>
+        <h3>{{ subtitle }}</h3>
+    </a>
+{% else %}
+    <h2>{{ title }}</h2> </br>
+    <h3>{{ subtitle }}</h3>
+{% endif %}

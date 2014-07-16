@@ -63,6 +63,11 @@ def _post(slug):
     except IOError:
         pass
 
+    if app_config.DEPLOYMENT_TARGET and post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET]:
+
+        context['post_id'] = post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET]
+        context['tumblr_name'] = app_config.TUMBLR_NAME
+
     with open('%s/templates/index.html' % post_path) as f:
         template = f.read().decode('utf-8')
 

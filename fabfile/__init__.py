@@ -93,12 +93,18 @@ def post_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    id_target = env.post_config.TARGET_IDS[env.settings]
+
     # get the copytext spreadsheet so we can parse some tumblr variables
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
 
     title = unicode(COPY['tumblr']['title'])
     subtitle = unicode(COPY['tumblr']['subtitle'])
     description = unicode(COPY['tumblr']['description'])
+    if env.post_config.IS_PUBLISHED[env.settings]:
+        link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
+    else:
+        link=''
 
     # read the caption template and write the caption based on variables in the copytext spreadsheet
     with open('%s/templates/caption.html' % env.static_path) as f:
@@ -106,13 +112,12 @@ def post_to_tumblr():
     caption = template.render(
         title=title,
         subtitle=subtitle,
-        description=description
+        description=description,
+        link=link
     )
 
     tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
     tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
-
-    id_target = env.post_config.TARGET_IDS[env.settings]
 
     # if the post has a no ID, create the new post.
     if not id_target:
@@ -190,6 +195,19 @@ def post_to_tumblr():
 
     _deploy_promo_photo(response['id'])
 
+def _get_posts(id):
+    secrets = app_config.get_secrets()
+    client = pytumblr.TumblrRestClient(
+        secrets.get('TUMBLR_CONSUMER_KEY'),
+        secrets.get('TUMBLR_CONSUMER_SECRET'),
+        secrets.get('TUMBLR_TOKEN'),
+        secrets.get('TUMBLR_TOKEN_SECRET')
+    )
+
+    response = client.posts(app_config.TUMBLR_NAME, id=id)
+
+    return response['posts'][0]['short_url']
+
 def _publish_to_tumblr():
     """
     Publish the currently active post
@@ -204,14 +222,34 @@ def _publish_to_tumblr():
 
     now = datetime.datetime.now()
 
+    # get the copytext spreadsheet so we can parse some tumblr variables
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+
+    title = unicode(COPY['tumblr']['title'])
+    subtitle = unicode(COPY['tumblr']['subtitle'])
+    description = unicode(COPY['tumblr']['description'])
+    link = 'http\://%s/%s' % (app_config.S3_BASE_URL, env.static_path)
+
+    # read the caption template and write the caption based on variables in the copytext spreadsheet
+    with open('%s/templates/caption.html' % env.static_path) as f:
+        template = Template(f.read())
+    caption = template.render(
+        title=title,
+        subtitle=subtitle,
+        description=description,
+        link=link
+    )
+
     id_target = env.post_config.TARGET_IDS[env.settings]
 
     response = client.edit_post(
         app_config.TUMBLR_NAME,
         id=id_target,
+        type='photo',
         state='published',
         slug=env.folder_name,
-        date=now
+        date=now,
+        caption=caption
     )
 
     if 'id' not in response:
@@ -363,11 +401,12 @@ def publish():
     rename(env.slug, False)
 
     update()
+
+    _publish_to_tumblr()
+
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.folder_name)
     utils._deploy_to_s3('.gzip/posts/%s' % env.folder_name)
-    _publish_to_tumblr()
-
     generate_index()
 
 
