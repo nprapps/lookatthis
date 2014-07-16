@@ -202,12 +202,16 @@ def _publish_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    now = datetime.datetime.now()
+
     id_target = env.post_config.TARGET_IDS[env.settings]
 
     response = client.edit_post(
         app_config.TUMBLR_NAME,
         id=id_target,
-        state='published'
+        state='published',
+        slug=env.folder_name,
+        date=now
     )
 
     if 'id' not in response:
