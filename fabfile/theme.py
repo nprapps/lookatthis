@@ -34,13 +34,10 @@ def render():
         print 'Rendering %s' % path
 
 
-        print env.settings
         if env.settings == 'development':
             g.compile_includes = False
         else:
             g.compile_includes = True
-
-        print g.compile_includes
 
         g.compiled_includes = compiled_includes
 

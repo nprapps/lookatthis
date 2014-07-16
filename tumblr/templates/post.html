@@ -1,8 +1,20 @@
-<!-- Post template -->
-{% block post %}
 {block:PermalinkPage}
-    <body class="permalink-page">
+    <section class="permalink-page">
+        {block:PostTitle}
+        {PostTitle}
+        {/block:PostTitle}
+
     {block:Posts}
+        {block:Text}{/block:Text}
+        {block:Panorama}{/block:Panorama}
+        {block:Audio}{/block:Audio}
+        {block:Video}{/block:Video}
+        {block:Photoset}{/block:Photoset}
+        {block:Quote}{/block:Quote}
+        {block:Link}{/block:Link}
+        {block:Chat}{/block:Chat}
+
+        {block:Photo}
         <div class="text-wrapper">
             {Body}
         </div>
@@ -16,16 +28,14 @@
             </ul>
         </div>
 
-    {{ JS.push('js/lib/jquery.js') }}
-    {{ JS.push('js/lib/bootstrap.js') }}
-    {{ JS.push('js/app_config.js') }}
-    {{ JS.push('js/post.js') }}
-    {{ JS.render('js/post-footer.min.js')}}
-{/block:Posts}
+        {{ JS.push('js/lib/jquery.js') }}
+        {{ JS.push('js/lib/bootstrap.js') }}
+        {{ JS.push('js/app_config.js') }}
+        {{ JS.push('js/post.js') }}
+        {{ JS.render('js/post-footer.min.js')}}
 
-
-
-
+        {/block:Photo}
+    {/block:Posts}
 
     <!-- CHARTBEAT -->
     <script type="text/javascript">
@@ -52,6 +62,5 @@
                 loadChartbeat : function() { oldonload(); loadChartbeat(); };
         })();
     </script>
-</body>
+</section>
 {/block:PermalinkPage}
-{% endblock %}
