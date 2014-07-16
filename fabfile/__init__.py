@@ -228,7 +228,7 @@ def _publish_to_tumblr():
     title = unicode(COPY['tumblr']['title'])
     subtitle = unicode(COPY['tumblr']['subtitle'])
     description = unicode(COPY['tumblr']['description'])
-    link = 'http\://%s/%s' % (app_config.S3_BASE_URL, env.static_path)
+    link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
 
     # read the caption template and write the caption based on variables in the copytext spreadsheet
     with open('%s/templates/caption.html' % env.static_path) as f:
