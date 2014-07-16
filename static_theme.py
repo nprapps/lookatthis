@@ -9,6 +9,8 @@ from render_utils import flatten_app_config
 from render_utils import make_context, CSSIncluder, JavascriptIncluder
 import static
 
+import app_config
+
 theme = Blueprint('theme', __name__, url_prefix='/tumblr', template_folder='tumblr/templates')
 
 # Render LESS files on-demand
@@ -42,5 +44,7 @@ def _theme():
 
     context['JS'] = JavascriptIncluder(asset_depth=0, static_path='tumblr', absolute=True)
     context['CSS'] = CSSIncluder(asset_depth=0, static_path='tumblr', absolute=True)
+
+    context['tumblr_name'] = app_config.TUMBLR_NAME
 
     return render_template('theme.html', **context)
