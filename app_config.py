@@ -115,7 +115,7 @@ def configure_targets(deployment_target):
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'npr-news'
         DEBUG = False
-        TUMBLR_NAME = 'nprlookatthis'
+        TUMBLR_NAME = 'lookatthisstory'
     elif deployment_target == 'staging':
         S3_BUCKETS = STAGING_S3_BUCKETS
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
