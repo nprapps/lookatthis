@@ -63,9 +63,11 @@ def _post(slug):
     except IOError:
         pass
 
-    if app_config.DEPLOYMENT_TARGET and post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET]:
+    dt = app_config.DEPLOYMENT_TARGET
 
-        context['post_id'] = post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET]
+    if dt and post_config.TARGET_IDS[dt] and post_config.IS_PUBLISHED[dt]:
+
+        context['post_id'] = post_config.TARGET_IDS[dt]
         context['tumblr_name'] = app_config.TUMBLR_NAME
 
     with open('%s/templates/index.html' % post_path) as f:
