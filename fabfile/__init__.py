@@ -190,8 +190,8 @@ def post_to_tumblr():
             find,
             replace
         )
-
-    _deploy_promo_photo(response['id'])
+    if env.post_config.IS_PUBLISHED[env.settings]:
+        _deploy_promo_photo(response['id'])
 
 def _get_posts(id):
     secrets = app_config.get_secrets()
@@ -292,6 +292,8 @@ def _delete_tumblr_post():
 
     id_target = env.post_config.TARGET_IDS[env.settings]
 
+    _delete_promo_photo(id_target)
+
     client.delete_post(
         app_config.TUMBLR_NAME,
         id_target
@@ -321,6 +323,14 @@ def _deploy_promo_photo(id):
         ))
 
     local('fab tumblr assets.sync')
+
+def _delete_promo_photo(id):
+    if id:
+        local('fab tumblr assets.rm:homepage/%s.jpg' % id)
+    else:
+        return
+
+
 @task
 def deploy(slug=''):
     """
