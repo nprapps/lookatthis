@@ -59,23 +59,6 @@ def development():
     app_config.configure_targets(env.settings)
 
 """
-Deployment
-
-Changes to deployment requires a full-stack test. Deployment
-has two primary functions: Pushing flat files to S3 and deploying
-code to a remote server if required.
-"""
-
-@task
-def update():
-    """
-    Update all application data not in repository (copy, assets, etc).
-    """
-    text.update()
-    assets.sync()
-    data.update()
-
-"""
 Tumblr posts
 
 Functions for creating, updating and deleting posts on Tumblr.
@@ -333,6 +316,23 @@ def _render_caption(COPY, pass_link):
 
     return rendered
 
+
+"""
+Deployment
+
+Changes to deployment requires a full-stack test. Deployment
+has two primary functions: Pushing flat files to S3 and deploying
+code to a remote server if required.
+"""
+
+@task
+def update():
+    """
+    Update all application data not in repository (copy, assets, etc).
+    """
+    text.update()
+    assets.sync()
+    data.update()
 
 @task
 def deploy(slug=''):
