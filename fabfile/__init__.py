@@ -5,6 +5,7 @@ from glob import glob
 import imp
 import json
 import os
+from termcolor import colored
 
 import copytext
 from fabric.api import local, require, settings, task
@@ -59,21 +60,10 @@ def development():
     app_config.configure_targets(env.settings)
 
 """
-Deployment
+Tumblr posts
 
-Changes to deployment requires a full-stack test. Deployment
-has two primary functions: Pushing flat files to S3 and deploying
-code to a remote server if required.
+Functions for creating, updating and deleting posts on Tumblr.
 """
-
-@task
-def update():
-    """
-    Update all application data not in repository (copy, assets, etc).
-    """
-    text.update()
-    assets.sync()
-    data.update()
 
 @task
 def post_to_tumblr():
@@ -91,29 +81,21 @@ def post_to_tumblr():
         secrets.get('TUMBLR_TOKEN_SECRET')
     )
 
+    # see if we have an id already for this deployment target
     id_target = env.post_config.TARGET_IDS[env.settings]
 
-    # get the copytext spreadsheet so we can parse some tumblr variables
+    # if we already have a published post, we want to render a link to it
+    if env.post_config.IS_PUBLISHED[env.settings]:
+        pass_link = True
+    else:
+        pass_link = False
+
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
 
-    title = unicode(COPY['tumblr']['title'])
-    subtitle = unicode(COPY['tumblr']['subtitle'])
-    description = unicode(COPY['tumblr']['description'])
-    if env.post_config.IS_PUBLISHED[env.settings]:
-        link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
-    else:
-        link=''
+    # render the caption
+    caption = _render_caption(COPY, pass_link)
 
-    # read the caption template and write the caption based on variables in the copytext spreadsheet
-    with open('%s/templates/caption.html' % env.static_path) as f:
-        template = Template(f.read())
-    caption = template.render(
-        title=title,
-        subtitle=subtitle,
-        description=description,
-        link=link
-    )
-
+    # find the photo for the dashboard
     tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
     tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
 
@@ -142,6 +124,7 @@ def post_to_tumblr():
             print response
             return
 
+        # Take the id tumblr returns and write it to the post config.
         post_config_path = '%s/post_config.py' % env.static_path
 
         find = "'%s': None," % env.settings
@@ -180,6 +163,7 @@ def post_to_tumblr():
             print response
             return
 
+        # Take the id tumblr returns and write it to the post config.
         post_config_path = '%s/post_config.py' % env.static_path
 
         find = "'%s': '%s'," % (env.settings, id_target)
@@ -191,20 +175,9 @@ def post_to_tumblr():
             replace
         )
 
-    _deploy_promo_photo(response['id'])
-
-def _get_posts(id):
-    secrets = app_config.get_secrets()
-    client = pytumblr.TumblrRestClient(
-        secrets.get('TUMBLR_CONSUMER_KEY'),
-        secrets.get('TUMBLR_CONSUMER_SECRET'),
-        secrets.get('TUMBLR_TOKEN'),
-        secrets.get('TUMBLR_TOKEN_SECRET')
-    )
-
-    response = client.posts(app_config.TUMBLR_NAME, id=id)
-
-    return response['posts'][0]['short_url']
+    # if the post is published,
+    if env.post_config.IS_PUBLISHED[env.settings]:
+        _deploy_promo_photo(response['id'])
 
 def _publish_to_tumblr():
     """
@@ -220,33 +193,23 @@ def _publish_to_tumblr():
 
     now = datetime.datetime.now()
 
-    # get the copytext spreadsheet so we can parse some tumblr variables
     COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
 
-    title = unicode(COPY['tumblr']['title'])
-    subtitle = unicode(COPY['tumblr']['subtitle'])
-    description = unicode(COPY['tumblr']['description'])
-    link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
-
-    # read the caption template and write the caption based on variables in the copytext spreadsheet
-    with open('%s/templates/caption.html' % env.static_path) as f:
-        template = Template(f.read())
-    caption = template.render(
-        title=title,
-        subtitle=subtitle,
-        description=description,
-        link=link
-    )
+    caption = _render_caption(COPY, pass_link=True)
 
     id_target = env.post_config.TARGET_IDS[env.settings]
 
+    params = {
+        'id': id_target,
+        'type': 'photo',
+        'state': 'published',
+        'slug': env.slug,
+        'caption': caption
+    }
+
     response = client.edit_post(
         app_config.TUMBLR_NAME,
-        id=id_target,
-        type='photo',
-        state='published',
-        slug=env.slug,
-        caption=caption
+        **params
     )
 
     if 'id' not in response:
@@ -292,6 +255,8 @@ def _delete_tumblr_post():
 
     id_target = env.post_config.TARGET_IDS[env.settings]
 
+    _delete_promo_photo(id_target)
+
     client.delete_post(
         app_config.TUMBLR_NAME,
         id_target
@@ -321,6 +286,55 @@ def _deploy_promo_photo(id):
         ))
 
     local('fab tumblr assets.sync')
+
+def _delete_promo_photo(id):
+    if id:
+        local('fab tumblr assets.rm:homepage/%s.jpg' % id)
+    else:
+        return
+
+def _render_caption(COPY, pass_link):
+    # get the copytext spreadsheet so we can parse some tumblr variables
+
+    title = unicode(COPY['tumblr']['title'])
+    subtitle = unicode(COPY['tumblr']['subtitle'])
+    description = unicode(COPY['tumblr']['description'])
+    if pass_link:
+        link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
+    else:
+        link = ''
+
+    # read the caption template and write the caption based on variables in the copytext spreadsheet
+    with open('%s/templates/caption.html' % env.static_path) as f:
+        template = Template(f.read())
+
+    rendered = template.render(
+        title=title,
+        subtitle=subtitle,
+        description=description,
+        link=link
+    )
+
+    return rendered
+
+
+"""
+Deployment
+
+Changes to deployment requires a full-stack test. Deployment
+has two primary functions: Pushing flat files to S3 and deploying
+code to a remote server if required.
+"""
+
+@task
+def update():
+    """
+    Update all application data not in repository (copy, assets, etc).
+    """
+    text.update()
+    assets.sync()
+    data.update()
+
 @task
 def deploy(slug=''):
     """
@@ -352,7 +366,10 @@ def post(slug):
 
     if os.path.exists ('%s/post_config.py' % env.static_path):
         env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
-        env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
+        url = env.post_config.COPY_GOOGLE_DOC_URL
+        bits = url.split('key=')
+        bits = bits[1].split('&')
+        env.copytext_key = bits[0]
     else:
         env.post_config = None
         env.copytext_key = None
@@ -385,6 +402,8 @@ def publish():
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
     utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
+
+    print colored('Hey, you should commit your post to the repo now! The post ID has changed, and others will want it to work with the post.', 'blue')
 
 @task
 def delete():

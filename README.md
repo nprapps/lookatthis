@@ -16,6 +16,7 @@ lookatthis
 * [Run the project](#run-the-project)
 * [Starting a new post](#starting-a-new-post)
 * [Publishing a post](#publishing-a-post)
+* [Post ordering](#post-ordering)
 * [COPY editing](#copy-editing)
 * [Arbitrary Google Docs](#arbitrary-google-docs)
 * [Run Python tests](#run-python-tests)
@@ -166,7 +167,7 @@ Post ordering is handled entirely by Tumblr. Thus, posts will appear on Look At 
 To push a post to the top of the post order, republish the post:
 
 ```
-fab staging post:$SLUG publish`
+fab staging post:$SLUG publish
 ```
 
 Note that the timestamp is updated on Tumblr every time you run the `publish` command. Thus, **if you are making copyedits to a published post, make sure to run `deploy` instead.** 
