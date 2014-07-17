@@ -43,13 +43,13 @@ def post_config_js():
         f.write(js)
 
 @task
-def copytext_js(folder_name):
+def copytext_js(slug):
     """
     Render COPY to copy.js.
     """
     from static import copy_js
 
-    response = copy_js(folder_name)
+    response = copy_js(slug)
     js = response[0]
 
     with open('%s/www/js/copy.js' % env.static_path, 'w') as f:
@@ -62,18 +62,18 @@ def render_all():
     """
     from flask import g, url_for
 
-    require('folder_name', provided_by=['post'])
+    require('slug', provided_by=['post'])
 
     less()
     post_config_js()
-    copytext_js(env.folder_name)
+    copytext_js(env.slug)
 
     compiled_includes = {}
 
     app_config.configure_targets(env.get('settings', None))
 
     with app.app.test_request_context():
-        path = 'posts/%s/www/index.html' % env.folder_name
+        path = 'posts/%s/www/index.html' % env.slug
 
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path

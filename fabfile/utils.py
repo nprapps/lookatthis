@@ -65,27 +65,16 @@ def _deploy_to_s3(path='.gzip'):
             bucket,
             app_config.PROJECT_SLUG
         )))
-def _get_folder_for_slug(slug):
-    regex = re.compile('^\d+-\d+-\d+-(.*)$')
-
-    if regex.match(slug):
-        return slug
-
+def _find_slugs(slug):
     posts = glob('%s/*' % app_config.POST_PATH)
 
     for folder in posts:
-        folder_name = folder.split('%s/' % app_config.POST_PATH)[1]
-        regex = re.compile('^\d+-\d+-\d+-(.*)$')
-        folder_slug = regex.match(folder_name).group(1);
+        folder_slug = folder.split('%s/' % app_config.POST_PATH)[1]
 
         if slug == folder_slug:
-            return folder_name
+            return folder_slug
 
     return
-
-def _get_slug_for_folder(folder_name):
-    regex = re.compile('^\d+-\d+-\d+-(.*)$')
-    return regex.match(folder_name).group(1);
 
 def replace_in_file(filename, find, replace):
     with open(filename, 'r') as f:

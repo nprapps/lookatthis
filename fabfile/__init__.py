@@ -27,8 +27,6 @@ import utils
 if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
     import bootstrap
 
-env.folder_name = None
-
 """
 Environments
 
@@ -96,7 +94,7 @@ def post_to_tumblr():
     id_target = env.post_config.TARGET_IDS[env.settings]
 
     # get the copytext spreadsheet so we can parse some tumblr variables
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
 
     title = unicode(COPY['tumblr']['title'])
     subtitle = unicode(COPY['tumblr']['subtitle'])
@@ -126,7 +124,7 @@ def post_to_tumblr():
             'format' : 'html',
             'data' : str(tumblr_photo_path),
             'caption' : caption,
-            'slug' : env.folder_name
+            'slug' : env.slug
         }
 
         tags = unicode(COPY['tumblr']['tags']).split(',')
@@ -164,7 +162,7 @@ def post_to_tumblr():
             'format' : 'html',
             'data' : str(tumblr_photo_path),
             'caption' : caption,
-            'slug' : env.folder_name
+            'slug' : env.slug
         }
 
         tags = unicode(COPY['tumblr']['tags']).split(',')
@@ -223,7 +221,7 @@ def _publish_to_tumblr():
     now = datetime.datetime.now()
 
     # get the copytext spreadsheet so we can parse some tumblr variables
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
 
     title = unicode(COPY['tumblr']['title'])
     subtitle = unicode(COPY['tumblr']['subtitle'])
@@ -247,8 +245,7 @@ def _publish_to_tumblr():
         id=id_target,
         type='photo',
         state='published',
-        slug=env.folder_name,
-        date=now,
+        slug=env.slug,
         caption=caption
     )
 
@@ -305,7 +302,7 @@ def _deploy_promo_photo(id):
     Rename the promo photo to the post ID and deploy it
     """
 
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.folder_name)
+    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
 
     # Find the promo photo
     post_assets = '%s/www/assets' % env.static_path
@@ -322,18 +319,20 @@ def _deploy_promo_photo(id):
                 app_config.PROJECT_SLUG
             )
         ))
+
+    local('fab tumblr assets.sync')
 @task
 def deploy(slug=''):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[development, staging, production])
-    require('folder_name', provided_by=[post])
+    require('slug', provided_by=[post])
 
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.folder_name)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.folder_name)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
     post_to_tumblr()
 
 """
@@ -342,15 +341,14 @@ App-specific commands
 
 @task
 def post(slug):
-    env.folder_name = utils._get_folder_for_slug(slug)
+    env.slug = utils._find_slugs(slug)
 
-    if not env.folder_name:
+    if not env.slug:
         utils.confirm('This post does not exist. Do you want to create a new post called %s?' % slug)
         _new(slug)
         return
 
-    env.slug = slug
-    env.static_path = '%s/%s' % (app_config.POST_PATH, env.folder_name)
+    env.static_path = '%s/%s' % (app_config.POST_PATH, env.slug)
 
     if os.path.exists ('%s/post_config.py' % env.static_path):
         env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
@@ -359,60 +357,40 @@ def post(slug):
         env.post_config = None
         env.copytext_key = None
 
-    env.copytext_slug = env.folder_name
+    env.copytext_slug = env.slug
 
 def _new(slug):
 
-    today = datetime.date.today()
-
-    local('cp -r new_post %s/%s-%s' % (app_config.POST_PATH, today, slug))
+    local('cp -r new_post %s/%s' % (app_config.POST_PATH, slug))
     post(slug)
     text.update()
 
 
 @task
-def rename(slug, check_exists=True):
-    require('folder_name', provided_by=[post])
+def rename(new_slug, check_exists=True):
+    require('slug', provided_by=[post])
 
-    exists = utils._get_folder_for_slug(slug)
-
-    if check_exists:
-        if exists:
-            print 'A post with this name already exists.'
-            return
-
-    today = datetime.date.today()
-    timestamp_path = '%s-%s' % (today, slug)
-
-    if exists == timestamp_path:
-        return
-
-    new_path = '%s/%s' % (app_config.POST_PATH, timestamp_path)
+    new_path = '%s/%s' % (app_config.POST_PATH, new_slug)
     local('mv %s %s' % (env.static_path, new_path))
-    local('mv data/%s.xlsx data/%s.xlsx' % (env.folder_name, timestamp_path))
-    post(slug)
+    local('mv data/%s.xlsx data/%s.xlsx' % (env.slug, new_slug))
+    post(new_slug)
 
 @task
 def publish():
-    require('folder_name', provided_by=[post])
+    require('slug', provided_by=[post])
     require('settings', provided_by=[development, staging, production])
 
-    # update the timestamp in slug
-    rename(env.slug, False)
-
     update()
-
     _publish_to_tumblr()
-
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.folder_name)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.folder_name)
+    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
+    utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
     generate_index()
 
 
 @task
 def delete():
-    require('folder_name', provided_by=[post])
+    require('slug', provided_by=[post])
 
     env.settings = 'development'
     _delete_tumblr_post()
@@ -426,7 +404,7 @@ def delete():
     local('fab post:%s assets.rm:"*"' % env.slug)
 
     local('rm -r %s' % env.static_path)
-    local('rm data/%s.xlsx' % env.folder_name)
+    local('rm data/%s.xlsx' % env.slug)
 
 
     generate_index()
@@ -449,9 +427,8 @@ def generate_index():
 
 @task
 def tumblr():
-    require('settings', provided_by=[development, staging, production])
-
     env.static_path = 'tumblr'
+    env.slug = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
     env.copytext_slug = 'theme'
 
