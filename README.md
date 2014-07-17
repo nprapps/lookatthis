@@ -158,6 +158,19 @@ Publishing a post
 * `fab staging post:$SLUG deploy`: This function will create a draft post on Tumblr and deploy the static assets to S3.
 * `fab staging post:$SLUG publish`: This function will publish the draft post that already exists on Tumblr.
 
+Post ordering
+-------------
+
+Post ordering is handled entirely by Tumblr. Thus, posts will appear on Look At This in the order they are published. 
+
+To push a post to the top of the post order, republish the post:
+
+```
+fab staging post:$SLUG publish`
+```
+
+Note that the timestamp is updated on Tumblr every time you run the `publish` command. Thus, **if you are making copyedits to a published post, make sure to run `deploy` instead.** 
+
 COPY editing
 ------------
 
