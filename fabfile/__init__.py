@@ -449,8 +449,6 @@ def generate_index():
 
 @task
 def tumblr():
-    require('settings', provided_by=[development, staging, production])
-
     env.static_path = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
     env.copytext_slug = 'theme'
