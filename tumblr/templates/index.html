@@ -5,11 +5,8 @@
 
                 <div id="posts" class="posts">
                     <div class="row">
-                    <!-- START POSTS -->
-                    {block:Posts}
-
-                        {block:Post1}
-                        <header>
+                    
+                    <header>
                             <div class="header-wrapper">
                                 <div class="header-content">
                                     <div class="inner-menu">
@@ -31,37 +28,36 @@
                                     </div><!--inner-menu-->
                                 </div>
                             </div>
-
-                            {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
                         </header>
+                    
+                    
+                    <!-- START POSTS -->
+                    {block:Posts}
+
+                        {block:Post1}
+                        
                         {/block:Post1}
 
                         <article class="post">
 
                             <div class="post-wrapper">
-
-                                {block:Text}
-                                <a href="{Permalink}" class="permalink">
-                                    <h3>{Title}</h3>
-                                </a>
-                                <div class="text-wrapper">
-                                    {Body}
-                                </div>
-                                {/block:Text}
-
                                 {block:Photo}
                                 <a href="{Permalink}">
 
                                 <img src="{{ S3_BASE_URL }}/tumblr/assets/homepage/{PostID}.jpg" class="img-responsive" alt="{PhotoAlt}"/>
 
                                 </a>
-                                {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
+                                
+                                
+                                {block:Caption}
+                                <div class="caption">
+                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
+                                    {Caption}
+                                </div>
+                                {/block:Caption}
+                                
                                 {/block:Photo}
 
-                                <div class="post-meta">
-
-                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
-                                </div>
 
                             </div>
 

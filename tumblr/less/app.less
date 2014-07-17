@@ -1,5 +1,5 @@
 @import "./lib/bootstrap/bootstrap.less";
-@import "./lib/font-awesome/font-awesome.less";
+//@import "./lib/font-awesome/font-awesome.less";
 @import "./lib/prefixer.less";
 
 // Global variables
@@ -34,7 +34,6 @@ h1,h2,h3,h4,h5,h6 {
     }
 
     .header-wrapper {
-        padding-bottom: 137.922%;
         position: relative;
         margin-bottom: @grid-gutter-width;
 
@@ -133,24 +132,27 @@ h1,h2,h3,h4,h5,h6 {
 
     .post-wrapper {
         position: relative;
-        padding-bottom: 66.66666%;
         margin-bottom: @grid-gutter-width;
 
         a {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            
 
             img {
                 width: 100%;
             }
         }
 
-        .caption,
-        .post-meta {
-            display: none;
+        .caption {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            
+            h2, h3, p {
+                color: #fff;
+                font-size: 14px;
+            }
+            
+            blockquote {display: none;}
         }
     }
 }
