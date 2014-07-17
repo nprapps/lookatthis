@@ -5,6 +5,7 @@ from glob import glob
 import imp
 import json
 import os
+from termcolor import colored
 
 import copytext
 from fabric.api import local, require, settings, task
@@ -401,6 +402,8 @@ def publish():
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
     utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
+
+    print colored('Hey, you should commit your post to the repo now! The post ID has changed, and others will want it to work with the post.', 'blue')
 
 @task
 def delete():
