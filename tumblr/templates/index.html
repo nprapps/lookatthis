@@ -9,30 +9,30 @@
  
                     <div class="top-section">
                     
-                    <header>
-                            <div class="header-wrapper">
-                                <div class="header-content">
-                                    <div class="inner-menu">
-                                        <a href="http://npr.org" class="npr-logo">
-                                            <img src="http://apps.npr.org/borderland/assets/img/npr-logo.png">
-                                        </a>
-                                        <h3><a href="/">Look At This</a></h3>
-                                        <h4>An awesome tagline</h4>
-                                        <ul>
-                                            <li><a href="/about">What's this about?</a></li>
-                                            <li><a href="/weird">Send us something weird</a></li>
-                                        </ul>
-                                        <div class="follow-us">
-                                            <p class="twitter">
-                                                <em><a href="#">@LookAtThisNPR</a></em>
-                                                <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
-                                            </p>
-                                        </div><!--follow-us-->
-                                    </div><!--inner-menu-->
-                                </div>
-                            </div>
+                        <header style="background-image:url('{{ S3_BASE_URL }}/tumblr/assets/branding-background.png');">
+                        
+                            <div class="branding">
+                                <a href="http://npr.org" class="npr-logo">
+                                    <img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.png">
+                                </a>
+                                <h3><a href="/"><b>Look</b> At This</a></h3>
+                                <h4>Look At This is a rabbit hole of visual curiosities.</h4>
+                            </div><!--branding-->
+                            
+                            <div class="menu">
+                                <ul>
+                                    <li><a href="/about">What's this about?</a></li>
+                                    <li><a href="/weird">Send us something weird</a></li>
+                                </ul>
+                                <div class="follow-us">
+                                    <p class="twitter">
+                                        <em><a href="#">@LookAtThisNPR</a></em>
+                                        <a href="#" class="twitter-hashtag">#looksGoodNPR</a>
+                                    </p>
+                                </div><!--follow-us-->
+                            </div><!--menu-->
+                                
                         </header>
-                    
                     
                     <!-- START POSTS -->
                     {block:Posts}
@@ -53,17 +53,18 @@
                                 
                                 
                                 {block:Caption}
-                                <div class="caption">
-                                    <p class="pubdate">
-                                    <a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a>
-                                    </p>
-                                    {Caption}
-                                </div>
-                                {/block:Caption}
                                 
+                                <div class="caption-wrapper">
+                                <div class="caption">
+                                    {Caption}
+                                    <p class="pubdate">
+                                    {block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}
+                                    </p>
+                                </div>
+                                </div><!-- /caption-wrapper-->
+                                {/block:Caption}
+                                </a>
                                 {/block:Photo}
-
-
                             </div>
 
                         </article>
