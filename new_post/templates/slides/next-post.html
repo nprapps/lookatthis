@@ -1,0 +1,13 @@
+<div class="slide next-post" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+
+    <div class="up-next">
+        <h2>Up Next</h2>
+        <a href="{{ row.text3 }}">
+            <h3 class="next-post-title">{{ row.text1 }}</h3>
+            <p>{{ row.text2 }}
+            <img src="assets/{{ row.media }}">
+        </a>
+    </div>
+
+    <div class="share"></div>
+</div>
