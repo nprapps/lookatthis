@@ -19,10 +19,10 @@ def sync():
     """
     Intelligently synchronize assets between S3 and local folder.
     """
-    require('folder_name', provided_by=['post'])
+    require('static_path', provided_by=['post', 'tumblr'])
 
     assets_root = '%s/www/assets' % env.static_path
-    s3_root = '%s/%s' % (app_config.ASSETS_SLUG, env.folder_name)
+    s3_root = '%s/%s' % (app_config.ASSETS_SLUG, env.slug)
 
     ignore_globs = []
 
@@ -176,7 +176,7 @@ def rm(path):
 
                 continue
 
-            assets_slug = '%s/%s' % (app_config.ASSETS_SLUG, env.folder_name)
+            assets_slug = '%s/%s' % (app_config.ASSETS_SLUG, env.slug)
 
             key_name = local_path.replace(assets_root, assets_slug, 1)
 
