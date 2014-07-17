@@ -6,6 +6,9 @@
                 <div id="posts" class="posts">
                     <div class="row">
                     
+ 
+                    <div class="top-section">
+                    
                     <header>
                             <div class="header-wrapper">
                                 <div class="header-content">
@@ -34,24 +37,26 @@
                     <!-- START POSTS -->
                     {block:Posts}
 
-                        {block:Post1}
-                        
-                        {/block:Post1}
+                       {block:Post2}
+                        </div><!-- /top-section->
+                        </div><!-- /.row -->
+                        <div class="row">
+                        {/block:Post2}
 
                         <article class="post">
 
                             <div class="post-wrapper">
                                 {block:Photo}
                                 <a href="{Permalink}">
-
                                 <img src="{{ S3_BASE_URL }}/tumblr/assets/homepage/{PostID}.jpg" class="img-responsive" alt="{PhotoAlt}"/>
-
                                 </a>
                                 
                                 
                                 {block:Caption}
                                 <div class="caption">
-                                    <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a></p>
+                                    <p class="pubdate">
+                                    <a href="{Permalink}" class="permalink">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</a>
+                                    </p>
                                     {Caption}
                                 </div>
                                 {/block:Caption}
