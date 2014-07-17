@@ -42,8 +42,6 @@ tumblr/www/js/templates.js
 tumblr/www/js/app_config.js
 tumblr/www/js/copy.js
 
-posts
-
 confs/rendered/*
 data/copy.xls
 data/copy.xlsx

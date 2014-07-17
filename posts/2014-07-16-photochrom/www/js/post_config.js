@@ -1,0 +1,1 @@
+window.POST_CONFIG = {"GOOGLE_ANALYTICS": {"TOPICS": "", "DOMAIN": "apps.npr.org", "ACCOUNT_ID": "UA-5828686-4"}, "IS_PUBLISHED": {"development": false, "production": false, "staging": false}, "TARGET_IDS": {"development": "91947801182", "production": null, "staging": null}, "COPY_GOOGLE_DOC_KEY": "0AsbgU6Ugtx7udDZYM0NjNzdiLXRTYk1wUTFJS1o2NkE"}

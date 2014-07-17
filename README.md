@@ -103,7 +103,6 @@ cd lookatthis
 mkvirtualenv --no-site-packages lookatthis
 pip install -r requirements.txt
 npm install
-fab update
 ```
 
 **Problems installing requirements?** You may need to run the pip command as ``ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install -r requirements.txt`` to work around an issue with OSX.
