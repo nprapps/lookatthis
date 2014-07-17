@@ -17,8 +17,6 @@ def _post_less(slug, filename):
 
 @post.route('/<string:slug>/js/post_config.js')
 def _post_config_js(slug):
-    print slug
-
     config = flatten_post_config(slug)
     js = 'window.POST_CONFIG = ' + json.dumps(config)
 

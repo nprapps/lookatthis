@@ -385,8 +385,6 @@ def publish():
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
     utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
-    generate_index()
-
 
 @task
 def delete():
@@ -405,25 +403,6 @@ def delete():
 
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.slug)
-
-
-    generate_index()
-
-@task
-def generate_index():
-    require('settings', provided_by=[development, staging, production])
-
-    from app import _posts_index
-
-    response = _posts_index()
-
-    with open('.posts_index.json', 'w') as f:
-        f.write(response)
-
-    for bucket in app_config.S3_BUCKETS:
-        local('aws s3 cp .posts_index.json s3://%s/%s/posts_index.json --acl "public-read" --cache-control "max-age=5" --region "us-east-1"' % (bucket, app_config.PROJECT_SLUG))
-
-    local('rm .posts_index.json')
 
 @task
 def tumblr():

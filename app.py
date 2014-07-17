@@ -82,40 +82,6 @@ def _post_preview(slug):
 
     return render_template('parent.html', **context)
 
-@app.route('/posts_index.json')
-def _posts_index():
-    output = []
-    posts = glob('%s/*' % app_config.POST_PATH)
-    for post in reversed(posts):
-        post_metadata = {}
-
-        slug = post.split('%s/' % app_config.POST_PATH)[1]
-
-        post_config = imp.load_source('post_config', 'posts/%s/post_config.py' % slug)
-
-        if app_config.DEPLOYMENT_TARGET and not post_config.IS_PUBLISHED[app_config.DEPLOYMENT_TARGET]:
-            continue
-
-        copy = copytext.Copy(filename='data/%s.xlsx' % slug)
-
-        post_metadata['slug'] = slug
-        post_metadata['title'] = unicode(copy['tumblr']['title'])
-        post_metadata['image'] = unicode(copy['tumblr']['promo_photo'])
-
-        if app_config.DEPLOYMENT_TARGET:
-            post_metadata['url'] = 'http://%s.tumblr.com/post/%s/%s' % (
-                app_config.TUMBLR_NAME,
-                post_config.TARGET_IDS[app_config.DEPLOYMENT_TARGET],
-                slug
-            )
-        else:
-            post_metadata['url'] = url_for('_post_preview', slug=slug)
-
-        output.append(post_metadata)
-
-    data=json.dumps(output)
-    return 'dataHandler(%s);' % data
-
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
 app.register_blueprint(static_post.post)

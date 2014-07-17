@@ -311,7 +311,7 @@ var receiveMessage = function(e) {
     var tail = e.data.substr(5, e.data.length);
     if (head == 'post-') {
         var post = JSON.parse(tail);
-        
+
         $nextPostTitle.text(post.title);
         $nextPostImage.attr('src', post.image);
         $nextPostURL.attr('href', post.url);
