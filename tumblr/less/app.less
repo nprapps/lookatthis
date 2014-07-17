@@ -23,28 +23,59 @@ h1,h2,h3,h4,h5,h6 {
 
 #posts {
     padding-top: @grid-gutter-width;
+    
+    
 
-    header,
+    /*header,*/
     .post {
         .make-md-column(4);
     }
-
+/*
     header + .post {
         .make-md-column(8);
     }
+    
+    */
+    
+    
+    .top-section {
+    display: -webkit-box;
+	display: flex;
+	-webkit-justify-content: space-between; 
+    justify-content: space-between; 
+    margin-bottom: @grid-gutter-width;
+    
+        header {
+    	    width: 31.7%;
+            margin-right: 27px;
+            background-color: #ddd;
+            
+        }
+        
+        .top-story {
+    	    width: 65.9%;
+    	    background-color: #ccc;
+        }
+    	
+    }
+    
+    
+    header + .post {
+        float: none;
+        width: 65.9%;
+        padding: 0;
+        
+        .post-wrapper {
+            margin-bottom: 0;
+        }
+    }
+    
+    
 
     .header-wrapper {
-        position: relative;
-        margin-bottom: @grid-gutter-width;
+        
 
         .header-content {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: @brand-primary;
-            padding: @grid-gutter-width / 2;
             color: #fff;
 
             a {
