@@ -42,33 +42,33 @@ var receiveMessage = function(e) {
 
 var getIndex = function() {
 
-        $.ajax({
-            url: APP_CONFIG.S3_BASE_URL + '/posts_index.json',
-            async: true,
-            dataType: 'jsonp',
-            jsonp: false,
-            jsonpCallback:'dataHandler',
-            success:function(data) {
-                var next_post = null;
-                var post_index = null;
-                for (var i = 0; i < data.length; i++) {
-                    var post = data[i];
-                    if (post.slug == slug) {
-                        post_index = i;
-                        break;
-                    }
-                }
-                
-                var post_data = {};
+        // $.ajax({
+        //     url: APP_CONFIG.S3_BASE_URL + '/posts_index.json',
+        //     async: true,
+        //     dataType: 'jsonp',
+        //     jsonp: false,
+        //     jsonpCallback:'dataHandler',
+        //     success:function(data) {
+        //         var next_post = null;
+        //         var post_index = null;
+        //         for (var i = 0; i < data.length; i++) {
+        //             var post = data[i];
+        //             if (post.slug == slug) {
+        //                 post_index = i;
+        //                 break;
+        //             }
+        //         }
 
-                if (post_index !== null && post_index !== 0) {
-                    post_data = data[post_index - 1];
-                }
+        //         var post_data = {};
 
-                $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), APP_CONFIG.S3_BASE_URL);
+        //         if (post_index !== null && post_index !== 0) {
+        //             post_data = data[post_index - 1];
+        //         }
 
-            }
-        });
+        //         $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), APP_CONFIG.S3_BASE_URL);
+
+        //     }
+        // });
 
 };
 
