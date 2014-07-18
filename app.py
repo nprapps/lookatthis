@@ -67,6 +67,9 @@ def _post(slug):
         context['post_id'] = post_config.TARGET_IDS[dt]
         context['tumblr_name'] = app_config.TUMBLR_NAME
 
+    with open('data/featured.json') as f:
+        context['featured'] = json.load(f)
+
     with open('%s/templates/index.html' % post_path) as f:
         template = f.read().decode('utf-8')
 
