@@ -22,6 +22,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .container-fluid {
     max-width: 1280px;
+    //max-width: 2000px;
     margin: 0 auto;
     padding: 0 @grid-gutter-width;
 }
@@ -33,15 +34,15 @@ h1,h2,h3,h4,h5,h6 {
 
 #posts {
 
-    @media @screen-medium-above {
+    @media @screen-small-above {
         padding-top: @grid-gutter-width;
     }
     
     
 
-    /*header,*/
+    
     .post {
-        .make-md-column(4);
+        .make-sm-column(4);
     }
 /*
     header + .post {
@@ -55,7 +56,7 @@ h1,h2,h3,h4,h5,h6 {
     
         margin-bottom: @grid-gutter-width;
     
-        @media @screen-medium-above {
+        @media @screen-small-above {
             display: -webkit-box;
             display: flex;
             -webkit-justify-content: space-between;
@@ -75,12 +76,16 @@ h1,h2,h3,h4,h5,h6 {
             -webkit-transition: all 1s ease;
             //opacity: .7;
             
-            @media @screen-medium-above {
+            @media @screen-small-above {
                 text-align: center;
                 text-align: left;
                 width: 31.7%;
                 margin: 0 27px 0 0;
-                min-height: 620px;
+                
+            }
+            
+            @media @screen-medium-above {
+                //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio
             }
 
             &:hover {
@@ -175,12 +180,8 @@ h1,h2,h3,h4,h5,h6 {
                 padding: 8px 5px;
                 background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
-                
-                @media @screen-small-above {
-                    padding: 10px;
-                }
             
-                @media @screen-medium-above {
+                @media @screen-small-above {
                     border: none;
                     position: absolute;
                     bottom: 10%;
@@ -197,13 +198,8 @@ h1,h2,h3,h4,h5,h6 {
                     min-height: 25px;
                     max-width: 280px;
                     
+                    
                     @media @screen-small-above {
-                        padding: 0 0 0 20px;
-                        max-width: none;
-                    }
-                    
-                    
-                    @media @screen-medium-above {
                         padding: 0;
                         height: auto;
                         max-width: 300px;
@@ -222,12 +218,9 @@ h1,h2,h3,h4,h5,h6 {
                         
                         margin-right: 10px;
                         
-                        @media @screen-small-above {
-                            font-size: 12px;
-                            padding: 5px 10px;
-                        }
                         
-                        @media @screen-medium-above {
+                        
+                        @media @screen-small-above {
                             background-color: transparent;
                             float: none;
                             border-top: 1px solid #eee;
@@ -251,14 +244,9 @@ h1,h2,h3,h4,h5,h6 {
                     left: 0;
                     width: 100%;
                     
-                    @media @screen-small-above {
-                    bottom: 10px;
-                    right: 10px;
-                    left: auto;
-                    width: auto;
-                    }
+                    
                 
-                    @media @screen-medium-above {
+                    @media @screen-small-above {
                         position: static;
                         border-top: 1px solid #fff;
                         padding-top: 30px;
@@ -339,7 +327,7 @@ h1,h2,h3,h4,h5,h6 {
     header + .post {
         float: none;
         
-        @media @screen-medium-above {
+        @media @screen-small-above {
             width: 65.9%;
             padding: 0;
         }
