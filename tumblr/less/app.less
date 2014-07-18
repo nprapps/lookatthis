@@ -26,13 +26,16 @@ h1,h2,h3,h4,h5,h6 {
     padding: 0 @grid-gutter-width;
 }
 
-#post {
+/*#post {
 	margin-bottom: 75px;
     height: 100%;
-}
+}*/
 
 #posts {
-    padding-top: @grid-gutter-width;
+
+    @media @screen-medium-above {
+        padding-top: @grid-gutter-width;
+    }
     
     
 
@@ -49,21 +52,34 @@ h1,h2,h3,h4,h5,h6 {
     
     
     .top-section {
-    display: -webkit-box;
-	display: flex;
-	-webkit-justify-content: space-between; 
-    justify-content: space-between; 
-    margin-bottom: @grid-gutter-width;
+    
+        margin-bottom: @grid-gutter-width;
+    
+        @media @screen-medium-above {
+            display: -webkit-box;
+            display: flex;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+            margin: 0 15px @grid-gutter-width 15px;
+        }
+        
+        
     
         header {
             color: #fff;
             position: relative;
-    	    width: 31.7%;
-            margin-right: 27px;
+    	    text-align: center;
+    	    margin: 30px 15px 30px 15px;
             background-color: #F60062;
             background-size: 60%;
             -webkit-transition: all 1s ease;
             //opacity: .7;
+            
+            @media @screen-medium-above {
+                text-align: left;
+                width: 31.7%;
+                margin: 0 27px 0 0;
+            }
 
             &:hover {
                 //background-size: 100%;
@@ -78,14 +94,21 @@ h1,h2,h3,h4,h5,h6 {
 
 
             .branding {
-                max-width: 300px;
-                margin: 10% 0 0 15%;
+                
+                padding-top: 20px;
+                @media @screen-medium-above {
+                   max-width: 300px;
+                   margin: 10% auto 0 auto;
+                }
 
                 .npr-logo {
                     img {
                         max-width: 80px;
                         display: block;
-                        margin-left: 7px;
+                        margin: 0 auto;
+                        @media @screen-medium-above {
+                            margin: 0 0 0 7px;
+                        }
                     }
                 }
 
@@ -94,8 +117,9 @@ h1,h2,h3,h4,h5,h6 {
                     margin: 20px 0 10px 0;
                     font-weight: bold;
                     text-transform: uppercase;
-                    
-                    b {font-size: 78px;}
+                    @media @screen-medium-above {
+                        b {font-size: 78px;}
+                    }
                 }
 
                 h4 {
@@ -103,7 +127,9 @@ h1,h2,h3,h4,h5,h6 {
                     font-weight: normal;
                     font-style: italic;
                     font-size: 23px;
-                    max-width: 260px;
+                     @media @screen-medium-above {
+                         max-width: 260px;
+                    }
                     line-height: 1.2;
                 }
 
@@ -111,27 +137,43 @@ h1,h2,h3,h4,h5,h6 {
             }
             
             .menu {
-                position: absolute;
-                bottom: 10%;
-                left: 15%;
-                width: 100%;
-                max-width: 270px;
+            
+                @media @screen-medium-above {
+                    position: absolute;
+                    bottom: 10%;
+                    left: 0;
+                    width: 100%;
+                }
                 
                 ul {
-                    margin: 0;
+                    margin: 0 auto;
                     padding: 0;
                     list-style-type: none;
+                    @media @screen-medium-above {
+                        max-width: 300px;
+                    }
 
                     li {
-                        border-top: 1px solid #eee;
-                        font-size: 18px;
-                        padding: 20px 0;
+                        float: left;
+                        @media @screen-medium-above {
+                            float: none;
+                            border-top: 1px solid #eee;
+                            font-size: 18px;
+                            padding: 20px 0 20px 10px;
+                        }
+                        
                     }
                 }
 
                 .follow-us {
-                    border-top: 1px solid #fff;
-                    padding-top: 30px;
+                
+                    @media @screen-medium-above {
+                        border-top: 1px solid #fff;
+                        padding-top: 30px;
+                        padding-left: 10px;
+                        max-width: 300px;
+                        margin: 0 auto;
+                    }
                 
                     p {
                         line-height: 1;
@@ -142,23 +184,31 @@ h1,h2,h3,h4,h5,h6 {
                             font-family: "FontAwesome";
                             content: '\f099';
                             font-size: 24px;
+                            
+                            @media @screen-medium-above {
                             float: left;
                             padding-top: 10px;
+                            }
                         }
 
                         em {
                             font-size: 17px;
                             font-family: georgia, serif;
                             padding: 8px 0 3px 0;
-                            display: block;
-                            margin-left: 40px;
+                            
+                            @media @screen-medium-above {
+                                display: block;
+                                margin-left: 40px;
+                            }
                         }
 
                         .twitter-hashtag {
                             font-size: 13px;
                             font-weight: bold;
-                            display: block;
-                            margin-left: 40px;
+                            @media @screen-medium-above {
+                                display: block;
+                                margin-left: 40px;
+                            }
                            
                         }
 
@@ -179,8 +229,11 @@ h1,h2,h3,h4,h5,h6 {
     
     header + .post {
         float: none;
-        width: 65.9%;
-        padding: 0;
+        
+        @media @screen-medium-above {
+            width: 65.9%;
+            padding: 0;
+        }
         
         .post-wrapper {
             margin-bottom: 0;
@@ -283,13 +336,6 @@ h1,h2,h3,h4,h5,h6 {
         
     }// post wrapper
 }
-
-.header-content {
-
-
-}//main menu
-
-
 
 
 .post-fixed-menu {
