@@ -68,14 +68,15 @@ h1,h2,h3,h4,h5,h6 {
         header {
             color: #fff;
             position: relative;
-    	    text-align: center;
-    	    margin: 30px 15px 30px 15px;
+    	    
+    	    margin: 0 -15px 30px -15px;
             background-color: #F60062;
             background-size: 60%;
             -webkit-transition: all 1s ease;
             //opacity: .7;
             
             @media @screen-medium-above {
+                text-align: center;
                 text-align: left;
                 width: 31.7%;
                 margin: 0 27px 0 0;
@@ -95,7 +96,8 @@ h1,h2,h3,h4,h5,h6 {
 
             .branding {
                 
-                padding-top: 20px;
+                padding-top: 10px;
+                padding-left: 30px;
                 @media @screen-medium-above {
                    max-width: 300px;
                    margin: 10% auto 0 auto;
@@ -103,22 +105,26 @@ h1,h2,h3,h4,h5,h6 {
 
                 .npr-logo {
                     img {
-                        max-width: 80px;
+                        max-width: 50px;
                         display: block;
-                        margin: 0 auto;
+                        
                         @media @screen-medium-above {
+                            margin: 0 auto;
                             margin: 0 0 0 7px;
+                            max-width: 80px;
                         }
                     }
                 }
 
                 h3 {
-                    font-size: 59px;
-                    margin: 20px 0 10px 0;
+                    font-size: 22px;
+                    margin: 8px 0 5px 0;
                     font-weight: bold;
                     text-transform: uppercase;
                     @media @screen-medium-above {
+                        margin: 20px 0 10px 0;
                         b {font-size: 78px;}
+                        font-size: 59px;
                     }
                 }
 
@@ -126,9 +132,10 @@ h1,h2,h3,h4,h5,h6 {
                     font-family: georgia, serif;
                     font-weight: normal;
                     font-style: italic;
-                    font-size: 23px;
+                    font-size: 13px;
                      @media @screen-medium-above {
                          max-width: 260px;
+                         font-size: 23px;
                     }
                     line-height: 1.2;
                 }
@@ -137,37 +144,68 @@ h1,h2,h3,h4,h5,h6 {
             }
             
             .menu {
+                padding: 10px;
+                background-color: rgba(246, 0, 98, 0.7);
+                border-top: 2px solid #fff;
             
                 @media @screen-medium-above {
+                    border: none;
                     position: absolute;
                     bottom: 10%;
                     left: 0;
                     width: 100%;
+                    padding: 0 0 10px 0;
+                    background-color: transparent;
                 }
                 
                 ul {
                     margin: 0 auto;
-                    padding: 0;
+                    padding: 0 0 0 20px;
                     list-style-type: none;
+                    min-height: 30px;
                     @media @screen-medium-above {
+                        height: auto;
                         max-width: 300px;
                     }
 
                     li {
                         float: left;
+                        font-size: 12px;
+                        padding: 5px 10px;
+                        background-color: rgba(255, 255, 255, 0.9);
+                        
+                        a {
+                            color: #F60062;
+                            font-weight: bold;
+                        }
+                        
+                        margin-right: 10px;
+                        
                         @media @screen-medium-above {
+                            background-color: transparent;
                             float: none;
                             border-top: 1px solid #eee;
                             font-size: 18px;
                             padding: 20px 0 20px 10px;
+                            margin-right: 0;
+                            
+                            a {
+                                color: #fff;
+                                font-weight: normal;
+                            }
                         }
                         
                     }
                 }
 
                 .follow-us {
+                    
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
                 
                     @media @screen-medium-above {
+                        position: static;
                         border-top: 1px solid #fff;
                         padding-top: 30px;
                         padding-left: 10px;
@@ -183,28 +221,31 @@ h1,h2,h3,h4,h5,h6 {
                         &:before {
                             font-family: "FontAwesome";
                             content: '\f099';
-                            font-size: 24px;
+                            font-size: 14px;
                             
                             @media @screen-medium-above {
                             float: left;
                             padding-top: 10px;
+                            font-size: 24px;
                             }
                         }
 
                         em {
-                            font-size: 17px;
+                            font-size: 12px;
                             font-family: georgia, serif;
                             padding: 8px 0 3px 0;
                             
                             @media @screen-medium-above {
                                 display: block;
                                 margin-left: 40px;
+                                font-size: 17px;
                             }
                         }
 
                         .twitter-hashtag {
                             font-size: 13px;
                             font-weight: bold;
+                            display: none;
                             @media @screen-medium-above {
                                 display: block;
                                 margin-left: 40px;
@@ -316,22 +357,22 @@ h1,h2,h3,h4,h5,h6 {
             }
         }
         
-        
-        &:hover {
-           
-            background-color: #F60062;
-            
-            .caption-wrapper {
-                opacity: 1;
-               //-webkit-transform: scale(1);
+        @media @screen-medium-above {
+            &:hover {
+               
+                background-color: #F60062;
+                
+                .caption-wrapper {
+                    opacity: 1;
+                   //-webkit-transform: scale(1);
+                }
+                
+                img {
+                  //-webkit-transform: scale(1.05);
+                  opacity: .4;  
+                }
+                
             }
-            
-            
-            img {
-              //-webkit-transform: scale(1.05);
-              opacity: .4;  
-            }
-            
         }
         
     }// post wrapper
