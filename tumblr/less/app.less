@@ -96,9 +96,17 @@ h1,h2,h3,h4,h5,h6 {
 
 
             .branding {
+                padding: 60px 0 60px 10px;
+                width: 260px;
+                margin: 0 auto;
                 
-                padding-top: 10px;
-                padding-left: 30px;
+                @media @screen-small-above {
+                    margin: 0;
+                    width: auto;
+                    padding-top: 10px;
+                    padding-left: 30px;
+                }
+                
                 @media @screen-medium-above {
                    max-width: 300px;
                    margin: 10% auto 0 auto;
@@ -106,12 +114,20 @@ h1,h2,h3,h4,h5,h6 {
 
                 .npr-logo {
                     img {
-                        max-width: 50px;
+                        max-width: 60px;
                         display: block;
+                        float: left;
+                        margin-right: 10px;
+                        
+                        @media @screen-small-above {
+                            max-width: 50px;
+                            float: none;
+                            margin: 10px 0 0 0;
+                        }
                         
                         @media @screen-medium-above {
                             margin: 0 auto;
-                            margin: 0 0 0 7px;
+                            margin: 0 0 10px 7px;
                             max-width: 80px;
                         }
                     }
@@ -119,9 +135,15 @@ h1,h2,h3,h4,h5,h6 {
 
                 h3 {
                     font-size: 22px;
-                    margin: 8px 0 5px 0;
+                    margin: 0;
                     font-weight: bold;
                     text-transform: uppercase;
+                    
+                    @media @screen-small-above {
+                        font-size: 22px;
+                        margin: 8px 0 5px 0;
+                    }
+                    
                     @media @screen-medium-above {
                         margin: 20px 0 10px 0;
                         b {font-size: 78px;}
@@ -130,10 +152,15 @@ h1,h2,h3,h4,h5,h6 {
                 }
 
                 h4 {
-                    font-family: georgia, serif;
-                    font-weight: normal;
-                    font-style: italic;
-                    font-size: 13px;
+                    display: none;
+                    @media @screen-small-above {
+                        display: block;
+                        font-family: georgia, serif;
+                        font-weight: normal;
+                        font-style: italic;
+                        font-size: 13px;
+                    }
+                    
                      @media @screen-medium-above {
                          max-width: 260px;
                          font-size: 23px;
@@ -145,9 +172,13 @@ h1,h2,h3,h4,h5,h6 {
             }
             
             .menu {
-                padding: 10px;
+                padding: 8px 5px;
                 background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
+                
+                @media @screen-small-above {
+                    padding: 10px;
+                }
             
                 @media @screen-medium-above {
                     border: none;
@@ -161,18 +192,27 @@ h1,h2,h3,h4,h5,h6 {
                 
                 ul {
                     margin: 0 auto;
-                    padding: 0 0 0 20px;
+                    padding: 0 0 0 5px;
                     list-style-type: none;
-                    min-height: 30px;
+                    min-height: 25px;
+                    max-width: 280px;
+                    
+                    @media @screen-small-above {
+                        padding: 0 0 0 20px;
+                        max-width: none;
+                    }
+                    
+                    
                     @media @screen-medium-above {
+                        padding: 0;
                         height: auto;
                         max-width: 300px;
                     }
 
                     li {
                         float: left;
-                        font-size: 12px;
-                        padding: 5px 10px;
+                        font-size: 10px;
+                        padding: 5px;
                         background-color: rgba(255, 255, 255, 0.9);
                         
                         a {
@@ -181,6 +221,11 @@ h1,h2,h3,h4,h5,h6 {
                         }
                         
                         margin-right: 10px;
+                        
+                        @media @screen-small-above {
+                            font-size: 12px;
+                            padding: 5px 10px;
+                        }
                         
                         @media @screen-medium-above {
                             background-color: transparent;
@@ -202,8 +247,16 @@ h1,h2,h3,h4,h5,h6 {
                 .follow-us {
                     
                     position: absolute;
+                    bottom: 80px;
+                    left: 0;
+                    width: 100%;
+                    
+                    @media @screen-small-above {
                     bottom: 10px;
                     right: 10px;
+                    left: auto;
+                    width: auto;
+                    }
                 
                     @media @screen-medium-above {
                         position: static;
@@ -219,6 +272,16 @@ h1,h2,h3,h4,h5,h6 {
                     }
 
                     .twitter {
+                        width: 130px;
+                        margin: 0 auto;
+                        
+                        @media @screen-small-above {
+                            width: auto;
+                            margin: 0;
+                        }
+                        
+                    
+                    
                         &:before {
                             font-family: "FontAwesome";
                             content: '\f099';
@@ -233,13 +296,17 @@ h1,h2,h3,h4,h5,h6 {
 
                         em {
                             font-size: 12px;
-                            font-family: georgia, serif;
+                            font-style: normal;
+                            font-weight: bold;
                             padding: 8px 0 3px 0;
                             
                             @media @screen-medium-above {
+                                font-family: georgia, serif;
                                 display: block;
                                 margin-left: 40px;
                                 font-size: 17px;
+                                font-style: italic;
+                                font-weight: normal;
                             }
                         }
 
