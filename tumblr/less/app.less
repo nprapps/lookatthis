@@ -118,7 +118,7 @@ body {
 
 
             .branding {
-                padding: 40px 0 30px 30px;
+                padding: 40px 0 20px 30px;
                 margin: 0;
                 
                 @media @screen-small-above {
@@ -207,15 +207,17 @@ body {
             
             .menu {
                 padding: 8px 5px 8px 5px;
-                background-color: rgba(246, 0, 98, 0.7);
+                //background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
-            
+                position: relative;
+                
+                
                 @media @screen-small-above {
                     border: none;
                     position: absolute;
                     bottom: 30px;
                     left: 30px;
-                    //width: 100%;
+                    width: 72%;
                     padding: 0 0 10px 0;
                     background-color: transparent;
                     z-index: 1px;
@@ -226,7 +228,7 @@ body {
                     padding: 0 0 0 0;
                     list-style-type: none;
                     min-height: 25px;
-                    max-width: 280px;
+                    
                     
                     
                     @media @screen-small-above {
@@ -237,120 +239,108 @@ body {
 
                     li {
                         float: left;
-                        font-size: 10px;
-                        padding: 5px;
-                        background-color: rgba(255, 255, 255, 0.9);
-                        margin-right: 10px;
-                        
+                        font-size: 14px;
+                        padding: 2px 0 0 0;
+                        margin: 0 0 0 30px;
+                        font-weight: bold;
                         
                         a {
-                            color: #F60062;
-                            font-weight: bold;
+                            color: #fff;
+                            
+                            &:hover {
+                                background-color: #333;
+                            }
                         }
-                        
-                        
-                        
-                        
                         
                         @media @screen-small-above {
                             background-color: transparent;
+                            font-weight: normal;
                             float: none;
                             border-top: 1px solid #eee;
                             font-size: 20px;
                             font-size: 1.4vw;
-                            padding: 10% 0;
-                            margin-right: 0;
+                            padding: 10px 0;
+                            margin: 0;
                             
-                            a {
-                                color: #fff;
-                                font-weight: normal;
-                            }
+                            
                         }
                         
-                        @media @screen-mega-above {
-                            font-size: 20px;
-                        }
                         
                     }
                 }
 
                 .follow-us {
+                    margin: 0;
+                    padding: 0;
                     
-                    position: absolute;
-                   
-                    bottom: 55px;
-                    left: 30px;
-                    
-                    
-                    
-                
-                    @media @screen-small-above {
-                        position: static;
-                        border-top: 1px solid #fff;
-                        padding-top: 10px;
-                        max-width: 300px;
-                    }
-                
-                    p {
-                        line-height: 1;
-                    }
 
-                    .twitter {
-                        width: 130px;
-                        margin: 0 auto;
+                    @media @screen-small-above {
+                        border-top: 1px solid #fff;
+                        padding: 6px 0 0 5px;
+                    }
+                    
+                    dt {
+                        display: none;
+                    
+                        @media @screen-small-above {
+                            display: block;
+                            float: left;
+                            margin: 6px 20px 0 0;
+                            font-weight: normal;
+                            font-size: 20px;
+                            font-size: 1.4vw;
+
+                        }
+                    
+                    
+                    }
+                    
+                    
+                    i {
                         
                         @media @screen-small-above {
-                            width: auto;
-                            margin: 0;
+                            font-size: 20px;
+                            font-size: 1.8vw;
                         }
                         
+                        &:hover {
+                            color: #333;
+                        }
                     
-                    
-                        i {
-                            
-                            font-size: 14px;
-                            float: left;
-                            @media @screen-small-above {
-                            padding-top: 10px;
-                            font-size: 24px;
-                            }
-                        }
-
-                        em {
-                            display: none;
-                            font-size: 12px;
-                            font-style: normal;
-                            font-weight: bold;
-                            padding: 8px 0 3px 0;
-                            
-                            @media @screen-small-above {
-                                font-family: georgia, serif;
-                                display: block;
-                                margin-left: 40px;
-                                font-style: italic;
-                                font-weight: normal;
-                                line-height: 1.5;
-                                font-size: 17px;
-                                font-size: 1.4vw;
-                                
-                            }
-                        }
-
-                        .twitter-hashtag {
-                        
-                            display: none;
-                            
-                            @media @screen-small-above {
-                                font-size: 13px;
-                                font-size: 1.1vw;
-                                font-weight: bold;
-                                margin-left: 40px;
-                                display: block;   
-                            }
-                           
-                        }
-
                     }
+                    
+                    .twitter {
+                        position: absolute;
+                        bottom: 6px;
+                        right: 60px;
+                        
+                        @media @screen-small-above {
+                            position: static;
+                            float: left;
+                            margin-right: 25px;
+                            padding-top: 3%;
+                        }
+                    }
+                    
+                    .facebook {
+                        position: absolute;
+                        bottom: 6px;
+                        right: 30px;
+                        
+                        @media @screen-small-above {
+                            position: static;
+                            padding-top: 3%;
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    
+                
+                    
+
+                    
                 }
 
             }
