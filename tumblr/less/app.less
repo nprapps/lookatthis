@@ -15,6 +15,7 @@
 
 // Global variables
 @img-root: "../img";
+@brand-primary:  #F60062;
 
 h1,h2,h3,h4,h5,h6 {
 	margin-top: 0;
@@ -34,8 +35,8 @@ body {
 }
 
 #post {
-	//margin-bottom: 75px;
-    height: 100%;
+    height: 99%;
+    overflow: hidden;
 }
 
 
@@ -87,9 +88,9 @@ body {
             color: #fff;
             position: relative;
     	    margin: 0 -15px 30px -15px;
-            background-color: #F60062;
+            background-color: @brand-primary;
             background-size: 60%;
-            -webkit-transition: all 1s ease;
+            //-webkit-transition: all 1s ease;
             
             @media @screen-small-above {
                 text-align: center;
@@ -241,7 +242,7 @@ body {
                         float: left;
                         font-size: 14px;
                         padding: 2px 0 0 0;
-                        margin: 0 0 0 30px;
+                        margin: 0 0 0 25px;
                         font-weight: bold;
                         
                         a {

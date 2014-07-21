@@ -23,7 +23,7 @@ var onDocumentLoad = function(e) {
 
     // Set some attributes to this proto-iframe.
     $iframe.attr('width', '100%');
-    $iframe.attr('height', '100%');
+    $iframe.attr('height', '99%');
     $iframe.attr('scrolling', 'no');
     $iframe.attr('marginheight', '0');
     $iframe.attr('frameborder', '0');
