@@ -6,5 +6,11 @@
                 {{ row.text1 }}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
+
+        {% if row.media %}
+            <div class="credit">
+                {{ row.media_credit }}
+            </div>
+        {% endif %}
     </div><!--full-block-->
 </div><!--slide-->

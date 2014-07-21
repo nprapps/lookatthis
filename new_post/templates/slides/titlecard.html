@@ -5,6 +5,12 @@
             <div class="full-block-content">
                 <h2>{{ row.text1 }}</h2>
                 <h3>{{ row.text2 }}</h3>
+
+                {% if row.media %}
+                    <div class="credit">
+                        {{ row.media_credit }}
+                    </div>
+                {% endif %}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
     </div><!--full-block-->

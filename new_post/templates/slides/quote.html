@@ -3,7 +3,7 @@
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
-                <div class="quote-image contained-image" {% if row.image %} data-bgimage="{{ row.media }}" {% endif %}></div>
+                <div class="quote-image contained-image" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}></div>
                 <div class="quote-text">
                     <blockquote>
                         {{ row.text1 }}
@@ -14,5 +14,11 @@
                 </div><!--big-quote-text-->
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
+
+        {% if row.media %}
+            <div class="credit">
+                {{ row.media_credit }}
+            </div>
+        {% endif %}
     </div><!--full-block-->
 </div><!--slide-->
