@@ -3,7 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis';
+var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
 
 var $w;
 var $h;

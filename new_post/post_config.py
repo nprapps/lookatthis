@@ -4,6 +4,8 @@ GOOGLE_ANALYTICS = {
     'DOMAIN': 'apps.npr.org',
     'TOPICS': '' # e.g. '[1014,3,1003,1002,1001]'
 }
+SLUG = None
+
 
 
 """
