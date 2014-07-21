@@ -27,10 +27,27 @@ h1,h2,h3,h4,h5,h6 {
     padding: 0 @grid-gutter-width;
 }
 
+body {
+    @media @screen-small-above {
+        background-color: #eee;
+    }
+}
+
 /*#post {
 	margin-bottom: 75px;
     height: 100%;
 }*/
+
+
+.posts-wrapper {
+    background-color: #fff;
+    
+    
+    @media @screen-small-above {
+        margin: 30px 0px;   
+        padding: 0 30px;
+    }
+}
 
 #posts {
 
@@ -53,7 +70,7 @@ h1,h2,h3,h4,h5,h6 {
     
     
     .top-section {
-    
+        position: relative;
         margin-bottom: @grid-gutter-width;
     
         @media @screen-small-above {
@@ -68,7 +85,7 @@ h1,h2,h3,h4,h5,h6 {
     
         header {
             color: #fff;
-            position: relative;
+            
     	    
     	    margin: 0 -15px 30px -15px;
             background-color: #F60062;
@@ -85,7 +102,7 @@ h1,h2,h3,h4,h5,h6 {
             }
             
             @media @screen-medium-above {
-                //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio
+                //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio ios bug with min height
             }
 
             &:hover {
@@ -101,76 +118,89 @@ h1,h2,h3,h4,h5,h6 {
 
 
             .branding {
-                padding: 60px 0 60px 10px;
-                width: 260px;
+                padding: 50px 0 30px 10px;
                 margin: 0 auto;
                 
                 @media @screen-small-above {
-                    margin: 0;
+                    padding: 0;
+                    margin: 10% 0 0 10%;
                     width: auto;
-                    padding-top: 10px;
-                    padding-left: 30px;
                 }
                 
                 @media @screen-medium-above {
                    max-width: 300px;
-                   margin: 10% auto 0 auto;
                 }
 
                 .npr-logo {
                     img {
-                        max-width: 60px;
+                        min-width: 60px;
+                        max-width: 10%;
                         display: block;
-                        float: left;
-                        margin-right: 10px;
+                        margin: 0 auto;
+                        padding-bottom: 10px;
                         
                         @media @screen-small-above {
-                            max-width: 50px;
                             float: none;
-                            margin: 10px 0 0 0;
-                        }
-                        
-                        @media @screen-medium-above {
-                            margin: 0 auto;
-                            margin: 0 0 10px 7px;
-                            max-width: 80px;
+                            margin: 0 0 0 7px;
+                            max-width: 30%;
+                            padding: 0;
                         }
                     }
                 }
 
                 h3 {
                     font-size: 22px;
+                    font-size: 7vw;
                     margin: 0;
+                    text-align: center;
                     font-weight: bold;
                     text-transform: uppercase;
                     
                     @media @screen-small-above {
-                        font-size: 22px;
-                        margin: 8px 0 5px 0;
+                        margin: 10px 0 10px 0;
+                        font-size: 59px;
+                        font-size: 4.75vw;
+                        text-align: left;
+                        
+                        b {
+                            display: block;
+                            font-size: 78px;
+                            font-size: 6.3vw;
+                        }
                     }
                     
-                    @media @screen-medium-above {
-                        margin: 20px 0 10px 0;
-                        b {font-size: 78px;}
-                        font-size: 59px;
+                    @media @screen-mega-above {
+                        font-size: 68px;
+                        b {
+                            font-size: 91px;   
+                        }
+                        
                     }
                 }
 
                 h4 {
                     display: none;
+                    line-height: 1.2;
+                    
                     @media @screen-small-above {
                         display: block;
                         font-family: georgia, serif;
                         font-weight: normal;
                         font-style: italic;
-                        font-size: 13px;
+                        max-width: 260px;
+                         max-width: 21vw;
+                         font-size: 23px;
+                         font-size: 1.74vw;
                     }
                     
                      @media @screen-medium-above {
-                         max-width: 260px;
-                         font-size: 23px;
+                         
                     }
-                    line-height: 1.2;
+                    
+                    @media @screen-mega-above {
+                        font-size: 26px;
+                    }
+                    
                 }
 
                 
@@ -184,11 +214,12 @@ h1,h2,h3,h4,h5,h6 {
                 @media @screen-small-above {
                     border: none;
                     position: absolute;
-                    bottom: 10%;
-                    left: 0;
-                    width: 100%;
+                    bottom: 30px;
+                    left: 30px;
+                    //width: 100%;
                     padding: 0 0 10px 0;
                     background-color: transparent;
+                    z-index: 1px;
                 }
                 
                 ul {
@@ -210,13 +241,15 @@ h1,h2,h3,h4,h5,h6 {
                         font-size: 10px;
                         padding: 5px;
                         background-color: rgba(255, 255, 255, 0.9);
+                        margin-right: 10px;
+                        
                         
                         a {
                             color: #F60062;
                             font-weight: bold;
                         }
                         
-                        margin-right: 10px;
+                        
                         
                         
                         
@@ -224,14 +257,19 @@ h1,h2,h3,h4,h5,h6 {
                             background-color: transparent;
                             float: none;
                             border-top: 1px solid #eee;
-                            font-size: 18px;
-                            padding: 20px 0 20px 10px;
+                            font-size: 20px;
+                            font-size: 1.4vw;
+                            padding: 10% 0;
                             margin-right: 0;
                             
                             a {
                                 color: #fff;
                                 font-weight: normal;
                             }
+                        }
+                        
+                        @media @screen-mega-above {
+                            font-size: 20px;
                         }
                         
                     }
@@ -376,7 +414,7 @@ h1,h2,h3,h4,h5,h6 {
             width: 100%;
             opacity: 6;
             //-webkit-transform: scale(.7);
-            -webkit-transition: all .6s ease-in;
+            -webkit-transition: all .3s ease-in;
             
             .caption {
                 padding: 0 20px;
@@ -416,7 +454,7 @@ h1,h2,h3,h4,h5,h6 {
         @media @screen-medium-above {
             &:hover {
                
-                background-color: #F60062;
+                background-color: #fff;
                 
                 .caption-wrapper {
                     opacity: 1;
@@ -425,7 +463,7 @@ h1,h2,h3,h4,h5,h6 {
                 
                 img {
                   //-webkit-transform: scale(1.05);
-                  opacity: .4;  
+                  opacity: .6;  
                 }
                 
             }
