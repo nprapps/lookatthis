@@ -1,5 +1,5 @@
 @import "./lib/bootstrap/bootstrap.less";
-//@import "./lib/font-awesome/font-awesome.less";
+@import "./lib/font-awesome/font-awesome.less";
 @import "./lib/prefixer.less";
 
 // Breakpoints
@@ -33,10 +33,10 @@ body {
     }
 }
 
-/*#post {
-	margin-bottom: 75px;
+#post {
+	//margin-bottom: 75px;
     height: 100%;
-}*/
+}
 
 
 .posts-wrapper {
@@ -85,13 +85,11 @@ body {
     
         header {
             color: #fff;
-            
-    	    
+            position: relative;
     	    margin: 0 -15px 30px -15px;
             background-color: #F60062;
             background-size: 60%;
             -webkit-transition: all 1s ease;
-            //opacity: .7;
             
             @media @screen-small-above {
                 text-align: center;
@@ -208,7 +206,7 @@ body {
             }
             
             .menu {
-                padding: 8px 5px 8px 30px;
+                padding: 8px 5px 8px 5px;
                 background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
             
@@ -279,19 +277,18 @@ body {
                 .follow-us {
                     
                     position: absolute;
-                    bottom: 80px;
-                    left: 0;
-                    width: 100%;
+                   
+                    bottom: 55px;
+                    left: 30px;
+                    
                     
                     
                 
                     @media @screen-small-above {
                         position: static;
                         border-top: 1px solid #fff;
-                        padding-top: 30px;
-                        padding-left: 10px;
+                        padding-top: 10px;
                         max-width: 300px;
-                        margin: 0 auto;
                     }
                 
                     p {
@@ -309,41 +306,46 @@ body {
                         
                     
                     
-                        &:before {
-                            font-family: "FontAwesome";
-                            content: '\f099';
-                            font-size: 14px;
+                        i {
                             
-                            @media @screen-medium-above {
+                            font-size: 14px;
                             float: left;
+                            @media @screen-small-above {
                             padding-top: 10px;
                             font-size: 24px;
                             }
                         }
 
                         em {
+                            display: none;
                             font-size: 12px;
                             font-style: normal;
                             font-weight: bold;
                             padding: 8px 0 3px 0;
                             
-                            @media @screen-medium-above {
+                            @media @screen-small-above {
                                 font-family: georgia, serif;
                                 display: block;
                                 margin-left: 40px;
-                                font-size: 17px;
                                 font-style: italic;
                                 font-weight: normal;
+                                line-height: 1.5;
+                                font-size: 17px;
+                                font-size: 1.4vw;
+                                
                             }
                         }
 
                         .twitter-hashtag {
-                            font-size: 13px;
-                            font-weight: bold;
+                        
                             display: none;
-                            @media @screen-medium-above {
-                                display: block;
+                            
+                            @media @screen-small-above {
+                                font-size: 13px;
+                                font-size: 1.1vw;
+                                font-weight: bold;
                                 margin-left: 40px;
+                                display: block;   
                             }
                            
                         }
