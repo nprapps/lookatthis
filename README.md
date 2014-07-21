@@ -309,13 +309,19 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|Custom 1|Custom 2|
 |--------|------|-----|-----|--------|--------|
-|lookatthis|tweet|`location`||||
-|lookatthis|facebook|`location`||||
-|lookatthis|email|`location`||||
-|lookatthis|new-comment||||
-|lookatthis|open-share-discuss||||
-|lookatthis|close-share-discuss||||
-|lookatthis|summary-copied||||
-|lookatthis|featured-tweet-action|`action`||``tweet_url``|
-|lookatthis|featured-facebook-action|`action`||``post_url``|
+|lookatthis:$SLUG|tweet|`location`||||
+|lookatthis:$SLUG|facebook|`location`||||
+|lookatthis:$SLUG|email|`location`||||
+|lookatthis:$SLUG|new-comment||||
+|lookatthis:$SLUG|open-share-discuss||||
+|lookatthis:$SLUG|close-share-discuss||||
+|lookatthis:$SLUG|summary-copied||||
+|lookatthis:$SLUG|featured-tweet-action|`action`||``tweet_url``|
+|lookatthis:$SLUG|featured-facebook-action|`action`||``post_url``|
+|lookatthis:$SLUG|Slideshow - Clicked Go||||
+|lookatthis:$SLUG|Slideshow - Reached Last Slide||||
+|lookatthis:$SLUG|Navigation - Used Keyboard||||
+|lookatthis:$SLUG|Navigation - Used Slide Controls||||
+
+
 

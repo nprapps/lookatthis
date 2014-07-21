@@ -2,8 +2,9 @@
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
+var $shareModal = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis';
+var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
 
 var $w;
 var $h;
@@ -21,6 +22,20 @@ var w;
 var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
+
+var onShareModalShown = function(e) {
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'open-share-discuss']);
+}
+
+var onShareModalHidden = function(e) {
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'close-share-discuss']);
+}
+
+var onClippyCopy = function(e) {
+    alert('Copied to your clipboard!');
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
+}
 
 var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
@@ -319,6 +334,7 @@ var receiveMessage = function(e) {
 }
 
 $(document).ready(function() {
+    $shareModal = $('#share-modal');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
@@ -332,6 +348,9 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    // Bind events
+    $shareModal.on('shown.bs.modal', onShareModalShown);
+    $shareModal.on('hidden.bs.modal', onShareModalHidden);
     $startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
 
