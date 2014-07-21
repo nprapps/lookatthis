@@ -2,7 +2,6 @@
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
-var $shareModal = null;
 var NAV_HEIGHT = 75;
 var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
 
@@ -22,20 +21,6 @@ var w;
 var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
-
-var onShareModalShown = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'open-share-discuss']);
-}
-
-var onShareModalHidden = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'close-share-discuss']);
-}
-
-var onClippyCopy = function(e) {
-    alert('Copied to your clipboard!');
-
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
-}
 
 var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
@@ -80,6 +65,7 @@ var setUpFullPage = function() {
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
     $('body').css('opacity', 1);
+    showNavigation();
 };
 
 // after a new slide loads
@@ -164,16 +150,22 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        /*
-        * Title card gets no arrows and no nav.
-        */
-        $arrows.removeClass('active');
-        $arrows.css({
+        if (!$arrows.hasClass('active')) {
+            animateArrows();
+        }
+
+        var $prevArrow = $arrows.filter('.prev');
+
+        $prevArrow.removeClass('active');
+        $prevArrow.css({
             'opacity': 0,
             'display': 'none'
         });
-        $primaryNav.css('opacity', '0');
-    } else if ($slides.last().hasClass('active')) {
+
+        $primaryNav.css('opacity', '1');
+    }
+
+    else if ($slides.last().hasClass('active')) {
         /*
         * Last card gets no next arrow but does have the nav.
         */
@@ -334,7 +326,6 @@ var receiveMessage = function(e) {
 }
 
 $(document).ready(function() {
-    $shareModal = $('#share-modal');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
@@ -348,9 +339,6 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
-    // Bind events
-    $shareModal.on('shown.bs.modal', onShareModalShown);
-    $shareModal.on('hidden.bs.modal', onShareModalHidden);
     $startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
 
