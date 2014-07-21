@@ -153,6 +153,18 @@ Starting a new post
 
 Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
 
+Post metadata
+-------------
+
+All post metadata must be filled out in order to publish. In the default copy spreadsheet, the `tumblr` sheet contains all of the metadata.
+
+* `thumbnail_photo`: The image that lives on the Tumblr homepage and is used in the `next-post` template.
+* `tumblr_dashboard_photo`: The image that is used on the Tumblr dashboard.
+* `tags`: Tags for the tumblr post, comma separated
+* `title`: The title of the post, used on the Tumblr homepage and in the dashboard caption.
+* `subtitle`: The subtitle of the post, used on the Tumblr homepage and in the dashboard caption.
+* `description`: A short description of the post, used on the Tumblr homepage and in the dashboard caption.
+
 Publishing a post
 -----------------
 
