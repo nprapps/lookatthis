@@ -28,7 +28,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 body {
-    @media @screen-small-above {
+    @media @screen-medium-above {
         background-color: #eee;
     }
 }
@@ -43,7 +43,7 @@ body {
     background-color: #fff;
     
     
-    @media @screen-small-above {
+    @media @screen-medium-above {
         margin: 30px 0px;   
         padding: 0 30px;
     }
@@ -96,13 +96,15 @@ body {
             @media @screen-small-above {
                 text-align: center;
                 text-align: left;
-                width: 31.7%;
+                width: 30.9%;
                 margin: 0 27px 0 0;
                 
             }
             
             @media @screen-medium-above {
                 //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio ios bug with min height
+                width: 31.7%;
+                
             }
 
             &:hover {
@@ -118,12 +120,12 @@ body {
 
 
             .branding {
-                padding: 50px 0 30px 10px;
-                margin: 0 auto;
+                padding: 40px 0 30px 30px;
+                margin: 0;
                 
                 @media @screen-small-above {
-                    padding: 0;
-                    margin: 10% 0 0 10%;
+                    padding: 10% 0 0 0;
+                    margin: 0 0 0 10%;
                     width: auto;
                 }
                 
@@ -133,11 +135,11 @@ body {
 
                 .npr-logo {
                     img {
-                        min-width: 60px;
-                        max-width: 10%;
+                        min-width: 50px;
+                        max-width: 15%;
                         display: block;
-                        margin: 0 auto;
-                        padding-bottom: 10px;
+                        margin: 0 0 0 3px;
+                        padding-bottom: 2%;
                         
                         @media @screen-small-above {
                             float: none;
@@ -150,9 +152,8 @@ body {
 
                 h3 {
                     font-size: 22px;
-                    font-size: 7vw;
+                    font-size: 10.5vw;
                     margin: 0;
-                    text-align: center;
                     font-weight: bold;
                     text-transform: uppercase;
                     
@@ -207,7 +208,7 @@ body {
             }
             
             .menu {
-                padding: 8px 5px;
+                padding: 8px 5px 8px 30px;
                 background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
             
@@ -223,8 +224,8 @@ body {
                 }
                 
                 ul {
-                    margin: 0 auto;
-                    padding: 0 0 0 5px;
+                    margin: 0;
+                    padding: 0 0 0 0;
                     list-style-type: none;
                     min-height: 25px;
                     max-width: 280px;

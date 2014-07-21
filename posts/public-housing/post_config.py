@@ -1,4 +1,4 @@
-COPY_GOOGLE_DOC_URL = 'https://docs.google.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE&usp=drive_web#gid=9'
+COPY_GOOGLE_DOC_URL = 'https://docs.google.com/spreadsheet/ccc?key=0AsbgU6Ugtx7udEEtenZsZ2xBVlJXbzdPTEJJSGxWN0E&usp=drive_web#gid=9'
 GOOGLE_ANALYTICS = {
     'ACCOUNT_ID': 'UA-5828686-4',
     'DOMAIN': 'apps.npr.org',
@@ -13,11 +13,11 @@ DO. NOT. EDIT. THESE.
 """
 TARGET_IDS = {
     'development': '92161893407',
-    'staging': None,
+    'staging': '92436486323',
     'production': None,
 }
 IS_PUBLISHED = {
     'development': True,
-    'staging': False,
+    'staging': True,
     'production': False
 }
