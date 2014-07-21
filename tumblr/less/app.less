@@ -28,7 +28,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 body {
-    background-color: #eee;
+    @media @screen-small-above {
+        background-color: #eee;
+    }
 }
 
 /*#post {
@@ -39,8 +41,12 @@ body {
 
 .posts-wrapper {
     background-color: #fff;
-    margin: 30px 0px;
-    padding: 0 30px;
+    
+    
+    @media @screen-small-above {
+        margin: 30px 0px;   
+        padding: 0 30px;
+    }
 }
 
 #posts {
@@ -96,7 +102,7 @@ body {
             }
             
             @media @screen-medium-above {
-                //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio
+                //min-height: 620px; prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio ios bug with min height
             }
 
             &:hover {
@@ -112,59 +118,49 @@ body {
 
 
             .branding {
-                padding: 60px 0 60px 10px;
-                width: 260px;
+                padding: 50px 0 30px 10px;
                 margin: 0 auto;
                 
                 @media @screen-small-above {
-                    margin: 0;
+                    padding: 0;
+                    margin: 10% 0 0 10%;
                     width: auto;
-                    padding-top: 10px;
-                    padding-left: 30px;
                 }
                 
                 @media @screen-medium-above {
                    max-width: 300px;
-                   margin: 10% 0 0 30px;
-                   padding-left: 0;
                 }
 
                 .npr-logo {
                     img {
-                        max-width: 60px;
+                        min-width: 60px;
+                        max-width: 10%;
                         display: block;
-                        float: left;
-                        margin-right: 10px;
+                        margin: 0 auto;
+                        padding-bottom: 10px;
                         
                         @media @screen-small-above {
-                            max-width: 50px;
                             float: none;
-                            margin: 10px 0 0 0;
-                        }
-                        
-                        @media @screen-medium-above {
-                            margin: 0 auto;
-                            margin: 0 0 10px 7px;
-                            max-width: 80px;
+                            margin: 0 0 0 7px;
+                            max-width: 30%;
+                            padding: 0;
                         }
                     }
                 }
 
                 h3 {
                     font-size: 22px;
+                    font-size: 7vw;
                     margin: 0;
+                    text-align: center;
                     font-weight: bold;
                     text-transform: uppercase;
                     
-                    /*@media @screen-small-above {
-                        font-size: 22px;
-                        margin: 8px 0 5px 0;
-                    }*/
-                    
                     @media @screen-small-above {
-                        margin: 20px 0 10px 0;
+                        margin: 10px 0 10px 0;
                         font-size: 59px;
                         font-size: 4.75vw;
+                        text-align: left;
                         
                         b {
                             display: block;
@@ -192,9 +188,9 @@ body {
                         font-weight: normal;
                         font-style: italic;
                         max-width: 260px;
-                         max-width: 20vw;
+                         max-width: 21vw;
                          font-size: 23px;
-                         font-size: 1.77vw;
+                         font-size: 1.74vw;
                     }
                     
                      @media @screen-medium-above {
@@ -245,13 +241,15 @@ body {
                         font-size: 10px;
                         padding: 5px;
                         background-color: rgba(255, 255, 255, 0.9);
+                        margin-right: 10px;
+                        
                         
                         a {
                             color: #F60062;
                             font-weight: bold;
                         }
                         
-                        margin-right: 10px;
+                        
                         
                         
                         
