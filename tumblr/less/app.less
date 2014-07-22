@@ -25,7 +25,10 @@ h1,h2,h3,h4,h5,h6 {
     max-width: 1280px;
     //max-width: 2000px;
     margin: 0 auto;
-    padding: 0 10px;
+    
+    @media @screen-small-above {
+        padding: 0 10px;
+    }
     
     @media @screen-medium-above {
         padding: 0 @grid-gutter-width;
@@ -123,7 +126,7 @@ body {
 
 .posts-wrapper {
     background-color: #fff;
-    
+    margin-bottom: 0;
     
     @media @screen-medium-above {
         margin: 30px 0px;   
@@ -133,20 +136,35 @@ body {
 
 #posts {
 
+    .row {
+        margin: 0;
+        
+        @media @screen-medium-above {
+        margin: 0 -15px;
+        }
+    }
+
     @media @screen-small-above {
         padding-top: @grid-gutter-width;
     }
     
     .post {
         .make-sm-column(4);
+        padding: 5px;
+        
+        @media @screen-small-above {
+            padding: 0 15px;
+        }
+        
     }
     
     
     .top-section {
         position: relative;
-        margin-bottom: @grid-gutter-width;
+        
     
         @media @screen-small-above {
+            margin-bottom: @grid-gutter-width;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -161,11 +179,12 @@ body {
     
         header {
             color: #fff;
-    	    margin: 0 -15px 30px -15px;
             background-color: @brand-primary;
             background-size: 60%;
+            margin-bottom: 5px;
             
             @media @screen-small-above {
+                margin: 0 -15px 30px -15px;
                 text-align: center;
                 text-align: left;
                 width: 30.9%;
