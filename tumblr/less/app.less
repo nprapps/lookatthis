@@ -25,7 +25,11 @@ h1,h2,h3,h4,h5,h6 {
     max-width: 1280px;
     //max-width: 2000px;
     margin: 0 auto;
-    padding: 0 @grid-gutter-width;
+    padding: 0 10px;
+    
+    @media @screen-medium-above {
+        padding: 0 @grid-gutter-width;
+    }
 }
 
 body {
@@ -157,11 +161,9 @@ body {
     
         header {
             color: #fff;
-            //position: relative;
     	    margin: 0 -15px 30px -15px;
             background-color: @brand-primary;
             background-size: 60%;
-            //-webkit-transition: all 1s ease;
             
             @media @screen-small-above {
                 text-align: center;
@@ -178,9 +180,7 @@ body {
             }
 
             &:hover {
-                //background-size: 100%;
                 opacity: 1;
-                //background-position: -70px -100px;
             }
             
             a {
@@ -390,27 +390,22 @@ body {
                             font-size: 20px;
                         }
                     
-                    
                     }
-                    
                     
                     i {
                         
                         @media @screen-small-above {
                             font-size: 20px;
                         }
-                        
-                        
-                        
+
                         &:hover {
                             color: #333;
                         }
-                    
                     }
                     
                     .twitter {
                         position: absolute;
-                        bottom: 6px;
+                        bottom: 8px;
                         right: 60px;
                         
                         @media @screen-small-above {
@@ -423,7 +418,7 @@ body {
                     
                     .facebook {
                         position: absolute;
-                        bottom: 6px;
+                        bottom: 9px;
                         right: 30px;
                         
                         @media @screen-small-above {
@@ -435,8 +430,6 @@ body {
                     
                     
                 }
-                
-                
 
             } // menu
             
@@ -462,7 +455,12 @@ body {
             margin-bottom: 0;
             
             .caption-wrapper {
-                top: 40%;
+                
+                top: 20%;
+                
+                @media @screen-small-above {
+                    top: 30%;
+                }
                 
                 .caption {
                     
@@ -470,13 +468,32 @@ body {
                 }
             
                 h2 {
-                    font-size: 48px;
-                    padding: 10px;
+                    font-size: 24px;
+                    padding: 5px;
+                    
+                    @media @screen-small-above {
+                        font-size: 36px;
+                    }
+                
+                    @media @screen-medium-above {
+                        font-size: 48px;
+                        padding: 10px;
+                    }
                 }
                 
                 h3 {
-                    font-size: 28px;
-                    padding: 10px;
+                    
+                    font-size: 14px;
+                    padding: 5px;
+                    
+                    @media @screen-small-above {
+                        font-size: 18px;
+                    }
+                
+                    @media @screen-medium-above {
+                        font-size: 28px;
+                        padding: 10px;
+                    }                    
                     
                 }
                 
@@ -512,7 +529,7 @@ body {
 
         .caption-wrapper {
             position: absolute;
-            top: 30%;
+            top: 20%;
             left: 0;
             width: 100%;
             opacity: 6;
@@ -532,29 +549,45 @@ body {
                     font-weight: bold;
                     font-size: 22px;
                     color: #fff;
-                    margin: 0 10px;
-                    padding: 10px;
+                    margin: 0;
+                    padding: 5px;
                     text-decoration: none;
-                    display: inline-block;
-                    
                     .transition(all .2s ease-in);
+                    
+                    @media @screen-small-above {
+                        font-size: 18px;
+                    }
+                
+                    @media @screen-medium-above {
+                        font-size: 24px;
+                        padding: 10px;
+                    } 
                 }
                 
                 h3 {
                     font-family: georgia, serif;
-                    font-size: 15px;
+                    font-size: 12px;
                     margin: 0;
-                    padding: 10px;
+                    padding: 5px;
                     color: #fff;
                     text-decoration: none;
                     line-height: 1.3;
                     font-style: italic;
                     .transition(all .3s ease-in);
+                    
+                    @media @screen-small-above {
+                        font-size: 12px;
+                    }
+                
+                    @media @screen-medium-above {
+                        font-size: 15px;
+                        padding: 10px;
+                    } 
                 }
                 
                 p {
                     font-family: georgia, serif;
-                    font-size: 12px;
+                    font-size: 10px;
                     color: #fff;
                     text-decoration: none;
                     font-style: italic;
@@ -562,6 +595,16 @@ body {
                     position: relative;
                     z-index: 1;
                     margin: 0;
+                    display: none;
+                    
+                    @media @screen-small-above {
+                        display: block;
+                        font-size: 12px;
+                    }
+                
+                    @media @screen-medium-above {
+                        font-size: 14px;
+                    }
                 }
                 
                 blockquote {display: none;}
@@ -582,7 +625,6 @@ body {
             &:hover {
             
                 h2 {
-                    background-color: rgba(0, 0, 0, 0.7);
                     //background-color: @brand-primary;
                     //background-color: rgba(246, 0, 98, 0.7);
                     text-shadow: none;
