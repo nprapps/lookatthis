@@ -121,6 +121,18 @@
     {{ JS.push('js/infinite-scroll.js') }}
     {{ JS.push('js/app.js') }}
     {{ JS.render('js/app-footer.min.js') }}
+    
+    <script type="text/javascript">
+        window.addEventListener('orientationchange', changeOrientation, false);
+        
+        function changeOrientation() {
+        var $container = $('header');
+        $container.hide();
+        setTimeout(function() {
+        $container.show();
+        }, 100);
+        }
+    </script>
 
     <!-- CHARTBEAT -->
     <script type="text/javascript">
