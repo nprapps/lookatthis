@@ -17,6 +17,7 @@
                                 </a>
                                 <h3><a href="/"><b>Look</b> At This</a></h3>
                                 <h4>Look At This is a rabbit hole of visual curiosities.</h4>
+                                
                             </div><!--branding-->
                             
                             <div class="menu">
@@ -50,19 +51,33 @@
 
                             <div class="post-wrapper">
                                 {block:Photo}
+                                <a href="{Permalink}" class="story-link"></a><!-- / story link -->
+                                
                                 <a href="{Permalink}">
-                                <img src="{{ S3_BASE_URL }}/tumblr/assets/homepage/{PostID}.jpg" class="img-responsive" alt="{PhotoAlt}"/>
+                                <img src="{{ S3_BASE_URL }}/tumblr/assets/homepage/{PostID}.jpg" class="img-responsive" alt="{PhotoAlt}"/></a>
                                 
                                 
                                 {block:Caption}
                                 
                                 <div class="caption-wrapper">
-                                <div class="caption">
-                                    {Caption}
-                                </div>
+                                
+                                    <div class="caption">
+                                        <a href="{Permalink}">
+                                        {Caption}
+                                        </a>
+                                        
+                                        <p class="pubdate">
+                                     {block:Date}
+                                     <a href="{Permalink}">
+                                     {Month} {DayOfMonth}, {Year}
+                                     </a>
+                                     {/block:Date}
+                                       </p>
+                                    </div>
+                                
                                 </div><!-- /caption-wrapper-->
                                 {/block:Caption}
-                                </a>
+                                
                                 {/block:Photo}
                             </div>
 
