@@ -15,9 +15,6 @@
         {block:Chat}{/block:Chat}
 
         {block:Photo}
-        <div class="text-wrapper">
-            {Body}
-        </div>
 
         <div id="post"></div>
 
@@ -29,14 +26,27 @@
         </div>
 
         {{ JS.push('js/lib/jquery.js') }}
-        {{ JS.push('js/lib/bootstrap.js') }}
         {{ JS.push('js/app_config.js') }}
         {{ JS.push('js/post.js') }}
         {{ JS.render('js/post-footer.min.js')}}
 
         {/block:Photo}
     {/block:Posts}
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            resizeDiv();
+        });
+        
+        window.onresize = function(event) {
+            resizeDiv();
+        }
+        
+        function resizeDiv() {
+            vpw = $(window).width();
+            vph = $(window).height();
+            $('#post').css({'height': vph + 'px'});
+        }
+    </script>
     <!-- CHARTBEAT -->
     <script type="text/javascript">
         var _sf_async_config={};
