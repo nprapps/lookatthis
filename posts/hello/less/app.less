@@ -267,7 +267,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .next-post {
 
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-top: 100px;
 
@@ -288,7 +288,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
     
     .previous-post {
-        
+        margin-left: 40px;
         
         p {
             font-family: georgia, serif;
@@ -314,13 +314,27 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .up-next {
         position: relative;
         
+        a {
+                
+            &:hover {
+            
+                i {color: #fff;}
+                
+            }
+        }
+        
         h2 {
             text-transform: uppercase;
+            padding-right: 60px;
+            font-weight: bold;
+            margin: 0;
             
         }
         
         p,h3 {
             font-family: georgia, serif;
+            margin: 0;
+            padding: 0;
         }
         
         .up-next-caption-wrapper {
@@ -329,17 +343,28 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             left: 30px;
         }
         
-        .next-button {
+        .next-button-wrapper {
             position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #f60062;
-            padding: 10px;
+            top: 40%;
+            right: 10px;
             
-            i {
-                font-size: 36px;
+            .next-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: #f60062;
+                padding: 10px;
                 
+                
+                
+                i {
+                    font-size: 36px;
+                    
+                    
+                }
             }
         }
+        
+        
     }
 }
