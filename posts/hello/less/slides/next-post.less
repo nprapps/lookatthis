@@ -1,0 +1,93 @@
+.next-post {
+
+    width: 90%;
+    margin: auto;
+    height: 90%;
+
+    h2 {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 60px;
+    }
+
+    p {
+        font-family: Georgia;
+    }
+
+    a {
+        color: white;
+    }
+
+    .previous-post {
+        float: left;
+        width: 30%;
+        height: 80%;
+        text-align: center;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        .share {
+            text-align: center;
+            .share-button:before {
+                font-family: FontAwesome;
+                content: "\f064";
+                font-size: 48px;
+            }
+
+        }
+
+
+    }
+    .up-next {
+        float: right;
+        width: 60%;
+        height: 100%;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .up-next-caption-wrapper {
+            position: absolute;
+            top: 30%;
+            left: 0;
+
+            .up-next-caption {
+                padding: 20px;
+                text-align: left;
+
+                p {
+                    font-size: 24px;
+                }
+
+            }
+        }
+
+        .next-button-wrapper {
+            position: absolute;
+            top: 30%;
+            right: 0;
+
+            .next-button {
+                padding: 20px;
+                background-color: #F60062;
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                font-size: 50px;
+            }
+
+            .next-button:before {
+                font-family: "FontAwesome";
+                content: "\f054";
+            }
+
+        }
+    }
+}
