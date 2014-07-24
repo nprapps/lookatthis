@@ -262,3 +262,84 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     opacity: .5;
     text-align: right;
 }
+
+//up-next
+
+.next-post {
+
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 100px;
+
+    .row {margin: 0;}
+
+    a {
+        color: #fff;
+        
+        &:hover {
+            color: #f60062;
+        }
+    }
+    
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    
+    .previous-post {
+        
+        
+        p {
+            font-family: georgia, serif;
+        }
+        
+        h2 {
+            text-transform: uppercase;
+            font-size: 24px;
+        }
+        
+        h5 {
+            font-size: 18px;
+            text-transform: uppercase;
+            text-align: center;
+            
+            i {
+                display: block;
+                font-size: 32px;
+            }
+        }
+    }
+    
+    .up-next {
+        position: relative;
+        
+        h2 {
+            text-transform: uppercase;
+            
+        }
+        
+        p,h3 {
+            font-family: georgia, serif;
+        }
+        
+        .up-next-caption-wrapper {
+            position: absolute;
+            top: 30%;
+            left: 30px;
+        }
+        
+        .next-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #f60062;
+            padding: 10px;
+            
+            i {
+                font-size: 36px;
+                
+            }
+        }
+    }
+}
