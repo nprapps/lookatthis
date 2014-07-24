@@ -41,13 +41,6 @@ body {
     }
 }
 
-//story page
-
-#post {
-    height: 99%;
-    overflow: hidden;
-}
-
 
 .post-fixed-menu {
 	position: fixed;
@@ -121,48 +114,11 @@ body {
 	}
 }
 
-//index page
+// branding
 
-
-.posts-wrapper {
-    background-color: #fff;
-    margin-bottom: 0;
-    
-    @media @screen-medium-above {
-        margin: 30px 0px;   
-        padding: 0 30px;
-    }
-}
-
-#posts {
-
-    .row {
-        margin: 0;
-        
-        @media @screen-medium-above {
-        margin: 0 -15px;
-        }
-    }
-
-    @media @screen-small-above {
-        padding-top: @grid-gutter-width;
-    }
-    
-    .post {
-        .make-sm-column(4);
-        padding: 5px;
-        
-        @media @screen-small-above {
-            padding: 0 15px;
-        }
-        
-    }
-    
-    
-    .top-section {
+.top-section {
         position: relative;
-        
-    
+
         @media @screen-small-above {
             margin-bottom: @grid-gutter-width;
             display: -webkit-box;
@@ -454,13 +410,84 @@ body {
             
         } //header
         
-        .top-story {
-    	    width: 65.9%;
-    	    background-color: #ccc;
-        }
+        
     	
+    } //top-section end
+
+//content wrappers
+
+.posts-wrapper, .text-wrapper {
+    background-color: #fff;
+    margin-bottom: 0;
+    
+    @media @screen-medium-above {
+        margin: 30px 0px;   
+        padding: 0 30px;
+    }
+}
+    
+//photo post start
+
+#post {
+    height: 99%;
+    overflow: hidden;
+}
+
+//text posts
+#text {
+
+    .main-content {
+	    
+	    padding: 15px;
+        
+        @media @screen-small-above {
+            padding: 0 15px;
+            width: 65.9%;
+        }
     }
     
+    .row {
+        margin: 0;
+        
+        @media @screen-medium-above {
+        margin: 0 -15px;
+        }
+    }
+
+    @media @screen-small-above {
+        padding-top: @grid-gutter-width;
+    }
+    
+}//#text
+    
+
+//index page start
+
+
+
+#posts {
+
+    .row {
+        margin: 0;
+        
+        @media @screen-medium-above {
+        margin: 0 -15px;
+        }
+    }
+
+    @media @screen-small-above {
+        padding-top: @grid-gutter-width;
+    }
+    
+    .post {
+        .make-sm-column(4);
+        padding: 5px;
+        
+        @media @screen-small-above {
+            padding: 0 15px;
+        }
+        
+    }
     
     header + .post {
         float: none;

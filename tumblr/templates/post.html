@@ -1,11 +1,8 @@
 {block:PermalinkPage}
     <section class="permalink-page">
-        {block:PostTitle}
-        {PostTitle}
-        {/block:PostTitle}
+        
 
     {block:Posts}
-        {block:Text}{/block:Text}
         {block:Panorama}{/block:Panorama}
         {block:Audio}{/block:Audio}
         {block:Video}{/block:Video}
@@ -13,13 +10,70 @@
         {block:Quote}{/block:Quote}
         {block:Link}{/block:Link}
         {block:Chat}{/block:Chat}
+        
+        {block:Text}
+        
+            <div class="container-fluid">
+            
+                <div class="text-wrapper">
+                    <div id="text">
+                
+                    <div class="row">
+                    <div class="top-section">
+                        
+                        <header>
+                        
+                            <div class="branding">
+                                <a href="http://npr.org" class="npr-logo">
+                                    <img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.png">
+                                </a>
+                                <h3><a href="/"><b>Look</b> At This</a></h3>
+                                <h4>Look At This is a rabbit hole of visual curiosities.</h4>
+                                
+                            </div><!--branding-->
+                            
+                            <div class="menu">
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                </ul>
+                                <dl class="follow-us">
+                                    <dt>Follow us</dt>
+                                    <dd class="twitter">
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                    </dd>
+                                    <dd class="facebook">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                    </dd>
+                                </dl><!--follow-us-->
+                            </div><!--menu-->
+                                
+                        </header>
+                        
+                        <div class="main-content">
+                        <div class="title-section">
+                            {block:PostTitle}
+                                <h1>{PostTitle}</h1>
+                            {/block:PostTitle}
+                        </div>
+                            {body}
+                        </div>
+                        
+                        </div><!-- /top-section-->
+                    
+                </div><!--/row-->
+                    
+                    </div><!--/#text-->
+                </div><!--/text-wrapper-->
+                
+            </div><!--/#text-->
+        
+        {/block:Text}
 
         {block:Photo}
-
+        
         <div id="post"></div>
-
+        
         <div class="post-fixed-menu">
-
             <ul>
                 <li class="button-menu"><a href="/">View all stories <i class="fa fa-th"></i></a></li>
             </ul>
@@ -29,24 +83,28 @@
         {{ JS.push('js/app_config.js') }}
         {{ JS.push('js/post.js') }}
         {{ JS.render('js/post-footer.min.js')}}
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                resizeDiv();
+            });
+            
+            window.onresize = function(event) {
+                resizeDiv();
+            }
+            
+            function resizeDiv() {
+                vpw = $(window).width();
+                vph = $(window).height();
+                $('#post').css({'height': vph + 'px'});
+            }
+        </script>
 
         {/block:Photo}
+        
+        
     {/block:Posts}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            resizeDiv();
-        });
-        
-        window.onresize = function(event) {
-            resizeDiv();
-        }
-        
-        function resizeDiv() {
-            vpw = $(window).width();
-            vph = $(window).height();
-            $('#post').css({'height': vph + 'px'});
-        }
-    </script>
+    
     <!-- CHARTBEAT -->
     <script type="text/javascript">
         var _sf_async_config={};
@@ -72,5 +130,7 @@
                 loadChartbeat : function() { oldonload(); loadChartbeat(); };
         })();
     </script>
+    
+    
 </section>
 {/block:PermalinkPage}
