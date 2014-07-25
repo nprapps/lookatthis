@@ -22,11 +22,11 @@ var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
 
-var onStartCardButtonClick = function() {
+/*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
 
     _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
-}
+}*/
 
 var resize = function() {
 
@@ -158,11 +158,13 @@ var showNavigation = function() {
 
         $prevArrow.removeClass('active');
         $prevArrow.css({
-            'opacity': 0,
+            //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('titlecard-nav');
 
-        $primaryNav.css('opacity', '1');
+        //$primaryNav.css('opacity', '1');
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -177,11 +179,11 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            'opacity': 0,
+            //'opacity': 0,
             'display': 'none'
         });
 
-        $primaryNav.css('opacity', '1');
+        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -189,8 +191,10 @@ var showNavigation = function() {
         if ($arrows.filter('active').length != $arrows.length) {
             animateArrows();
         }
+        
+        $('body').removeClass('titlecard-nav');
 
-        $primaryNav.css('opacity', '1');
+        //$primaryNav.css('opacity', '1');
     }
 }
 
@@ -210,7 +214,7 @@ var fadeInArrows = _.debounce(function() {
     /*
     * Debounce makes you do crazy things.
     */
-    $arrows.css('opacity', 1)
+    //$arrows.css('opacity', 1)
 }, 1);
 
 
@@ -329,7 +333,7 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    $startCardButton = $('.btn-go');
+    //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
@@ -339,7 +343,7 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
-    $startCardButton.on('click', onStartCardButtonClick);
+    //$startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
 
     // Redraw slides if the window resizes
