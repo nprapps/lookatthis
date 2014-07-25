@@ -2,10 +2,12 @@
     <div class="container-fluid next-post">
     <div class="row">
     
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <div class="previous-post">
-            <p><em>You just looked at</em></p>
-            <h2>{{ COPY.tumblr.title }}</h2>
+            <div class="looked-at">
+                <p><em>You just looked at</em></p>
+                <h2>{{ COPY.tumblr.title }}</h2>
+            </div><!-- /looked-at -->
             <img src="assets/{{ COPY.tumblr.thumbnail_photo }}">
             <div class="share">
                 <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
@@ -18,7 +20,7 @@
             </div>
         </div>
     </div><!-- /col 6 -->
-    <div class="col-md-8">
+    <div class="col-sm-8">
         <div class="up-next">
             <a href="{{ row.text3 }}">
             <img src="{{ row.media }}">
