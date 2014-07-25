@@ -22,11 +22,11 @@ var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
 
-var onStartCardButtonClick = function() {
+/*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
 
     _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
-}
+}*/
 
 var resize = function() {
 
@@ -333,7 +333,7 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    $startCardButton = $('.btn-go');
+    //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
@@ -343,7 +343,7 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
-    $startCardButton.on('click', onStartCardButtonClick);
+    //$startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
 
     // Redraw slides if the window resizes
