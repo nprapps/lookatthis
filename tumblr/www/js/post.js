@@ -31,6 +31,9 @@ var onDocumentLoad = function(e) {
     // Append the iframe to our element.
     $post.append($iframe);
 
+    // focus on the iframe so that keyboard nav works
+    $iframe.focus();
+
     window.addEventListener('message', receiveMessage, false);
     $window.on('resize', onWindowResize);
 }
