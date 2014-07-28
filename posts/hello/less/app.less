@@ -59,15 +59,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
     .controlArrow {
         position: fixed;
-        width: 50px;
-        height: 100px;
         top: 40%;
-        font-size: 30px;
+        width: 50px;
+        font-size: 24px;
         font-weight: bold;
         text-align: center;
         line-height: 47px;
         background: rgba(0, 0, 0, 0.2);
-        border: 3px solid #fff;
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -86,7 +84,12 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         }
         
         @media @screen-small-above {
-
+            top: 40%;
+            
+            height: 100px;
+            font-size: 30px;
+            border: 3px solid #fff;
+            
             &:hover {
                 background-color: #fff;
                 color: #000;
@@ -102,12 +105,17 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 
     .controlArrow.prev {
-        left: 10px;
-
+        left: 0;
+        
         &:before {
             font-family: "FontAwesome";
             content: '\f104';
             display: block;
+            
+        }
+        
+        @media @screen-small-above {
+            left: 10px;
             padding-top: 25px;
         }
         
@@ -126,13 +134,18 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         */
     }
     .controlArrow.next {
-        right: 25px;
+        right: 0;
         padding: 0 0 0 5px;
 
         &:before {
             font-family: "FontAwesome";
             content: "\f105";
             display: block;
+            
+        }
+        
+        @media @screen-small-above {
+            right: 25px;
             padding-top: 25px;
         }
         /*
@@ -151,7 +164,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 }
 
 .titlecard-nav .primary-navigation .controlArrow {
+    opacity: .7;
+    @media @screen-small-above {
         opacity: 1;
+    }
 }
 
 // default slide styles
@@ -228,7 +244,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .full-block-content {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px 40px 80px;
+        padding: 20px 40px;
         @media @screen-small-above {
              padding: 20px 100px;
         }

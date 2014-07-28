@@ -1,8 +1,4 @@
 .start {
-    
-    .primary-navigation {
-        opacity: 1;
-    }
 
     .full-block {
         background-color: rgba(0,0,0,0.5);
@@ -14,18 +10,26 @@
         
         .look-branding {
             img {
-                max-width: 80px;
+                max-width: 50px;
                 display: block;
                 margin: 0 auto;
+                
+                @media @screen-small-above {
+                    max-width: 80px;
+                }
             }
             
             h5 {
                 text-transform: uppercase;
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 12px;
                 padding: 5px 0 10px 0;
                 border-bottom: 3px solid #f60062;
                 display: inline-block;
+                
+                @media @screen-small-above {
+                    font-size: 16px;
+                }
             }
         }
 
