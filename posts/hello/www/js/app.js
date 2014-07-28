@@ -317,6 +317,23 @@ var onControlArrowClick = function(e) {
     return true;
 }
 
+var onSlideClick = function(e) {
+    if (!hasTrackedSlideNav) {
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Clicked Slide']);
+        hasTrackedSlideNav = true;
+    }
+
+    $.fn.fullpage.moveSlideRight();
+
+    return true;
+}
+
+var onNextPostClick = function(e) {
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigated to next post']);
+
+    return true;
+}
+
 var receiveMessage = function(e) {
     var head = e.data.substr(0, 5);
     var tail = e.data.substr(5, e.data.length);
@@ -340,11 +357,13 @@ $(document).ready(function() {
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
 
+    //$startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
+    $arrows.on('click', onControlArrowClick);
+    $nextPostURL.on('click', onNextPostClick);
+
     setUpFullPage();
     resize();
-
-    //$startCardButton.on('click', onStartCardButtonClick);
-    $arrows.on('click', onControlArrowClick);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);

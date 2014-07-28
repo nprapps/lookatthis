@@ -314,6 +314,21 @@ var onControlArrowClick = function(e) {
         hasTrackedSlideNav = true;
     }
 
+    if ($(this).hasClass('slide')) {
+        $.fn.fullpage.moveSlideRight();
+    }
+
+    return true;
+}
+
+var onSlideClick = function(e) {
+    if (!hasTrackedSlideNav) {
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Clicked Slide']);
+        hasTrackedSlideNav = true;
+    }
+
+    $.fn.fullpage.moveSlideRight();
+
     return true;
 }
 
@@ -346,12 +361,13 @@ $(document).ready(function() {
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
 
-    setUpFullPage();
-    resize();
-
     //$startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
     $arrows.on('click', onControlArrowClick);
     $nextPostURL.on('click', onNextPostClick);
+
+    setUpFullPage();
+    resize();
 
     // Redraw slides if the window resizes
     $(window).resize(resize);
