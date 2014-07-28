@@ -50,7 +50,7 @@ data/*.xlsx
 tumblr-theme.html
 www/test/test.html
 www/assets
-posts/*/www/assets
+posts/*/www/assets/*.jpg
 data/gdoc*.csv
 www/comments/index.html
 analytics.json
