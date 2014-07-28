@@ -261,14 +261,10 @@ body {
                 position: relative;  
                 
                 @media @screen-small-above {
-                    border: none;
-                    position: absolute;
-                    bottom: 30px;
-                    left: 30px;
-                    width: 72%;
-                    padding: 0 0 10px 0;
+                    border: none; 
+                    padding: 0 10%;
+                    margin-top: 40px;
                     background-color: transparent;
-                    z-index: 1px;
                 }
  
                 ul {
@@ -282,12 +278,12 @@ body {
                     @media @screen-small-above {
                         padding: 0;
                         height: auto;
-                        width: 35%;
-                        max-width: 160px;
+                        //width: 35%;
+                        //max-width: 160px;
                     }
                     
                     @media @screen-medium-above {
-                        max-width: 300px;
+                        //max-width: 300px;
                     }
 
                     li {
@@ -336,13 +332,13 @@ body {
 
                     @media @screen-small-above {
                         border-top: 1px solid #fff;
-                        padding: 6px 0 0 5px;
-                        width: 35%;
-                        max-width: 160px;
+                        //padding: 6px 0 0 5px;
+                        //width: 35%;
+                        //max-width: 160px;
                     }
                     
                     @media @screen-medium-above {
-                        max-width: 300px;
+                        //max-width: 300px;
                     }
                     
                     dt {
@@ -351,7 +347,7 @@ body {
                         @media @screen-small-above {
                             display: block;
                             float: left;
-                            margin: 6px 20px 0 0;
+                            margin: 10px 20px 0 0;
                             font-weight: normal;
                             font-size: 14px;
                         }
@@ -387,7 +383,12 @@ body {
                             position: static;
                             float: left;
                             margin-right: 25px;
-                            padding-top: 3%;
+                            padding-top: 10px;
+                        }
+                        
+                        @media @screen-medium-above {
+                            position: static;
+                            padding-top: 15px;
                         }
                     }
                     
@@ -398,7 +399,11 @@ body {
                         
                         @media @screen-small-above {
                             position: static;
-                            padding-top: 3%;
+                            padding-top: 10px;
+                        }
+                        
+                        @media @screen-medium-above {
+                            padding-top: 15px;
                         }
                         
                     }
@@ -485,7 +490,13 @@ body {
             text-shadow: 2px 2px 12px #000;
             text-transform: uppercase;
             font-weight: bold;
-            font-size: 3vw;
+            font-size: 5.5vw;
+        }
+        
+        @media @screen-small-above {
+            h1 {
+                 font-size: 3vw;
+            }
         }
     }
     
