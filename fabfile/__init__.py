@@ -331,6 +331,8 @@ def update():
     """
     Update all application data not in repository (copy, assets, etc).
     """
+    require('slug', provided_by=[post])
+
     text.update()
     assets.sync()
     data.update()
@@ -380,7 +382,7 @@ def _new(slug):
 
     local('cp -r new_post %s/%s' % (app_config.POST_PATH, slug))
     post(slug)
-    text.update()
+    update()
 
     post_config_path = '%s/%s/post_config.py' % (app_config.POST_PATH, slug)
     find = "SLUG = None"
