@@ -22,8 +22,8 @@ var onDocumentLoad = function(e) {
     $iframe.attr('src', APP_CONFIG.S3_BASE_URL + '/posts/' + slug)
 
     // Set some attributes to this proto-iframe.
-    $iframe.attr('width', '100%');
-    $iframe.attr('height', '99%');
+    $iframe.attr('width', $window.width());
+    $iframe.attr('height', $window.height());
     $iframe.attr('scrolling', 'no');
     $iframe.attr('marginheight', '0');
     $iframe.attr('frameborder', '0');
@@ -32,6 +32,12 @@ var onDocumentLoad = function(e) {
     $post.append($iframe);
 
     window.addEventListener('message', receiveMessage, false);
+    $window.on('resize', onWindowResize);
+}
+
+var onWindowResize = function(){
+    $iframe.attr('width', $window.width());
+    $iframe.attr('height', $window.height());
 }
 
 var receiveMessage = function(e) {
