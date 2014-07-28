@@ -441,10 +441,10 @@ def delete():
     env.settings = 'production'
     _delete_tumblr_post()
 
+    local('fab post:%s assets.rm:"*"' % env.slug)
+
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.slug)
-
-    local('fab post:%s assets.rm:"*"' % env.slug)
 
 @task
 def tumblr():

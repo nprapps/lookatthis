@@ -161,7 +161,7 @@ var showNavigation = function() {
             //'opacity': 0,
             'display': 'none'
         });
-        
+
         $('body').addClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -191,7 +191,7 @@ var showNavigation = function() {
         if ($arrows.filter('active').length != $arrows.length) {
             animateArrows();
         }
-        
+
         $('body').removeClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -317,6 +317,12 @@ var onControlArrowClick = function(e) {
     return true;
 }
 
+var onNextPostClick = function(e) {
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigated to next post']);
+
+    return true;
+}
+
 var receiveMessage = function(e) {
     var head = e.data.substr(0, 5);
     var tail = e.data.substr(5, e.data.length);
@@ -345,6 +351,7 @@ $(document).ready(function() {
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
+    $nextPostURL.on('click', onNextPostClick);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);
