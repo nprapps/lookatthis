@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from mimetypes import guess_type
+import subprocess
 
 from flask import abort
 
@@ -13,9 +14,11 @@ static = Blueprint('static', __name__)
 # Render LESS files on-demand
 def less(static_path, filename):
 
-    r = envoy.run('node_modules/less/bin/lessc -rp=%s/less/ %s/less/%s' % (static_path, static_path, filename))
+    # r = envoy.run('node_modules/less/bin/lessc -rp=%s/less/ %s/less/%s' % (static_path, static_path, filename))
 
-    return r.std_out, 200, { 'Content-Type': 'text/css' }
+    r = subprocess.check_output(["node_modules/less/bin/lessc", "-rp=%s/less/" % static_path, "%s/less/%s" % (static_path, filename)])
+
+    return r, 200, { 'Content-Type': 'text/css' }
 
 # render copytext
 def copy_js(slug):
