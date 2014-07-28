@@ -109,8 +109,8 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    //
-    if ($w < 769 && isTouch) {
+    console.log($w);
+    if ($w < 769) {
         mobileSuffix = '-sq';
     }
 
@@ -126,6 +126,8 @@ var getBackgroundImage = function(container) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
+
+    console.log(mobileSuffix);
 
     if ($(container).data('bgimage')) {
 
@@ -314,10 +316,6 @@ var onControlArrowClick = function(e) {
         hasTrackedSlideNav = true;
     }
 
-    if ($(this).hasClass('slide')) {
-        $.fn.fullpage.moveSlideRight();
-    }
-
     return true;
 }
 
@@ -351,6 +349,9 @@ var receiveMessage = function(e) {
 }
 
 $(document).ready(function() {
+    $w = $(window).width();
+    $h = $(window).height();
+
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');

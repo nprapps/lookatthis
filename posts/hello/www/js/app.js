@@ -109,8 +109,8 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    //
-    if ($w < 769 && isTouch) {
+    console.log($w);
+    if ($w < 769) {
         mobileSuffix = '-sq';
     }
 
@@ -126,6 +126,8 @@ var getBackgroundImage = function(container) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
+
+    console.log(mobileSuffix);
 
     if ($(container).data('bgimage')) {
 
@@ -161,7 +163,7 @@ var showNavigation = function() {
             //'opacity': 0,
             'display': 'none'
         });
-        
+
         $('body').addClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -191,7 +193,7 @@ var showNavigation = function() {
         if ($arrows.filter('active').length != $arrows.length) {
             animateArrows();
         }
-        
+
         $('body').removeClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -347,6 +349,9 @@ var receiveMessage = function(e) {
 }
 
 $(document).ready(function() {
+    $w = $(window).width();
+    $h = $(window).height();
+
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
