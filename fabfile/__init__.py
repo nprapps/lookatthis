@@ -331,6 +331,8 @@ def update():
     """
     Update all application data not in repository (copy, assets, etc).
     """
+    require('slug', provided_by=[post])
+
     text.update()
     assets.sync()
     data.update()
