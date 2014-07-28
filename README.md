@@ -15,6 +15,7 @@ lookatthis
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
 * [Starting a new post](#starting-a-new-post)
+* [Working on an existing post](#working-on-an-existing-post)
 * [Publishing a post](#publishing-a-post)
 * [Post ordering](#post-ordering)
 * [COPY editing](#copy-editing)
@@ -152,6 +153,11 @@ Starting a new post
 * Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``.
 
 Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
+
+Working on an existing post
+---------------------------
+
+If you are working on a post that already exists in the repo for the first time, be sure to run `fab post:$SLUG update` to get the assets and copytext spreadsheet.
 
 Post metadata
 -------------
