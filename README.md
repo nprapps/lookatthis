@@ -174,8 +174,8 @@ All post metadata must be filled out in order to publish. In the default copy sp
 Publishing a post
 -----------------
 
-* `fab staging post:$SLUG deploy`: This function will create a draft post on Tumblr and deploy the static assets to S3.
-* `fab staging post:$SLUG publish`: This function will publish the draft post that already exists on Tumblr.
+* `fab post:$SLUG staging deploy`: This function will create a draft post on Tumblr and deploy the static assets to S3.
+* `fab post:$SLUG staging publish`: This function will publish the draft post that already exists on Tumblr.
 
 Post ordering
 -------------
