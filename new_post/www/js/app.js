@@ -161,7 +161,7 @@ var showNavigation = function() {
             //'opacity': 0,
             'display': 'none'
         });
-        
+
         $('body').addClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -191,7 +191,7 @@ var showNavigation = function() {
         if ($arrows.filter('active').length != $arrows.length) {
             animateArrows();
         }
-        
+
         $('body').removeClass('titlecard-nav');
 
         //$primaryNav.css('opacity', '1');
@@ -345,6 +345,7 @@ $(document).ready(function() {
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $arrows.on('click', onControlArrowClick);
+    $nextPostURL.on('click', onNextPostClick);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);
