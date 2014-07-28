@@ -382,7 +382,7 @@ def _new(slug):
 
     local('cp -r new_post %s/%s' % (app_config.POST_PATH, slug))
     post(slug)
-    text.update()
+    update()
 
     post_config_path = '%s/%s/post_config.py' % (app_config.POST_PATH, slug)
     find = "SLUG = None"
