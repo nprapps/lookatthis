@@ -6,10 +6,10 @@
                 <div class="quote-image contained-image" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}></div>
                 <div class="quote-text">
                     <blockquote>
-                        {{ row.text1 }}
+                        {{ row.text1|smarty }}
                     </blockquote>
                     <cite>
-                        {{ row.text2 }}
+                        {{ row.text2|smarty }}
                     </cite>
                 </div><!--big-quote-text-->
             </div><!--full-block-content-->
@@ -17,7 +17,7 @@
 
         {% if row.media %}
             <div class="credit">
-                {{ row.media_credit }}
+                {{ row.media_credit|smarty }}
             </div>
         {% endif %}
     </div><!--full-block-->
