@@ -104,14 +104,7 @@ Hide project secrets
 
 Project secrets should **never** be stored in ``app_config.py`` or anywhere else in the repository. They will be leaked to the client if you do. Instead, always store passwords, keys, etc. in environment variables and document that they are needed here in the README.
 
-### Tumblr Secrets
-
-Tumblr tokens and secrets should be stored as environment variables as follows:
-
-* `export TUMBLR_CONSUMER_KEY=whateveritis`
-* `export TUMBLR_CONSUMER_SECRET=whateveritis`
-* `export TUMBLR_TOKEN=whateveritis`
-* `export TUMBLR_TOKEN_SECRET=whateveritis`
+The required environment variables for this project are in the `# lookatthis` section of [env.sh](https://github.com/nprapps/workinprivate/blob/master/env.sh) in the `workinprivate` repo. You will need to copy and paste those lines to your `~/.bash_profile`.
 
 Save media assets
 -----------------
