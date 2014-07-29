@@ -86,7 +86,12 @@ def get_secrets():
         'TUMBLR_CONSUMER_KEY',
         'TUMBLR_CONSUMER_SECRET',
         'TUMBLR_TOKEN',
-        'TUMBLR_TOKEN_SECRET'
+        'TUMBLR_TOKEN_SECRET',
+        'TWITTER_API_CONSUMER_KEY',
+        'TWITTER_API_CONSUMER_SECRET',
+        'TWITTER_API_OAUTH_TOKEN',
+        'TWITTER_API_OAUTH_SECRET',
+        'FACEBOOK_API_APP_TOKEN'
     ]
 
     secrets_dict = {}
