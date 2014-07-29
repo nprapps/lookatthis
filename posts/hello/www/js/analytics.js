@@ -5,7 +5,7 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', POST_CONFIG.GOOGLE_ANALYTICS.ACCOUNT_ID]);
 _gaq.push(['_setDomainName', POST_CONFIG.GOOGLE_ANALYTICS.DOMAIN]);
 //_gaq.push(['_setCustomVar', 1, 'BC', '', 3]);
-_gaq.push(['_setCustomVar', 2, 'Topics', POST_CONFIG.GOOGLE_ANALYTICS.TOPICS, 3]);
+//_gaq.push(['_setCustomVar', 2, 'Topics', POST_CONFIG.GOOGLE_ANALYTICS.TOPICS, 3]);
 //_gaq.push(['_setCustomVar', 3, 'Program ID', '', 3]);
 //_gaq.push(['_setCustomVar', 3, 'Localization', '', 1]);
 _gaq.push(['_setCustomVar', 4, 'OrgID', '1', 3]);
