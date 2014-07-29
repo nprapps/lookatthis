@@ -18,22 +18,39 @@
         background: rgba(246, 0, 98, 0.7); 
     }
     
-    
-    
-    
 }
 
-p {
-    line-height:1;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-align: center;
-    
-    @media @screen-small-above {
-        font-size: 60px;
+
+
+.slide {
+
+    h3 {
+        text-shadow: 2px 2px 9px #333;
+    }
+
+    p {
+        line-height:1;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 9px #333;
+        
+        @media @screen-small-above {
+            font-size: 60px;
+        }
+        
     }
     
 }
+
+#next-up {
+    p {
+        text-transform: none;
+        font-weight: normal;
+    }
+}
+
+
 
 #text1 {
     a {
