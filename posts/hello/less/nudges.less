@@ -1,0 +1,67 @@
+// Breakpoints
+@screen-mega-above: ~"screen and (min-width: 1440px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
+
+
+
+#intro {
+    
+    .full-block {
+        background: rgba(246, 0, 98, 0.7); 
+    }
+    
+}
+
+
+
+.slide {
+
+    h3 {
+        text-shadow: 2px 2px 9px #333;
+    }
+
+    p {
+        line-height:1;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 9px #333;
+        
+        @media @screen-small-above {
+            font-size: 60px;
+        }
+        
+    }
+    
+}
+
+#next-up {
+    p {
+        text-transform: none;
+        font-weight: normal;
+    }
+}
+
+
+
+#text1 {
+    a {
+        color: #F60062;
+    }
+    .full-block {
+        background: rgba(0, 0, 0, 0.3); 
+    }
+}
+
+
+a {
+    color: #F60062;
+}

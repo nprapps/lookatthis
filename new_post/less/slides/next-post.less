@@ -163,6 +163,23 @@
         
         
         a {
+        
+            &:after {
+                font-family: "FontAwesome";
+                .transition(all .6s ease-in);
+                content: 'LOOK \f0da';
+                //content: 'LOOK \00bb';
+                display: block;
+                letter-spacing: 1px;
+                font-size: 17px;
+                padding: 30px 15px;
+                color: #fff;
+                opacity: 0;
+                position: absolute;
+                bottom: 0px;
+                right: 0px;
+                background-color: #000;
+            }
                 
            @media @screen-medium-above {
                 &:hover {
@@ -178,7 +195,9 @@
                     }
                     
                     
-                    
+                    &:after {
+                        opacity: .7;
+                    }
                     
                     img {
                       opacity: .3;  
