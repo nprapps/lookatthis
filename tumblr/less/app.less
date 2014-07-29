@@ -296,6 +296,7 @@ body {
                         
                         a {
                             color: #fff;
+                            padding: 3px;
                             
                             &:hover {
                                 background-color: #333;
@@ -348,7 +349,7 @@ body {
                         @media @screen-small-above {
                             display: block;
                             float: left;
-                            margin: 10px 20px 0 0;
+                            margin: 10px 20px 0 3px;
                             font-weight: normal;
                             font-size: 14px;
                         }
@@ -603,12 +604,12 @@ body {
 
     .post-wrapper {
         position: relative;
-        margin-bottom: @grid-gutter-width;
-        //background-color: #000;
         background-color: @brand-primary;
         .transition(all .6s ease-in);
-        
         overflow: hidden;
+        @media @screen-small-above {
+            margin-bottom: @grid-gutter-width;
+        }
    
         img {
             width: 100%;

@@ -14,10 +14,14 @@ lookatthis
 * [Save media assets](#save-media-assets)
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
+* [Architecture Overview](#architecture-overview)
+* [Tumblr data](#tumblr-data)
+* [Developing posts](#developing-posts)
 * [Starting a new post](#starting-a-new-post)
 * [Working on an existing post](#working-on-an-existing-post)
-* [Publishing a post](#publishing-a-post)
+* [Deploying and publishing a post](#deploying-and-publishing-a-post)
 * [Post ordering](#post-ordering)
+* [Deleting posts](#deleting-posts)
 * [COPY editing](#copy-editing)
 * [Arbitrary Google Docs](#arbitrary-google-docs)
 * [Run Python tests](#run-python-tests)
@@ -146,21 +150,46 @@ python app.py
 
 Visit [localhost:8000](http://localhost:8000) in your browser.
 
-Starting a new post
--------------------
+## Architecture Overview
 
-* `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
-* Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``.
+The Look At This stack relies on three separate Tumblrs and deployment targets: [development](http://dev-lookatthis.tumblr.com), [staging](http://stage-lookatthis.tumblr.com), and [production](http://lookatthisstory.tumblr.com).
+
+[**Development**](http://dev-lookatthis.tumblr.com) is used for working on posts locally. All links on this Tumblr will point to your localhost. You will only be able to see this Tumblr properly if you run a local server (`python app.py`).
+
+[**Staging**](http://stage-lookatthis.tumblr.com) mimics the production Tumblr, but all links point to our staging S3 bucket. Thus, staging will only work properly on NPR Internet or an otherwise whitelisted IP address. Use this Tumblr to test a production-ready post before you send it to the production Tumblr.
+
+[**Production**](http://lookatthisstory.tumblr.com) is the live, public-facing Tumblr. This Tumblr should only contain posts that are completed.
+
+Use `development`, `staging` and `production` as your deployment targets in Fabric commands, i.e. `fab post:$SLUG staging deploy`.
+
+The actual content of the posts lives on our Amazon S3 servers, and the posts are dynamically injected into the Tumblr post page. Thus, you cannot work on posts in the Tumblr dashboard, as the content of the posts does not actually live there.
+
+## Tumblr Data
+
+When we deploy posts to Tumblr, we send the following:
+
+* A slug, which is the name of the folder of the post
+* An image for the Tumblr dashboard, which should live in the post’s `www/assets` folder with a filename that matches the value of the `tumblr_dashboard_photo` variable in the spreadsheet.
+* A caption for the image, built out of the `title`, `subtitle` and `description` fields in the `tumblr` sheet of the copytext spreadsheet for the post.
+
+Tumblr then returns a post ID, which we use to create an image for the Tumblr homepage, named with the ID of the post. This is a copy of the image set for the `thumbnail_photo` variable in the `tumblr` sheet of the post spreadsheet.
+
+## Developing posts
+
+Working with posts on the command line revolves around the `fab post:$SLUG` command. All commands that follow `fab post:$SLUG` will work with just the post specified.
+
+### Starting a new post
+
+1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
+2.  Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the key (found in the Google Docs URL after ``&key=``). That key will go in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_KEY``.
 
 Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
 
-Working on an existing post
----------------------------
+### Working on an existing post
 
 If you are working on a post that already exists in the repo for the first time, be sure to run `fab post:$SLUG update` to get the assets and copytext spreadsheet.
 
-Post metadata
--------------
+### Post metadata
 
 All post metadata must be filled out in order to publish. In the default copy spreadsheet, the `tumblr` sheet contains all of the metadata.
 
@@ -171,24 +200,42 @@ All post metadata must be filled out in order to publish. In the default copy sp
 * `subtitle`: The subtitle of the post, used on the Tumblr homepage and in the dashboard caption.
 * `description`: A short description of the post, used on the Tumblr homepage and in the dashboard caption.
 
-Publishing a post
------------------
+### Deploying and publishing a post
+
+Deploying and publishing are separate functions. 
+
+The `deploy` function creates a post on Tumblr if one does not exist or edits that post if it is already on Tumblr. 
+
+The `publish` function takes an existing draft post and makes it public on Tumblr. Note that running `publish` on an already published post will [update the timestamp](#post-ordering).
+
+Deploy and publish with the following commands:
 
 * `fab post:$SLUG staging deploy`: This function will create a draft post on Tumblr and deploy the static assets to S3.
 * `fab post:$SLUG staging publish`: This function will publish the draft post that already exists on Tumblr.
 
-Post ordering
--------------
+**After you deploy for the first time or publish, commit to the GitHub repo so that others can get the updated post ID.**
+
+### Post ordering
 
 Post ordering is handled entirely by Tumblr. Thus, posts will appear on Look At This in the order they are published. 
 
 To push a post to the top of the post order, republish the post:
 
 ```
-fab staging post:$SLUG publish
+fab post:$SLUG staging publish
 ```
 
 Note that the timestamp is updated on Tumblr every time you run the `publish` command. Thus, **if you are making copyedits to a published post, make sure to run `deploy` instead.** 
+
+### Deleting posts
+
+If you want to delete a post, use the following command:
+
+```
+fab post:$SLUG delete
+```
+
+**Do not** specify a deployment target. The delete command will delete the post locally and on all three Tumblrs if the post exists on any of them. This will also delete all assets related to the post in the assets rig. 
 
 COPY editing
 ------------
