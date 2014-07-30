@@ -104,14 +104,7 @@ Hide project secrets
 
 Project secrets should **never** be stored in ``app_config.py`` or anywhere else in the repository. They will be leaked to the client if you do. Instead, always store passwords, keys, etc. in environment variables and document that they are needed here in the README.
 
-### Tumblr Secrets
-
-Tumblr tokens and secrets should be stored as environment variables as follows:
-
-* `export TUMBLR_CONSUMER_KEY=whateveritis`
-* `export TUMBLR_CONSUMER_SECRET=whateveritis`
-* `export TUMBLR_TOKEN=whateveritis`
-* `export TUMBLR_TOKEN_SECRET=whateveritis`
+The required environment variables for this project are in the `# lookatthis` section of [env.sh](https://github.com/nprapps/workinprivate/blob/master/env.sh) in the `workinprivate` repo. You will need to copy and paste those lines to your `~/.bash_profile`.
 
 Save media assets
 -----------------
@@ -374,19 +367,19 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|Custom 1|Custom 2|
 |--------|------|-----|-----|--------|--------|
-|lookatthis:$SLUG|tweet|`location`||||
-|lookatthis:$SLUG|facebook|`location`||||
-|lookatthis:$SLUG|email|`location`||||
-|lookatthis:$SLUG|new-comment||||
-|lookatthis:$SLUG|open-share-discuss||||
-|lookatthis:$SLUG|close-share-discuss||||
-|lookatthis:$SLUG|summary-copied||||
-|lookatthis:$SLUG|featured-tweet-action|`action`||``tweet_url``|
-|lookatthis:$SLUG|featured-facebook-action|`action`||``post_url``|
-|lookatthis:$SLUG|Slideshow - Clicked Go||||
-|lookatthis:$SLUG|Slideshow - Reached Last Slide||||
-|lookatthis:$SLUG|Navigation - Used Keyboard||||
-|lookatthis:$SLUG|Navigation - Used Slide Controls||||
+|lookatthis|tweet|`location`||||
+|lookatthis|facebook|`location`||||
+|lookatthis|email|`location`||||
+|lookatthis|new-comment||||
+|lookatthis|open-share-discuss||||
+|lookatthis|close-share-discuss||||
+|lookatthis|summary-copied||||
+|lookatthis|featured-tweet-action|`action`||``tweet_url``|
+|lookatthis|featured-facebook-action|`action`||``post_url``|
+|lookatthis|slide-exit|`slideIndex`|`timeOnSlide`||
+|lookatthis|keyboard-nav||||
+|lookatthis|next-post||||
+|lookatthis|completion|percent|||
 
 
 

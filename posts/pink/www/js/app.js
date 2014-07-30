@@ -2,9 +2,8 @@
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
-var $shareModal = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
+var EVENT_CATEGORY = 'lookatthis';
 
 var $w;
 var $h;
@@ -22,26 +21,12 @@ var w;
 var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
+var slideStartTime = moment();
+var completion = 0;
 
-var onShareModalShown = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'open-share-discuss']);
-}
-
-var onShareModalHidden = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'close-share-discuss']);
-}
-
-var onClippyCopy = function(e) {
-    alert('Copied to your clipboard!');
-
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
-}
-
-var onStartCardButtonClick = function() {
+/*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
-
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
-}
+}*/
 
 var resize = function() {
 
@@ -80,6 +65,7 @@ var setUpFullPage = function() {
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
     $('body').css('opacity', 1);
+    showNavigation();
 };
 
 // after a new slide loads
@@ -91,8 +77,13 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     slideStartTime = moment();
 
-    if ($slides.last().hasClass('active')) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
+    // Completion tracking
+    how_far = (slideIndex + 1) / $slides.length;
+
+    if (how_far >= completion + 0.25) {
+        completion = how_far - (how_far % 0.25);
+
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
     }
 };
 
@@ -123,8 +114,7 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    //
-    if ($w < 769 && isTouch) {
+    if ($w < 769) {
         mobileSuffix = '-sq';
     }
 
@@ -164,16 +154,24 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        /*
-        * Title card gets no arrows and no nav.
-        */
-        $arrows.removeClass('active');
-        $arrows.css({
-            'opacity': 0,
+        if (!$arrows.hasClass('active')) {
+            animateArrows();
+        }
+
+        var $prevArrow = $arrows.filter('.prev');
+
+        $prevArrow.removeClass('active');
+        $prevArrow.css({
+            //'opacity': 0,
             'display': 'none'
         });
-        $primaryNav.css('opacity', '0');
-    } else if ($slides.last().hasClass('active')) {
+
+        $('body').addClass('titlecard-nav');
+
+        //$primaryNav.css('opacity', '1');
+    }
+
+    else if ($slides.last().hasClass('active')) {
         /*
         * Last card gets no next arrow but does have the nav.
         */
@@ -185,11 +183,11 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            'opacity': 0,
+            //'opacity': 0,
             'display': 'none'
         });
 
-        $primaryNav.css('opacity', '1');
+        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -198,7 +196,9 @@ var showNavigation = function() {
             animateArrows();
         }
 
-        $primaryNav.css('opacity', '1');
+        $('body').removeClass('titlecard-nav');
+
+        //$primaryNav.css('opacity', '1');
     }
 }
 
@@ -218,7 +218,7 @@ var fadeInArrows = _.debounce(function() {
     /*
     * Debounce makes you do crazy things.
     */
-    $arrows.css('opacity', 1)
+    //$arrows.css('opacity', 1)
 }, 1);
 
 
@@ -277,7 +277,10 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     * Called when leaving a slide.
     */
 
-    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', timeOnSlide]);
+    var now = moment();
+    var timeOnSlide = (now - slideStartTime);
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -298,7 +301,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
+            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'keyboard-nav']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -312,11 +315,14 @@ var onDocumentKeyDown = function(e) {
     return true;
 }
 
-var onControlArrowClick = function(e) {
-    if (!hasTrackedSlideNav) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
-        hasTrackedSlideNav = true;
-    }
+var onSlideClick = function(e) {
+    $.fn.fullpage.moveSlideRight();
+
+    return true;
+}
+
+var onNextPostClick = function(e) {
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
 
     return true;
 }
@@ -334,25 +340,25 @@ var receiveMessage = function(e) {
 }
 
 $(document).ready(function() {
-    $shareModal = $('#share-modal');
+    $w = $(window).width();
+    $h = $(window).height();
+
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    $startCardButton = $('.btn-go');
+    //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $nextPostURL = $('.next-post-url');
 
+    //$startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
+    $nextPostURL.on('click', onNextPostClick);
+
     setUpFullPage();
     resize();
-
-    // Bind events
-    $shareModal.on('shown.bs.modal', onShareModalShown);
-    $shareModal.on('hidden.bs.modal', onShareModalHidden);
-    $startCardButton.on('click', onStartCardButtonClick);
-    $arrows.on('click', onControlArrowClick);
 
     // Redraw slides if the window resizes
     $(window).resize(resize);

@@ -6,7 +6,7 @@ from glob import glob
 import imp
 import json
 
-from flask import Blueprint, Flask, render_template, render_template_string, url_for
+from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
 from render_utils import make_context, smarty_filter, urlencode_filter, CSSIncluder, JavascriptIncluder

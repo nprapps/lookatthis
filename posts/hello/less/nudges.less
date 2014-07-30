@@ -21,26 +21,29 @@
 }
 
 
+h3 {
+    text-shadow: 2px 2px 9px #333;
+}
 
-.slide {
-
-    h3 {
-        text-shadow: 2px 2px 9px #333;
-    }
-
-    p {
-        line-height:1;
-        text-transform: uppercase;
-        font-weight: bold;
-        text-align: center;
-        text-shadow: 2px 2px 9px #333;
-        
-        @media @screen-small-above {
-            font-size: 60px;
-        }
-        
+p {
+    line-height:1;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 9px #333;
+    
+    @media @screen-small-above {
+        font-size: 60px;
     }
     
+}
+    
+
+
+#text1, #question1 {
+    h3, p {
+        text-shadow: none;
+    }
 }
 
 #next-up {
@@ -53,9 +56,7 @@
 
 
 #text1 {
-    a {
-        color: #F60062;
-    }
+    
     .full-block {
         background: rgba(0, 0, 0, 0.3); 
     }
@@ -64,4 +65,11 @@
 
 a {
     color: #F60062;
+    text-decoration: none;
+    
+    &:hover {
+        color: #fff;
+        text-decoration: none;
+        background-color: #F60062; 
+    }
 }
