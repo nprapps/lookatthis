@@ -316,7 +316,9 @@ var onDocumentKeyDown = function(e) {
 }
 
 var onSlideClick = function(e) {
-    $.fn.fullpage.moveSlideRight();
+    if (isTouch) {
+        $.fn.fullpage.moveSlideRight();
+    }
 
     return true;
 }
