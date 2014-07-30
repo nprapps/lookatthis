@@ -199,7 +199,7 @@ Deploying and publishing are separate functions.
 
 The `deploy` function creates a post on Tumblr if one does not exist or edits that post if it is already on Tumblr. 
 
-The `publish` function takes an existing draft post and makes it public on Tumblr. Note that running `publish` on an already published post will [update the timestamp](#post-ordering).
+The `publish` function takes an existing draft post and makes it public on Tumblr. You can only run this once.
 
 Deploy and publish with the following commands:
 
@@ -211,14 +211,6 @@ Deploy and publish with the following commands:
 ### Post ordering
 
 Post ordering is handled entirely by Tumblr. Thus, posts will appear on Look At This in the order they are published. 
-
-To push a post to the top of the post order, republish the post:
-
-```
-fab post:$SLUG staging publish
-```
-
-Note that the timestamp is updated on Tumblr every time you run the `publish` command. Thus, **if you are making copyedits to a published post, make sure to run `deploy` instead.** 
 
 ### Deleting posts
 
