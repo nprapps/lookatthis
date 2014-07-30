@@ -379,6 +379,7 @@ The Google Analytics events tracked in this application are:
 |lookatthis|slide-exit|`slideIndex`|`timeOnSlide`||
 |lookatthis|keyboard-nav||||
 |lookatthis|next-post||||
+|lookatthis|completion|percent|||
 
 
 

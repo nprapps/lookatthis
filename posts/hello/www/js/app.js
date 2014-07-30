@@ -3,7 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
+var EVENT_CATEGORY = 'lookatthis';
 
 var $w;
 var $h;
@@ -21,11 +21,11 @@ var w;
 var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
+var slideStartTime = moment();
+var completion = 0;
 
 /*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
-
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
 }*/
 
 var resize = function() {
@@ -77,8 +77,13 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     slideStartTime = moment();
 
-    if ($slides.last().hasClass('active')) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
+    // Completion tracking
+    how_far = (slideIndex + 1) / $slides.length;
+
+    if (how_far >= completion + 0.25) {
+        completion = how_far - (how_far % 0.25);
+
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
     }
 };
 
@@ -109,7 +114,6 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    console.log($w);
     if ($w < 769) {
         mobileSuffix = '-sq';
     }
@@ -126,8 +130,6 @@ var getBackgroundImage = function(container) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
-    console.log(mobileSuffix);
 
     if ($(container).data('bgimage')) {
 
@@ -275,7 +277,10 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     * Called when leaving a slide.
     */
 
-    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', timeOnSlide]);
+    var now = moment();
+    var timeOnSlide = (now - slideStartTime);
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -296,7 +301,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
+            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'keyboard-nav']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -310,28 +315,14 @@ var onDocumentKeyDown = function(e) {
     return true;
 }
 
-var onControlArrowClick = function(e) {
-    if (!hasTrackedSlideNav) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
-        hasTrackedSlideNav = true;
-    }
-
-    return true;
-}
-
 var onSlideClick = function(e) {
-    if (!hasTrackedSlideNav) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Clicked Slide']);
-        hasTrackedSlideNav = true;
-    }
-
     $.fn.fullpage.moveSlideRight();
 
     return true;
 }
 
 var onNextPostClick = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigated to next post']);
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
 
     return true;
 }
@@ -364,7 +355,6 @@ $(document).ready(function() {
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $arrows.on('click', onControlArrowClick);
     $nextPostURL.on('click', onNextPostClick);
 
     setUpFullPage();

@@ -22,6 +22,7 @@ var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
 var slideStartTime = moment();
+var completion = 0;
 
 /*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
@@ -75,6 +76,15 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     showNavigation();
 
     slideStartTime = moment();
+
+    // Completion tracking
+    how_far = (slideIndex + 1) / $slides.length;
+
+    if (how_far >= completion + 0.25) {
+        completion = how_far - (how_far % 0.25);
+
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
+    }
 };
 
 var setSlidesForLazyLoading = function(slideIndex) {
@@ -104,7 +114,6 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    console.log($w);
     if ($w < 769) {
         mobileSuffix = '-sq';
     }
@@ -121,8 +130,6 @@ var getBackgroundImage = function(container) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
-    console.log(mobileSuffix);
 
     if ($(container).data('bgimage')) {
 
@@ -348,7 +355,6 @@ $(document).ready(function() {
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $arrows.on('click', onControlArrowClick);
     $nextPostURL.on('click', onNextPostClick);
 
     setUpFullPage();
