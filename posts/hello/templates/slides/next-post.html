@@ -6,7 +6,7 @@
         <div class="previous-post">
             <div class="looked-at">
                 <p><em>You just looked at</em></p>
-                <h2>{{ COPY.tumblr.title }}</h2>
+                <h2>{{ COPY.tumblr.title|smarty }}</h2>
             </div><!-- /looked-at -->
             <img src="assets/{{ COPY.tumblr.thumbnail_photo }}">
             <div class="share">
@@ -27,8 +27,8 @@
             <div class="up-next-caption-wrapper">
                 <div class="up-next-caption">
                         <p><em>Up Next</em></p>
-                        <h2 class="next-post-title">{{ row.text1 }}</h2>
-                        <h3><em>{{ row.text2 }}</em></h3>
+                        <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
+                        <h3><em>{{ row.text2|smarty }}</em></h3>
                 </div>
                 
                 <div class="next-button-wrapper">
