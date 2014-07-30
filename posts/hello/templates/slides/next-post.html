@@ -1,7 +1,7 @@
 <div class="slide" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
     <div class="container-fluid next-post">
     <div class="row">
-    
+
     <div class="primary-column">
         <div class="previous-post">
             <div class="looked-at">
@@ -22,7 +22,6 @@
     </div>
     <div class="secondary-column">
         <div class="up-next">
-            <a href="{{ row.text3 }}">
             <img src="{{ row.media }}">
             <div class="up-next-caption-wrapper">
                 <div class="up-next-caption">
@@ -30,17 +29,19 @@
                         <h2 class="next-post-title">{{ row.text1 }}</h2>
                         <h3><em>{{ row.text2 }}</em></h3>
                 </div>
-                
+
                 <div class="next-button-wrapper">
                     <div class="next-button">
                         <i class="fa fa-chevron-right"></i>
                     </div>
                 </div>
             </div><!-- /next-button-wrapper -->
-            
-            </a>
         </div>
     </div>
     </div><!-- row -->
     </div><!-- container -->
 </div><!-- slide -->
+
+<script type="text/javascript">
+    window.NEXT_POST_URL = "{{ row.text3 }}";
+</script>
