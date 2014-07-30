@@ -22,7 +22,6 @@
     </div>
     <div class="secondary-column">
         <div class="up-next">
-            <a class"next-post-url" href="{{ row.text3 }}">
             <img src="{{ row.media }}">
             <div class="up-next-caption-wrapper">
                 <div class="up-next-caption">
@@ -37,10 +36,12 @@
                     </div>
                 </div>
             </div><!-- /next-button-wrapper -->
-
-            </a>
         </div>
     </div>
     </div><!-- row -->
     </div><!-- container -->
 </div><!-- slide -->
+
+<script type="text/javascript">
+    window.NEXT_POST_URL = "{{ row.text3 }}";
+</script>

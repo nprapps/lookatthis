@@ -1,7 +1,7 @@
 // Global state
 var $nextPostTitle = null;
 var $nextPostImage = null;
-var $nextPostURL = null;
+var $upNext = null;
 var NAV_HEIGHT = 75;
 var EVENT_CATEGORY = 'lookatthis';
 
@@ -322,6 +322,8 @@ var onSlideClick = function(e) {
 }
 
 var onNextPostClick = function(e) {
+    window.top.location = NEXT_POST_URL;
+
     _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
 
     return true;
@@ -351,11 +353,11 @@ $(document).ready(function() {
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
-    $nextPostURL = $('.next-post-url');
+    $upNext = $('.up-next');
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $nextPostURL.on('click', onNextPostClick);
+    $upNext.on('click', onNextPostClick);
 
     setUpFullPage();
     resize();

@@ -357,7 +357,6 @@ $(document).ready(function() {
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $arrows.on('click', onControlArrowClick);
     $upNext.on('click', onNextPostClick);
 
     setUpFullPage();
