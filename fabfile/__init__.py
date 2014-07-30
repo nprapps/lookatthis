@@ -420,6 +420,10 @@ def publish():
     require('slug', provided_by=[post])
     require('settings', provided_by=[development, staging, production])
 
+    if env.post_config.IS_PUBLISHED[env.settings]:
+        print "This post is already published on %s!" % env.settings
+        return
+
     update()
     _publish_to_tumblr()
     render.render_all()
