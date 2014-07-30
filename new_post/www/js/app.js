@@ -3,7 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $nextPostURL = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis:' + POST_CONFIG['slug'];
+var EVENT_CATEGORY = 'lookatthis';
 
 var $w;
 var $h;
@@ -21,11 +21,10 @@ var w;
 var h;
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
+var slideStartTime = moment();
 
 /*var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
-
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Clicked Go']);
 }*/
 
 var resize = function() {
@@ -76,10 +75,6 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     showNavigation();
 
     slideStartTime = moment();
-
-    if ($slides.last().hasClass('active')) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Slideshow - Reached Last Slide']);
-    }
 };
 
 var setSlidesForLazyLoading = function(slideIndex) {
@@ -275,7 +270,10 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     * Called when leaving a slide.
     */
 
-    // _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Time on Slide', timeOnSlide]);
+    var now = moment();
+    var timeOnSlide = (now - slideStartTime);
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -296,7 +294,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Keyboard']);
+            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'keyboard-nav']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -310,28 +308,14 @@ var onDocumentKeyDown = function(e) {
     return true;
 }
 
-var onControlArrowClick = function(e) {
-    if (!hasTrackedSlideNav) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Used Slide Controls']);
-        hasTrackedSlideNav = true;
-    }
-
-    return true;
-}
-
 var onSlideClick = function(e) {
-    if (!hasTrackedSlideNav) {
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigation - Clicked Slide']);
-        hasTrackedSlideNav = true;
-    }
-
     $.fn.fullpage.moveSlideRight();
 
     return true;
 }
 
 var onNextPostClick = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'Navigated to next post']);
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
 
     return true;
 }
