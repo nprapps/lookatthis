@@ -4,7 +4,7 @@ GOOGLE_ANALYTICS = {
     'DOMAIN': 'apps.npr.org',
     'TOPICS': '' # e.g. '[1014,3,1003,1002,1001]'
 }
-SLUG = 'pink'
+SLUG = 'about-pink'
 
 
 
@@ -14,12 +14,12 @@ DO NOT EDIT THESE
 DO. NOT. EDIT. THESE.
 """
 TARGET_IDS = {
-    'development': '92443410867',
-    'staging': '92443540183',
+    'development': None,
+    'staging': '93779895993',
     'production': None,
 }
 IS_PUBLISHED = {
-    'development': True,
+    'development': False,
     'staging': True,
     'production': False
 }
