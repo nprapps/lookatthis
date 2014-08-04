@@ -14,12 +14,12 @@ DO NOT EDIT THESE
 DO. NOT. EDIT. THESE.
 """
 TARGET_IDS = {
-    'development': None,
+    'development': '93783074142',
     'staging': '93779895993',
     'production': None,
 }
 IS_PUBLISHED = {
-    'development': False,
+    'development': True,
     'staging': True,
     'production': False
 }
