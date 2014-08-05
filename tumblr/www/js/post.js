@@ -47,6 +47,10 @@ var onWindowResize = function(){
 
 
 var onTrackEventMessage = function(args) {
+    if (args.length >= 4) {
+        args.splice(3, 1, parseFloat(args[3]));
+    }
+
     args.splice(0, 0, '_trackEvent');
 
     _gaq.push(args);
