@@ -413,7 +413,7 @@ body {
 
 //content wrappers
 
-.posts-wrapper {
+.posts-wrapper, .text-wrapper {
     background-color: #fff;
     margin-bottom: 0;
 
@@ -434,40 +434,40 @@ body {
 #text {
     background-color: #fff;
     color: #222;
-    h2 {
-        font-size: 30px;
-        font-weight: bold;
-        text-transform: uppercase;
-        text-align: center;
-    }
-
-    h3 {
-        font-size: 18px;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    h5 {
-        font-size: 15px;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    p {
-        font-size: 13px;
-        padding: 0;
-        margin-bottom: 10px;
-    }
-
-    img {
-        max-width: 100%;
-        margin: 30px 0;
-    }
-
+    width: 100%;
     .post-body {
         margin: 0 auto;
         padding: 50px 20px 80px 20px;
+        h2 {
+            font-size: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        h5 {
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 13px;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            margin: 30px 0;
+        }
 
         .look-branding {
             text-align: center;
@@ -488,29 +488,84 @@ body {
                 display: inline-block;
             }
         }
+        @media @screen-small-above {
+            padding: 100px 0;
+            max-width: 660px;
+
+            h2 {
+                font-size: 50px;
+            }
+
+            h3 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            img {
+                margin: 50px 0;
+            }
+        }
+    }
+    .main-content {
+
+        padding: 15px;
+
+        @media @screen-small-above {
+            padding: 0 15px;
+            width: 65.9%;
+        }
+    }
+
+    .row {
+        margin: 0;
+
+        @media @screen-medium-above {
+        margin: 0 -15px;
+        }
     }
 
     @media @screen-small-above {
-        .post-body {
-            padding: 100px 0;
-            max-width: 660px;
+        padding-top: @grid-gutter-width;
+    }
+
+    .title-section {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: fixed;
+
+        .caption {
+            color: #fff;
+            text-shadow: 2px 2px 2px #000;
+            padding: 5px;
+            text-align: right;
+            font-size: 12px;
+            font-family: georgia, serif;
+        }
+    }
+
+    .about {
+        background: transparent url('http://stage-apps.npr.org/lookatthis/tumblr/assets/about-look.jpg') no-repeat;
+        background-size: cover;
+        margin-bottom: 40px;
+
+        h1 {
+            padding: 30% 0;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 12px #000;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 5.5vw;
         }
 
-        h2 {
-            font-size: 50px;
-        }
-
-        h3 {
-            font-size: 22px;
-        }
-
-        p {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        img {
-            margin: 50px 0;
+        @media @screen-small-above {
+            h1 {
+                 font-size: 3vw;
+            }
         }
     }
 
