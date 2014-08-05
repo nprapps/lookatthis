@@ -1,6 +1,6 @@
 {block:PermalinkPage}
     <section class="permalink-page">
-        
+
 
     {block:Posts}
         {block:Panorama}{/block:Panorama}
@@ -10,64 +10,35 @@
         {block:Quote}{/block:Quote}
         {block:Link}{/block:Link}
         {block:Chat}{/block:Chat}
-        
+
         {block:Text}
-        
-            <div class="container-fluid">
-            
-                <div class="text-wrapper">
-                    <div id="text">
-                
-                    <div class="row">
-                    <div class="top-section">
-                        
-                        <header>
-                        
-                            <div class="branding">
-                                <a href="http://npr.org" class="npr-logo">
-                                    <img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.png">
-                                </a>
-                                <h3><a href="/"><b>Look</b> At This</a></h3>
-                                <h4>Look At This is a rabbit hole of visual curiosities.</h4>
-                                
-                            </div><!--branding-->
-                            
-                            <div class="menu">
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                </ul>
-                                <dl class="follow-us">
-                                    <dt>Follow us</dt>
-                                    <dd class="twitter">
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                    </dd>
-                                    <dd class="facebook">
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                    </dd>
-                                </dl><!--follow-us-->
-                            </div><!--menu-->
-                                
-                        </header>
-                        
-                        <div class="main-content">
-                            {body}
-                        </div>
-                        
-                        </div><!-- /top-section-->
-                    
-                </div><!--/row-->
-                    
-                    </div><!--/#text-->
-                </div><!--/text-wrapper-->
-                
-            </div><!--/#text-->
-        
+
+        <div id="text">
+            <div id="post" class="main-content">
+                <article class="post-body">
+                    <div class="look-branding">
+                        <img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.svg">
+                        <h5>Look At This</h5>
+                    </div>
+                    <h2>{Title}</h2>
+                    {body}
+                </article>
+            </div>
+            <div class="post-fixed-menu">
+                <ul>
+                    <li class="button-menu"><a href="/"><i class="fa fa-th"></i> View all stories</a></li>
+                </ul>
+            </div>
+        </div><!--/row-->
+        </div>
+    </div>
+
         {/block:Text}
 
         {block:Photo}
-        
+
         <div id="post"></div>
-        
+
         <div class="post-fixed-menu">
             <ul>
                 <li class="button-menu"><a href="/"><i class="fa fa-th"></i> View all stories</a></li>
@@ -78,16 +49,16 @@
         {{ JS.push('js/app_config.js') }}
         {{ JS.push('js/post.js') }}
         {{ JS.render('js/post-footer.min.js')}}
-        
+
         <script type="text/javascript">
             $(document).ready(function(){
                 resizeDiv();
             });
-            
+
             window.onresize = function(event) {
                 resizeDiv();
             }
-            
+
             function resizeDiv() {
                 vpw = $(window).width();
                 vph = $(window).height();
@@ -96,9 +67,9 @@
         </script>
 
         {/block:Photo}
-        
-        
+
+
     {/block:Posts}
-    
+
 </section>
 {/block:PermalinkPage}

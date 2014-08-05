@@ -71,7 +71,7 @@ def deploy():
     require('settings', provided_by=['production', 'staging', 'development'])
     require('static_path', provided_by=['tumblr'])
 
-    execute('update')
+    # execute('update')
     render()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
     utils._deploy_to_s3('.gzip/tumblr/')

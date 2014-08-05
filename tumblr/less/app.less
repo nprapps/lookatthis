@@ -25,11 +25,11 @@ h1,h2,h3,h4,h5,h6 {
     max-width: 1280px;
     //max-width: 2000px;
     margin: 0 auto;
-    
+
     @media @screen-small-above {
         padding: 0 10px;
     }
-    
+
     @media @screen-medium-above {
         padding: 0 @grid-gutter-width;
     }
@@ -86,7 +86,7 @@ body {
 		position: absolute;
 		top: 2px;
 		left: 10px;
-		
+
 		i {padding-right: 3px;}
 
 		a {
@@ -114,41 +114,41 @@ body {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            
+
             -webkit-justify-content: space-between;
             -ms-flex-pack: space-between;
             justify-content: space-between;
             margin: 0 15px @grid-gutter-width 15px;
         }
-        
-        
-    
+
+
+
         header {
             color: #fff;
             background-color: @brand-primary;
             background-size: 60%;
             margin-bottom: 5px;
-            
+
             @media @screen-small-above {
                 margin: 0 -15px 30px -15px;
                 text-align: center;
                 text-align: left;
                 width: 30.9%;
                 margin: 0 27px 0 0;
-                
+
             }
-            
+
             @media @screen-medium-above {
-                min-height: 460px; 
+                min-height: 460px;
                 //prevent left column from getting too shallow in the event of an incorrect thumbnail aspect ratio ios bug with min height
                 width: 31.7%;
-                
+
             }
 
             &:hover {
                 opacity: 1;
             }
-            
+
             a {
                 color: #fff;
                 text-decoration: none;
@@ -158,13 +158,13 @@ body {
             .branding {
                 padding: 40px 0 20px 30px;
                 margin: 0;
-                
+
                 @media @screen-small-above {
                     padding: 10% 0 0 0;
                     margin: 0 0 0 10%;
                     width: auto;
                 }
-                
+
                 @media @screen-medium-above {
                    max-width: 300px;
                 }
@@ -176,7 +176,7 @@ body {
                         display: block;
                         margin: 0 0 0 3px;
                         padding-bottom: 2%;
-                        
+
                         @media @screen-small-above {
                             float: none;
                             margin: 0 0 0 7px;
@@ -192,24 +192,24 @@ body {
                     margin: 0;
                     font-weight: bold;
                     text-transform: uppercase;
-                    
+
                     @media @screen-small-above {
                         margin: 10px 0 10px 0;
                         font-size: 59px;
                         font-size: 4.75vw;
                         text-align: left;
-                        
+
                         b {
                             display: block;
                             font-size: 78px;
                             font-size: 6.3vw;
                         }
                     }
-                    
+
                     @media @screen-mega-above {
                         font-size: 68px;
                         b {
-                            font-size: 91px;   
+                            font-size: 91px;
                         }
                     }
                 }
@@ -217,7 +217,7 @@ body {
                 h4 {
                     display: none;
                     line-height: 1.2;
-                    
+
                     @media @screen-small-above {
                         display: block;
                         font-family: georgia, serif;
@@ -228,51 +228,51 @@ body {
                          font-size: 23px;
                          font-size: 2.5vw;
                     }
-                    
+
                      @media @screen-medium-above {
                          max-width: 260px;
                          max-width: 21vw;
                          font-size: 23px;
                          font-size: 1.74vw;
                     }
-                    
+
                     @media @screen-mega-above {
                         font-size: 26px;
                     }
-                    
+
                 }
 
-                
+
             }
-            
+
             .menu {
                 padding: 8px 5px 8px 5px;
                 //background-color: rgba(246, 0, 98, 0.7);
                 border-top: 2px solid #fff;
-                position: relative;  
-                
+                position: relative;
+
                 @media @screen-small-above {
-                    border: none; 
+                    border: none;
                     padding: 0 10%;
                     margin-top: 40px;
                     background-color: transparent;
                 }
- 
+
                 ul {
                     margin: 0;
                     padding: 0 0 0 0;
                     list-style-type: none;
                     min-height: 25px;
-                    
-                    
-                    
+
+
+
                     @media @screen-small-above {
                         padding: 0;
                         height: auto;
                         //width: 35%;
                         //max-width: 160px;
                     }
-                    
+
                     @media @screen-medium-above {
                         //max-width: 300px;
                     }
@@ -283,16 +283,16 @@ body {
                         padding: 2px 0 0 0;
                         margin: 0 0 0 25px;
                         font-weight: bold;
-                        
+
                         a {
                             color: #fff;
                             padding: 3px;
-                            
+
                             &:hover {
                                 background-color: #333;
                             }
                         }
-                        
+
                         @media @screen-small-above {
                             background-color: transparent;
                             font-weight: normal;
@@ -302,25 +302,25 @@ body {
                             padding: 10px 0;
                             margin: 0;
                         }
-                        
+
                         @media @screen-medium-above {
                             font-size: 20px;
                             font-size: 1.4vw;
                         }
-                        
+
                         @media @screen-mega-above {
                             font-size: 20px;
                         }
-                        
-                        
+
+
                     }
                 }
 
                 dl.follow-us {
                     margin: 0;
                     padding: 0;
-                    
-                    
+
+
 
                     @media @screen-small-above {
                         border-top: 1px solid #fff;
@@ -328,14 +328,14 @@ body {
                         //width: 35%;
                         //max-width: 160px;
                     }
-                    
+
                     @media @screen-medium-above {
                         //max-width: 300px;
                     }
-                    
+
                     dt {
                         display: none;
-                    
+
                         @media @screen-small-above {
                             display: block;
                             float: left;
@@ -343,20 +343,20 @@ body {
                             font-weight: normal;
                             font-size: 14px;
                         }
-                        
+
                         @media @screen-medium-above {
                             font-size: 20px;
                             font-size: 1.4vw;
                         }
-                        
+
                         @media @screen-mega-above {
                             font-size: 20px;
                         }
-                    
+
                     }
-                    
+
                     i {
-                        
+
                         @media @screen-small-above {
                             font-size: 20px;
                         }
@@ -365,64 +365,64 @@ body {
                             color: #333;
                         }
                     }
-                    
+
                     .twitter {
                         position: absolute;
                         bottom: 8px;
                         right: 60px;
-                        
+
                         @media @screen-small-above {
                             position: static;
                             float: left;
                             margin-right: 25px;
                             padding-top: 10px;
                         }
-                        
+
                         @media @screen-medium-above {
                             position: static;
                             padding-top: 15px;
                         }
                     }
-                    
+
                     .facebook {
                         position: absolute;
                         bottom: 9px;
                         right: 30px;
-                        
+
                         @media @screen-small-above {
                             position: static;
                             padding-top: 10px;
                         }
-                        
+
                         @media @screen-medium-above {
                             padding-top: 15px;
                         }
-                        
+
                     }
-                    
-                    
+
+
                 }
 
             } // menu
-            
+
         } //header
-        
-        
-    	
+
+
+
     } //top-section end
 
 //content wrappers
 
-.posts-wrapper, .text-wrapper {
+.posts-wrapper {
     background-color: #fff;
     margin-bottom: 0;
-    
+
     @media @screen-medium-above {
-        margin: 30px 0px;   
+        margin: 30px 0px;
         padding: 0 30px;
     }
 }
-    
+
 //photo post start
 
 #post {
@@ -432,68 +432,90 @@ body {
 
 //text posts
 #text {
-
-    .main-content {
-	    
-	    padding: 15px;
-        
-        @media @screen-small-above {
-            padding: 0 15px;
-            width: 65.9%;
-        }
+    background-color: #fff;
+    color: #222;
+    h2 {
+        font-size: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
     }
-    
-    .row {
-        margin: 0;
-        
-        @media @screen-medium-above {
-        margin: 0 -15px;
+
+    h3 {
+        font-size: 18px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    h5 {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 13px;
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    img {
+        max-width: 100%;
+        margin: 30px 0;
+    }
+
+    .post-body {
+        margin: 0 auto;
+        padding: 50px 20px 80px 20px;
+
+        .look-branding {
+            text-align: center;
+
+            img {
+                display: block;
+                margin: 0 auto;
+                max-width: 80px;
+                background-color: @brand-primary;
+            }
+
+            h5 {
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: bold;
+                padding: 5px 0px 10px;
+                border-bottom: 3px solid @brand-primary;
+                display: inline-block;
+            }
         }
     }
 
     @media @screen-small-above {
-        padding-top: @grid-gutter-width;
-    }
-    
-    .title-section {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: fixed;
-        
-        .caption {
-            color: #fff;
-            text-shadow: 2px 2px 2px #000;
-            padding: 5px;
-            text-align: right;
-            font-size: 12px;
-            font-family: georgia, serif;
+        .post-body {
+            padding: 100px 0;
+            max-width: 660px;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+
+        h3 {
+            font-size: 22px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        img {
+            margin: 50px 0;
         }
     }
-    
-    .about {
-        background: transparent url('http://stage-apps.npr.org/lookatthis/tumblr/assets/about-look.jpg') no-repeat;
-        background-size: cover;
-        margin-bottom: 40px;
-        
-        h1 {
-            padding: 30% 0;
-            text-align: center;
-            color: #fff;
-            text-shadow: 2px 2px 12px #000;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 5.5vw;
-        }
-        
-        @media @screen-small-above {
-            h1 {
-                 font-size: 3vw;
-            }
-        }
-    }
-    
+
 }//#text
-    
+
 
 //index page start
 
@@ -503,7 +525,7 @@ body {
 
     .row {
         margin: 0;
-        
+
         @media @screen-medium-above {
         margin: 0 -15px;
         }
@@ -512,83 +534,84 @@ body {
     @media @screen-small-above {
         padding-top: @grid-gutter-width;
     }
-    
+
     .post {
         .make-sm-column(4);
         padding: 5px;
-        
+
         @media @screen-small-above {
             padding: 0 15px;
         }
-        
+
     }
-    
+
     header + .post {
         float: none;
-        
+
         @media @screen-small-above {
             width: 65.9%;
             padding: 0;
         }
-        
+
         .post-wrapper {
             margin-bottom: 0;
-            
+            height: 100%;
+
             .caption-wrapper {
-                
+
                 top: 20%;
-                
+
                 @media @screen-small-above {
                     top: 30%;
                 }
-                
+
                 .caption {
-                    
-                    margin: 0 auto; 
+
+                    margin: 0 auto;
                 }
-            
+
                 h2 {
                     font-size: 24px;
                     padding: 5px;
-                    
+
                     @media @screen-small-above {
                         font-size: 36px;
                     }
-                
+
                     @media @screen-medium-above {
                         font-size: 48px;
                         padding: 10px;
                     }
                 }
-                
+
                 h3 {
-                    
+
                     font-size: 14px;
                     padding: 5px;
-                    
+
                     @media @screen-small-above {
                         font-size: 18px;
                     }
-                
+
                     @media @screen-medium-above {
                         font-size: 28px;
                         padding: 10px;
-                    }                    
-                    
+                    }
+
                 }
-                
+
                 p {
                     font-size: 16px;
-                    
+
                 }
             }
-            
+
             &:after {
                 font-size: 17px;
                 padding: 30px 15px;
             }
-            
-        
+
+
         }
     }
 
@@ -600,12 +623,12 @@ body {
         @media @screen-small-above {
             margin-bottom: @grid-gutter-width;
         }
-   
+
         img {
             width: 100%;
            .transition(all .3s ease-in);
         }
-        
+
         a {
             text-decoration: none;
             color: #fff;
@@ -618,11 +641,11 @@ body {
             width: 100%;
             opacity: 6;
             .text-shadow(2px 2px 8px #111);
-            
+
             .caption {
                 //padding: 0 20px;
                 text-align: center;
-                
+
                 a {
                     width: 100%;
                     display: inline-block;
@@ -637,17 +660,17 @@ body {
                     padding: 5px;
                     text-decoration: none;
                     .transition(all .2s ease-in);
-                    
+
                     @media @screen-small-above {
                         font-size: 18px;
                     }
-                
+
                     @media @screen-medium-above {
                         font-size: 24px;
                         padding: 10px;
-                    } 
+                    }
                 }
-                
+
                 h3 {
                     font-family: georgia, serif;
                     font-size: 12px;
@@ -658,17 +681,17 @@ body {
                     line-height: 1.3;
                     font-style: italic;
                     .transition(all .3s ease-in);
-                    
+
                     @media @screen-small-above {
                         font-size: 12px;
                     }
-                
+
                     @media @screen-medium-above {
                         font-size: 15px;
                         padding: 10px;
-                    } 
+                    }
                 }
-                
+
                 p {
                     font-family: georgia, serif;
                     font-size: 10px;
@@ -680,21 +703,21 @@ body {
                     z-index: 1;
                     margin: 0;
                     display: none;
-                    
+
                     @media @screen-small-above {
                         display: block;
                         font-size: 12px;
                     }
-                
+
                     @media @screen-medium-above {
                         font-size: 14px;
                     }
                 }
-                
+
                 blockquote {display: none;}
             }
         }
-        
+
        /* .story-link {
             position: absolute;
             display: block;
@@ -704,24 +727,24 @@ body {
             left: 0;
             z-index: 2;
         }*/
-        
-        
+
+
         @media @screen-small-above {
             &:hover {
-            
+
                 h2, h3, p {
                     //background-color: @brand-primary;
                     //background-color: rgba(246, 0, 98, 0.7);
                     text-shadow: none;
                 }
-               
+
                 img {
-                  opacity: .5;  
+                  opacity: .5;
                 }
-                
+
             }
         }
-        
+
     }// post wrapper
 }
 
