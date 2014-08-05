@@ -4,6 +4,8 @@ var $iframe = null;
 var $post = null;
 var $menu = null;
 
+var MESSAGE_DELIMITER = ';';
+
 if (!window.slug) {
     var slug = document.location.href.split('/')[5];
 }
@@ -34,7 +36,7 @@ var onDocumentLoad = function(e) {
     // focus on the iframe so that keyboard nav works
     $iframe.focus();
 
-    window.addEventListener('message', receiveMessage, false);
+    window.addEventListener('message', onReceiveMessage, false);
     $window.on('resize', onWindowResize);
 }
 
@@ -43,42 +45,30 @@ var onWindowResize = function(){
     $iframe.attr('height', $window.height());
 }
 
-var receiveMessage = function(e) {
-    if (e.data == 'handshake') {
-        getIndex();
-    }
+
+var onTrackEventMessage = function(args) {
+    args.splice(0, 0, '_trackEvent');
+
+    _gaq.push(args);
 }
 
-var getIndex = function() {
+var messageHandlers = {
+    'trackEvent': onTrackEventMessage
+}
 
-        // $.ajax({
-        //     url: APP_CONFIG.S3_BASE_URL + '/posts_index.json',
-        //     async: true,
-        //     dataType: 'jsonp',
-        //     jsonp: false,
-        //     jsonpCallback:'dataHandler',
-        //     success:function(data) {
-        //         var next_post = null;
-        //         var post_index = null;
-        //         for (var i = 0; i < data.length; i++) {
-        //             var post = data[i];
-        //             if (post.slug == slug) {
-        //                 post_index = i;
-        //                 break;
-        //             }
-        //         }
+var onReceiveMessage = function(e) {
+    var bits = e.data.split(MESSAGE_DELIMITER);
 
-        //         var post_data = {};
+    var signature = bits[0];
 
-        //         if (post_index !== null && post_index !== 0) {
-        //             post_data = data[post_index - 1];
-        //         }
+    if (signature != 'lookatthis') {
+        return;
+    }
 
-        //         $iframe[0].contentWindow.postMessage('post-' + JSON.stringify(post_data), APP_CONFIG.S3_BASE_URL);
+    var event = bits[1];
+    var args = bits.slice(2);
 
-        //     }
-        // });
-
-};
+    messageHandlers[event](args);
+}
 
 $(onDocumentLoad);

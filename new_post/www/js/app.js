@@ -4,6 +4,7 @@ var $nextPostImage = null;
 var $upNext = null;
 var NAV_HEIGHT = 75;
 var EVENT_CATEGORY = 'lookatthis';
+var MESSAGE_DELIMITER = ';';
 
 var $w;
 var $h;
@@ -83,7 +84,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
+        trackEvent([EVENT_CATEGORY, 'completion', completion]);
     }
 };
 
@@ -280,7 +281,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var now = moment();
     var timeOnSlide = (now - slideStartTime);
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
+    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -301,7 +302,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'keyboard-nav']);
+            trackEvent([EVENT_CATEGORY, 'keyboard-nav']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -326,21 +327,22 @@ var onSlideClick = function(e) {
 var onNextPostClick = function(e) {
     window.top.location = NEXT_POST_URL;
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
+    trackEvent([EVENT_CATEGORY, 'next-post']);
 
     return true;
 }
 
-var receiveMessage = function(e) {
-    var head = e.data.substr(0, 5);
-    var tail = e.data.substr(5, e.data.length);
-    if (head == 'post-') {
-        var post = JSON.parse(tail);
+var makeMessage = function(messageType, args) {
+    var bits = ['lookatthis', messageType];
+    bits.push.apply(bits, args)
 
-        $nextPostTitle.text(post.title);
-        $nextPostImage.attr('src', post.image);
-        $nextPostURL.attr('href', post.url);
-    }
+    return bits.join(MESSAGE_DELIMITER);
+}
+
+var trackEvent = function(args) {
+    var message = makeMessage('trackEvent', args)
+
+    window.top.postMessage(message, '*');
 }
 
 $(document).ready(function() {
@@ -368,8 +370,4 @@ $(document).ready(function() {
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
-
-    window.addEventListener('message', receiveMessage, false);
-
-    window.top.postMessage('handshake', '*');
 });
