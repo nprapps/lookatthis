@@ -18,7 +18,7 @@ def render():
     from flask import g
 
     require('static_path', provided_by=['tumblr'])
-    require('settings', provided_by=['development', 'staging', 'production'])
+    require('settings', provided_by=['staging', 'production'])
     less()
     app_config_js()
     copytext_js('theme')
@@ -33,11 +33,7 @@ def render():
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
 
-
-        if env.settings == 'development':
-            g.compile_includes = False
-        else:
-            g.compile_includes = True
+        g.compile_includes = True
 
         g.compiled_includes = compiled_includes
 
@@ -68,7 +64,7 @@ def deploy():
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
-    require('settings', provided_by=['production', 'staging', 'development'])
+    require('settings', provided_by=['production', 'staging'])
     require('static_path', provided_by=['tumblr'])
 
     execute('update')

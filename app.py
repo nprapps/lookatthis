@@ -44,13 +44,11 @@ def _post(slug):
     """
     Renders a post without the tumblr wrapper.
     """
-
     post_path = '%s/%s' % (app_config.POST_PATH, slug)
 
     context = make_context()
     context['slug'] = slug
     context['COPY'] = copytext.Copy(filename='data/%s.xlsx' % slug)
-
     context['JS'] = JavascriptIncluder(asset_depth=2, static_path=post_path)
     context['CSS'] = CSSIncluder(asset_depth=2, static_path=post_path)
 
@@ -60,13 +58,6 @@ def _post(slug):
     except IOError:
         pass
 
-    dt = app_config.DEPLOYMENT_TARGET
-
-    if dt and post_config.TARGET_IDS[dt] and post_config.IS_PUBLISHED[dt]:
-
-        context['post_id'] = post_config.TARGET_IDS[dt]
-        context['tumblr_name'] = app_config.TUMBLR_NAME
-
     with open('data/featured.json') as f:
         context['featured'] = json.load(f)
 
@@ -74,16 +65,6 @@ def _post(slug):
         template = f.read().decode('utf-8')
 
     return render_template_string(template, **context)
-
-@app.route('/posts/<slug>/preview')
-def _post_preview(slug):
-    """
-    Renders a post with the Tumblr wrapper.
-    """
-    context = make_context()
-    context['slug'] = slug
-
-    return render_template('parent.html', **context)
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)

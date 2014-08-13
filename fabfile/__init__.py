@@ -51,273 +51,6 @@ def staging():
     env.settings = 'staging'
     app_config.configure_targets(env.settings)
 
-@task
-def development():
-    """
-    Run as though on development.
-    """
-    env.settings = 'development'
-    app_config.configure_targets(env.settings)
-
-"""
-Tumblr posts
-
-Functions for creating, updating and deleting posts on Tumblr.
-"""
-
-@task
-def post_to_tumblr():
-    """
-    Push the currently active post as a draft to the site
-
-    TODO: Tweet in the post body
-    """
-    # authenticate
-    secrets = app_config.get_secrets()
-    client = pytumblr.TumblrRestClient(
-        secrets.get('TUMBLR_CONSUMER_KEY'),
-        secrets.get('TUMBLR_CONSUMER_SECRET'),
-        secrets.get('TUMBLR_TOKEN'),
-        secrets.get('TUMBLR_TOKEN_SECRET')
-    )
-
-    # see if we have an id already for this deployment target
-    id_target = env.post_config.TARGET_IDS[env.settings]
-
-    # if we already have a published post, we want to render a link to it
-    if env.post_config.IS_PUBLISHED[env.settings]:
-        pass_link = True
-    else:
-        pass_link = False
-
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
-
-    # render the caption
-    caption = _render_caption(COPY, pass_link)
-
-    # find the photo for the dashboard
-    tumblr_photo = unicode(COPY['tumblr']['tumblr_dashboard_photo'])
-    tumblr_photo_path = '%s/www/assets/%s' % (env.static_path, tumblr_photo)
-
-    # if the post has a no ID, create the new post.
-    if not id_target:
-        params = {
-            'state': 'draft',
-            'format' : 'html',
-            'data' : str(tumblr_photo_path),
-            'caption' : caption,
-            'slug' : env.slug
-        }
-
-        tags = unicode(COPY['tumblr']['tags']).split(',')
-
-        if tags:
-            params['tags'] = tags
-
-        response = client.create_photo(
-            app_config.TUMBLR_NAME,
-            **params
-        )
-
-        if 'id' not in response:
-            print 'Error creating new tumblr post'
-            print response
-            return
-
-        # Take the id tumblr returns and write it to the post config.
-        post_config_path = '%s/post_config.py' % env.static_path
-
-        find = "'%s': None," % env.settings
-        replace = "'%s': '%s'," % (env.settings, response['id'])
-
-        utils.replace_in_file(
-            post_config_path,
-            find,
-            replace
-        )
-
-    # if the post already exists and has an ID,
-    # update the existing post on Tumblr.
-    else:
-        params = {
-            'id' : id_target,
-            'type' :'photo',
-            'format' : 'html',
-            'data' : str(tumblr_photo_path),
-            'caption' : caption,
-            'slug' : env.slug
-        }
-
-        tags = unicode(COPY['tumblr']['tags']).split(',')
-
-        if tags:
-            params['tags'] = tags
-
-        response = client.edit_post(
-            app_config.TUMBLR_NAME,
-            **params
-        )
-
-        if 'id' not in response:
-            print 'Error editing tumblr post'
-            print response
-            return
-
-        # Take the id tumblr returns and write it to the post config.
-        post_config_path = '%s/post_config.py' % env.static_path
-
-        find = "'%s': '%s'," % (env.settings, id_target)
-        replace = "'%s': '%s'," % (env.settings, response['id'])
-
-        utils.replace_in_file(
-            post_config_path,
-            find,
-            replace
-        )
-
-    # if the post is published,
-    if env.post_config.IS_PUBLISHED[env.settings]:
-        _deploy_promo_photo(response['id'])
-
-def _publish_to_tumblr():
-    """
-    Publish the currently active post
-    """
-    secrets = app_config.get_secrets()
-    client = pytumblr.TumblrRestClient(
-        secrets.get('TUMBLR_CONSUMER_KEY'),
-        secrets.get('TUMBLR_CONSUMER_SECRET'),
-        secrets.get('TUMBLR_TOKEN'),
-        secrets.get('TUMBLR_TOKEN_SECRET')
-    )
-
-    now = datetime.datetime.now()
-
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
-
-    caption = _render_caption(COPY, pass_link=True)
-
-    id_target = env.post_config.TARGET_IDS[env.settings]
-
-    params = {
-        'id': id_target,
-        'type': 'photo',
-        'state': 'published',
-        'slug': env.slug,
-        'caption': caption
-    }
-
-    response = client.edit_post(
-        app_config.TUMBLR_NAME,
-        **params
-    )
-
-    if 'id' not in response:
-        print 'Error publishing tumblr post'
-        print response
-        return
-
-    post_config_path = '%s/post_config.py' % env.static_path
-
-    find = "'%s': '%s'" % (env.settings, id_target)
-    replace = "'%s': '%s'" % (env.settings, response['id'])
-
-    utils.replace_in_file(
-        post_config_path,
-        find,
-        replace
-    )
-
-    find = "'%s': False" % env.settings
-    replace = "'%s': True" % env.settings
-
-    utils.replace_in_file(
-        post_config_path,
-        find,
-        replace
-    )
-
-    _deploy_promo_photo(response['id'])
-
-def _delete_tumblr_post():
-    """
-    Delete a post on Tumblr
-    """
-    secrets = app_config.get_secrets()
-    client = pytumblr.TumblrRestClient(
-        secrets.get('TUMBLR_CONSUMER_KEY'),
-        secrets.get('TUMBLR_CONSUMER_SECRET'),
-        secrets.get('TUMBLR_TOKEN'),
-        secrets.get('TUMBLR_TOKEN_SECRET')
-    )
-
-    app_config.configure_targets(env.get('settings', None))
-
-    id_target = env.post_config.TARGET_IDS[env.settings]
-
-    _delete_promo_photo(id_target)
-
-    client.delete_post(
-        app_config.TUMBLR_NAME,
-        id_target
-    )
-
-def _deploy_promo_photo(id):
-    """
-    Rename the promo photo to the post ID and deploy it
-    """
-
-    COPY = copytext.Copy(filename='data/%s.xlsx' % env.slug)
-
-    # Find the promo photo
-    post_assets = '%s/www/assets' % env.static_path
-    promo_photo = unicode(COPY['tumblr']['thumbnail_photo'])
-
-    # Rename that file
-    local('cp %s/%s tumblr/www/assets/homepage/%s.jpg' % (post_assets, promo_photo, id))
-
-    sync_homepage_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
-
-    for bucket in app_config.S3_BUCKETS:
-        local(sync_homepage_assets % ('tumblr/www/assets/homepage', 's3://%s/%s/tumblr/assets/homepage' % (
-                bucket,
-                app_config.PROJECT_SLUG
-            )
-        ))
-
-    local('fab tumblr assets.sync')
-
-def _delete_promo_photo(id):
-    if id:
-        local('fab tumblr assets.rm:homepage/%s.jpg' % id)
-    else:
-        return
-
-def _render_caption(COPY, pass_link):
-    # get the copytext spreadsheet so we can parse some tumblr variables
-
-    title = unicode(COPY['tumblr']['title'])
-    subtitle = unicode(COPY['tumblr']['subtitle'])
-    description = unicode(COPY['tumblr']['description'])
-    if pass_link:
-        link = '%s/%s' % (app_config.S3_BASE_URL, env.static_path)
-    else:
-        link = ''
-
-    # read the caption template and write the caption based on variables in the copytext spreadsheet
-    with open('%s/templates/caption.html' % env.static_path) as f:
-        template = Template(f.read())
-
-    rendered = template.render(
-        title=title,
-        subtitle=subtitle,
-        description=description,
-        link=link
-    )
-
-    return rendered
-
-
 """
 Deployment
 
@@ -342,14 +75,13 @@ def deploy(slug=''):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
-    require('settings', provided_by=[development, staging, production])
+    require('settings', provided_by=[staging, production])
     require('slug', provided_by=[post])
 
     update()
     render.render_all()
     utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
     utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
-    post_to_tumblr()
 
 """
 App-specific commands
@@ -394,7 +126,6 @@ def _new(slug):
         replace
     )
 
-
 @task
 def rename(new_slug, check_exists=True):
     require('slug', provided_by=[post])
@@ -416,37 +147,10 @@ def rename(new_slug, check_exists=True):
     post(new_slug)
 
 @task
-def publish():
-    require('slug', provided_by=[post])
-    require('settings', provided_by=[development, staging, production])
-
-    if env.post_config.IS_PUBLISHED[env.settings]:
-        print "This post is already published on %s!" % env.settings
-        return
-
-    update()
-    _publish_to_tumblr()
-    render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
-
-    print colored('Hey, you should commit your post to the repo now! The post ID has changed, and others will want it to work with the post.', 'blue')
-
-@task
 def delete():
     require('slug', provided_by=[post])
 
-    env.settings = 'development'
-    _delete_tumblr_post()
-
-    env.settings = 'staging'
-    _delete_tumblr_post()
-
-    env.settings = 'production'
-    _delete_tumblr_post()
-
     local('fab post:%s assets.rm:"*"' % env.slug)
-
     local('rm -r %s' % env.static_path)
     local('rm data/%s.xlsx' % env.slug)
 
