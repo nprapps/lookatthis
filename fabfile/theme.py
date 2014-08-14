@@ -18,7 +18,7 @@ def render():
     from flask import g
 
     require('static_path', provided_by=['tumblr'])
-    require('settings', provided_by=['staging', 'production'])
+    require('settings', provided_by=['staging', 'production', 'development'])
     less()
     app_config_js()
     copytext_js('theme')
