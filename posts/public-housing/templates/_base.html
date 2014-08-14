@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>{{ COPY.tumblr.title }}</title>
+    <title>{{ COPY.post_metadata.title }}</title>
 
     <!-- META TAGS -->
     {% include '%s/templates/_meta.html' % slug %}
@@ -39,8 +39,6 @@
     {% include "%s/templates/_share_modal.html" % slug %}
 
     {% endblock outer_content %}
-
-
 
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/jquery.fullpage.js') }}
