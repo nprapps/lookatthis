@@ -13,7 +13,7 @@ static = Blueprint('static', __name__)
 # Render LESS files on-demand
 def less(static_path, filename):
 
-    r = subprocess.check_output(["node_modules/less/bin/lessc", "-rp=%s/less/" % static_path, "%s/less/%s" % (static_path, filename)])
+    r = subprocess.check_output(["node_modules/less/bin/lessc", "%s/less/%s" % (static_path, filename)])
 
     return r, 200, { 'Content-Type': 'text/css' }
 

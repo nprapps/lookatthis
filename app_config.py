@@ -126,6 +126,12 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         TUMBLR_NAME = 'stage-lookatthis'
+    elif deployment_target == 'development':
+        S3_BUCKETS = STAGING_S3_BUCKETS
+        S3_BASE_URL = 'http://127.0.0.1:8000'
+        DISQUS_SHORTNAME = 'nprviz-test'
+        DEBUG = True
+        TUMBLR_NAME = 'dev-lookatthis'
     else:
         S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'

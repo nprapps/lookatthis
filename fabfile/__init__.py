@@ -51,6 +51,11 @@ def staging():
     env.settings = 'staging'
     app_config.configure_targets(env.settings)
 
+@task
+def development():
+    env.settings = 'development'
+    app_config.configure_targets(env.settings)
+
 """
 Deployment
 

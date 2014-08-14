@@ -361,6 +361,10 @@ var rmFakeMobileHover = function() {
     });
 }
 
+var onOrientationChange = function() {
+
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -382,10 +386,12 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
+
     setUpFullPage();
     resize();
 
     // Redraw slides if the window resizes
+    window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
