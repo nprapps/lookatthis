@@ -3,8 +3,14 @@
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
-                <h2>{{ row.text1 }}</h2>
-                <h3>{{ row.text2 }}</h3>
+                <h2>{{ row.text1|smarty }}</h2>
+                <h3>{{ row.text2|smarty }}</h3>
+
+                {% if row.media %}
+                    <div class="credit">
+                        {{ row.media_credit|smarty }}
+                    </div>
+                {% endif %}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
     </div><!--full-block-->
