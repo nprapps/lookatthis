@@ -33,7 +33,10 @@ def render():
     with app.app.test_request_context(path=env.static_path):
         print 'Rendering %s' % path
 
-        g.compile_includes = True
+        if env.settings == 'development':
+            g.compile_includes = False
+        else:
+            g.compile_includes = True
 
         g.compiled_includes = compiled_includes
 
