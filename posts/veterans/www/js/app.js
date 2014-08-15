@@ -365,6 +365,50 @@ var onOrientationChange = function() {
 
 }
 
+//velocity filmstrip
+var s,
+  portraitsGrid = {
+    
+    settings: {
+      face: $('.face'),
+      transitionGridIn: "fadeIn",
+      transitionTitlesIn: "transition.flipYIn",
+      transitionGridOut: "fadeOut",
+      transitionTitlesOut: "transition.flipYOut",
+    },
+
+    init: function(options) {
+      this.settings = $.extend(this.settings, options);
+      s = this.settings;
+      this.loadPortraits();
+    },
+
+    loadPortraits: function() {
+      var genero = ["assets/vanessa-filmstrip"];
+      s.face.find('img').each(function(i) {
+        var rand = genero[Math.floor(Math.random() * genero.length)];
+        $(this).attr('src', '' + rand + '/' + i + '.jpg').width(w + 'px').height(h + 'px');
+        
+        //$(this).css('background-image','url(assets/vanessa-filmstrip/0.jpg)');
+      });
+      s.face.last().find('img').one('load', function() {
+        portraitsGrid.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+      });
+    },
+
+
+    sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
+      s.face.delay(delaygrid).velocity(easegrid, {
+        stagger: 500,
+        duration: durationgrid,
+        backwards: backgrid,
+        drag: true
+      });
+
+    }
+
+  };
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -389,6 +433,11 @@ $(document).ready(function() {
 
     setUpFullPage();
     resize();
+    
+    portraitsGrid.init({
+        transitionGridIn: "transition.fadeIn",
+        transitionGridOut: "transition.fadeOut"
+    });
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
