@@ -1,0 +1,51 @@
+.quote {
+
+    .full-block-cell {
+        vertical-align: bottom;
+        padding-bottom: 100px;
+
+        .full-block-content {margin: 0;}
+    }
+
+    .quote-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 225px;
+        .background-size(cover);
+        background-position: top left;
+        @media @screen-small-above {
+            height: 100%;
+            background-position: center center;
+        }
+    }
+
+    .quote-text {
+        position: absolute;
+        top: 225px;
+        right: 0;
+        padding: 20px 20px 70px 20px;
+        color: #ddd;
+
+        @media @screen-small-above {
+            top: auto;
+            bottom: 90px;
+            right: 25px;
+            max-width: 300px;
+            padding: 20px;
+            background-color: rgba(0,0,0,.8);
+        }
+
+        blockquote {
+            border: 0;
+            margin: 0;
+            padding: 0;
+
+            font-size: 13px;
+            @media @screen-small-above {
+                font-size: 18px;
+            }
+        }
+    }
+}
