@@ -46,6 +46,11 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
+    
+    $filmstrip.width(w + 'px').height(h + 'px');
+    //$titlecard_wrapper.height($w.height() + 'px');
+    
+    
 };
 
 var setUpFullPage = function() {
@@ -365,7 +370,7 @@ var onOrientationChange = function() {
 
 }
 
-//velocity filmstrip
+//velocity filmstrip to be extended to work for image sequences and contact sheets.
 var s,
   portraitsGrid = {
     
@@ -387,9 +392,9 @@ var s,
       var genero = ["assets/vanessa-filmstrip"];
       s.face.find('img').each(function(i) {
         var rand = genero[Math.floor(Math.random() * genero.length)];
-        $(this).attr('src', '' + rand + '/' + i + '.jpg').width(w + 'px').height(h + 'px');
+        $(this).attr('src', '' + rand + '/' + i + '.jpg');
+        //.width(w + 'px').height(h + 'px');
         
-        //$(this).css('background-image','url(assets/vanessa-filmstrip/0.jpg)');
       });
       s.face.last().find('img').one('load', function() {
         portraitsGrid.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
@@ -412,7 +417,7 @@ var s,
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
-
+    $filmstrip = $('.fs');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
