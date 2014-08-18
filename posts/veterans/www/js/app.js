@@ -372,7 +372,7 @@ var onOrientationChange = function() {
 
 //velocity filmstrip to be extended to work for image sequences and contact sheets.
 var s,
-  portraitsGrid = {
+  vFilmstrip = {
     
     settings: {
       face: $('.face'),
@@ -397,14 +397,14 @@ var s,
         
       });
       s.face.last().find('img').one('load', function() {
-        portraitsGrid.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+        vFilmstrip.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
       });
     },
 
 
     sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
       s.face.delay(delaygrid).velocity(easegrid, {
-        stagger: 500,
+        stagger: 300,
         duration: durationgrid,
         backwards: backgrid,
         drag: true
@@ -439,7 +439,7 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
     
-    portraitsGrid.init({
+    vFilmstrip.init({
         transitionGridIn: "transition.fadeIn",
         transitionGridOut: "transition.fadeOut"
     });
