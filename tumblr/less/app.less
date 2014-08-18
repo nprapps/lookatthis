@@ -281,8 +281,9 @@
             }
         }
 
+
+        // Full width permalink page photos and videos
         &.photo,
-        &.photoset,
         &.panorama,
         &.video {
             .permalink-page & {
@@ -343,6 +344,14 @@
                 display: block;
                 max-width: 100%;
             }
+
+            // Constrain permalink photosets to 700px
+            .permalink-page & {
+                .post-content,
+                .post-header {
+                    max-width: 700px;
+                }
+            }
         }
 
         &.video {
@@ -389,12 +398,7 @@
             }
         }
 
-        &.audio {
-
-        }
-
         &.chat {
-
             .conversation {
                 margin-left: 0;
             }
@@ -481,7 +485,7 @@
         &.text,
         &.link,
         &.chat {
-
+            // Constrain permalink text/link/chat posts to 640px so inline photos don't get super blurry
             .permalink-page & {
                 .post-content,
                 .post-header {
@@ -509,7 +513,6 @@
         }
 
         .post-header {
-
             .index-page & {
                 .make-md-column(2);
                 .make-md-column-push(10);
@@ -522,6 +525,30 @@
                 .make-md-column-offset(2);
             }
 
+            .pubdate,
+            .note-count {
+                font-family: @font-family-headline;
+                text-transform: uppercase;
+                font-size: 12px;
+                line-height: 25px;
+                color: @gray-light;
+                margin-bottom: 0;
+
+                .permalink {
+                    color: @gray-light;
+
+                    &:hover {
+                        color: @brand-primary;
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            .note-count {
+                .icon {
+                    .opacity(50);
+                }
+            }
 
             .pubdate,
             .note-count {
@@ -568,32 +595,6 @@
                 .make-sm-column-offset(1);
                 .make-md-column(8);
                 .make-md-column-offset(2);
-            }
-        }
-
-        .pubdate,
-        .note-count {
-            display: block;
-            font-family: @font-family-headline;
-            text-transform: uppercase;
-            font-size: 12px;
-            line-height: 25px;
-            color: @gray-light;
-            margin-bottom: 0;
-
-            .permalink {
-                color: @gray-light;
-
-                &:hover {
-                    color: @brand-primary;
-                    text-decoration: none;
-                }
-            }
-        }
-
-        .note-count {
-            .icon {
-                .opacity(50);
             }
         }
 
