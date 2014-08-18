@@ -182,6 +182,10 @@
     z-index: 20;
     padding-top: @line-height-computed * 2;
 
+    .permalink-page & {
+        padding-top: 0;
+    }
+
     .tag-header {
         font-weight: normal;
         color: @music-medium;
@@ -274,6 +278,34 @@
             img {
                 width: 100%;
                 margin-bottom: @line-height-computed;
+            }
+        }
+
+        &.photo,
+        &.photoset,
+        &.panorama,
+        &.video {
+            .permalink-page & {
+                .post-content {
+                    width: 100%;
+                    position: static;
+                    margin: 0;
+
+                    .post-content-wrapper {
+                        .make-row();
+                    }
+
+                    .media-wrapper {
+                        .make-sm-column(12);
+                    }
+
+                    .caption {
+                        .make-sm-column(10);
+                        .make-sm-column-offset(10);
+                        .make-md-column(8);
+                        .make-md-column-offset(2);
+                    }
+                }
             }
         }
 
@@ -449,6 +481,14 @@
         &.text,
         &.link,
         &.chat {
+
+            .permalink-page & {
+                .post-content,
+                .post-header {
+                    max-width: 640px;
+                }
+            }
+
             h3 {
                 font-weight: bold;
                 text-transform: uppercase;
@@ -469,8 +509,19 @@
         }
 
         .post-header {
-            .make-md-column(2);
-            .make-md-column-push(10);
+
+            .index-page & {
+                .make-md-column(2);
+                .make-md-column-push(10);
+            }
+
+            .permalink-page & {
+                .make-sm-column(10);
+                .make-sm-column-offset(1);
+                .make-md-column(8);
+                .make-md-column-offset(2);
+            }
+
 
             .pubdate,
             .note-count {
@@ -507,8 +558,17 @@
         }
 
         .post-content {
-            .make-md-column(10);
-            .make-md-column-pull(2);
+            .index-page & {
+                .make-md-column(10);
+                .make-md-column-pull(2);
+            }
+
+            .permalink-page & {
+                .make-sm-column(10);
+                .make-sm-column-offset(1);
+                .make-md-column(8);
+                .make-md-column-offset(2);
+            }
         }
 
         .pubdate,
