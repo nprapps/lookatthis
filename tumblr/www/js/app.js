@@ -4,7 +4,7 @@ var $videoContainers;
 
 var sizeVideoContainers = function(element){
 	var scope = element||document;
-	var $videoIframe = $(scope).find('.tumblr_video_iframe, .spotify_audio_player, .video-container img');
+	var $videoIframe = $(scope).find('.tumblr_video_iframe, .video-container img');
 
 	$videoIframe.each(function(){
 		var $this = $(this);
