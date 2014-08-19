@@ -51,11 +51,27 @@
 @import "./lib/bootstrap/utilities.less";
 @import "./lib/bootstrap/responsive-utilities.less";
 
+body {
+    &:before {
+        display: block;
+        position: fixed;
+        height: 30px;
+        background: @brand-primary;
+        content: ' ';
+        z-index: 100;
+        width: 100%;
+    }
+}
+
 .container-fluid {
     .center-block;
     max-width: 1400px;
     padding-left: 15px;
     padding-right: 15px;
+
+    .index-page & {
+        max-width: 1170px;
+    }
 
     .row > header {
         .make-md-column(3);
@@ -65,10 +81,11 @@
 .blog-header {
     background: @brand-primary;
     padding-bottom: @line-height-computed;
+    position: relative;
+    z-index: 150;
 
     .blog-title {
-        .make-sm-column(10);
-        .make-sm-column-offset(1);
+        .make-sm-column(12);
         .make-md-column(8);
         .make-md-column-offset(2);
     }
@@ -113,10 +130,10 @@
 
     .description {
         color: #fff;
-        opacity: 0.9;
         font-family: @font-family-serif;
         font-style: italic;
-        font-size: @font-size-base * 1.5;
+        font-size: @font-size-base * 1.125;
+        -webkit-font-smoothing: antialiased;
     }
 }
 
@@ -129,49 +146,11 @@
     }
 }
 
-#blog_info {
-    text-align: left;
-    position: static;
-    box-sizing: border-box;
-    padding: 0 15px;
-
-    @media (min-width: @screen-md) {
-        text-align: right;
-        position: fixed;
-        width: 100%;
-        padding: 0;
-        max-width: 1400px;
-    }
-
-    p {
-        color: @music-medium;
-        clear: both;
-        -webkit-font-smoothing: antialiased;
-
-        .wf-loading & {
-            visibility: hidden;
-        }
-        .wf-active & {
-            font-family: @font-family-headline;
-        }
-    }
-
-    .fix-wrap {
-        width: 100%;
-
-        @media (min-width: @screen-md) {
-            width: 25%;
-            padding-top: @line-height-computed * 2;
-            padding-right: @line-height-computed;
-        }
-    }
-}
-
 #post-wrap {
-    .make-sm-column(10);
-    .make-sm-column-offset(1);
-    .make-md-column(8);
-    .make-md-column-offset(2);
+    .make-sm-column(12);
+    // .make-sm-column-offset(1);
+    // .make-md-column(8);
+    // .make-md-column-offset(2);
 
     .permalink-page & {
         .make-sm-column(12);
@@ -301,7 +280,7 @@
 
                     .caption {
                         .make-sm-column(10);
-                        .make-sm-column-offset(10);
+                        .make-sm-column-offset(1);
                         .make-md-column(8);
                         .make-md-column-offset(2);
                     }
@@ -513,6 +492,8 @@
 
         .post-header {
             .index-page & {
+                .make-sm-column(2);
+                .make-sm-column-push(10);
                 .make-md-column(2);
                 .make-md-column-push(10);
             }
@@ -560,7 +541,7 @@
                 overflow: hidden;
             }
 
-            @media screen and (min-width: @screen-md){
+            @media screen and (min-width: @screen-sm){
                 margin-top: @grid-gutter-width;
                 line-height: 1.4;
 
@@ -585,7 +566,11 @@
 
         .post-content {
             .index-page & {
-                .make-md-column(10);
+                .make-sm-column(10);
+                .make-sm-column-offset(0);
+                .make-sm-column-pull(2);
+                .make-md-column(8);
+                .make-md-column-offset(2);
                 .make-md-column-pull(2);
             }
 
@@ -685,6 +670,33 @@
                         padding: 5px 5px 0 0;
                         width: auto;
                     }
+                }
+            }
+        }
+    }
+
+    #footer {
+        .make-row();
+
+        .pagination-index {
+            .make-sm-column(10);
+            .make-sm-column-offset(1);
+            .make-md-column(8);
+            .make-md-column-offset(2);
+            margin-bottom: @line-height-computed;
+
+            a {
+                background: @brand-primary;
+                color: #fff;
+                font-family: @font-family-headline;
+                text-transform: uppercase;
+                font-weight: bold;
+                padding: 5px;
+
+                &:hover {
+                    background: #fff;
+                    color: @brand-primary;
+                    text-decoration: none;
                 }
             }
         }
