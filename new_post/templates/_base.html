@@ -2,25 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>{{ COPY.tumblr.title }}</title>
+    <title>{{ COPY.post_metadata.title }}</title>
 
     <!-- META TAGS -->
     {% include '%s/templates/_meta.html' % slug %}
-
-    <script type="text/javascript">
-        function inIframe() {
-            if (window.self !== window.top) {
-                return;
-            }
-            else {
-                {% if tumblr_name and post_id %}
-                    window.location.href = 'http://{{tumblr_name}}.tumblr.com/post/{{post_id}}';
-                {% endif %}
-            }
-        }
-
-        inIframe();
-    </script>
 
     <!-- FONTS -->
     {% include '%s/templates/_fonts.html' % slug %}

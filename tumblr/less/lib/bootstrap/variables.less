@@ -6,9 +6,28 @@
 // Global values
 // --------------------------------------------------
 
+// NPR colors
+// -------------------------
+@inline-link: #4774cc;
+@primary-control: #6d8ac4;
+@secondary-control: #bccae5;
+@heavy-gray: #e0e0e0;
+@light-gray: #ebebeb;
+@branding-gray: #7c7c7c;
+@npr-text-color: #111;
+@dark-hover: #4065a2;
+@deep-blue: #7598C9;
+@look-pink: #f60062;
+
+//music palette
+@music-dark: #41474E;
+@music-medium: #e6ebf2;
+@music-light: #dbe0e6;
+
 // Grays
 // -------------------------
 
+@white:                  #fff;
 @gray-darker:            lighten(#000, 13.5%); // #222
 @gray-dark:              lighten(#000, 20%);   // #333
 @gray:                   lighten(#000, 33.5%); // #555
@@ -18,7 +37,7 @@
 // Brand colors
 // -------------------------
 
-@brand-primary:         #F60062;
+@brand-primary:         @look-pink; //#428bca;
 @brand-success:         #5cb85c;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
@@ -27,8 +46,8 @@
 // Scaffolding
 // -------------------------
 
-@body-bg:               #fff;
-@text-color:            @gray-dark;
+@body-bg:               @gray-lighter; //@look-pink;
+@text-color:            @npr-text-color;
 
 // Links
 // -------------------------
@@ -39,7 +58,8 @@
 // Typography
 // -------------------------
 
-@font-family-sans-serif:  "Gotham SSm", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-headline:    "Gotham SSm", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
@@ -58,7 +78,7 @@
 @line-height-base:        1.428571429; // 20/14
 @line-height-computed:    floor(@font-size-base * @line-height-base); // ~20px
 
-@headings-font-family:    @font-family-base;
+@headings-font-family:    @font-family-headline;
 @headings-font-weight:    500;
 @headings-line-height:    1.1;
 @headings-color:          inherit;

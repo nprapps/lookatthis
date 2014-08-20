@@ -345,6 +345,26 @@ var trackEvent = function(args) {
     window.top.postMessage(message, '*');
 }
 
+var fakeMobileHover = function() {
+    $(this).css({
+        'background-color': '#fff',
+        'color': '#000',
+        'opacity': .9
+    });
+}
+
+var rmFakeMobileHover = function() {
+    $(this).css({
+        'background-color': 'rgba(0, 0, 0, 0.2)',
+        'color': '#fff',
+        'opacity': .3
+    });
+}
+
+var onOrientationChange = function() {
+
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -363,10 +383,15 @@ $(document).ready(function() {
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
 
+    $arrows.on('touchstart', fakeMobileHover);
+    $arrows.on('touchend', rmFakeMobileHover);
+
+
     setUpFullPage();
     resize();
 
     // Redraw slides if the window resizes
+    window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
