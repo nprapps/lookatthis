@@ -1,0 +1,9 @@
+<div><h2>{{ title }}</h2></div>
+<div><h3>{{ subtitle }}</h3></div>
+
+<blockquote>
+    {{ description }}
+    {% if link %}
+        <a href="{{ link }}">Continue reading...</a>
+    {% endif %}
+</blockquote>

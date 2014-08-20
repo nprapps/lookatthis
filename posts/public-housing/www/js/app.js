@@ -1,9 +1,10 @@
 // Global state
 var $nextPostTitle = null;
 var $nextPostImage = null;
-var $nextPostURL = null;
+var $upNext = null;
 var NAV_HEIGHT = 75;
 var EVENT_CATEGORY = 'lookatthis';
+var MESSAGE_DELIMITER = ';';
 
 var $w;
 var $h;
@@ -83,7 +84,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
+        trackEvent([EVENT_CATEGORY, 'completion', completion]);
     }
 };
 
@@ -280,7 +281,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var now = moment();
     var timeOnSlide = (now - slideStartTime);
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
+    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -301,7 +302,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            _gaq.push(['_trackEvent', EVENT_CATEGORY, 'keyboard-nav']);
+            trackEvent([EVENT_CATEGORY, 'keyboard-nav']);
             hasTrackedKeyboardNav = true;
             break;
 
@@ -316,27 +317,32 @@ var onDocumentKeyDown = function(e) {
 }
 
 var onSlideClick = function(e) {
-    $.fn.fullpage.moveSlideRight();
+    if (isTouch) {
+        $.fn.fullpage.moveSlideRight();
+    }
 
     return true;
 }
 
 var onNextPostClick = function(e) {
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'next-post']);
+    window.top.location = NEXT_POST_URL;
+
+    trackEvent([EVENT_CATEGORY, 'next-post']);
 
     return true;
 }
 
-var receiveMessage = function(e) {
-    var head = e.data.substr(0, 5);
-    var tail = e.data.substr(5, e.data.length);
-    if (head == 'post-') {
-        var post = JSON.parse(tail);
+var makeMessage = function(messageType, args) {
+    var bits = ['lookatthis', messageType];
+    bits.push.apply(bits, args)
 
-        $nextPostTitle.text(post.title);
-        $nextPostImage.attr('src', post.image);
-        $nextPostURL.attr('href', post.url);
-    }
+    return bits.join(MESSAGE_DELIMITER);
+}
+
+var trackEvent = function(args) {
+    var message = makeMessage('trackEvent', args)
+
+    window.top.postMessage(message, '*');
 }
 
 $(document).ready(function() {
@@ -351,11 +357,11 @@ $(document).ready(function() {
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
-    $nextPostURL = $('.next-post-url');
+    $upNext = $('.up-next');
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $nextPostURL.on('click', onNextPostClick);
+    $upNext.on('click', onNextPostClick);
 
     setUpFullPage();
     resize();
@@ -364,8 +370,4 @@ $(document).ready(function() {
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
-
-    window.addEventListener('message', receiveMessage, false);
-
-    window.top.postMessage('handshake', '*');
 });

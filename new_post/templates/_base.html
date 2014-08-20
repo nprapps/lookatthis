@@ -22,9 +22,6 @@
         inIframe();
     </script>
 
-    <!-- CHARTBEAT -->
-    <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-
     <!-- FONTS -->
     {% include '%s/templates/_fonts.html' % slug %}
 
@@ -58,8 +55,6 @@
 
     {% endblock outer_content %}
 
-
-
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/jquery.fullpage.js') }}
     {{ JS.push('js/lib/underscore.js') }}
@@ -72,7 +67,6 @@
     {{ JS.push('js/console.js') }}
     {{ JS.push('js/app.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}
-    {{ JS.push('js/analytics.js') }}
     {{ JS.render('js/app-footer.min.js') }}
 
     {% block extra_foot %}

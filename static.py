@@ -6,15 +6,12 @@ import subprocess
 from flask import abort
 
 import copytext
-import envoy
 from flask import Blueprint
 
 static = Blueprint('static', __name__)
 
 # Render LESS files on-demand
 def less(static_path, filename):
-
-    # r = envoy.run('node_modules/less/bin/lessc -rp=%s/less/ %s/less/%s' % (static_path, static_path, filename))
 
     r = subprocess.check_output(["node_modules/less/bin/lessc", "-rp=%s/less/" % static_path, "%s/less/%s" % (static_path, filename)])
 
