@@ -6,6 +6,8 @@
 @import "./slides/quote.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
+@import "./slides/filmstrip.less";
+@import "./slides/words.less";
 @import "./slides/video.less";
 @import "./slides/next-post.less";
 @import "./nudges.less";
@@ -37,8 +39,40 @@ body {
 
 //typography
 
-h1,h2,h3,h4,h5,h6,p,ul,ol,li {
+h1,h2,h3,h4,h5,h6,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
+}
+
+h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+h2 {
+    max-width: 90%;
+    padding-left: 20%;
+}
+
+p {
+    font-family: "georgia";
+    margin: 0 auto;
+    padding-top: 20px;
+    font-size: 30px;
+    line-height:150%;
+    max-width: 90%;
+    /*margin-left: 20%;*/
+}
+
+.dark-overlay:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
 }
 
 .primary-navigation {
@@ -222,6 +256,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     display: table;
     width: 100%;
     height: 100%;
+    position: relative;
+    z-index: 10;
 
 
     .full-block-cell {
@@ -239,7 +275,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .full-block-content {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px; 
+     
+
         @media @screen-small-above {
              padding: 20px 100px;
         }

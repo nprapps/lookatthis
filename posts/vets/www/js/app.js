@@ -56,7 +56,7 @@ var setUpFullPage = function() {
         css3: true,
         loopHorizontal: false,
         afterRender: onPageLoad,
-        afterSlideLoad: lazyLoad,
+        afterSlideLoad: onAfterSlideLoad,
         onSlideLeave: onSlideLeave
     });
 };
@@ -272,6 +272,21 @@ var setImages = function(container) {
 
 };
 
+var onAfterSlideLoad = function(anchorLink, index, slideAnchor, slideIndex) {
+    /*
+     * Fired after the slide changes.
+     */
+
+    var $currentSlide = $($slides[slideIndex]);
+    lazyLoad(slideIndex);
+
+    if ($currentSlide.hasClass('filmstrip')){
+        var images = $currentSlide.data('filmstrip');
+        var length = parseInt($currentSlide.data('filmstrip-length'));
+        initializeFilmstrip(images, length);
+    }
+};
+
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
@@ -279,6 +294,11 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
 
     var now = moment();
     var timeOnSlide = (now - slideStartTime);
+    var $currentSlide = $($slides[slideIndex]);
+
+    if ($currentSlide.hasClass('filmstrip')){
+        $currentSlide.find('.grid-face').empty();
+    }
 
     _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
 }
@@ -341,6 +361,65 @@ var receiveMessage = function(e) {
         $nextPostImage.attr('src', post.image);
         $nextPostURL.attr('href', post.url);
     }
+}
+
+var initializeFilmstrip = function(images, length){
+    //velocity filmstrip to be extended to work for image sequences and contact sheets.
+    var s,
+      vFilmstrip = {
+        
+        settings: {
+          grid: $('.grid-face'),
+          transitionGridIn: "fadeIn",
+          transitionTitlesIn: "transition.flipYIn",
+          transitionGridOut: "fadeOut",
+          transitionTitlesOut: "transition.flipYOut",
+        },
+
+        init: function(options) {
+          var frame = "<div class='face'><img src='1.jpg' class='fs'><div class='mask'></div></div>";
+
+          this.settings = $.extend(this.settings, options);
+          s = this.settings;
+          s.grid.empty();
+
+          for (var i = 0; i < length; i++){
+            s.grid.append($(frame));
+          }
+
+          this.loadPortraits();
+        },
+
+        loadPortraits: function() {
+          var genero = ["assets/" + images];
+          s.grid.find('img').each(function(i) {
+            var rand = genero[Math.floor(Math.random() * genero.length)];
+            $(this).attr('src', '' + rand + '/' + i + '.jpg');
+            //.width(w + 'px').height(h + 'px');
+            
+          });
+          s.grid.find('.face').last().find('img').one('load', function() {
+            vFilmstrip.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+          });
+        },
+
+
+        sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
+          s.grid.find('.face').delay(delaygrid).velocity(easegrid, {
+            stagger: 300,
+            duration: durationgrid,
+            backwards: backgrid,
+            drag: true
+          });
+
+        }
+
+    };
+
+    vFilmstrip.init({
+        transitionGridIn: "transition.fadeIn",
+        transitionGridOut: "transition.fadeOut"
+    });
 }
 
 $(document).ready(function() {
