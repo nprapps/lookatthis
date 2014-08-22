@@ -16,7 +16,7 @@ def _post_less(slug, filename):
 
 # Render post_config.js
 @post.route('/<string:slug>/js/app_config.js')
-def _post_config_js(slug):
+def _app_config_js(slug):
     config = flatten_app_config()
     config.update(flatten_post_config(slug))
     js = 'window.APP_CONFIG = ' + json.dumps(config)
