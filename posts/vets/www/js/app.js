@@ -130,7 +130,6 @@ var getBackgroundImage = function(container) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
     if ($(container).data('bgimage')) {
 
         var image_filename = $(container).data('bgimage').split('.')[0];
@@ -278,7 +277,7 @@ var onAfterSlideLoad = function(anchorLink, index, slideAnchor, slideIndex) {
      */
 
     var $currentSlide = $($slides[slideIndex]);
-    lazyLoad(slideIndex);
+    lazyLoad(null, null, null, slideIndex);
 
     if ($currentSlide.hasClass('filmstrip')){
         var images = $currentSlide.data('filmstrip');
