@@ -332,17 +332,25 @@ var onNextPostClick = function(e) {
     return true;
 }
 
-var makeMessage = function(messageType, args) {
-    var bits = ['lookatthis', messageType];
-    bits.push.apply(bits, args)
-
-    return bits.join(MESSAGE_DELIMITER);
+var trackEvent = function(args) {
+    args.splice(0, 0, '_trackEvent');
+    _gaq.push(args) 
 }
 
-var trackEvent = function(args) {
-    var message = makeMessage('trackEvent', args)
+var fakeMobileHover = function() {
+    $(this).css({
+        'background-color': '#fff',
+        'color': '#000',
+        'opacity': .9
+    });
+}
 
-    window.top.postMessage(message, '*');
+var rmFakeMobileHover = function() {
+    $(this).css({
+        'background-color': 'rgba(0, 0, 0, 0.2)',
+        'color': '#fff',
+        'opacity': .3
+    });
 }
 
 $(document).ready(function() {
@@ -363,10 +371,15 @@ $(document).ready(function() {
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
 
+    $arrows.on('touchstart', fakeMobileHover);
+    $arrows.on('touchend', rmFakeMobileHover);
+
+
     setUpFullPage();
     resize();
 
     // Redraw slides if the window resizes
+    window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);

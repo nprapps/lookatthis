@@ -332,17 +332,9 @@ var onNextPostClick = function(e) {
     return true;
 }
 
-var makeMessage = function(messageType, args) {
-    var bits = ['lookatthis', messageType];
-    bits.push.apply(bits, args)
-
-    return bits.join(MESSAGE_DELIMITER);
-}
-
 var trackEvent = function(args) {
-    var message = makeMessage('trackEvent', args)
-
-    window.top.postMessage(message, '*');
+    args.splice(0, 0, '_trackEvent');
+    _gaq.push(args) 
 }
 
 var fakeMobileHover = function() {
@@ -382,10 +374,12 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
+
     setUpFullPage();
     resize();
 
     // Redraw slides if the window resizes
+    window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
     $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
