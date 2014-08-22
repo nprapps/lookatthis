@@ -282,7 +282,7 @@ var onAfterSlideLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if ($currentSlide.hasClass('filmstrip')){
         var images = $currentSlide.data('filmstrip');
         var length = parseInt($currentSlide.data('filmstrip-length'));
-        initializeFilmstrip(images, length);
+        initializeFilmstrip($currentSlide, images, length);
     }
 };
 
@@ -362,13 +362,13 @@ var receiveMessage = function(e) {
     }
 }
 
-var initializeFilmstrip = function(images, length){
+var initializeFilmstrip = function(slide, images, length){
     //velocity filmstrip to be extended to work for image sequences and contact sheets.
     var s,
       vFilmstrip = {
         
         settings: {
-          grid: $('.grid-face'),
+          grid: slide.find('.grid-face'),
           transitionGridIn: "fadeIn",
           transitionTitlesIn: "transition.flipYIn",
           transitionGridOut: "fadeOut",
