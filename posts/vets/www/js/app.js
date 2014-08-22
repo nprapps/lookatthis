@@ -368,7 +368,7 @@ var initializeFilmstrip = function(slide, images, length){
       vFilmstrip = {
         
         settings: {
-          grid: slide.find('.grid-face'),
+          filmstrip: slide.find('.filmstrip-container'),
           transitionGridIn: "fadeIn",
           transitionTitlesIn: "transition.flipYIn",
           transitionGridOut: "fadeOut",
@@ -376,36 +376,36 @@ var initializeFilmstrip = function(slide, images, length){
         },
 
         init: function(options) {
-          var frame = "<div class='face'><img src='1.jpg' class='fs'><div class='mask'></div></div>";
+          var frame = "<div class='frame'><img src='1.jpg'></div>";
 
           this.settings = $.extend(this.settings, options);
           s = this.settings;
-          s.grid.empty();
+          s.filmstrip.empty();
 
           for (var i = 0; i < length; i++){
-            s.grid.append($(frame));
+            s.filmstrip.append($(frame));
           }
 
           this.loadPortraits();
         },
 
         loadPortraits: function() {
-          var genero = ["assets/" + images];
-          s.grid.find('img').each(function(i) {
-            var rand = genero[Math.floor(Math.random() * genero.length)];
-            $(this).attr('src', '' + rand + '/' + i + '.jpg');
+          var imageRoot = "assets/" + images + '/';
+          s.filmstrip.find('.frame').each(function(i) {
+            $(this).find('img').attr('src', imageRoot + i + '.jpg');
+            $(this).css('background-image', 'url(' + imageRoot + i + '.jpg)');
             //.width(w + 'px').height(h + 'px');
-            
           });
-          s.grid.find('.face').last().find('img').one('load', function() {
-            vFilmstrip.sequenceInOut(100, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+          
+          s.filmstrip.find('.frame').last().find('img').one('load', function() {
+            vFilmstrip.sequenceInOut(50, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
           });
         },
 
 
         sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
-          s.grid.find('.face').delay(delaygrid).velocity(easegrid, {
-            stagger: 200,
+          s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
+            stagger: 100,
             duration: durationgrid,
             backwards: backgrid,
             drag: true

@@ -1,7 +1,7 @@
 .slide.filmstrip {
 	background-position: top center;
 
-	.grid-face {
+	.filmstrip-container {
         position: absolute;
         top: 0;
         left: 0;
@@ -16,24 +16,23 @@
         height: 100%;
             overflow: hidden;
         
-        .face {
+        .frame {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            
+            background-size: cover;
+            background-position: top center;
             opacity: 0;
             -webkit-transform-origin: center center;
             -ms-transform-origin: center center;
             transform-origin: center center;
-            
+
             img {
-                width: 100%;
-                height: auto;
-                display: block;
-                background-size: cover;
+                opacity: 0;
             }
+            
         }
     }
 }
