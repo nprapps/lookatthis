@@ -41,7 +41,6 @@
         <!-- JS -->
         {{ JS.push('js/lib/modernizr.js') }}
         {{ JS.push('js/app_config.js') }}
-        {{ JS.push('js/analytics.js') }}
         {{ JS.render('js/app-header.min.js') }}
 
         <meta name="twitter:card" content="summary">
@@ -240,6 +239,7 @@
         {{ JS.push('js/lib/jquery.fitvids.js') }}
         {{ JS.push('js/infinite-scroll.js') }}
         {{ JS.push('js/app.js') }}
+        {{ JS.push('js/analytics.js') }}
         {{ JS.render('js/app-footer-index.min.js') }}
         {/block:IndexPage}
 
@@ -247,6 +247,7 @@
         {{ JS.push('js/lib/jquery.js') }}
         {{ JS.push('js/lib/jquery.fitvids.js') }}
         {{ JS.push('js/app.js') }}
+        {{ JS.push('js/analytics.js') }}
         {{ JS.render('js/app-footer-permalink.min.js') }}
         {/block:PermalinkPage}
     </body>
