@@ -162,12 +162,3 @@ def shiva_the_destroyer():
         for bucket in app_config.S3_BUCKETS:
             local(sync % ('s3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
 
-        if app_config.DEPLOY_TO_SERVERS:
-            servers.delete_project()
-
-            if app_config.DEPLOY_CRONTAB:
-                servers.uninstall_crontab()
-
-            if app_config.DEPLOY_SERVICES:
-                servers.nuke_confs()
-
