@@ -1,17 +1,10 @@
 #!/usr/bin/env python
 
-import datetime
-from glob import glob
 import imp
-import json
 import os
-from termcolor import colored
 
-import copytext
 from fabric.api import local, require, settings, task
 from fabric.state import env
-from jinja2 import Template
-import pytumblr
 
 import app_config
 
@@ -121,29 +114,9 @@ def _new(slug):
     post(slug)
     update()
 
-    post_config_path = '%s/%s/post_config.py' % (app_config.POST_PATH, slug)
-    find = "SLUG = None"
-    replace = "SLUG = '%s'" % slug
-
-    utils.replace_in_file(
-        post_config_path,
-        find,
-        replace
-    )
-
 @task
 def rename(new_slug, check_exists=True):
     require('slug', provided_by=[post])
-
-    post_config_path = '%s/%s/post_config.py' % (app_config.POST_PATH, env.slug)
-    find = "SLUG = '%s'" % env.slug
-    replace = "SLUG = '%s'" % new_slug
-
-    utils.replace_in_file(
-        post_config_path,
-        find,
-        replace
-    )
 
     new_path = '%s/%s' % (app_config.POST_PATH, new_slug)
     local('mv %s %s' % (env.static_path, new_path))
