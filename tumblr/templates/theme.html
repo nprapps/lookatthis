@@ -27,10 +27,6 @@
              });
         </script>
 
-        <!-- Reset CSS -->
-        <link rel="stylesheet" href="http://static.tumblr.com/thpaaos/DIcklyl4z/reset.css" type="text/css">
-
-
         <!-- CSS -->
                 {{ CSS.push('less/app.less') }}
                 {% block extra_css %}{% endblock extra_css %}
@@ -200,7 +196,7 @@
                             {block:PermalinkPage}
                             {block:PostNotes}
                                 <div class="post-notes">
-                                    <h3>Notes</h3>
+                                    <h3>{NoteCountWithLabel}</h3>
                                     {PostNotes-64}
                                 </div>
                             {/block:PostNotes}
