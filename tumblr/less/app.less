@@ -55,7 +55,7 @@ body {
     &:before {
         display: block;
         position: fixed;
-        height: 30px;
+        height: 40px;
         background: @brand-primary;
         content: ' ';
         z-index: 100;
@@ -499,14 +499,12 @@ body {
                 text-transform: uppercase;
 
                 a {
-                    color: #fff;
-                    background: @brand-primary;
-                    padding: 3px;
-                    line-height: 1.5;
+                    color: @brand-primary;
+                    line-height: 1.2;
 
                     &:hover {
-                        background: transparent;
-                        color: @brand-primary;
+                        background: @brand-primary;
+                        color: #fff;
                         text-decoration: none;
                     }
                 }
@@ -637,7 +635,7 @@ body {
             .tag {
                 display: inline-block;
                 position: relative;
-                background: @gray-light;
+                background: #ccc;
                 color: @white;
                 font-size: 13px;
                 line-height: 18px;
@@ -650,6 +648,7 @@ body {
 
                 &:hover {
                     background: @brand-primary;
+                    color: @white;
                     text-decoration: none;
                 }
             }
