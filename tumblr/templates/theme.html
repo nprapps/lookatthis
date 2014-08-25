@@ -94,9 +94,6 @@
                                         {block:SameDayDate}<p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>{/block:SameDayDate}
                                         <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
                                     {/block:IndexPage}
-                                    {block:PermalinkPage}
-                                        <p class="pubdate">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</p>
-                                    {/block:PermalinkPage}
                                     {block:IndexPage}
                                         <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
                                     {/block:IndexPage}
@@ -157,7 +154,7 @@
 
                                         {block:Chat}
                                             {block:Title}<h3>{Title}</h3>{/block:Title}
-                                            <ul class="conversation">
+                                            <ul class="list-unstyled conversation">
                                                 {block:Lines}
                                                 <li class="line {Alt}">
                                                     {block:Label}<span class="person">{Label}</span>{/block:Label}
@@ -176,11 +173,16 @@
                                         {/block:Answer}
 
                                         <div class="post-meta">
-                                        {block:HasTags}
-                                            <div class="tags">
-                                                {block:Tags}<a href="{TagURL}" class="tag">{Tag}<span class="triangle"></span></a>{/block:Tags}
-                                            </div>
-                                        {/block:HasTags}
+                                            {block:HasTags}
+                                                <div class="tags">
+                                                    {block:Tags}<a href="{TagURL}" class="tag">{Tag}<span class="triangle"></span></a>{/block:Tags}
+                                                </div>
+                                            {/block:HasTags}
+
+                                            {block:PermalinkPage}
+                                                <p class="pubdate">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</p>
+                                                <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
+                                            {/block:PermalinkPage}
                                         </div>
                                     </div><!-- end .post-content-wrapper -->
                                 </div><!-- end .post-content -->
