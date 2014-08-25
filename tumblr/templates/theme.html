@@ -88,14 +88,9 @@
                                 <div class="post-header">
                                     {block:IndexPage}
                                         {block:NewDayDate}
-                                            <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{ShortMonth}. {DayOfMonth}, {Year}{/block:Date}</a></p>
-                                            <p class="pubdate time"><a href="{Permalink}" class="permalink">{block:Date}{12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>
+                                            <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{ShortMonth}. {DayOfMonth}, {Year} {12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>
                                         {/block:NewDayDate}
                                         {block:SameDayDate}<p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>{/block:SameDayDate}
-                                        <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
-                                    {/block:IndexPage}
-                                    {block:IndexPage}
-                                        <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
                                     {/block:IndexPage}
                                 </div>
 
@@ -183,6 +178,10 @@
                                                 <p class="pubdate">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</p>
                                                 <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
                                             {/block:PermalinkPage}
+                                            {block:IndexPage}
+                                                <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
+                                                <div class="sharing">{LikeButton color="grey"}{ReblogButton color="grey"}</div>
+                                            {/block:IndexPage}
                                         </div>
                                     </div><!-- end .post-content-wrapper -->
                                 </div><!-- end .post-content -->
