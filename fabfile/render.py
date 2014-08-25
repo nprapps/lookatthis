@@ -30,16 +30,16 @@ def less():
             raise
 
 @task
-def post_config_js():
+def app_config_js():
     """
     Render app_config.js to file.
     """
-    from static_post import _post_config_js
+    from static_post import _app_config_js
 
-    response = _post_config_js(env.slug)
+    response = _app_config_js(env.slug)
     js = response[0]
 
-    with open('%s/www/js/post_config.js' % env.static_path, 'w') as f:
+    with open('%s/www/js/app_config.js' % env.static_path, 'w') as f:
         f.write(js)
 
 @task
@@ -60,12 +60,12 @@ def render_all():
     """
     Render HTML templates and compile assets.
     """
-    from flask import g, url_for
+    from flask import g
 
     require('slug', provided_by=['post'])
 
     less()
-    post_config_js()
+    app_config_js()
     copytext_js(env.slug)
 
     compiled_includes = {}
