@@ -64,6 +64,15 @@
                         <h1><a href="/"><b>Look</b> <span>At This</span></a></h1>
                         <p class="description">{Description}</p>
                     </div>
+
+                    <nav>
+                        <ul class="list-unstyled">
+                            {block:Pages}
+                                <li><a href="{URL}">{Label}</a></li>
+                            {/block:Pages}
+                                <li class="social"><a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-facebook"></i></a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </header>
