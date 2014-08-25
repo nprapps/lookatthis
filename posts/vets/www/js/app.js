@@ -398,14 +398,14 @@ var initializeFilmstrip = function(slide, images, length){
           });
           
           s.filmstrip.find('.frame').last().find('img').one('load', function() {
-            vFilmstrip.sequenceInOut(50, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+            vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 50, 50, s.transitionTitlesIn, 2500);
           });
         },
 
 
         sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
           s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
-            stagger: 100,
+            stagger: 250,
             duration: durationgrid,
             backwards: backgrid,
             drag: true
