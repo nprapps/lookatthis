@@ -566,6 +566,10 @@ body {
                         text-decoration: none;
                     }
                 }
+
+                @media screen and (max-width: @screen-xs-max){
+                    font-size: @font-size-base * 1.5; //24px
+                }
             }
         }
 
@@ -686,12 +690,8 @@ body {
                 font-size: 13px;
                 line-height: 18px;
                 padding: 3px 5px;
-                margin-left: 5px;
+                margin-right: 5px;
                 margin-bottom: 5px;
-
-                &:first-child {
-                    margin-left: 0;
-                }
 
                 &:hover {
                     background: @brand-primary;
