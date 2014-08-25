@@ -52,6 +52,8 @@
 @import "./lib/bootstrap/responsive-utilities.less";
 
 body {
+    background: #fff;
+
     &:before {
         display: block;
         position: fixed;
@@ -70,7 +72,7 @@ body {
     padding-right: 15px;
 
     .index-page & {
-        max-width: 1170px;
+        max-width: 1070px;
     }
 
     .row > header {
@@ -171,20 +173,21 @@ body {
     }
 
     .post {
-        margin-bottom: @line-height-computed;
+        margin-bottom: @line-height-computed * 2;
 
         .post-content-wrapper {
-            background: #fff;
-            padding: @grid-gutter-width;
+            // background: #fff;
+            // padding: @grid-gutter-width;
 
-            @media (max-width: @screen-xs-max){
-                padding: 15px;
-            }
+            // @media (max-width: @screen-xs-max){
+            //     padding: 15px;
+            // }
         }
 
         h3 {
             margin-top: 0;
             line-height: 1.1;
+            margin-bottom: @line-height-computed;
         }
 
         blockquote {
@@ -300,17 +303,17 @@ body {
                 }
             }
 
-            .post-meta {
-                @media (min-width: @screen-sm){
-                    .pubdate,
-                    .note-count,
-                    .tags {
-                        display: block;
-                        margin-left: 0;
-                        position: static;
-                    }
-                }
-            }
+            // .post-meta {
+            //     @media (min-width: @screen-sm){
+            //         .pubdate,
+            //         .note-count,
+            //         .tags {
+            //             display: block;
+            //             margin-left: 0;
+            //             position: static;
+            //         }
+            //     }
+            // }
         }
 
         &.photoset {
@@ -511,12 +514,67 @@ body {
             }
         }
 
+        .pubdate,
+        .note-count {
+            font-family: @font-family-headline;
+            text-transform: uppercase;
+            font-size: 12px;
+            line-height: 20px;
+            color: @gray-light;
+
+            .permalink {
+                color: @gray-light;
+
+                &:hover {
+                    color: @brand-primary;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .pubdate {
+            margin-bottom: @line-height-computed;
+        }
+
+        .note-count {
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+
+        .sharing {
+            .note-count {
+                float: left;
+            }
+
+            .share-tools {
+                float: right;
+                overflow: hidden;
+            }
+        }
+
+        .like_button,
+        .reblog_button {
+            display: inline-block !important;
+            height: 20px;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+
         .post-header {
             .index-page & {
-                .make-sm-column(2);
-                .make-sm-column-push(10);
-                .make-md-column(2);
-                .make-md-column-push(10);
+                .make-sm-column(10);
+                .make-sm-column-offset(1);
+                // .make-sm-column-pull(2);
+                .make-md-column(8);
+                .make-md-column-offset(2);
+                // .make-md-column-pull(2);
+
+                &:before {
+                    display: block;
+                    content: ' ';
+                    border-top: 1px solid #ddd;
+                    margin-bottom: @line-height-computed * 2;
+                }
             }
 
             .permalink-page & {
@@ -526,35 +584,10 @@ body {
                 .make-md-column-offset(2);
             }
 
-            .pubdate,
-            .note-count {
-                font-family: @font-family-headline;
-                text-transform: uppercase;
-                font-size: 12px;
-                line-height: 25px;
-                color: @gray-light;
-                margin-bottom: 0;
-
-                .permalink {
-                    color: @gray-light;
-
-                    &:hover {
-                        color: @brand-primary;
-                        text-decoration: none;
-                    }
-                }
-            }
-
             .note-count {
                 .icon {
                     .opacity(50);
                 }
-            }
-
-            .pubdate,
-            .note-count {
-                display: inline-block;
-                margin-right: 10px;
             }
 
             .sharing {
@@ -563,11 +596,9 @@ body {
             }
 
             @media screen and (min-width: @screen-sm){
-                margin-top: @grid-gutter-width;
                 line-height: 1.4;
 
-                .pubdate,
-                .note-count {
+                .pubdate {
                     display: block;
                 }
 
@@ -575,24 +606,16 @@ body {
                     float: none;
                 }
             }
-
-            .like_button,
-            .reblog_button {
-                display: inline-block !important;
-                height: 20px;
-                overflow: hidden;
-                margin-right: 10px;
-            }
         }
 
         .post-content {
             .index-page & {
                 .make-sm-column(10);
-                .make-sm-column-offset(0);
-                .make-sm-column-pull(2);
+                .make-sm-column-offset(1);
+                // .make-sm-column-pull(2);
                 .make-md-column(8);
                 .make-md-column-offset(2);
-                .make-md-column-pull(2);
+                // .make-md-column-pull(2);
             }
 
             .permalink-page & {
@@ -628,6 +651,7 @@ body {
         }
 
         .tags {
+            margin: @line-height-computed 0;
 
             @media (max-width: @screen-xs-max) {
                 position: static;
@@ -641,6 +665,7 @@ body {
                 line-height: 18px;
                 padding: 3px 5px;
                 margin-left: 5px;
+                margin-bottom: 5px;
 
                 &:first-child {
                     margin-left: 0;
@@ -721,6 +746,10 @@ body {
         }
     }
 
+    #posts > .post:first-child .post-header:before {
+        display: none;
+    }
+
     #footer {
         .make-row();
 
@@ -784,4 +813,9 @@ body {
             -webkit-font-smoothing: antialiased;
         }
     }
+}
+
+// Center logged-in tumblr controls in fixed nav bar
+#tumblr_controls[height="26"] {
+    margin-top: 5px;
 }
