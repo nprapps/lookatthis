@@ -399,6 +399,10 @@ var initializeFilmstrip = function(slide, images, length){
           
           s.filmstrip.find('.frame').last().find('img').one('load', function() {
             vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 50, 50, s.transitionTitlesIn, 2500);
+            
+            /**** portraits grid 
+                portraitsGrid.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+            ****/
           });
         },
 
@@ -406,6 +410,9 @@ var initializeFilmstrip = function(slide, images, length){
         sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
           s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
             stagger: 250,
+            /**** portraits grid 
+                stagger: 0,
+            ****/
             duration: durationgrid,
             backwards: backgrid,
             drag: true
