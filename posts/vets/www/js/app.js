@@ -397,15 +397,22 @@ var initializeFilmstrip = function(slide, images, length){
                 }
             });
 
-            // if (s.filmstripType === 'contact-sheet') {
-            //     s.filmstrip.find('img').one('load', function(){
-            //         var windowArea = $(window).height() * $(window).width();
-            //         var frameArea = $(this).parent().width() * $(this).parent().height();
-            //         var framesNeeded = Math.ceil(windowArea / frameArea);
+            // Clone filmstrip frames to fill canvas
+            if (s.filmstripType === 'contact-sheet') {
+                s.filmstrip.find('img').one('load', function(){
+                    var $frames = s.filmstrip.find('.frame');
+                    var rows = Math.ceil($(window).height() / $(this).parent().height());
+                    var columns = Math.floor($(window).width() / $(this).parent().width());
+                    var framesNeeded = rows * columns;
+                    var fillFrames = framesNeeded - $frames.length;
 
-            //         debugger;
-            //     })
-            // }
+                    if (fillFrames > 0){
+                        for (var i = 0; i < fillFrames; i++) {
+                            $($frames[i]).clone().appendTo(s.filmstrip);
+                        }
+                    }
+                })
+            }
 
             s.filmstrip.find('.frame').last().find('img').one('load', function() {
                 if (s.filmstripType === 'animated') {
