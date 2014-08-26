@@ -282,7 +282,7 @@ var onAfterSlideLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if ($currentSlide.hasClass('filmstrip')){
         var images = $currentSlide.data('filmstrip');
         var length = parseInt($currentSlide.data('filmstrip-length'));
-        initializeFilmstrip($currentSlide, images, length);
+        setupFilmstrip($currentSlide, images, length);
     }
 };
 
@@ -362,82 +362,76 @@ var receiveMessage = function(e) {
     }
 }
 
-var initializeFilmstrip = function(slide, images, length){
+var setupFilmstrip = function(slide, images, length){
     //velocity filmstrip to be extended to work for image sequences and contact sheets.
-    var s = null;
-    var vFilmstrip = {
-        settings: {
-            filmstrip: slide.find('.filmstrip-container'),
-            filmstripType: slide.data('filmstrip-type'),
-            transitionGridIn: "fadeIn",
-            transitionTitlesIn: "transition.flipYIn",
-            transitionGridOut: "fadeOut",
-            transitionTitlesOut: "transition.flipYOut",
-        },
-        init: function(options) {
-            var frame = "<div class='frame'><img src='1.jpg'></div>";
+    var $filmstrip = slide.find('.filmstrip-container');
+    var filmstripType = slide.data('filmstrip-type');
+    var transitionGridIn = "transition.fadeIn";
+    var transitionTitlesIn = "transition.flipYIn";
+    var transitionGridOut = "transition.fadeOut";
+    var transitionTitlesOut = "transition.flipYOut";
 
-            this.settings = $.extend(this.settings, options);
-            s = this.settings;
-            s.filmstrip.empty();
+    var renderFrames = function(options) {
+        var frame = "<div class='frame'><img src='1.jpg'></div>";
 
-            for (var i = 0; i < length; i++){
-                s.filmstrip.append($(frame));
-            }
+        $filmstrip.empty();
 
-            this.loadPortraits();
-        },
-        loadPortraits: function() {
-            var imageRoot = "assets/" + images + '/';
-            s.filmstrip.find('.frame').each(function(i) {
-                $(this).find('img').attr('src', imageRoot + i + '.jpg');
-
-                if (s.filmstripType === 'animated') {
-                    $(this).css('background-image', 'url(' + imageRoot + i + '.jpg)');
-                }
-            });
-
-            // Clone filmstrip frames to fill canvas
-            if (s.filmstripType === 'contact-sheet') {
-                s.filmstrip.find('img').one('load', function(){
-                    var $frames = s.filmstrip.find('.frame');
-                    var rows = Math.ceil($(window).height() / $(this).parent().height());
-                    var columns = Math.floor($(window).width() / $(this).parent().width());
-                    var framesNeeded = rows * columns;
-                    var fillFrames = framesNeeded - $frames.length;
-
-                    if (fillFrames > 0){
-                        for (var i = 0; i < fillFrames; i++) {
-                            $($frames[i]).clone().appendTo(s.filmstrip);
-                        }
-                    }
-                })
-            }
-
-            s.filmstrip.find('.frame').last().find('img').one('load', function() {
-                if (s.filmstripType === 'animated') {
-                    vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 50, 50, s.transitionTitlesIn, 2500);
-                }
-
-                if (s.filmstripType === 'contact-sheet') {
-                    vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
-                }
-            });
-        },
-        sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
-            s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
-                stagger: s.filmstripType === 'animated' ? 250 : 0,
-                duration: durationgrid,
-                backwards: backgrid,
-                drag: true
-            });
+        for (var i = 0; i < length; i++){
+            $filmstrip.append($(frame));
         }
+
+        loadImages();
+    }
+
+    var loadImages = function() {
+        var imageRoot = "assets/" + images + '/';
+
+        $filmstrip.find('.frame').each(function(i) {
+            $(this).find('img').attr('src', imageRoot + i + '.jpg');
+
+            if (filmstripType === 'animated') {
+                $(this).css('background-image', 'url(' + imageRoot + i + '.jpg)');
+            }
+        });
+
+        // Clone filmstrip frames to fill canvas
+        if (filmstripType === 'contact-sheet') {
+            $filmstrip.find('img').one('load', function(){
+                var $frames = $filmstrip.find('.frame');
+                var rows = Math.ceil($(window).height() / $(this).parent().height());
+                var columns = Math.floor($(window).width() / $(this).parent().width());
+                var framesNeeded = rows * columns;
+                var fillFrames = framesNeeded - $frames.length;
+
+                if (fillFrames > 0){
+                    for (var i = 0; i < fillFrames; i++) {
+                        $($frames[i]).clone().appendTo($filmstrip);
+                    }
+                }
+            })
+        }
+
+        $filmstrip.find('.frame').last().find('img').one('load', function() {
+            if (filmstripType === 'animated') {
+                sequenceInOut(0, transitionGridIn, false, 50, 50, transitionTitlesIn, 2500);
+            }
+
+            if (filmstripType === 'contact-sheet') {
+                sequenceInOut(0, transitionGridIn, false, 800, 2700, transitionTitlesIn, 2500);
+            }
+        });
     };
 
-    vFilmstrip.init({
-        transitionGridIn: "transition.fadeIn",
-        transitionGridOut: "transition.fadeOut"
-    });
+    var sequenceInOut = function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
+        $filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
+            stagger: filmstripType === 'animated' ? 250 : 0,
+            duration: durationgrid,
+            backwards: backgrid,
+            drag: true
+        });
+    };
+
+    renderFrames();
 }
 
 $(document).ready(function() {
