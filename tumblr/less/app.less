@@ -80,10 +80,9 @@ body {
 
 .blog-header {
     background: @brand-primary;
-    padding-top: 40px;
-    // padding-bottom: @line-height-computed;
     position: relative;
     z-index: 150;
+    padding-top: 20px;
 
     .blog-title {
         .make-sm-column(12);
@@ -194,6 +193,10 @@ body {
             color: #fff;
             font-family: @font-family-headline;
         }
+    }
+
+    @media screen and (min-width: 651px){
+        padding-top: 40px;
     }
 }
 
