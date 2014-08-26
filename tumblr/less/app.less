@@ -275,6 +275,10 @@ body {
             display: none;
         }
     }
+
+    .is_lightbox & {
+        z-index: 1;
+    }
 }
 
 .permalink-page {
@@ -388,6 +392,10 @@ body {
             img {
                 width: 100%;
                 margin-bottom: @line-height-computed;
+            }
+
+            .html_photoset {
+                overflow: hidden;
             }
         }
 
