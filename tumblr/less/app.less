@@ -55,7 +55,7 @@ body {
     background: #fff;
 
     &.permalink-page {
-        padding-top: 40px;
+        padding-top: 40px + @grid-gutter-width / 2;
     }
 }
 
@@ -315,10 +315,6 @@ body {
 
     .post {
         margin-bottom: @line-height-computed * 2;
-
-        .permalink-page & {
-            padding-top: @line-height-computed * 2;
-        }
 
         h3 {
             margin-top: 0;
