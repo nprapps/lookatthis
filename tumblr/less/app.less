@@ -206,6 +206,7 @@ body {
     top: 0;
     left: 0;
     height: 40px;
+    overflow: hidden;
     background: @brand-primary;
     content: ' ';
     z-index: 100;
@@ -217,6 +218,7 @@ body {
         display: table-cell;
         vertical-align: middle;
         height: 40px;
+        overflow: hidden;
     }
 
     h1,
@@ -225,7 +227,7 @@ body {
         display: block;
         float: left;
         margin: 0 10px 0 0;
-        line-height: 40px;
+        line-height: 32px;
     }
 
     h1 {
@@ -241,9 +243,13 @@ body {
 
     .npr {
         a {
+            display: block;
             height: 25px;
-            position: relative;
-            top: -3px;
+            line-height: 25px;
+
+            img {
+                display: inline-block;
+            }
         }
     }
 
