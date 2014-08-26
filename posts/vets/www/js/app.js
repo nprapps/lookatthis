@@ -364,62 +364,67 @@ var receiveMessage = function(e) {
 
 var initializeFilmstrip = function(slide, images, length){
     //velocity filmstrip to be extended to work for image sequences and contact sheets.
-    var s,
-      vFilmstrip = {
-        
+    var s = null;
+    var vFilmstrip = {
         settings: {
-          filmstrip: slide.find('.filmstrip-container'),
-          transitionGridIn: "fadeIn",
-          transitionTitlesIn: "transition.flipYIn",
-          transitionGridOut: "fadeOut",
-          transitionTitlesOut: "transition.flipYOut",
+            filmstrip: slide.find('.filmstrip-container'),
+            filmstripType: slide.data('filmstrip-type'),
+            transitionGridIn: "fadeIn",
+            transitionTitlesIn: "transition.flipYIn",
+            transitionGridOut: "fadeOut",
+            transitionTitlesOut: "transition.flipYOut",
         },
-
         init: function(options) {
-          var frame = "<div class='frame'><img src='1.jpg'></div>";
+            var frame = "<div class='frame'><img src='1.jpg'></div>";
 
-          this.settings = $.extend(this.settings, options);
-          s = this.settings;
-          s.filmstrip.empty();
+            this.settings = $.extend(this.settings, options);
+            s = this.settings;
+            s.filmstrip.empty();
 
-          for (var i = 0; i < length; i++){
-            s.filmstrip.append($(frame));
-          }
+            for (var i = 0; i < length; i++){
+                s.filmstrip.append($(frame));
+            }
 
-          this.loadPortraits();
+            this.loadPortraits();
         },
-
         loadPortraits: function() {
-          var imageRoot = "assets/" + images + '/';
-          s.filmstrip.find('.frame').each(function(i) {
-            $(this).find('img').attr('src', imageRoot + i + '.jpg');
-            $(this).css('background-image', 'url(' + imageRoot + i + '.jpg)');
-            //.width(w + 'px').height(h + 'px');
-          });
-          
-          s.filmstrip.find('.frame').last().find('img').one('load', function() {
-            vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 50, 50, s.transitionTitlesIn, 2500);
-            
-            /**** portraits grid 
-                portraitsGrid.sequenceInOut(500, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
-            ****/
-          });
+            var imageRoot = "assets/" + images + '/';
+            s.filmstrip.find('.frame').each(function(i) {
+                $(this).find('img').attr('src', imageRoot + i + '.jpg');
+
+                if (s.filmstripType === 'animated') {
+                    $(this).css('background-image', 'url(' + imageRoot + i + '.jpg)');
+                }
+            });
+
+            // if (s.filmstripType === 'contact-sheet') {
+            //     s.filmstrip.find('img').one('load', function(){
+            //         var windowArea = $(window).height() * $(window).width();
+            //         var frameArea = $(this).parent().width() * $(this).parent().height();
+            //         var framesNeeded = Math.ceil(windowArea / frameArea);
+
+            //         debugger;
+            //     })
+            // }
+
+            s.filmstrip.find('.frame').last().find('img').one('load', function() {
+                if (s.filmstripType === 'animated') {
+                    vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 50, 50, s.transitionTitlesIn, 2500);
+                }
+
+                if (s.filmstripType === 'contact-sheet') {
+                    vFilmstrip.sequenceInOut(0, s.transitionGridIn, false, 800, 2700, s.transitionTitlesIn, 2500);
+                }
+            });
         },
-
-
         sequenceInOut: function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
-          s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
-            stagger: 250,
-            /**** portraits grid 
-                stagger: 0,
-            ****/
-            duration: durationgrid,
-            backwards: backgrid,
-            drag: true
-          });
-
+            s.filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
+                stagger: s.filmstripType === 'animated' ? 250 : 0,
+                duration: durationgrid,
+                backwards: backgrid,
+                drag: true
+            });
         }
-
     };
 
     vFilmstrip.init({

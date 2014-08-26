@@ -1,16 +1,12 @@
-<div class="slide filmstrip" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}{% if row.filmstrip_directory %} data-filmstrip="{{ row.filmstrip_directory }}" {% endif %}{% if row.filmstrip_length %} data-filmstrip-length="{{ row.filmstrip_length }}" {% endif %}>
+<div class="slide filmstrip{% if row.filmstrip_type %} {{ row.filmstrip_type }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}{% if row.filmstrip_directory %} data-filmstrip="{{ row.filmstrip_directory }}" {% endif %}{% if row.filmstrip_length %} data-filmstrip-length="{{ row.filmstrip_length }}" {% endif %}{% if row.filmstrip_type %} data-filmstrip-type="{{ row.filmstrip_type }}" {% endif %}>
 
     <div class="text full-block">
         <div class="full-block-cell">
-        
-            <div class="full-block-content">   
+            <div class="full-block-content">
                 {% if row.text1 %}
                     {{ row.text1 }}
                 {% endif %}
             </div><!--content-->
-            
-            
-            
         </div> <!--cell-->
 
         {% if row.media %}
@@ -19,7 +15,7 @@
             </div>
         {% endif %}
     </div>
-    
+
     <div class="filmstrip-container"></div> <!-- grid-face -->
-    
+
 </div> <!-- slide -->
