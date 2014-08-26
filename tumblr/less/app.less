@@ -54,14 +54,8 @@
 body {
     background: #fff;
 
-    &:before {
-        display: block;
-        position: fixed;
-        height: 40px;
-        background: @brand-primary;
-        content: ' ';
-        z-index: 100;
-        width: 100%;
+    &.permalink-page {
+        padding-top: 40px + @grid-gutter-width / 2;
     }
 }
 
@@ -80,12 +74,15 @@ body {
     }
 }
 
+.npr img {
+    width: 70px;
+}
+
 .blog-header {
     background: @brand-primary;
-    padding-top: 40px;
-    // padding-bottom: @line-height-computed;
     position: relative;
     z-index: 150;
+    padding-top: 20px;
 
     .blog-title {
         .make-sm-column(12);
@@ -93,13 +90,8 @@ body {
         .make-md-column-offset(2);
     }
 
-    .npr img {
-        width: 70px;
-    }
-
     h1 {
-        margin-top: 0;
-        margin-bottom: 0;
+        margin: 5px 0;
 
         a {
             font-size: 10vw;
@@ -127,6 +119,10 @@ body {
                 font-size: 70px;
             }
         }
+    }
+
+    h2 {
+        margin: 0;
     }
 
     .description {
@@ -167,9 +163,16 @@ body {
         .make-md-column-offset(2);
         margin-bottom: 0;
 
+        &:before {
+            display: block;
+            content: ' ';
+            background: #fff;
+            height: 1px;
+        }
+
         li {
             float: left;
-            margin-bottom: 10px;
+            line-height: 50px;
 
             &.social {
                 float: right;
@@ -190,6 +193,91 @@ body {
             color: #fff;
             font-family: @font-family-headline;
         }
+    }
+
+    @media screen and (min-width: 651px){
+        padding-top: 40px;
+    }
+}
+
+.fixed-nav {
+    display: table;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 40px;
+    overflow: hidden;
+    background: @brand-primary;
+    content: ' ';
+    z-index: 100;
+    width: 100%;
+    padding: 0 15px;
+    font-family: @font-family-headline;
+
+    .nav-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    h1,
+    h2,
+    p {
+        display: block;
+        float: left;
+        margin: 0 10px 0 0;
+        line-height: 32px;
+    }
+
+    h1 {
+        text-transform: uppercase;
+        font-size: @font-size-base * 1.5;
+
+        a:hover {
+            color: @brand-primary;
+            background: #fff;
+            text-decoration: none;
+        }
+    }
+
+    .npr {
+        a {
+            display: block;
+            height: 25px;
+            line-height: 25px;
+            margin-top: -1px;
+
+            img {
+                display: inline-block;
+            }
+        }
+    }
+
+    a {
+        color: #fff;
+    }
+
+    .social {
+        font-size: @font-size-large;
+        margin-left: @grid-gutter-width / 2;
+
+        a {
+            margin-right: @grid-gutter-width / 2;
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .is_lightbox & {
+        z-index: 1;
     }
 }
 
@@ -232,10 +320,6 @@ body {
     .post {
         margin-bottom: @line-height-computed * 2;
 
-        .permalink-page & {
-            padding-top: @line-height-computed * 2;
-        }
-
         h3 {
             margin-top: 0;
             line-height: 1.1;
@@ -245,7 +329,7 @@ body {
         blockquote {
             padding: 0 0 0 15px;
             margin: 0 0 24px;
-            border-left: 2px solid #eeeeee;
+            border-left: 1px solid #eeeeee;
             font-family: @font-family-serif;
             font-style: italic;
 
@@ -308,6 +392,10 @@ body {
             img {
                 width: 100%;
                 margin-bottom: @line-height-computed;
+            }
+
+            .html_photoset {
+                overflow: hidden;
             }
         }
 
@@ -379,8 +467,14 @@ body {
             // Constrain permalink photosets to 700px
             .permalink-page & {
                 .post-content,
-                .post-header {
+                .post-header,
+                .post-notes h3,
+                .post-notes .notes,
+                .pagination-index {
                     max-width: 700px;
+                    width: 100%;
+                    float: none;
+                    margin: 0 auto @line-height-computed;
                 }
             }
         }
@@ -545,8 +639,14 @@ body {
             // Constrain permalink text/link/chat posts to 640px so inline photos don't get super blurry
             .permalink-page & {
                 .post-content,
-                .post-header {
+                .post-header,
+                .post-notes h3,
+                .post-notes .notes,
+                .pagination-index {
                     max-width: 640px;
+                    width: 100%;
+                    float: none;
+                    margin: @line-height-computed auto;
                 }
             }
 
@@ -591,7 +691,9 @@ body {
         }
 
         .pubdate {
-            margin-bottom: @line-height-computed;
+            .index-page & {
+                margin-bottom: @line-height-computed;
+            }
         }
 
         .note-count {
@@ -744,7 +846,7 @@ body {
                     display: block;
                     content: '';
                     width: 100%;
-                    border-top: 2px solid @gray-lighter;
+                    border-top: 1px solid @gray-lighter;
                     margin-top: @line-height-computed;
                     padding-top: @line-height-computed;
                 }
@@ -786,6 +888,25 @@ body {
                             }
                         }
                     }
+
+                    &.more_notes_link_container {
+                        margin-top: @line-height-computed;
+                    }
+
+                    .more_notes_link {
+                        color: #fff;
+                        background: @brand-primary;
+                        padding: 5px;
+                        font-family: @font-family-headline;
+                        text-transform: uppercase;
+                        font-weight: bold;
+
+                        &:hover {
+                            color: @brand-primary;
+                            background: #fff;
+                            text-decoration: none;
+                        }
+                    }
                 }
             }
         }
@@ -803,6 +924,29 @@ body {
                 max-width: 640px;
             }
         }
+
+        .pagination-index {
+            .make-sm-column(10);
+            .make-sm-column-offset(1);
+            .make-md-column(8);
+            .make-md-column-offset(2);
+            margin-top: @line-height-computed * 2;
+            margin-bottom: @line-height-computed;
+
+            a {
+                font-family: @font-family-headline;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: @brand-primary;
+                padding: 5px 0;
+
+                &:hover {
+                    color: #fff;
+                    background: @brand-primary;
+                    text-decoration: none;
+                }
+            }
+        }
     }
 
     #posts > .post:first-child .post-header:before {
@@ -811,29 +955,6 @@ body {
 
     #footer {
         .make-row();
-
-        .pagination-index {
-            .make-sm-column(10);
-            .make-sm-column-offset(1);
-            .make-md-column(8);
-            .make-md-column-offset(2);
-            margin-bottom: @line-height-computed;
-
-            a {
-                background: @brand-primary;
-                color: #fff;
-                font-family: @font-family-headline;
-                text-transform: uppercase;
-                font-weight: bold;
-                padding: 5px;
-
-                &:hover {
-                    background: #fff;
-                    color: @brand-primary;
-                    text-decoration: none;
-                }
-            }
-        }
     }
 
     .pagination {
@@ -877,4 +998,10 @@ body {
 // Center logged-in tumblr controls in fixed nav bar
 #tumblr_controls[height="26"] {
     margin-top: 5px;
+}
+
+#tumblr_controls {
+    @media screen and (max-width: 650px){
+        display: none !important;
+    }
 }
