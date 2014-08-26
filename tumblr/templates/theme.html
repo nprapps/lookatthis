@@ -27,10 +27,6 @@
              });
         </script>
 
-        <!-- Reset CSS -->
-        <link rel="stylesheet" href="http://static.tumblr.com/thpaaos/DIcklyl4z/reset.css" type="text/css">
-
-
         <!-- CSS -->
                 {{ CSS.push('less/app.less') }}
                 {% block extra_css %}{% endblock extra_css %}
@@ -64,6 +60,15 @@
                         <h1><a href="/"><b>Look</b> <span>At This</span></a></h1>
                         <p class="description">{Description}</p>
                     </div>
+
+                    <nav>
+                        <ul class="list-unstyled">
+                            {block:Pages}
+                                <li><a href="{URL}">{Label}</a></li>
+                            {/block:Pages}
+                                <li class="social"><a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-facebook"></i></a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </header>
@@ -83,17 +88,9 @@
                                 <div class="post-header">
                                     {block:IndexPage}
                                         {block:NewDayDate}
-                                            <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{ShortMonth}. {DayOfMonth}, {Year}{/block:Date}</a></p>
-                                            <p class="pubdate time"><a href="{Permalink}" class="permalink">{block:Date}{12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>
+                                            <p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{ShortMonth}. {DayOfMonth}, {Year} {12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>
                                         {/block:NewDayDate}
                                         {block:SameDayDate}<p class="pubdate"><a href="{Permalink}" class="permalink">{block:Date}{12Hour}:{Minutes} {AmPm}{/block:Date}</a></p>{/block:SameDayDate}
-                                        <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
-                                    {/block:IndexPage}
-                                    {block:PermalinkPage}
-                                        <p class="pubdate">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</p>
-                                    {/block:PermalinkPage}
-                                    {block:IndexPage}
-                                        <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
                                     {/block:IndexPage}
                                 </div>
 
@@ -152,7 +149,7 @@
 
                                         {block:Chat}
                                             {block:Title}<h3>{Title}</h3>{/block:Title}
-                                            <ul class="conversation">
+                                            <ul class="list-unstyled conversation">
                                                 {block:Lines}
                                                 <li class="line {Alt}">
                                                     {block:Label}<span class="person">{Label}</span>{/block:Label}
@@ -171,11 +168,20 @@
                                         {/block:Answer}
 
                                         <div class="post-meta">
-                                        {block:HasTags}
-                                            <div class="tags">
-                                                {block:Tags}<a href="{TagURL}" class="tag">{Tag}<span class="triangle"></span></a>{/block:Tags}
-                                            </div>
-                                        {/block:HasTags}
+                                            {block:HasTags}
+                                                <div class="tags">
+                                                    {block:Tags}<a href="{TagURL}" class="tag">{Tag}<span class="triangle"></span></a>{/block:Tags}
+                                                </div>
+                                            {/block:HasTags}
+
+                                            {block:PermalinkPage}
+                                                <p class="pubdate">{block:Date}{Month} {DayOfMonth}, {Year}{/block:Date}</p>
+                                                <div class="sharing"> {LikeButton color="grey"}{ReblogButton color="grey"} </div>
+                                            {/block:PermalinkPage}
+                                            {block:IndexPage}
+                                                <p class="note-count"><a href="{Permalink}" class="permalink"><i class="icon icon-comment"></i> {NoteCountWithLabel}</a></p>
+                                                <div class="sharing">{LikeButton color="grey"}{ReblogButton color="grey"}</div>
+                                            {/block:IndexPage}
                                         </div>
                                     </div><!-- end .post-content-wrapper -->
                                 </div><!-- end .post-content -->
@@ -191,8 +197,8 @@
                             {block:PermalinkPage}
                             {block:PostNotes}
                                 <div class="post-notes">
-                                    <h3>Notes</h3>
-                                    {PostNotes}
+                                    <h3>{NoteCountWithLabel}</h3>
+                                    {PostNotes-64}
                                 </div>
                             {/block:PostNotes}
                             {/block:PermalinkPage}
@@ -239,7 +245,6 @@
         {{ JS.push('js/lib/jquery.fitvids.js') }}
         {{ JS.push('js/infinite-scroll.js') }}
         {{ JS.push('js/app.js') }}
-        {{ JS.push('js/analytics.js') }}
         {{ JS.render('js/app-footer-index.min.js') }}
         {/block:IndexPage}
 
@@ -247,8 +252,17 @@
         {{ JS.push('js/lib/jquery.js') }}
         {{ JS.push('js/lib/jquery.fitvids.js') }}
         {{ JS.push('js/app.js') }}
-        {{ JS.push('js/analytics.js') }}
         {{ JS.render('js/app-footer-permalink.min.js') }}
         {/block:PermalinkPage}
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', '{{ TUMBLR_GOOGLE_ANALYTICS.ACCOUNT_ID }}', 'tumblr.com');
+            ga('send', 'pageview');
+        </script>
     </body>
 </html>
