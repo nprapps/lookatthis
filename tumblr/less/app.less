@@ -323,11 +323,13 @@ body {
     }
 
     .tag-header {
-        font-weight: normal;
-        color: @music-medium;
-        margin-top: 0;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
+        .make-sm-column(10);
+        .make-sm-column-offset(1);
+        .make-md-column(8);
+        .make-md-column-offset(2);
+
+        color: @text-color;
+        font-weight: bold;
     }
 
     .post {
@@ -907,7 +909,8 @@ body {
                     }
 
                     &.more_notes_link_container {
-                        margin-top: @line-height-computed;
+                        margin: @line-height-computed 0 @line-height-computed * 2;
+                        text-align: left !important;
                     }
 
                     .more_notes_link {
