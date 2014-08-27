@@ -60,19 +60,20 @@ h2 {
 p {
     font-family: "georgia";
     margin: 0 auto;
-    padding-top: 20px;
+    padding-bottom: 20px;
     font-size: 14px;
     text-align: left;
-    line-height:170%;
-    max-width: 55%;
+    max-width: 70%;
     /*margin-left: 20%;*/
     
     @media @screen-small-above {
         font-size: 20px;
+        max-width: 55%;
     }
     
     @media @screen-medium-above {
         text-align: justify;
+        line-height:2;
     }
 }
 
@@ -275,8 +276,7 @@ p {
 
     .full-block-cell {
         display: table-cell;
-        vertical-align: top;
-        padding-top: 20px;
+        vertical-align: middle;
         @media @screen-small-above {
             padding-top: 0;
             vertical-align: middle;
