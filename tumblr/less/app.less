@@ -75,7 +75,7 @@ body {
 }
 
 .npr img {
-    width: 70px;
+    height: 25px;
 }
 
 .blog-header {
@@ -192,6 +192,7 @@ body {
         a {
             color: #fff;
             font-family: @font-family-headline;
+            text-transform: lowercase;
         }
     }
 
@@ -236,10 +237,10 @@ body {
     h1,
     h2,
     p {
-        display: block;
-        float: left;
+        display: inline;
         margin: 0 10px 0 0;
         line-height: 32px;
+        position: relative;
     }
 
     h1 {
@@ -253,12 +254,16 @@ body {
         }
     }
 
+    h1,
+    p { top: -3px; }
+
+    h2 { top: -1px; }
+
     .npr {
         a {
-            display: block;
+            // display: block;
             height: 25px;
             line-height: 25px;
-            margin-top: -1px;
 
             img {
                 display: inline-block;
@@ -322,15 +327,17 @@ body {
     }
 
     .tag-header {
-        font-weight: normal;
-        color: @music-medium;
-        margin-top: 0;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
+        .make-sm-column(10);
+        .make-sm-column-offset(1);
+        .make-md-column(8);
+        .make-md-column-offset(2);
+
+        color: @text-color;
+        font-weight: bold;
     }
 
     .post {
-        margin-bottom: @line-height-computed * 2;
+        margin-bottom: @line-height-computed;
 
         h3 {
             margin-top: 0;
@@ -704,7 +711,7 @@ body {
 
         .pubdate {
             .index-page & {
-                margin-bottom: @line-height-computed;
+                margin-bottom: @line-height-computed / 2;
             }
         }
 
@@ -744,7 +751,7 @@ body {
                     display: block;
                     content: ' ';
                     border-top: 1px solid #ddd;
-                    margin-bottom: @line-height-computed * 2;
+                    margin-bottom: @line-height-computed;
                 }
             }
 
@@ -872,10 +879,15 @@ body {
                 margin-left: 0;
 
                 li {
-                    margin-bottom: 5px;
+                    margin-bottom: @line-height-computed / 2;
+                    font-size: @font-size-small;
+
+                    .clear {
+                        .clearfix;
+                    }
 
                     .avatar {
-                        display: inline-block;
+                        float: left;
                         margin: 0 10px 0 0;
                         width: auto;
                         .square(32px);
@@ -883,8 +895,7 @@ body {
                     }
 
                     .action {
-                        display: inline-block;
-                        line-height: 32px;
+                        line-height: 1.2;
                     }
 
 
@@ -902,7 +913,8 @@ body {
                     }
 
                     &.more_notes_link_container {
-                        margin-top: @line-height-computed;
+                        margin: @line-height-computed 0 @line-height-computed * 2;
+                        text-align: left !important;
                     }
 
                     .more_notes_link {

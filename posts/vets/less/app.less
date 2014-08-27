@@ -60,12 +60,23 @@ h2 {
 p {
     font-family: "georgia";
     margin: 0 auto;
-    padding-top: 20px;
-    font-size: 20px;
-    text-align: justify;
-    line-height:170%;
-    max-width: 55%;
-    /*margin-left: 20%;*/
+    padding-bottom: 10px;
+    font-size: 14px;
+    text-align: left;
+    max-width: 70%;
+    text-shadow: 2px 2px 4px #111;
+    
+    
+    @media @screen-small-above {
+        font-size: 23px;
+        padding-bottom: 20px;
+        line-height:2;
+    }
+    
+    @media @screen-medium-above {
+        max-width: 55%;
+    }
+
 }
 
 .dark-overlay:after {
@@ -267,8 +278,7 @@ p {
 
     .full-block-cell {
         display: table-cell;
-        vertical-align: top;
-        padding-top: 20px;
+        vertical-align: middle;
         @media @screen-small-above {
             padding-top: 0;
             vertical-align: middle;
