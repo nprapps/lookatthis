@@ -135,6 +135,7 @@ Tumblelog.Infinite = (function() {
             // Insert posts and update counters
            $('#posts').append('<div class="page' + _current_page + '">' + new_posts_html + '</div>');
            sizeVideoContainers(new_post_div);
+           fixPhotosetWidths(new_post_div);
            $(new_post_div).fitVids({ customSelector: "video"});
 
             _posts_loaded = $new_posts.find('article.post').length;

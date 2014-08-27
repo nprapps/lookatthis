@@ -36,6 +36,14 @@ var sizeVideoContainers = function(element){
 	});
 }
 
+var fixPhotosetWidths = function(element){
+	var scope = element||document;
+	var $photosets = $(scope).find('iframe.photoset');
+
+	$photosets.attr('width',0);
+	$photosets.attr('width','100%');
+}
+
 $(function() {
 	$window = $(window);
 	$document = $(document);
@@ -54,5 +62,6 @@ $(function() {
 	});
 
 	sizeVideoContainers();
+	fixPhotosetWidths();
 
 });
