@@ -43,7 +43,7 @@ var fixPhotosetWidths = function(element){
 	$photosets.attr('width',0);
 	setTimeout(function(){
 		$photosets.attr('width','100%');
-	}, 0);
+	}, 10);
 }
 
 $(function() {
