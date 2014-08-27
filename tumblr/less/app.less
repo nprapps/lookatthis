@@ -192,6 +192,7 @@ body {
         a {
             color: #fff;
             font-family: @font-family-headline;
+            text-transform: lowercase;
         }
     }
 
@@ -214,6 +215,18 @@ body {
     padding: 0 15px;
     font-family: @font-family-headline;
 
+    @media screen and (max-width: 650px){
+        .permalink-page & {
+            position: absolute;
+            top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .index-page & {
+            display: none;
+        }
+    }
+
     .nav-wrapper {
         display: table-cell;
         vertical-align: middle;
@@ -232,7 +245,7 @@ body {
 
     h1 {
         text-transform: uppercase;
-        font-size: @font-size-base * 1.5;
+        font-size: 19px;
 
         a:hover {
             color: @brand-primary;
@@ -395,7 +408,7 @@ body {
             }
 
             .html_photoset {
-                overflow: hidden;
+                overflow: hidden; 
             }
         }
 
@@ -1000,8 +1013,24 @@ body {
     margin-top: 5px;
 }
 
-#tumblr_controls {
-    @media screen and (max-width: 650px){
-        display: none !important;
+@media screen and (max-width: 650px){
+    #tumblr_controls {
+        position: absolute;
+
+        .permalink-page & {
+            top: 2px;
+            right: 0;
+        }
+
+        .index-page & {
+            top: 2px;
+            right: 0;
+        }
     }
+
+    body {
+        border-top: 40px solid #333;
+    }
+
 }
+
