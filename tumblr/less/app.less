@@ -192,6 +192,7 @@ body {
         a {
             color: #fff;
             font-family: @font-family-headline;
+            text-transform: lowercase;
         }
     }
 
@@ -214,6 +215,18 @@ body {
     padding: 0 15px;
     font-family: @font-family-headline;
 
+    @media screen and (max-width: 650px){
+        .permalink-page & {
+            position: absolute;
+            top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .index-page & {
+            display: none;
+        }
+    }
+
     .nav-wrapper {
         display: table-cell;
         vertical-align: middle;
@@ -232,7 +245,7 @@ body {
 
     h1 {
         text-transform: uppercase;
-        font-size: @font-size-base * 1.5;
+        font-size: 19px;
 
         a:hover {
             color: @brand-primary;
@@ -274,6 +287,10 @@ body {
         @media screen and (max-width: 480px) {
             display: none;
         }
+    }
+
+    .is_lightbox & {
+        z-index: 1;
     }
 }
 
@@ -389,6 +406,10 @@ body {
                 width: 100%;
                 margin-bottom: @line-height-computed;
             }
+
+            .html_photoset {
+                overflow: hidden; 
+            }
         }
 
 
@@ -466,7 +487,7 @@ body {
                     max-width: 700px;
                     width: 100%;
                     float: none;
-                    margin: @line-height-computed auto;
+                    margin: 0 auto @line-height-computed;
                 }
             }
         }
@@ -683,7 +704,9 @@ body {
         }
 
         .pubdate {
-            margin-bottom: @line-height-computed;
+            .index-page & {
+                margin-bottom: @line-height-computed;
+            }
         }
 
         .note-count {
@@ -850,10 +873,15 @@ body {
                 margin-left: 0;
 
                 li {
-                    margin-bottom: 5px;
+                    margin-bottom: @line-height-computed;
+                    font-size: @font-size-small;
+
+                    .clear {
+                        .clearfix;
+                    }
 
                     .avatar {
-                        display: inline-block;
+                        float: left;
                         margin: 0 10px 0 0;
                         width: auto;
                         .square(32px);
@@ -861,8 +889,8 @@ body {
                     }
 
                     .action {
-                        display: inline-block;
-                        line-height: 32px;
+                        float: left;
+                        line-height: 1.2;
                     }
 
 
@@ -990,8 +1018,24 @@ body {
     margin-top: 5px;
 }
 
-#tumblr_controls {
-    @media screen and (max-width: 650px){
-        display: none !important;
+@media screen and (max-width: 650px){
+    #tumblr_controls {
+        position: absolute;
+
+        .permalink-page & {
+            top: 2px;
+            right: 0;
+        }
+
+        .index-page & {
+            top: 2px;
+            right: 0;
+        }
     }
+
+    body {
+        border-top: 40px solid #333;
+    }
+
 }
+

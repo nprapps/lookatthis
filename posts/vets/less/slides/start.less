@@ -1,13 +1,15 @@
 .start {
 
-    .full-block {
+.full-block {
         background-color: rgba(0,0,0,0.5);
+        position: relative;
+        z-index: 2;
     }
     .full-block-cell {
         text-align: center;
         color: #fff;
         text-shadow: 2px 2px 2px #000;
-        
+
         .look-branding {
             img {
                 max-width: 50px;
@@ -33,15 +35,13 @@
             }
         }
 
-
-
          h1 {
-             font-size: 20px;
+             font-size: 30px;
              text-transform: uppercase;
-             line-height: 125%;
-             margin: 0 auto;
+             font-weight: bold;
+             margin: 0;
              @media @screen-small-above {
-                 font-size: 60px;
+                 font-size: 70px;
             }
          }
 
@@ -49,22 +49,20 @@
             font-size: 13px;
             font-family: georgia, serif;
             font-weight: normal;
-            padding-top: 30px;
-            margin: 0 auto;
+            margin: 5px 0;
+            
             @media @screen-small-above {
-                    margin: 5px 0 10px 0;
-                    font-size: 25px;
+                    margin: 5px 0 30px 0;
+                    font-size: 30px;
             }
         }
         
         h3 {
             font-size: 11px;
-            font-family: georgia, serif;
+            font-weight: bold;
             margin: 0;
-            padding-top: 30px;
-            line-height:20px;
             @media @screen-small-above {
-                font-size: 12px; 
+                font-size: 16px; 
             }
         }
         
@@ -78,29 +76,8 @@
                 margin: 10px 0 0 0;
             }
         }
-
-
         
-        .btn.btn-go {
-            border-radius: 0;
-            background-color: #fff;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin: 35px auto 0 auto;
-            text-align: center;
-             font-size: 18px;
-            padding: 0 22px;
-            line-height: 44px;
 
-
-            &:hover {
-                .no-touch & {
-                    background-color: #000;
-                    color: #fff;
-                    cursor: pointer;
-                }
-            }
-
-        }
     }
+  
 }
