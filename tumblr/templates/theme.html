@@ -7,6 +7,10 @@
         <meta name="description" content="{block:IndexPage}{block:Description}{MetaDescription}{/block:Description}{/block:IndexPage}{block:PermalinkPage}{block:PostSummary}{PostSummary}{/block:PostSummary}{/block:PermalinkPage}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
+        <meta name="text:Flickr Username" content="" />
+        <meta name="text:Twitter Username" content="" />
+        <meta name="text:Facebook Username" content="" />
+        <meta name="text:YouTube Username" content="" />
 
         <link rel="shortcut icon" href="http://www.npr.org/favicon.ico" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="{RSS}"/>
@@ -66,7 +70,7 @@
                             {block:Pages}
                                 <li><a href="{URL}">{Label}</a></li>
                             {/block:Pages}
-                                <li class="social"><a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="social">{block:IfFacebookUsername}<a href="http://www.facebook.com/{text:Facebook Username}" class="facebook"><i class="fa fa-facebook"></i></a>{/block:IfFacebookUsername} {block:IfTwitterUsername}<a href="http://www.twitter.com/{text:Twitter Username}" class="twitter"><i class="fa fa-twitter"></i></a>{/block:IfTwitterUsername}</a></li>
                         </ul>
                     </nav>
                 </div>
