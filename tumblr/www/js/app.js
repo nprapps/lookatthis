@@ -41,7 +41,9 @@ var fixPhotosetWidths = function(element){
 	var $photosets = $(scope).find('iframe.photoset');
 
 	$photosets.attr('width',0);
-	$photosets.attr('width','100%');
+	setTimeout(function(){
+		$photosets.attr('width','100%');
+	}, 0);
 }
 
 $(function() {
