@@ -60,21 +60,23 @@ h2 {
 p {
     font-family: "georgia";
     margin: 0 auto;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     font-size: 14px;
     text-align: left;
     max-width: 70%;
-    /*margin-left: 20%;*/
+    text-shadow: 2px 2px 4px #111;
+    
     
     @media @screen-small-above {
-        font-size: 20px;
-        max-width: 55%;
+        font-size: 23px;
+        padding-bottom: 20px;
+        line-height:2;
     }
     
     @media @screen-medium-above {
-        text-align: justify;
-        line-height:2;
+        max-width: 55%;
     }
+
 }
 
 .dark-overlay:after {
