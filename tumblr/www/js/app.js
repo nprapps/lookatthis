@@ -40,9 +40,8 @@ var fixPhotosetWidths = function(element){
 	var scope = element||document;
 	var $photosets = $(scope).find('iframe.photoset');
 
-	$photosets.attr('width',0);
-	$photosets.on('load', function(){
-		$photosets.attr('width','100%');
+	$photosets.each(function(){
+		$(this).attr('width', $(this).parent().width());
 	});
 }
 
@@ -61,6 +60,8 @@ $(function() {
 			var vidSrc = $(this).attr('src');
 			$(this).attr('src', vidSrc);
 		});
+
+		fixPhotosetWidths();
 	});
 
 	sizeVideoContainers();
