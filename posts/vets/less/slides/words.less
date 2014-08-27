@@ -16,24 +16,36 @@
             
             p {
                 position: absolute;
-                left: 1%;
-                bottom: 10px;
-                color: #333;
-                background: rgba(255, 255, 255, 0.5); 
+                left: 0;
+                bottom: 0;
+                color: #fff;
+                background: rgba(0, 0, 0, 0.5); 
                 padding: 10px;
                 text-align: center;
                 line-height: 1;
                 max-width: 100%;
-                width: 98%;
+                width: 100%;
                 font-size: 18px;
                 text-shadow: none;
                 
                 @media @screen-small-above {
-                    bottom: 30px;
+                    bottom: 0px;
                     padding: 30px;
-                    font-size: 40px;
+                    font-size: 32px;
                 }
                 
+            }
+            
+            h3 {
+                text-align: right;
+                position: absolute;
+                top: 42%;
+                left: 0;
+                font-size: 24px;
+                opacity: .6;
+                text-transform: uppercase;
+                width: 90%;
+                text-shadow: 2px 2px 2px #000;
             }
         }
     }
