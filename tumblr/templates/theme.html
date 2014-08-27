@@ -60,7 +60,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="blog-title">
-                        <h2 class="npr"><a href="http://npr.org"><img src="http://stage-apps.npr.org/lookatthis/tumblr/assets/npr-logo.svg"></a></h2>
+                        <h2 class="npr"><a href="http://npr.org"><img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.svg"></a></h2>
                         <h1><a href="/"><b>Look</b> <span>At This</span></a></h1>
                         <p class="description">{Description}</p>
                     </div>
@@ -80,7 +80,7 @@
 
         <div class="fixed-nav">
             <div class="nav-wrapper">
-                <h2 class="npr"><a href="http://npr.org"><img src="http://stage-apps.npr.org/lookatthis/tumblr/assets/npr-logo.svg"></a></h2>
+                <h2 class="npr"><a href="http://npr.org"><img src="{{ S3_BASE_URL }}/tumblr/assets/npr-logo.svg"></a></h2>
                 <h1><a href="/"><b>Look</b> <span>At This</span></a></h1>
 
                 <p class="social">{block:IfTwitterUsername}<a href="http://www.twitter.com/{text:Twitter Username}" class="twitter"><i class="fa fa-twitter"></i></a>{/block:IfTwitterUsername} {block:IfFacebookUsername}<a href="http://www.facebook.com/{text:Facebook Username}" class="facebook"><i class="fa fa-facebook"></i></a>{/block:IfFacebookUsername}</p>
