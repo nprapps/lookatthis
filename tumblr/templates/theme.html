@@ -91,7 +91,11 @@
             <div class="row">
                 <section id="post-wrap">
 
-                    {block:TagPage}<h2 class="tag-header">{Tag}</h2>{/block:TagPage}
+                    {block:TagPage}
+                        <div class="row">
+                            <h2 class="tag-header">{Tag}</h2>
+                        </div>
+                    {/block:TagPage}
 
                     <div id="posts">
                     <!-- START POSTS -->
