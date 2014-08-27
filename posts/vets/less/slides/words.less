@@ -1,53 +1,56 @@
+// Breakpoints
+@screen-mega-above: ~"screen and (min-width: 1440px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
 .words {
 
     .full-block {
        .full-block-content {
+            
             p {
                 position: absolute;
                 left: 1%;
                 bottom: 30px;
                 color: #333;
                 background: rgba(255, 255, 255, 0.5); 
-                padding: 30px;
+                padding: 10px;
                 text-align: center;
                 line-height: 1;
                 max-width: 100%;
                 width: 98%;
-                font-size: 40px;
+                font-size: 18px;
+                
+                @media @screen-small-above {
+                    padding: 30px;
+                    font-size: 40px;
+                }
+                
             }
         }
     }
 
 }
 
-/*
-
-#vanessa1b {
+#marcus7c {
     p {
-        top: 40%;
-        left: 9%;
-        font-size: 50px;
-        max-width: 530px;
-        
+        em {
+            display: block;
+            padding-bottom: 5px;
+            font-size: 12px;
+            font-style: normal !important;
+            font-family: gotham;
+            font-weight: bold;
+            @media @screen-small-above {
+                padding-bottom: 15px;
+                font-size: 20px;
+            }
+        }
     }
 }
-
-#dearie1b {
-    p {
-        bottom: 2%;
-        left: 35%;
-        font-size: 50px;
-        max-width: 530px;
-    }       
-}
-
-#kiki1 {
-    p {
-        bottom: 5%;
-        right: 2%;
-        font-size: 50px;
-        max-width: 450px;
-    }       
-}
-
-*/
