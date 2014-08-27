@@ -75,7 +75,7 @@ body {
 }
 
 .npr img {
-    width: 70px;
+    height: 25px;
 }
 
 .blog-header {
@@ -237,10 +237,10 @@ body {
     h1,
     h2,
     p {
-        display: block;
-        float: left;
+        display: inline;
         margin: 0 10px 0 0;
         line-height: 32px;
+        position: relative;
     }
 
     h1 {
@@ -254,12 +254,16 @@ body {
         }
     }
 
+    h1,
+    p { top: -3px; }
+
+    h2 { top: -1px; }
+
     .npr {
         a {
-            display: block;
+            // display: block;
             height: 25px;
             line-height: 25px;
-            margin-top: -1px;
 
             img {
                 display: inline-block;
