@@ -874,18 +874,24 @@ body {
 
                 li {
                     margin-bottom: @line-height-computed;
+                    font-size: @font-size-small;
+
+                    .clear {
+                        .clearfix;
+                    }
 
                     .avatar {
                         float: left;
-                        margin: 0 10px 0 0;
+                        margin: 0;
                         width: auto;
                         .square(32px);
                         .border-radius(16px);
                     }
 
                     .action {
-                        display: inline;
-                        line-height: 1.1;
+                        float: right;
+                        line-height: 1.2;
+                        padding-left: 42px;
                     }
 
 
