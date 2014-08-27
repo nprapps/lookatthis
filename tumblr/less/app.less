@@ -873,10 +873,15 @@ body {
                 margin-left: 0;
 
                 li {
-                    margin-bottom: 5px;
+                    margin-bottom: @line-height-computed / 2;
+                    font-size: @font-size-small;
+
+                    .clear {
+                        .clearfix;
+                    }
 
                     .avatar {
-                        display: inline-block;
+                        float: left;
                         margin: 0 10px 0 0;
                         width: auto;
                         .square(32px);
@@ -884,8 +889,7 @@ body {
                     }
 
                     .action {
-                        display: inline-block;
-                        line-height: 32px;
+                        line-height: 1.2;
                     }
 
 
