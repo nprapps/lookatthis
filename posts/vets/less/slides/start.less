@@ -1,12 +1,15 @@
+#first {overflow: hidden;}
+
 .start {
 
-.full-block {
+    .full-block {
         background-color: rgba(0,0,0,0.5);
         position: relative;
         z-index: 2;
         
         .full-block-content {
             max-width: 240px;
+            overflow: hidden;
             @media @screen-tiny-above {
                 max-width: 1200px;
             }
@@ -21,6 +24,7 @@
         text-shadow: 2px 2px 2px #000;
 
         .look-branding {
+        
             a {
                 color: #fff;
             }
@@ -74,6 +78,7 @@
             font-size: 8px;
             font-weight: bold;
             margin: 0;
+            line-height: 1.3;
             @media @screen-small-above {
                 font-size: 16px; 
             }
