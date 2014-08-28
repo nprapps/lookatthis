@@ -14,39 +14,52 @@
     .full-block {
        .full-block-content {
             
-            p {
+            p, h3 {
                 position: absolute;
+                font-family: georgia;
                 left: 0;
                 bottom: 0;
                 color: #fff;
                 background: rgba(0, 0, 0, 0.5); 
                 padding: 10px;
                 text-align: center;
-                line-height: 1;
+                line-height: 1.2;
                 max-width: 100%;
                 width: 100%;
                 font-size: 18px;
                 text-shadow: none;
+                margin: 0;
                 
                 @media @screen-small-above {
                     bottom: 0px;
-                    padding: 30px;
+                    padding: 20px;
                     font-size: 32px;
                 }
                 
             }
             
+            /*
+            
             h3 {
-                text-align: right;
                 position: absolute;
-                top: 42%;
+                bottom: 5px;
                 left: 0;
-                font-size: 24px;
-                opacity: .6;
+                width: 100%;
+                text-align: center;
                 text-transform: uppercase;
-                width: 90%;
-                text-shadow: 2px 2px 2px #000;
+                text-shadow: 2px 2px 2px #333;
+                font-size: 18px;
+                
+                @media @screen-small-above {
+                    top: 42%;
+                    bottom: auto;
+                    right: 90px;
+                    font-size: 24px;
+                    width: auto;
+                    text-align: right;
+                }
             }
+            */
         }
     }
 

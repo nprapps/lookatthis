@@ -267,10 +267,32 @@ p {
     position: relative;
 }
 
+.slide.medic {
+    background-position: right top;
+    background-repeat: no-repeat;
+  
+}
+
+.slide.medic:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+    height: 100%;
+}
+
 
 //reduce the side of contact sheet background images.
 .slide.small-sheet {
-    background-size: 60%;
+    background-size: 80%;
+    @media @screen-small-above {
+        background-size: 60%;
+    }
 }
 
 .slide.small-sheet:after {
@@ -324,11 +346,10 @@ p {
     right: 15px;
     bottom: 5px;
     text-align: right;
-    font-size: 8px;
-    font-style: italic;
+    font-size: 10px;
     color: #fff;
     padding-right: 3px;
     @media @screen-small-above {
-         font-size: 10px;
+         font-size: 12px;
     }
 }
