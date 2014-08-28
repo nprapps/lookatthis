@@ -61,7 +61,7 @@ p {
     font-family: "georgia";
     margin: 0 auto;
     padding-bottom: 10px;
-    font-size: 13px;
+    font-size: 14px;
     text-align: left;
     max-width: 70%;
     text-shadow: 2px 2px 4px #111;
@@ -137,7 +137,6 @@ p {
             border: 3px solid #fff;
 
             &:hover {
-                background-color: #f60062;
                 color: #fff;
                 opacity: .9;
             }
@@ -268,6 +267,25 @@ p {
     position: relative;
 }
 
+
+//reduce the side of contact sheet background images.
+.slide.small-sheet {
+    background-size: 60%;
+}
+
+.slide.small-sheet:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+    height: 100%;
+}
+
 // full width container within a section or slide
 .full-block {
     display: table;
@@ -314,22 +332,3 @@ p {
          font-size: 10px;
     }
 }
-
-// @media only screen and (orientation:portrait){
-//     body {
-//         -webkit-transform: rotate(90deg);
-//         -moz-transform: rotate(90deg);
-//         -o-transform: rotate(90deg);
-//         -ms-transform: rotate(90deg);
-//         transform: rotate(90deg);
-//      }
-//  }
-//  @media only screen and (orientation:landscape){
-//     body {
-//         -webkit-transform: rotate(0deg);
-//         -moz-transform: rotate(0deg);
-//         -o-transform: rotate(0deg);
-//         -ms-transform: rotate(0deg);
-//         transform: rotate(0deg);
-//      }
-//  }
