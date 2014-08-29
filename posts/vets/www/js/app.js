@@ -457,6 +457,12 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    var clippy = new ZeroClipboard($(".clippy"));
+    clippy.on('ready', function(readyEvent) {
+        clippy.on('aftercopy', onClippyCopy);
+    });
+
     // Redraw slides if the window resizes
     $(window).resize(resize);
     $(window).resize(onResize);
