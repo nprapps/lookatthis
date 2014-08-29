@@ -58,7 +58,7 @@ def _post(slug):
     except IOError:
         pass
 
-    with open('data/featured.json') as f:
+    with open('%s/featured.json' % post_path) as f:
         context['featured'] = json.load(f)
 
     with open('%s/templates/index.html' % post_path) as f:

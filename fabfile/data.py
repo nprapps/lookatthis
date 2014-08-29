@@ -161,5 +161,5 @@ def update_featured_social():
         'facebook_posts': facebook_posts
     }
 
-    with open('data/featured.json', 'w') as f:
+    with open('%s/featured.json' % env.static_path, 'w') as f:
         json.dump(output, f)
