@@ -21,7 +21,7 @@
 
                     <ul class="featured-facebook-posts">
                         {% for post in featured.facebook_posts %}
-                        {% include '_featured_facebook_post.html' %}
+                        {% include '%s/templates/_featured_facebook_post.html' % slug %}
                         {% endfor %}
                     </ul><!-- / featured-tweets -->
 
@@ -32,7 +32,7 @@
 
                     <ul class="featured-tweets">
                         {% for tweet in featured.tweets %}
-                        {% include '_featured_tweet.html' %}
+                        {% include '%s/templates/_featured_tweet.html' % slug %}
                         {% endfor %}
                     </ul><!-- / featured-tweets -->
 
