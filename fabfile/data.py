@@ -46,7 +46,7 @@ def update_featured_social():
     tweets = []
 
     for i in range(1, 4):
-        tweet_url = COPY['meta']['featured_tweet%i' % i]
+        tweet_url = COPY['sharing']['featured_tweet%i' % i]
 
         if isinstance(tweet_url, copytext.Error) or unicode(tweet_url).strip() == '':
             continue
@@ -116,7 +116,7 @@ def update_featured_social():
     facebook_posts = []
 
     for i in range(1, 4):
-        fb_url = COPY['meta']['featured_facebook%i' % i]
+        fb_url = COPY['sharing']['featured_facebook%i' % i]
 
         if isinstance(fb_url, copytext.Error) or unicode(fb_url).strip() == '':
             continue
