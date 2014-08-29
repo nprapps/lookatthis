@@ -334,7 +334,7 @@ var onNextPostClick = function(e) {
 
 var trackEvent = function(args) {
     args.splice(0, 0, '_trackEvent');
-    _gaq.push(args) 
+    _gaq.push(args)
 }
 
 var fakeMobileHover = function() {
@@ -374,6 +374,11 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
+    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    var clippy = new ZeroClipboard($(".clippy"));
+    clippy.on('ready', function(readyEvent) {
+        clippy.on('aftercopy', onClippyCopy);
+    });
 
     setUpFullPage();
     resize();
