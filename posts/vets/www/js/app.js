@@ -436,6 +436,13 @@ var setupFilmstrip = function(slide, images, length){
     renderFrames();
 }
 
+/*
+ * Text copied to clipboard.
+ */
+var onClippyCopy = function(e) {
+    alert('Copied to your clipboard!');
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
