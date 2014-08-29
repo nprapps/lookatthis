@@ -79,6 +79,27 @@ p {
 
 }
 
+h4 {
+    font-family: "georgia";
+    margin: 0 auto;
+    padding-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    max-width: 70%;
+    text-shadow: 2px 2px 4px #111;
+    
+    
+    @media @screen-small-above {
+        font-size: 42px;
+        line-height:1.1;
+    }
+    
+    @media @screen-medium-above {
+        max-width: 55%;
+    }
+
+}
+
 .dark-overlay:after {
     display: block;
     content: ' ';
