@@ -79,6 +79,33 @@ p {
 
 }
 
+h4 {
+    font-family: "georgia";
+    margin: 0 auto;
+    padding-bottom: 10px;
+    font-size: 22px;
+    text-align: center;
+    max-width: 70%;
+    text-shadow: 2px 2px 4px #111;
+    font-weight: normal;
+    
+    
+    
+    @media @screen-small-above {
+        font-size: 54px;
+        line-height:1.1;
+    }
+    
+    @media @screen-medium-above {
+        max-width: 70%;
+    }
+
+}
+
+#dearie2 h4 {
+    
+}
+
 .dark-overlay:after {
     display: block;
     content: ' ';
@@ -267,10 +294,32 @@ p {
     position: relative;
 }
 
+.slide.medic {
+    background-position: right top;
+    background-repeat: no-repeat;
+  
+}
+
+.slide.medic:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+    height: 100%;
+}
+
 
 //reduce the side of contact sheet background images.
 .slide.small-sheet {
-    background-size: 60%;
+    background-size: 80%;
+    @media @screen-small-above {
+        background-size: 60%;
+    }
 }
 
 .slide.small-sheet:after {
@@ -324,11 +373,10 @@ p {
     right: 15px;
     bottom: 5px;
     text-align: right;
-    font-size: 8px;
-    font-style: italic;
+    font-size: 10px;
     color: #fff;
     padding-right: 3px;
     @media @screen-small-above {
-         font-size: 10px;
+         font-size: 12px;
     }
 }
