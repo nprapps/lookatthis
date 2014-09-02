@@ -366,12 +366,29 @@ var receiveMessage = function(e) {
 
 var setupFilmstrip = function(slide, images, length){
     //velocity filmstrip to be extended to work for image sequences and contact sheets.
+    
+   
+    /*
+    $.Velocity.RegisterUI("transition.filmic", {
+        defaultDuration: 0,
+        calls: [ 
+            [ {opacity: 1} ]
+        ]
+    });
+    */
+   
+    
+    
     var $filmstrip = slide.find('.filmstrip-container');
     var filmstripType = slide.data('filmstrip-type');
     var transitionGridIn = "transition.fadeIn";
-    var transitionTitlesIn = "transition.flipYIn";
     var transitionGridOut = "transition.fadeOut";
+    
+    var transitionTitlesIn = "transition.flipYIn";
     var transitionTitlesOut = "transition.flipYOut";
+    
+    
+    
 
     var renderFrames = function(options) {
         var frame = "<div class='frame'><img src='1.jpg'></div>";
@@ -415,7 +432,7 @@ var setupFilmstrip = function(slide, images, length){
 
         $filmstrip.find('.frame').last().find('img').one('load', function() {
             if (filmstripType === 'animated') {
-                sequenceInOut(0, transitionGridIn, false, 50, 50, transitionTitlesIn, 2500);
+                sequenceInOut(0, transitionGridIn, false, 0, 0);
             }
 
             if (filmstripType === 'contact-sheet') {
@@ -424,16 +441,23 @@ var setupFilmstrip = function(slide, images, length){
         });
     };
 
-    var sequenceInOut = function(delaygrid, easegrid, backgrid, durationgrid, delaytext, easetext, durationtext) {
+    var sequenceInOut = function(delaygrid, easegrid, backgrid, durationgrid) {
         $filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
-            stagger: filmstripType === 'animated' ? 250 : 0,
+            stagger: filmstripType === 'animated' ? 700 : 0,
             duration: durationgrid,
             backwards: backgrid,
-            drag: true
+            drag: false
         });
     };
 
     renderFrames();
+}
+
+/*
+ * Text copied to clipboard.
+ */
+var onClippyCopy = function(e) {
+    alert('Copied to your clipboard!');
 }
 
 $(document).ready(function() {
@@ -456,6 +480,12 @@ $(document).ready(function() {
 
     setUpFullPage();
     resize();
+
+    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    var clippy = new ZeroClipboard($(".clippy"));
+    clippy.on('ready', function(readyEvent) {
+        clippy.on('aftercopy', onClippyCopy);
+    });
 
     // Redraw slides if the window resizes
     $(window).resize(resize);

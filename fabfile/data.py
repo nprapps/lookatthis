@@ -6,7 +6,8 @@ Commands that update or process the application data.
 from datetime import datetime
 import json
 
-from fabric.api import task
+from fabric.api import require, task
+from fabric.state import env
 from facebook import GraphAPI
 from twitter import Twitter, OAuth
 
@@ -18,14 +19,16 @@ def update():
     """
     Stub function for updating app-specific data.
     """
-    #update_featured_social()
+    update_featured_social()
 
 @task
 def update_featured_social():
     """
     Update featured tweets
     """
-    COPY = copytext.Copy(app_config.COPY_PATH)
+    require('slug', provided_by=['post'])
+
+    COPY = copytext.Copy('data/%s.xlsx' % env.slug)
     secrets = app_config.get_secrets()
 
     # Twitter
@@ -40,10 +43,10 @@ def update_featured_social():
         )
     )
 
-    tweets = [] 
+    tweets = []
 
     for i in range(1, 4):
-        tweet_url = COPY['meta']['featured_tweet%i' % i]
+        tweet_url = COPY['sharing']['featured_tweet%i' % i]
 
         if isinstance(tweet_url, copytext.Error) or unicode(tweet_url).strip() == '':
             continue
@@ -77,7 +80,7 @@ def update_featured_social():
             replacement = '<a href="%s" target="_blank" onclick="_gaq.push([\'_trackEvent\', \'%s\', \'featured-tweet-action\', \'link\', 0, \'%s\']);">%s</a>' % (url['url'], app_config.PROJECT_SLUG, tweet_url, url['display_url'])
 
             subs[original] = replacement
-    
+
         for hashtag in tweet['entities'].get('hashtags', []):
             original = tweet['text'][hashtag['indices'][0]:hashtag['indices'][1]]
             replacement = '<a href="https://twitter.com/hashtag/%s" target="_blank" onclick="_gaq.push([\'_trackEvent\', \'%s\', \'featured-tweet-action\', \'hashtag\', 0, \'%s\']);">%s</a>' % (hashtag['text'], app_config.PROJECT_SLUG, tweet_url, '#%s' % hashtag['text'])
@@ -90,7 +93,7 @@ def update_featured_social():
         # https://dev.twitter.com/docs/api/1.1/get/statuses/show/%3Aid
         tweets.append({
             'id': tweet['id'],
-            'url': tweet_url, 
+            'url': tweet_url,
             'html': html,
             'favorite_count': tweet['favorite_count'],
             'retweet_count': tweet['retweet_count'],
@@ -109,11 +112,11 @@ def update_featured_social():
     print 'Fetching Facebook posts...'
 
     fb_api = GraphAPI(secrets['FACEBOOK_API_APP_TOKEN'])
-   
+
     facebook_posts = []
 
     for i in range(1, 4):
-        fb_url = COPY['meta']['featured_facebook%i' % i]
+        fb_url = COPY['sharing']['featured_facebook%i' % i]
 
         if isinstance(fb_url, copytext.Error) or unicode(fb_url).strip() == '':
             continue
@@ -142,7 +145,7 @@ def update_featured_social():
                 'picture': post['picture']
             },
             'from': {
-                'name': user['name'], 
+                'name': user['name'],
                 'link': user['link'],
                 'picture': user_picture['url']
             },
@@ -158,5 +161,5 @@ def update_featured_social():
         'facebook_posts': facebook_posts
     }
 
-    with open('data/featured.json', 'w') as f:
-        json.dump(output, f)      
+    with open('%s/featured.json' % env.static_path, 'w') as f:
+        json.dump(output, f)
