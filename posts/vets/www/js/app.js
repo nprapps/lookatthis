@@ -386,9 +386,6 @@ var setupFilmstrip = function(slide, images, length){
     
     var transitionTitlesIn = "transition.flipYIn";
     var transitionTitlesOut = "transition.flipYOut";
-    
-    
-    
 
     var renderFrames = function(options) {
         var frame = "<div class='frame'><img src='1.jpg'></div>";
@@ -443,7 +440,7 @@ var setupFilmstrip = function(slide, images, length){
 
     var sequenceInOut = function(delaygrid, easegrid, backgrid, durationgrid) {
         $filmstrip.find('.frame').delay(delaygrid).velocity(easegrid, {
-            stagger: filmstripType === 'animated' ? 700 : 0,
+            stagger: filmstripType === 'animated' ? 900 : 0,
             duration: durationgrid,
             backwards: backgrid,
             drag: false
