@@ -1,0 +1,72 @@
+.slide.filmstrip {
+	background-position: top center;
+
+	.filmstrip-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        min-width: 100%;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    &.animated {
+        .frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: top center;
+            opacity: 0;
+            -webkit-transform-origin: center center;
+            -ms-transform-origin: center center;
+            transform-origin: center center;
+
+            img {
+                opacity: 0;
+            }
+        }
+    }
+
+    &.contact-sheet {
+        .filmstrip-container {
+            position: absolute;
+            min-width: 100%;
+            -webkit-perspective: 1000px;
+            perspective: 1000px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            .frame {
+                position: relative;
+                float: left;
+                width: 25%;
+                opacity: 0;
+                -webkit-transform-origin: center center;
+                -ms-transform-origin: center center;
+                transform-origin: center center;
+            }
+
+            .frame:nth-child(4n+1) {
+                clear: left;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+    }
+}

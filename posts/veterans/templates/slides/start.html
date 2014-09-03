@@ -1,0 +1,24 @@
+<div class="slide start" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                {{ row.text1|smarty }}
+                
+                <!--
+                <h2>{{ row.text2|smarty }}</h2>
+                <h3>{{ row.author|smarty }}</h3>
+                <h4>{{ row.date|smarty }}</h4>
+                <button class="btn btn-go">{{ row.text3 }}</button>
+                -->
+
+            </div>
+        </div>
+
+        {% if row.media %}
+            <div class="credit">
+                {{ row.media_credit|smarty }}
+            </div>
+        {% endif %}
+    </div>
+</div>
