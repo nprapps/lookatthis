@@ -326,16 +326,47 @@ h4 {
 .slide.conclusion {
 
     h3 {
-        font-size: 24px;
+        font-size: 16px;
+        margin: 0;
         text-transform: uppercase;
         font-weight: bold;
+        @media @screen-small-above {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    }
+    
+    p {
+        max-width: 700px;
+    }
+    
+    .share-section {
+        padding: 10px 0;
+        
+        @media @screen-small-above {
+            padding: 25px 0 5px 0;
+        }
+    }
+    
+    .facebook-share {
+        .facebook-post  {
+            margin-top: 10px;
+            
+            @media @screen-small-above {
+                margin-top: 20px;
+            }
+        }
+        
     }
     
     .share-vets-section {
         max-width: 700px;
         margin: 0 auto 20px auto;
-        padding: 10px 30px;
+        padding: 10px;
         background: rgba(255,255,255,0.2);
+        @media @screen-small-above {
+            padding: 10px 30px;
+        }
     }
 
     .share-vets {
@@ -346,6 +377,14 @@ h4 {
             text-align: left;
             max-width: 100%;
             
+        }
+        
+        h4 {
+            font-size: 12px;
+            padding-bottom: 0;
+            @media @screen-small-above {
+                font-size: 18px;
+            }
         }
         
         p {
@@ -367,12 +406,12 @@ h4 {
         .share-story {
             margin: 10px 10px 10px 0;
             a {
-                font-size: 12px;
+                font-size: 9px;
                 display: inline-block;
                 text-transform: uppercase;
                 font-weight: bold;
                 text-decoration: none;
-                padding: 10px;
+                padding: 5px;
                 background-color: #7a96cc;
                 color: #fff;
         
@@ -380,6 +419,11 @@ h4 {
                 &:focus {
                 background-color: #4774cc;
                 color: #fff;
+                }
+                
+                @media @screen-small-above {
+                    font-size: 12px;
+                    padding: 10px;
                 }
             }
             b {padding: 0 5px;}
