@@ -1,0 +1,196 @@
+.slide.medic {
+    background-position: right top;
+    background-repeat: no-repeat;
+  
+}
+
+.slide.medic:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+    height: 100%;
+}
+
+.slide.conclusion {
+
+    h3 {
+        font-size: 16px;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        @media @screen-small-above {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    }
+    
+    p {
+        max-width: 700px;
+    }
+    
+    .share-section {
+        padding: 10px 0;
+        
+        @media @screen-small-above {
+            padding: 25px 0 5px 0;
+        }
+    }
+    
+    .facebook-share {
+        .facebook-post  {
+            margin-top: 10px;
+            
+            @media @screen-small-above {
+                margin-top: 20px;
+            }
+        }
+        
+    }
+    
+    .share-vets-section {
+        max-width: 700px;
+        margin: 0 auto 20px auto;
+        padding: 10px;
+        background: rgba(255,255,255,0.2);
+        @media @screen-small-above {
+            padding: 10px 30px;
+        }
+    }
+    
+    .project-credits {
+        max-width: 700px;
+        margin: 0 auto 20px auto;
+        
+        border-top: 1px solid #555;
+        font-family: gotham, helvetica, sans-serif;
+        
+        h6 {
+            font-size: 16px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+        p {
+            font-family: gotham, helvetica, sans-serif;
+            font-size: 12px;
+            color: #ccc;
+        }
+    }
+
+    .share-vets {
+        
+        h4, h5, p {
+            font-family: "Gotham", helvetica, arial, sans-serif;
+            text-shadow: none;
+            text-align: left;
+            max-width: 100%;
+            
+        }
+        
+        h4 {
+            font-size: 12px;
+            padding-bottom: 0;
+            @media @screen-small-above {
+                font-size: 18px;
+            }
+        }
+        
+        p {
+            color: #333;
+        }
+        
+        a {
+            color: #444;
+            &:hover,
+            &:focus {
+            color: #333;
+            }
+        }
+        
+        .email-friend, .share-section {
+            border: none;
+        }
+        
+        .share-story {
+            margin: 10px 10px 10px 0;
+            a {
+                font-size: 9px;
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: bold;
+                text-decoration: none;
+                padding: 5px;
+                background-color: #7a96cc;
+                color: #fff;
+        
+                &:hover,
+                &:focus {
+                background-color: #4774cc;
+                color: #fff;
+                }
+                
+                @media @screen-small-above {
+                    font-size: 12px;
+                    padding: 10px;
+                }
+            }
+            b {padding: 0 5px;}
+            
+            float: left;
+        }
+        
+        .story-summary {
+            clear: both;
+            .clippy {
+            background-color: #7a96cc;
+            color: #fff;
+            &:hover,
+            &:focus {
+            color: #fff;
+            }
+        }
+        }
+        
+        
+        
+    }
+
+    .full-block-content:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: -1;
+        height: 100%;
+    }   
+    
+}
+
+//darken of contact sheet background images.
+
+.slide.small-sheet {
+    
+    .full-block-content:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: -1;
+        height: 100%;
+    }
+}
