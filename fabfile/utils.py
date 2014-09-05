@@ -8,6 +8,8 @@ from glob import glob
 import re
 
 from fabric.api import local, prompt
+from fabric.state import env
+
 import app_config
 
 
@@ -49,17 +51,35 @@ def _deploy_to_s3(path='.gzip'):
     sync_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
 
     for bucket in app_config.S3_BUCKETS:
-        local(sync % (path, 's3://%s/%s/%s' % (
-            bucket,
-            app_config.PROJECT_SLUG,
-            path.split('.gzip/')[1]
-        )))
+        if path.split('.gzip/')[1].startswith('tumblr'):
+            print 'deploying'
+            local(sync % (path, 's3://%s/%s/%s' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                path.split('.gzip/')[1]
+            )))
 
-        local(sync_gzip % (path, 's3://%s/%s/%s' % (
-            bucket,
-            app_config.PROJECT_SLUG,
-            path.split('.gzip/')[1]
-        )))
+        else:
+            local(sync % (path, 's3://%s/%s/%s' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                env.post_config.DEPLOY_SLUG
+            )))
+
+        if path.split('.gzip/')[1].startswith('tumblr'):
+            print 'deploying'
+            local(sync_gzip % (path, 's3://%s/%s/%s' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                path.split('.gzip/')[1]
+            )))
+
+        else:
+            local(sync_gzip % (path, 's3://%s/%s/posts/%s' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                env.post_config.DEPLOY_SLUG
+            )))
 
         local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/assets/' % (
             bucket,

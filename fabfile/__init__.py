@@ -97,6 +97,11 @@ def post(slug):
     env.static_path = '%s/%s' % (app_config.POST_PATH, env.slug)
 
     if os.path.exists ('%s/post_config.py' % env.static_path):
+        # set slug for deployment in post_config
+        find = "DEPLOY_SLUG = ''"
+        replace = "DEPLOY_SLUG = '%s'" % env.slug
+        utils.replace_in_file('%s/post_config.py' % env.static_path, find, replace)
+
         env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
         url = env.post_config.COPY_GOOGLE_DOC_URL
         bits = url.split('key=')
