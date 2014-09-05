@@ -52,7 +52,6 @@ def _deploy_to_s3(path='.gzip'):
 
     for bucket in app_config.S3_BUCKETS:
         if path.split('.gzip/')[1].startswith('tumblr'):
-            print 'deploying'
             local(sync % (path, 's3://%s/%s/%s' % (
                 bucket,
                 app_config.PROJECT_SLUG,
@@ -67,7 +66,6 @@ def _deploy_to_s3(path='.gzip'):
             )))
 
         if path.split('.gzip/')[1].startswith('tumblr'):
-            print 'deploying'
             local(sync_gzip % (path, 's3://%s/%s/%s' % (
                 bucket,
                 app_config.PROJECT_SLUG,
