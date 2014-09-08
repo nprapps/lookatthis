@@ -198,7 +198,7 @@ To update the latest document, simply run:
 fab text.update
 ```
 
-Note: ``copytext.update`` runs automatically whenever ``fab render`` is called.
+Note: ``text.update`` runs automatically whenever ``fab render`` is called.
 
 At the template level, Jinja maintains a ``COPY`` object that you can use to access your values in the templates. Using our example sheet, to use the ``byline`` key in ``templates/index.html``:
 
