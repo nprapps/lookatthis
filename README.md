@@ -195,7 +195,7 @@ The app template is outfitted with a few ``fab`` utility functions that make pul
 To update the latest document, simply run:
 
 ```
-fab copytext.update
+fab text.update
 ```
 
 Note: ``copytext.update`` runs automatically whenever ``fab render`` is called.
