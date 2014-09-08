@@ -147,7 +147,7 @@ Working with posts on the command line revolves around the `fab post:$SLUG` comm
 ### Starting a new post
 
 1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
-2.  Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0) into a new spreadsheet and copy the URL. That URL should be pasted in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_URL``.
+2.  Copy the [sample copy spreadsheet](https://docs.google.com/a/tylerjfisher.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE&usp=drive_web#gid=1) into a new spreadsheet and copy the URL. That URL should be pasted in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_URL``.
 
 Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
 
