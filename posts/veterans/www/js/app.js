@@ -483,7 +483,15 @@ $(document).ready(function() {
     clippy.on('ready', function(readyEvent) {
         clippy.on('aftercopy', onClippyCopy);
     });
+    
+    
+   
+    $( ".home" ).click(function() {
+      $.fn.fullpage.moveTo(0, 0);
+    });
 
+    $(".menu-items").velocity( { opacity: 1 }, 2000);
+    
     // Redraw slides if the window resizes
     $(window).resize(resize);
     $(window).resize(onResize);

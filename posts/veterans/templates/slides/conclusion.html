@@ -3,14 +3,31 @@
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
+            
+                <div class="share-vets-section listen">
+                
+                    <h3>Hear From Dan Martin</h3>
+                    <p>NPR's Quil Lawrence spoke with Martin about his journey. Learn more about his time on the street and the challenges facing the Department of Veterans Affairs as they work to end chronic homelessness among veterans.</p>
+                    
+                    <div class="audio-segment clearfix">
+                    <a href="#">
+                    <img src="assets/dan-audio.jpg">
+                    <h3><i class="fa fa-headphones"></i> Audio Story Title</h3>
+                    <p>All Things Considerend, September X, 2014</p>
+                    </a>
+                 </div>
+   
                 {% if row.text1 %}
                     {{ row.text1 }}
                 {% endif %}
+
+                </div>
+            
                 
                
                 <div class="share-vets share-vets-section">
                 
-                <h3>Share this story</h3>
+                <h3>Share your thoughts</h3>
                 
                 <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
                     

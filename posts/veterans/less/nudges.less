@@ -9,6 +9,51 @@
 @screen-tiny-above: ~"screen and (min-width: 481px)";
 @screen-tiny: ~"screen and (max-width: 480px)";
 
+.home {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    cursor: pointer;
+    opacity: .5;
+    
+    h6 {
+        text-transform: uppercase;
+        font-weight: bold;
+        
+        i {
+            font-size: 20px;
+        }
+    }
+    
+    .titlecard-nav & {
+        display: none;
+    }
+    
+    b {
+        display: none;
+        position: absolute;
+        bottom: 8px;
+        left: 22px;
+        font-size: 10px;
+    }
+    
+    &:hover {
+        opacity: 1;
+        b {display: block;}
+    }
+    
+    .touch & {
+        
+        &:hover {
+            opacity: .5;
+            b {display: none;}
+        }
+        
+    }
+    
+    
+}
+
 .slide.medic {
     background-position: right top;
     background-repeat: no-repeat;
@@ -30,11 +75,50 @@
 
 .slide.conclusion {
 
+.listen {
+    
+    p {
+        font-family: gotham, helvetica, arial;
+        text-shadow: none;
+        font-size: 14px;
+    }
+    
+
+    .audio-segment {
+        
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        
+        img {
+            max-width: 90px;
+            float: left;
+            margin-right: 10px
+        }
+        
+        a {
+            color: #7a96cc;
+            
+            text-decoration: none;
+    
+            h3 {margin: 0;}
+            
+            p {
+                color: #777;
+                font-size: 14px;
+  
+            }
+        }
+        
+    }
+    
+} 
+
     h3 {
         font-size: 16px;
-        margin: 0;
+        margin: 0 auto;
         text-transform: uppercase;
         font-weight: bold;
+        max-width: 700px;
         @media @screen-small-above {
             font-size: 24px;
             margin-bottom: 10px;
