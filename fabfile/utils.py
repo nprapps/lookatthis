@@ -79,9 +79,10 @@ def _deploy_to_s3(path='.gzip'):
                 env.post_config.DEPLOY_SLUG
             )))
 
-        local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/assets/' % (
+        local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/posts/%s/assets/' % (
             bucket,
-            app_config.PROJECT_SLUG
+            app_config.PROJECT_SLUG,
+            env.post_config.DEPLOY_SLUG
         )))
 def _find_slugs(slug):
     posts = glob('%s/*' % app_config.POST_PATH)

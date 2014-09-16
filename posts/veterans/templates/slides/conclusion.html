@@ -1,16 +1,38 @@
 <div class="slide conclusion filmstrip{% if row.filmstrip_type %} {{ row.filmstrip_type }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}{% if row.filmstrip_directory %} data-filmstrip="{{ row.filmstrip_directory }}" {% endif %}{% if row.filmstrip_length %} data-filmstrip-length="{{ row.filmstrip_length }}" {% endif %}{% if row.filmstrip_type %} data-filmstrip-type="{{ row.filmstrip_type }}" {% endif %}>
 
+<div class="look-note">
+    
+    <p>Join us on Tumblr as we embark on a new visual storytelling experiment we're calling <a href="http://lookatthisstory.tumblr.com/" target="_blank">Look At This</a></p>
+</div><!--/look-note-->
+
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
+            
+                <div class="share-vets-section listen">
+                
+                    <h3>Hear From Dan Martin</h3>
+                    <p>NPR's Quil Lawrence spoke with Martin about his journey. Learn more about his time on the street and the challenges facing the Department of Veterans Affairs as they work to end chronic homelessness among veterans.</p>
+                    
+                    <div class="audio-segment clearfix">
+                    <a href="#">
+                    <img src="assets/dan-audio.jpg">
+                    <h3><i class="fa fa-headphones"></i> Audio Story Title</h3>
+                    <p>All Things Considerend, September X, 2014</p>
+                    </a>
+                 </div>
+   
                 {% if row.text1 %}
                     {{ row.text1 }}
                 {% endif %}
+
+                </div>
+            
                 
                
                 <div class="share-vets share-vets-section">
                 
-                <h3>Share this story</h3>
+                <h3>Share your thoughts</h3>
                 
                 <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
                     
@@ -34,38 +56,14 @@
                         
                     </div><!-- / email-friend -->
                 </div><!-- / share-vets-section -->
-                <div class="share-vets share-vets-section">    
-                    
-                    <h3>Join the conversation</h3>
-
-                <div class="facebook-share share-section">
-
-                    <h4>On Facebook</h4>
-
-                    <ul class="featured-facebook-posts">
-                        {% for post in featured.facebook_posts %}
-                        {% include '%s/templates/_featured_facebook_post.html' % slug %}
-                        {% endfor %}
-                    </ul><!-- / featured-tweets -->
-
-                    
-                </div><!-- / facebook-share -->
-
-                <div class="twitter-share share-section">
-                    <h4>On Twitter</h4>
-                    
-                    <ul class="featured-tweets">
-                        {% for tweet in featured.tweets %}
-                        {% include '%s/templates/_featured_tweet.html' % slug %}
-                        {% endfor %}
-                    </ul><!-- / featured-tweets -->
-
-                    
-                </div><!-- / twitter-share -->
                 
-                </div><!-- / share-vets -->
                 
-                <div class="project-credits"><p>project credits</p></div><!--/project-credits-->
+                <!-- add conversation -->
+                
+                <div class="project-credits">
+                    <h6>Project Credits</h6>
+                    {{ row.media_credit|smarty }}
+                </div><!--/project-credits-->
                 
                 
             </div><!--content-->
@@ -73,9 +71,5 @@
         
        
     </div>
-    
-    
-
-    <div class="filmstrip-container"></div> <!-- grid-face -->
 
 </div> <!-- slide -->
