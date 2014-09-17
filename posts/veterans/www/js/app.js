@@ -3,7 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $upNext = null;
 var NAV_HEIGHT = 75;
-var EVENT_CATEGORY = 'lookatthis';
+var EVENT_CATEGORY = 'veterans';
 
 var $w;
 var $h;
@@ -94,7 +94,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion.toString()]);
     }
 };
 
@@ -312,7 +312,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
         $currentSlide.find('.grid-face').empty();
     }
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'slide-exit', slideIndex.toString(), timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -466,6 +466,8 @@ var setupFilmstrip = function(slide, images, length){
  */
 var onClippyCopy = function(e) {
     alert('Copied to your clipboard!');
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
 }
 
 $(document).ready(function() {
