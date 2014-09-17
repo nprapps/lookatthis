@@ -304,19 +304,19 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|Custom 1|Custom 2|
 |--------|------|-----|-----|--------|--------|
-|lookatthis|tweet|`location`||||
-|lookatthis|facebook|`location`||||
-|lookatthis|email|`location`||||
-|lookatthis|new-comment||||
-|lookatthis|open-share-discuss||||
-|lookatthis|close-share-discuss||||
-|lookatthis|summary-copied||||
-|lookatthis|featured-tweet-action|`action`||``tweet_url``|
-|lookatthis|featured-facebook-action|`action`||``post_url``|
-|lookatthis|slide-exit|`slideIndex`|`timeOnSlide`||
-|lookatthis|keyboard-nav||||
-|lookatthis|next-post||||
-|lookatthis|completion|percent|||
+|$POST_SLUG|tweet|`location`||||
+|$POST_SLUG|facebook|`location`||||
+|$POST_SLUG|email|`location`||||
+|$POST_SLUG|new-comment||||
+|$POST_SLUG|open-share-discuss||||
+|$POST_SLUG|close-share-discuss||||
+|$POST_SLUG|summary-copied||||
+|$POST_SLUG|featured-tweet-action|`action`||``tweet_url``|
+|$POST_SLUG|featured-facebook-action|`action`||``post_url``|
+|$POST_SLUG|slide-exit|`slideIndex`|`timeOnSlide`||
+|$POST_SLUG|keyboard-nav||||
+|$POST_SLUG|next-post||||
+|$POST_SLUG|completion|percent|||
 
-
+(Not posts necessarily track all metrics.)
 

@@ -3,6 +3,7 @@ var $nextPostTitle = null;
 var $nextPostImage = null;
 var $upNext = null;
 var NAV_HEIGHT = 75;
+// TODO: use deploy slug
 var EVENT_CATEGORY = 'lookatthis';
 var MESSAGE_DELIMITER = ';';
 
@@ -281,7 +282,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var now = moment();
     var timeOnSlide = (now - slideStartTime);
 
-    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex, timeOnSlide]);
+    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex.toString(), timeOnSlide]);
 }
 
 var onResize = function(e) {
@@ -351,6 +352,15 @@ var rmFakeMobileHover = function() {
         'color': '#fff',
         'opacity': .3
     });
+}
+
+/*
+ * Text copied to clipboard.
+ */
+var onClippyCopy = function(e) {
+    alert('Copied to your clipboard!');
+
+    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
 }
 
 $(document).ready(function() {
