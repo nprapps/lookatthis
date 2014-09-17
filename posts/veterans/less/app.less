@@ -392,23 +392,23 @@ h4 {
 	    font-size: 20px;
     }
     
-    .touch & {
-        b {display: none;}
-    }
-    
 }
 
 /* Menu style */
 .overlay-menu nav {
 	text-align: center;
 	position: relative;
-	top: 50%;
-	height: 60%;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
+	top: 50%;
+    height: 70%;
 	
     .touch & {
         overflow-y: auto;
+    }
+    
+    @media @screen-small-above {
+	    
     }
 	
 }
@@ -424,7 +424,7 @@ h4 {
 
 .overlay-menu ul li {
 	display: block;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	text-shadow: none;
 	font-weight: 300;
 	display: block;
@@ -432,7 +432,7 @@ h4 {
 	-webkit-transition: color 0.2s;
 	transition: color 0.2s;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 12px;
 	
 	
 	@media @screen-small-above {
@@ -469,14 +469,3 @@ h4 {
 	-webkit-transform: translateY(25%) rotateX(-35deg);
 	transform: translateY(25%) rotateX(-35deg);
 }
-
-/*
-@media screen and (max-height: 30.5em) {
-	.overlay-menu nav {
-		height: 70%;
-		font-size: 34px;
-	}
-	.overlay-menu ul li {
-		min-height: 34px;
-	}
-}*/
