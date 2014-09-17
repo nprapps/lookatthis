@@ -59,7 +59,7 @@ def _deploy_to_s3(path='.gzip'):
             )))
 
         else:
-            local(sync % (path, 's3://%s/%s/%s' % (
+            local(sync % (path, 's3://%s/%s/posts/%s' % (
                 bucket,
                 app_config.PROJECT_SLUG,
                 env.post_config.DEPLOY_SLUG
