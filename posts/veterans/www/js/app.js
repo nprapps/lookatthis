@@ -83,7 +83,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion]);
+        _gaq.push(['_trackEvent', EVENT_CATEGORY, 'completion', completion.toString()]);
     }
 };
 
