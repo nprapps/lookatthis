@@ -15,41 +15,41 @@
     left: 12px;
     cursor: pointer;
     opacity: .5;
-    
+
     h6 {
         text-transform: uppercase;
         font-weight: bold;
-        
+
         i {
             font-size: 20px;
         }
     }
-    
+
     .titlecard-nav & {
         display: none;
     }
-    
+
     b {
         position: absolute;
         bottom: 13px;
         left: 24px;
         font-size: 10px;
     }
-    
+
     &:hover {
         opacity: 1;
     }
-    
+
     .touch & {
         b {display: none;}
         
         &:hover {
             opacity: .5; 
         }
-        
+
     }
-    
-    
+
+
 }
 
 .slide {
@@ -59,7 +59,7 @@
 .slide.medic {
     background-position: right top;
     background-repeat: no-repeat;
-  
+
 }
 
 .slide.medic:after {
@@ -87,7 +87,7 @@ padding-top: 80px;
     padding-top: 25px;
     background-color: rgba(0, 0, 0, 0.5);
     height: 80px;
-    
+
     p {
         font-size: 11px;
         font-family: gotham, helvetica, arial, sans-serif;
@@ -97,15 +97,15 @@ padding-top: 80px;
         padding: 0 0 10px 0;
         line-height: 1.4;
         text-align: center;
-        
+
         @media @screen-small-above {
             font-size: 15px;
             padding: 0 0 20px 0;
             max-width: 500px;
         }
-        
+
         a {
-            
+
             color: #fff;
             text-transform: uppercase;
             font-weight: bold;
@@ -119,42 +119,42 @@ padding-top: 80px;
 
 
 .listen {
-    
+
     p {
         font-family: gotham, helvetica, arial;
         text-shadow: none;
         font-size: 14px;
     }
-    
+
 
     .audio-segment {
-        
+
         background: rgba(255, 255, 255, 0.8);
         padding: 10px;
-        
+
         img {
             max-width: 90px;
             float: left;
             margin-right: 10px
         }
-        
+
         a {
             color: #7a96cc;
-            
+
             text-decoration: none;
-    
+
             h3 {margin: 0;}
-            
+
             p {
                 color: #777;
                 font-size: 14px;
-  
+
             }
         }
-        
+
     }
-    
-} 
+
+}
 
     h3 {
         font-size: 16px;
@@ -163,34 +163,34 @@ padding-top: 80px;
         font-weight: bold;
         max-width: 700px;
         @media @screen-small-above {
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 10px;
         }
     }
-    
+
     p {
         max-width: 700px;
     }
-    
+
     .share-section {
         padding: 10px 0;
-        
+
         @media @screen-small-above {
             padding: 25px 0 5px 0;
         }
     }
-    
+
     .facebook-share {
         .facebook-post  {
             margin-top: 10px;
-            
+
             @media @screen-small-above {
                 margin-top: 20px;
             }
         }
-        
+
     }
-    
+
     .share-vets-section {
         max-width: 700px;
         margin: 0 auto 20px auto;
@@ -199,15 +199,18 @@ padding-top: 80px;
         @media @screen-small-above {
             padding: 10px 30px;
         }
+        h3 {
+
+        }
     }
-    
+
     .project-credits {
         max-width: 700px;
         margin: 0 auto 20px auto;
-        
+
         border-top: 1px solid #555;
         font-family: gotham, helvetica, sans-serif;
-        
+
         h6 {
             font-size: 16px;
             margin: 15px 0;
@@ -223,15 +226,15 @@ padding-top: 80px;
     }
 
     .share-vets {
-        
+
         h4, h5, p {
             font-family: "Gotham", helvetica, arial, sans-serif;
             text-shadow: none;
             text-align: left;
             max-width: 100%;
-            
+
         }
-        
+
         h4 {
             font-size: 12px;
             padding-bottom: 0;
@@ -239,11 +242,11 @@ padding-top: 80px;
                 font-size: 18px;
             }
         }
-        
+
         p {
             color: #333;
         }
-        
+
         a {
             color: #444;
             &:hover,
@@ -251,11 +254,11 @@ padding-top: 80px;
             color: #333;
             }
         }
-        
+
         .email-friend, .share-section {
             border: none;
         }
-        
+
         .share-story {
             margin: 10px 10px 10px 0;
             a {
@@ -267,23 +270,23 @@ padding-top: 80px;
                 padding: 5px;
                 background-color: #7a96cc;
                 color: #fff;
-        
+
                 &:hover,
                 &:focus {
                 background-color: #4774cc;
                 color: #fff;
                 }
-                
+
                 @media @screen-small-above {
                     font-size: 12px;
                     padding: 10px;
                 }
             }
             b {padding: 0 5px;}
-            
+
             float: left;
         }
-        
+
         .story-summary {
             clear: both;
             .clippy {
@@ -295,9 +298,9 @@ padding-top: 80px;
             }
         }
         }
-        
-        
-        
+
+
+
     }
 
     .full-block-content:after {
@@ -311,14 +314,14 @@ padding-top: 80px;
         background: rgba(0,0,0,0.5);
         z-index: -1;
         height: 100%;
-    }   
-    
+    }
+
 }
 
 //darken of contact sheet background images.
 
 .slide.small-sheet {
-    
+
     .full-block-content:after {
         display: block;
         content: ' ';

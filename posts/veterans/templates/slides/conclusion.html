@@ -1,75 +1,75 @@
 <div class="slide conclusion filmstrip{% if row.filmstrip_type %} {{ row.filmstrip_type }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}{% if row.filmstrip_directory %} data-filmstrip="{{ row.filmstrip_directory }}" {% endif %}{% if row.filmstrip_length %} data-filmstrip-length="{{ row.filmstrip_length }}" {% endif %}{% if row.filmstrip_type %} data-filmstrip-type="{{ row.filmstrip_type }}" {% endif %}>
 
 <div class="look-note">
-    
+
     <p>Join us on Tumblr as we embark on a new visual storytelling experiment we're calling <a href="http://lookatthisstory.tumblr.com/" target="_blank">Look At This</a></p>
 </div><!--/look-note-->
 
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
-            
+
                 <div class="share-vets-section listen">
-                
+
                     <h3>Hear From Dan Martin</h3>
                     <p>NPR's Quil Lawrence spoke with Martin about his journey. Learn more about his time on the street and the challenges facing the Department of Veterans Affairs as they work to end chronic homelessness among veterans.</p>
-                    
+
                     <div class="audio-segment clearfix">
-                    <a href="#">
+                    <a href="http://www.npr.org/2014/09/17/349329437/homeless-vets-story-illustrates-challenge-in-getting-off-the-street">
                     <img src="assets/dan-audio.jpg">
-                    <h3><i class="fa fa-headphones"></i> Chronic Homeless Vets</h3>
+                    <h3><i class="fa fa-headphones"></i> Homeless Vet's Story Illustrates Challenge In Getting Off The Street</h3>
                     <p>All Things Considered, September 17, 2014</p>
                     </a>
                  </div>
-   
+
                 {% if row.text1 %}
                     {{ row.text1 }}
                 {% endif %}
 
                 </div>
-            
-                
-               
+
+
+
                 <div class="share-vets share-vets-section">
-                
+
                 <h3>Share your thoughts</h3>
-                
+
                 <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
-                    
+
                     <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ SHARE_URL|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
-                    
-                    
+
+
                     <p class="share-story">
                         <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
                     </p>
-                
+
                  <div class="story-summary">
                     <p>
                     <b class="summary-text">{{ COPY.sharing.story_summary }} {{ COPY.sharing.share_url }}</b> <a class="clippy" data-clipboard-text="{{ COPY.sharing.story_summary }} {{ COPY.sharing.share_url }}"><i class="fa fa-clipboard"></i> Copy</a> </p>
-                    
-                    
-                    
+
+
+
 
                 </div><!-- / story-summary -->
 
                 <div class="email-friend">
-                        
+
                     </div><!-- / email-friend -->
                 </div><!-- / share-vets-section -->
-                
-                
+
+
                 <!-- add conversation -->
-                
+
                 <div class="project-credits">
                     <h6>Project Credits</h6>
                     {{ row.media_credit|smarty }}
                 </div><!--/project-credits-->
-                
-                
+
+
             </div><!--content-->
         </div> <!--cell-->
-        
-       
+
+
     </div>
 
 </div> <!-- slide -->
