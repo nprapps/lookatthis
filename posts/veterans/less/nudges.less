@@ -30,28 +30,30 @@
     }
     
     b {
-        display: none;
         position: absolute;
-        bottom: 8px;
-        left: 22px;
+        bottom: 13px;
+        left: 24px;
         font-size: 10px;
     }
     
     &:hover {
         opacity: 1;
-        b {display: block;}
     }
     
     .touch & {
+        b {display: none;}
         
         &:hover {
-            opacity: .5;
-            b {display: none;}
+            opacity: .5; 
         }
         
     }
     
     
+}
+
+.slide {
+    .fa-square {font-size: 15px;}
 }
 
 .slide.medic {
