@@ -5,6 +5,9 @@
         </div>
     </div><!--contained-image-container-->
     {% if row.media %}
+        <div class="caption">
+            {{ row.caption|smarty }}
+        </div>
         <div class="credit">
             {{ row.media_credit|smarty }}
         </div>

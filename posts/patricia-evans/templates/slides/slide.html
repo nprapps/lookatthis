@@ -8,6 +8,9 @@
         </div><!--full-block-cell-->
 
         {% if row.media %}
+            <div class="caption">
+                {{ row.caption|smarty }}
+            </div>
             <div class="credit">
                 {{ row.media_credit|smarty }}
             </div>
