@@ -6,6 +6,7 @@ import os
 from fabric.api import local, require, settings, task
 from fabric.state import env
 
+import app
 import app_config
 
 # Other fabfiles
@@ -143,6 +144,32 @@ def tumblr():
     env.slug = 'tumblr'
     env.copytext_key = app_config.COPY_GOOGLE_DOC_KEY
     env.copytext_slug = 'theme'
+
+@task
+def sitemap():
+    """
+    Render and deploy sitemap.
+    """
+    require('settings', provided_by=[staging, production])
+
+    app_config.configure_targets(env.get('settings', None))
+
+    with app.app.test_request_context(path='sitemap.xml'):
+        print 'Rendering sitemap.xml' 
+
+        view = app.__dict__['_sitemap']
+        content = view()
+
+    with open('.sitemap.xml', 'w') as f:
+        f.write(content.encode('utf-8'))
+
+    sync = 'aws s3 cp sitemap.xml s3://%s/%s/sitemap.xml --acl "public-read" --cache-control "max-age=5" --region "us-east-1"'
+
+    for bucket in app_config.S3_BUCKETS:
+        local(sync % ( 
+            bucket,
+            app_config.PROJECT_SLUG
+        ))
 
 """
 Destruction

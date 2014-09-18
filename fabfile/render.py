@@ -86,3 +86,4 @@ def render_all():
 
     with open(path, 'w') as f:
         f.write(content.encode('utf-8'))
+

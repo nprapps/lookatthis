@@ -84,6 +84,7 @@ def _deploy_to_s3(path='.gzip'):
             app_config.PROJECT_SLUG,
             env.post_config.DEPLOY_SLUG
         )))
+
 def _find_slugs(slug):
     posts = glob('%s/*' % app_config.POST_PATH)
 

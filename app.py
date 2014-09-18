@@ -2,6 +2,7 @@
 
 import argparse
 import copytext
+import csv
 from glob import glob
 import imp
 import json
@@ -38,6 +39,20 @@ def _posts_list():
     context['posts_count'] = len(context['posts'])
 
     return render_template('post_list.html', **context)
+
+@app.route('/sitemap.xml')
+def _sitemap():
+    """
+    Render a simple sitemap for look content.
+    """
+    context = make_context()
+
+    with open('data/sitemap.csv') as f:
+        posts = csv.reader(f)
+        posts.next()
+        context['posts'] = list(posts)
+
+    return render_template('sitemap.xml', **context)
 
 @posts.route('/posts/<slug>/')
 def _post(slug):
