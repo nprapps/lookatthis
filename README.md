@@ -31,6 +31,7 @@ lookatthis
 * [Install web services](#install-web-services)
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
+* [Updating sitemap](#updating-sitemap)
 
 What is this?
 -------------
@@ -319,4 +320,12 @@ The Google Analytics events tracked in this application are:
 |$POST_SLUG|completion|percent|||
 
 (Not posts necessarily track all metrics.)
+
+Updating sitemap
+----------------
+
+To add a project to the sitemap:
+
+* Add a line to ``data/sitemap.csv``
+* Run ``fab staging|production sitemap
 
