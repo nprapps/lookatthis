@@ -163,7 +163,7 @@ def sitemap():
     with open('.sitemap.xml', 'w') as f:
         f.write(content.encode('utf-8'))
 
-    sync = 'aws s3 cp sitemap.xml s3://%s/%s/sitemap.xml --acl "public-read" --cache-control "max-age=5" --region "us-east-1"'
+    sync = 'aws s3 cp .sitemap.xml s3://%s/%s/sitemap.xml --acl "public-read" --cache-control "max-age=5" --region "us-east-1"'
 
     for bucket in app_config.S3_BUCKETS:
         local(sync % ( 
