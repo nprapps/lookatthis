@@ -25,7 +25,7 @@
                         {% endfor %}
                     </ul><!-- / featured-tweets -->
 
-                    <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.share.facebook_app_id }}&amp;link={{ COPY.share.share_url|urlencode }}&amp;name={{ COPY.share.facebook_title|urlencode }}&amp;picture={{ COPY.share.facebook_image_url|urlencode }}&amp;redirect_uri={{ SHARE_URL|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b>Share story on Facebook</b></a></p>
+                    <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.share.facebook_app_id }}&amp;link={{ COPY.share.share_url|urlencode }}&amp;name={{ COPY.share.facebook_title|urlencode }}&amp;picture={{ COPY.share.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.share.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b>Share story on Facebook</b></a></p>
                 </div><!-- / facebook-share -->
 
                 <div class="twitter-share share-section">
