@@ -53,7 +53,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        fixedElements: '.primary-navigation, #share-modal, .audio-controls',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -62,6 +62,13 @@ var setUpFullPage = function() {
         onSlideLeave: onSlideLeave
     });
 };
+
+var sound = new Howl({
+  urls: ['assets/color-music.mp3'],
+  autoplay: false,
+  loop: true,
+  volume: 0.7,
+});
 
 
 var onPageLoad = function() {
@@ -392,6 +399,13 @@ $(document).ready(function() {
 
     setUpFullPage();
     resize();
+    
+    $('#ex1-play').on('click', function(){
+		sound.stop().play();
+	});
+	$('#ex1-pause').on('click', function(){
+		sound.pause();
+	});
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
