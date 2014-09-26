@@ -5,9 +5,10 @@
             <div class="full-block-content">
                 {{ row.text1|smarty }}
                 
-            {% if row.fact_icon %}
-                <img src="assets/{{ row.fact_icon }}">
-            {% endif %}
+                {% if row.fact_icon %}
+                    <img src="assets/{{ row.fact_icon }}">
+                {% endif %}
+            
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
         
