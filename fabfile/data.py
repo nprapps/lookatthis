@@ -122,7 +122,7 @@ def update_featured_social():
             continue
 
         fb_id = unicode(fb_url).split('/')[-1]
-
+        
         post = fb_api.get_object(fb_id)
         user  = fb_api.get_object(post['from']['id'])
         user_picture = fb_api.get_object('%s/picture' % post['from']['id'])

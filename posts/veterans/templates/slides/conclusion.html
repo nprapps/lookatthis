@@ -36,7 +36,7 @@
 
                 <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
 
-                    <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ SHARE_URL|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
+                    <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
 
 
                     <p class="share-story">
@@ -58,7 +58,28 @@
                 </div><!-- / share-vets-section -->
 
 
-                <!-- add conversation -->
+                <div class="share-vets share-vets-section">    
+                 
+                <h3>Join the conversation</h3>
+                <div class="facebook-share share-section">
+                    <h4>On Facebook</h4>
+                    <ul class="featured-facebook-posts">
+                        {% for post in featured.facebook_posts %}
+                        {% include '%s/templates/_featured_facebook_post.html' % slug %}
+                        {% endfor %}
+                        </ul><!-- / featured-tweets -->
+            
+                </div><!-- / facebook-share -->
+            
+                <div class="twitter-share share-section">
+                    <h4>On Twitter</h4>
+                    <ul class="featured-tweets">
+                        {% for tweet in featured.tweets %}
+                        {% include '%s/templates/_featured_tweet.html' % slug %}
+                        {% endfor %}
+                    </ul><!-- / featured-tweets -->
+                </div><!-- / twitter-share -->
+            </div><!-- / share-vets -->
 
                 <div class="project-credits">
                     <h6>Project Credits</h6>
