@@ -4,8 +4,14 @@
         <div class="full-block-cell">
             <div class="full-block-content">
                 {{ row.text1|smarty }}
+                
+            {% if row.fact_icon %}
+                <img src="assets/{{ row.fact_icon }}">
+            {% endif %}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
+        
+        
 
         {% if row.media %}
             <div class="credit">
