@@ -40,6 +40,25 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
 
+
+//navigation
+.home {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    p {
+        font-size: 22px;
+        cursor: pointer;
+        color: #ccc;
+        
+        &:hover {
+           color: #fff;
+        }
+        
+    }
+}
+
 .audio-controls {
     position: absolute;
     top: 10px;
@@ -222,11 +241,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .background-size(cover);
     background-position: center center;
     position: relative;
-    
-    p {
-        max-width: 700px;
-        margin: 0 auto;
-    }
 }
 
 // full width container within a section or slide
@@ -249,7 +263,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 
     .full-block-content {
-        max-width: 1200px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 20px;
         @media @screen-small-above {

@@ -6,6 +6,11 @@
    
    .full-block {
         background-color: rgba(0,0,0,0.3);
+        
+        @media @screen-small-above {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
     }
     
     */
@@ -15,18 +20,15 @@
         text-align: center;
         color: #fff;
 
-         h2{
-            
-             font-size: 12px;
+         h2 {
+             font-size: 16px;
              font-weight: bold;
              border-bottom: 4px solid #fff;
              padding-bottom: 5px;
              display: inline-block;
              text-transform: uppercase;
-             @media @screen-small-above {
-                font-size: 16px;
-                letter-spacing: 2px;
-            }
+             letter-spacing: 6px;
+             padding-left: 6px;
          }
          
          p {
@@ -34,11 +36,13 @@
              margin: 30px auto;
              font-size: 55px;
              line-height: 1.1;
+             text-align: justify;
          }
 
          h5 {
             font-size: 12px;
             font-weight: bold;
+            text-align: justify;
         }
     }
 }
