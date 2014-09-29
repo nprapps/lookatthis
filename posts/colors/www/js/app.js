@@ -123,9 +123,12 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
+/*
     if ($w < 769) {
         mobileSuffix = '-sq';
     }
+    
+*/
 
     _.each($(slides), function(slide) {
 

@@ -370,8 +370,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .slide.fact {
     .fact-icon {
-        float: left;
-        max-width: 80px;
+        max-width: 60px;
+        margin: 0 auto;
+        
+        @media @screen-small-above {
+            float: left;
+            max-width: 80px;
+        }
     }
 
     .fact-text {
