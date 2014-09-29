@@ -1,0 +1,33 @@
+<div class="slide fact" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+            
+                {% if row.fact_icon %}
+                    <img src="assets/{{ row.fact_icon }}" class="fact-icon">
+                {% endif %}
+            
+            
+                <div class="fact-text">  
+                    {% if row.text2 %}
+                        <h3>{{ row.text2|smarty }}</h3>
+                    {% endif %}   
+                        
+                    {{ row.text1|smarty }}
+                </div>
+                
+                
+            
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+        
+        
+
+        {% if row.media %}
+            <div class="credit">
+                {{ row.media_credit|smarty }}
+            </div>
+        {% endif %}
+    </div><!--full-block-->
+</div><!--slide-->
