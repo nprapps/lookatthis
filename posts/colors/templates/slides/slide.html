@@ -4,19 +4,20 @@
         <div class="full-block-cell">
             <div class="full-block-content">
             
-                <div class="fact-text">
-                
-                {% if row.text2 %}
-                    <h3>{{ row.text2|smarty }}</h3>
-                {% endif %}   
-                    
-                {{ row.text1|smarty }}
-                    
+                {% if row.fact_icon %}
+                    <img src="assets/{{ row.fact_icon }}" class="fact-icon">
+                {% endif %}
+            
+            
+                <div class="fact-text">  
+                    {% if row.text2 %}
+                        <h3>{{ row.text2|smarty }}</h3>
+                    {% endif %}   
+                        
+                    {{ row.text1|smarty }}
                 </div>
                 
-                {% if row.fact_icon %}
-                    <img src="assets/{{ row.fact_icon }}">
-                {% endif %}
+                
             
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
