@@ -9,7 +9,9 @@ TO RUN:
 * ./generate_quote_images.py
 """
 
+from collections import namedtuple
 import os
+import re
 import textwrap
 import HTMLParser
 
@@ -17,12 +19,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 import copytext
 
+Margin = namedtuple('Margin', ['top', 'right', 'bottom', 'left'])
+
 OUT_DIR = 'www/share-images'
 
 CANVAS_WIDTH = 640
 CANVAS_HEIGHT = 640
-TEXT_MARGIN = (40, 40, 200, 40)
-TEXT_MAX_WIDTH = CANVAS_WIDTH - (TEXT_MARGIN[1] + TEXT_MARGIN[3])
+BODY_MARGIN = Margin(top=200, right=40, bottom=200, left=200)
+TEXT_MAX_WIDTH = CANVAS_WIDTH - (BODY_MARGIN[1] + BODY_MARGIN[3])
 
 SIZE_MIN = 16
 SIZE_MAX = 64
@@ -32,14 +36,18 @@ LINE_MIN = 16
 LINE_MAX = 50
 LINE_DELTA = 2 
 
-#LOGO = Image.open('www/assets/image-footer.png')
+BACKGROUND = Image.open('www/assets/spectrum.jpg')\
+    .resize((CANVAS_WIDTH, CANVAS_HEIGHT), Image.ANTIALIAS)
+
+LOGO = Image.open('www/assets/npr-logo.png')\
+    .resize((75, 26), Image.ANTIALIAS)
 
 fonts = {}
-fonts['book'] = {}
+fonts['normal'] = {}
 fonts['bold'] = {}
-fonts['serif'] = {}
 
-quote_width = {}
+def strip_tags(text):
+    return re.sub('<[^<]+?>', '', text)
 
 def compute_size(lines, fontsize):
     font = fonts['bold'][fontsize]
@@ -87,65 +95,64 @@ def optimize_text(text, max_height):
 
     return optimal
 
-def render(slug, icon_filename, body):
+def render(slug, icon_filename, title, body):
     img = Image.new('RGB', (640, 640), (17, 17, 17))
     draw = ImageDraw.Draw(img)
-    text_margin = TEXT_MARGIN
 
     parse = HTMLParser.HTMLParser()
 
-    text = u'“%s”' % body 
-    text = parse.unescape(text)
+    # Background
+    img.paste(BACKGROUND, (0, 0))
 
+    # Logo
+    img.paste(LOGO, (40, 40), mask=LOGO)
+
+    # Brand
+    text = 'LOOK AT THIS'
+    font = fonts['bold'][16]
+    width = font.getsize(text)[0]
+
+    draw.text((40, 80), text, font=font, fill=(255, 255, 255))
+    draw.line([(40, 100), (width + 40, 100)], width=2, fill='#F60062')
+
+    # Icon
     if icon_filename != '' and os.path.exists('www/assets/%s' % icon_filename):
-        text_margin = (230, 40, 200, 40)
+        icon = Image.open('www/assets/%s' % icon_filename)
+        icon = icon.resize((60, 60), Image.ANTIALIAS)
 
-        mask =  Image.open('www/assets/icon-mask.png')
-        mask = mask.resize((150,150),1)
+        img.paste(icon, (BODY_MARGIN.left - 80, BODY_MARGIN.top - 40), mask=icon)
 
-        mug = Image.open('www/assets/%s' % icon_filename)
-        mug = mug.resize((150,150),1)
-        mug_xy = (
-            (CANVAS_WIDTH / 2) - mug.size[0] / 2,
-            40
-        )
+    # Title
+    text = parse.unescape(title.upper())
+    font = fonts['bold'][24]
+    width = font.getsize(text)[0]
 
-        img.paste(mug, mug_xy, mask)
+    draw.text((BODY_MARGIN.left, BODY_MARGIN.top - 40), text, font=font, fill=(255, 255, 255))
+    draw.line([(BODY_MARGIN.left, BODY_MARGIN.top - 16), (BODY_MARGIN.left + width, BODY_MARGIN.top - 16)], width=4, fill=(255, 255, 255))
 
-    max_height = CANVAS_WIDTH - (text_margin[0] + text_margin[2]) 
+    # Body
+    text = parse.unescape(strip_tags(body))
+
+    max_height = CANVAS_HEIGHT - (BODY_MARGIN.top + BODY_MARGIN.bottom) 
     size, wrap_count = optimize_text(text, max_height)
-    #font = fonts['bold'][size]
     lines = textwrap.wrap(text, wrap_count)
 
-    y = text_margin[0]
+    y = BODY_MARGIN.top
 
     for i, line in enumerate(lines):
-        x = text_margin[1] - quote_width[size]
 
-        if i > 0:
-            x += quote_width[size]
-
-        draw.text((x, y), line, font=fonts['bold'][size], fill=(255, 255, 255))
+        draw.text((BODY_MARGIN.left, y), line, font=fonts['normal'][size], fill=(255, 255, 255))
 
         y += size * 1.15
 
     y += 40
 
-    logo="""logo_xy = (
-        0,
-        CANVAS_HEIGHT - LOGO.size[1]
-    )
-
-    img.paste(LOGO, logo_xy)"""
-
     img.save('%s/%s.png' % (OUT_DIR, slug), 'PNG')
 
 def main():
     for size in xrange(SIZE_MIN, SIZE_MAX + 1, SIZE_DELTA):
-        fonts['book'][size] =  ImageFont.truetype('/Library/Fonts/Arial.ttf', size)
-        fonts['bold'][size] =  ImageFont.truetype('/Library/Fonts/Arial Bold.ttf', size)
-        fonts['serif'][size] =  ImageFont.truetype('/Library/Fonts/Arial Italic.ttf', size)
-        quote_width[size] = fonts['bold'][size].getsize(u'“')[0]
+        fonts['normal'][size] =  ImageFont.truetype('www/assets/helveticaneuelt-roman.ttf', size)
+        fonts['bold'][size] =  ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', size)
 
     slides = copytext.Copy('../../data/colors.xlsx')['content']
 
@@ -153,10 +160,9 @@ def main():
         os.mkdir(OUT_DIR)
 
     for slide in slides:
-        print slide['slug']
-
         if slide['fact_icon']:
-            render(slide['slug'], slide['fact_icon'], slide['text1'])
+            print slide['slug']
+            render(slide['slug'], slide['fact_icon'], slide['text2'], slide['text1'])
 
 if __name__ == '__main__':
     main()
