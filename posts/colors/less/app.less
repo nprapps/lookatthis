@@ -48,9 +48,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     left: 10px;
 
     p {
-        font-size: 22px;
+        font-size: 18px;
         cursor: pointer;
         color: #ccc;
+        
+        @media @screen-small-above {
+            font-size: 22px;
+        }
         
         &:hover {
            color: #fff;
@@ -288,6 +292,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                 height: 100%;
                 display: block;
                 overflow: auto;
+                padding-bottom: 55px; // to account for section nav
             }
 
         }
@@ -369,20 +374,32 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 //fact slides
 
 .slide.fact {
+
+    .full-block-content {
+        max-width: 70%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 900px;
+        }
+    }
+
     .fact-icon {
-        width: 60px;
+        width: 40px;
         margin: 0 auto;
         display: block;
+        position: relative;
+        left: -5px;
         
         @media @screen-small-above {
+            left: 0;
             margin: 0;
             float: left;
-            max-width: 80px;
+            width: 80px;
         }
     }
 
     .fact-text {
-        
+    
         @media @screen-small-above {
             margin-left: 120px;
         }
@@ -391,7 +408,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
              font-size: 16px;
              font-weight: bold;
             
-             margin: 10px 0 25px 0;
+             margin: 10px 0 10px 0;
              text-align: center;
              text-transform: uppercase;
              letter-spacing: 6px;
@@ -406,10 +423,17 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
          }
          
          p {
-             font-size: 16px;
-             letter-spacing: 2px;
-             line-height: 2;
-             margin-bottom: 20px;
+             font-size: 11px;
+             letter-spacing: 1px;
+             line-height: 1.5;
+             margin-bottom: 10px;
+             
+             @media @screen-small-above {
+                 font-size: 16px;
+                 letter-spacing: 2px;
+                 line-height: 2;
+                 margin-bottom: 20px;
+             }
          }
      
     }
