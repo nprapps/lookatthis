@@ -11,9 +11,7 @@ TO RUN:
 
 from collections import namedtuple
 import os
-import re
 import textwrap
-import HTMLParser
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -25,29 +23,40 @@ OUT_DIR = 'www/share-images'
 
 CANVAS_WIDTH = 640
 CANVAS_HEIGHT = 640
-BODY_MARGIN = Margin(top=200, right=40, bottom=200, left=200)
-TEXT_MAX_WIDTH = CANVAS_WIDTH - (BODY_MARGIN[1] + BODY_MARGIN[3])
+BODY_MARGIN = Margin(top=200, right=40, bottom=200, left=150)
+TEXT_MAX_WIDTH = CANVAS_WIDTH - (BODY_MARGIN.left + BODY_MARGIN.right)
 
-SIZE_MIN = 16
+SIZE_MIN = 16 
 SIZE_MAX = 64
 SIZE_DELTA = 4
 
-LINE_MIN = 16
+LINE_MIN = 20
 LINE_MAX = 50
 LINE_DELTA = 2 
 
 BACKGROUND = Image.open('www/assets/spectrum.jpg')\
     .resize((CANVAS_WIDTH, CANVAS_HEIGHT), Image.ANTIALIAS)
 
-LOGO = Image.open('www/assets/npr-logo.png')\
-    .resize((75, 26), Image.ANTIALIAS)
+LOGO = Image.open('www/assets/look-logo.png')
+
+FOOTER = Image.open('www/assets/color-band.png')
+
+ICONS = {}
 
 fonts = {}
 fonts['normal'] = {}
 fonts['bold'] = {}
 
 def strip_tags(text):
-    return re.sub('<[^<]+?>', '', text)
+    text = text.replace(u'<p>', u'')
+    text = text.replace('</p>', '\n\n')
+    text = text.replace('&#34;', '"')
+    text = text.replace('&quot;', '"')
+    text = text.replace('&mdash;', u'—')
+
+    text = text.replace('--', u'—')
+
+    return text
 
 def compute_size(lines, fontsize):
     font = fonts['bold'][fontsize]
@@ -95,11 +104,9 @@ def optimize_text(text, max_height):
 
     return optimal
 
-def render(slug, icon_filename, title, body):
+def render(slug, icon_filename, title, body, source):
     img = Image.new('RGB', (640, 640), (17, 17, 17))
     draw = ImageDraw.Draw(img)
-
-    parse = HTMLParser.HTMLParser()
 
     # Background
     img.paste(BACKGROUND, (0, 0))
@@ -107,23 +114,24 @@ def render(slug, icon_filename, title, body):
     # Logo
     img.paste(LOGO, (40, 40), mask=LOGO)
 
-    # Brand
-    text = 'LOOK AT THIS'
-    font = fonts['bold'][16]
-    width = font.getsize(text)[0]
-
-    draw.text((40, 80), text, font=font, fill=(255, 255, 255))
-    draw.line([(40, 100), (width + 40, 100)], width=2, fill='#F60062')
+    font = fonts['bold'][20]
+    draw.text((40, 100), '#colorfacts', font=font, fill=(255, 255, 255))
 
     # Icon
-    if icon_filename != '' and os.path.exists('www/assets/%s' % icon_filename):
-        icon = Image.open('www/assets/%s' % icon_filename)
-        icon = icon.resize((60, 60), Image.ANTIALIAS)
+    if icon_filename != '':
+        if icon_filename not in ICONS:
+            icon = Image.open('www/assets/%s' % icon_filename)
+            width = 70
+            height = int((float(icon.size[1]) / icon.size[0]) * width)
 
-        img.paste(icon, (BODY_MARGIN.left - 80, BODY_MARGIN.top - 40), mask=icon)
+            ICONS[icon_filename] = icon.resize((width, height), Image.ANTIALIAS)
+
+        icon = ICONS[icon_filename]
+
+        img.paste(icon, (40, BODY_MARGIN.top - 40), mask=icon)
 
     # Title
-    text = parse.unescape(title.upper())
+    text = title.upper()
     font = fonts['bold'][24]
     width = font.getsize(text)[0]
 
@@ -131,7 +139,7 @@ def render(slug, icon_filename, title, body):
     draw.line([(BODY_MARGIN.left, BODY_MARGIN.top - 16), (BODY_MARGIN.left + width, BODY_MARGIN.top - 16)], width=4, fill=(255, 255, 255))
 
     # Body
-    text = parse.unescape(strip_tags(body))
+    text = strip_tags(unicode(body))
 
     max_height = CANVAS_HEIGHT - (BODY_MARGIN.top + BODY_MARGIN.bottom) 
     size, wrap_count = optimize_text(text, max_height)
@@ -145,7 +153,11 @@ def render(slug, icon_filename, title, body):
 
         y += size * 1.15
 
-    y += 40
+    # Footer
+    img.paste(FOOTER, (0, CANVAS_HEIGHT - 35))
+
+    font = fonts['bold'][16]
+    draw.text((490, 618), 'http://n.pr/colors', font=font, fill=(255, 255, 255))
 
     img.save('%s/%s.png' % (OUT_DIR, slug), 'PNG')
 
@@ -160,9 +172,9 @@ def main():
         os.mkdir(OUT_DIR)
 
     for slide in slides:
-        if slide['fact_icon']:
+        if slide['template'] == 'fact':
             print slide['slug']
-            render(slide['slug'], slide['fact_icon'], slide['text2'], slide['text1'])
+            render(slide['slug'], slide['fact_icon'], slide['text2'], slide['text1'], slide['text3'])
 
 if __name__ == '__main__':
     main()
