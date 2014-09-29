@@ -439,6 +439,73 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
+//titlecard
+.titlecard {
+   
+   
+   .full-block-content {
+        max-width: 70%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 900px;
+        }
+    }
+    
+    
+    .full-block-cell {
+        text-align: center;
+        color: #fff;
+
+         h2 {
+             font-size: 12px;
+             font-weight: bold;
+             border-bottom: 3px solid #fff;
+             padding-bottom: 5px;
+             display: inline-block;
+             text-transform: uppercase;
+             letter-spacing: 6px;
+             padding-left: 6px;
+             
+             @media @screen-small-above {
+                 font-size: 16px;
+                 border-bottom: 4px solid #fff;
+                 letter-spacing: 3px;
+                 padding-left: 3px;
+             }
+         }
+         
+         p {
+             font-family: 'Dancing Script', cursive, serif;
+             margin: 10px auto;
+             font-size: 24px;
+             line-height: 1.1;
+             text-align: center;
+             
+             @media @screen-small-above {
+                 margin: 30px auto;
+                 font-size: 55px;
+                 line-height: 1.1;
+                 text-align: justify;
+             }
+         }
+
+         h5 {
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            
+            @media @screen-small-above {
+                 margin: 30px auto;
+                 font-size: 55px;
+                 line-height: 1.1;
+                 text-align: justify;
+             }
+        }
+    }
+}
+
+
+
 // @media only screen and (orientation:portrait){
 //     body {
 //         -webkit-transform: rotate(90deg);
