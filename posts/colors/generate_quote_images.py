@@ -11,6 +11,7 @@ TO RUN:
 
 from collections import namedtuple
 import os
+import re
 import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
@@ -57,8 +58,16 @@ def strip_tags(text):
     text = text.replace('&#34;', '"')
     text = text.replace('&quot;', '"')
     text = text.replace('&mdash;', u'—')
-
+    
     text = text.replace('--', u'—')
+    
+    # Smart double quotes
+    text = re.sub(r'([a-zA-Z0-9.,?!;:\'\"])"', u'”', text)
+    text = text.replace('"', u'“')
+
+    # Smart single quotes
+    text = re.sub(r"([a-zA-Z0-9.,?!;:\"\'])'", u'’', text)
+    text = text.replace("'", u'‘')
 
     return text
 
