@@ -108,7 +108,12 @@ def render(slug, icon_filename, title, body):
     img.paste(LOGO, (40, 40), mask=LOGO)
 
     # Brand
-    draw.text((40, 80), 'LOOK AT THIS', font=fonts['bold'][16], fill=(255, 255, 255))
+    text = 'LOOK AT THIS'
+    font = fonts['bold'][16]
+    width = font.getsize(text)[0]
+
+    draw.text((40, 80), text, font=font, fill=(255, 255, 255))
+    draw.line([(40, 100), (width + 40, 100)], width=2, fill='#F60062')
 
     # Icon
     if icon_filename != '' and os.path.exists('www/assets/%s' % icon_filename):
@@ -120,9 +125,10 @@ def render(slug, icon_filename, title, body):
     # Title
     text = parse.unescape(title.upper())
     font = fonts['bold'][24]
-    width, height = font.getsize(text)
+    width = font.getsize(text)[0]
 
     draw.text((BODY_MARGIN.left, BODY_MARGIN.top - 40), text, font=font, fill=(255, 255, 255))
+    draw.line([(BODY_MARGIN.left, BODY_MARGIN.top - 16), (BODY_MARGIN.left + width, BODY_MARGIN.top - 16)], width=4, fill=(255, 255, 255))
 
     # Body
     text = parse.unescape(strip_tags(body))
