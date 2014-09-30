@@ -292,7 +292,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                 height: 100%;
                 display: block;
                 overflow: auto;
-                padding-bottom: 55px; // to account for section nav
+                padding-bottom: 50px; // to account for section nav
             }
 
         }
@@ -339,9 +339,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
     right: 15px;
-    bottom: 5px;
+    bottom: 60px;
     text-align: right;
-    font-size: 8px;
+    font-size: 10px;
     font-style: italic;
     color: #fff;
     padding-right: 3px;
@@ -375,6 +375,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .slide.fact {
 
+    .full-block {
+        background: rgba(0,0,0,0.4);
+    }
+
     .full-block-content {
         max-width: 70%;
         margin: 0 auto;
@@ -402,6 +406,18 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     
         @media @screen-small-above {
             margin-left: 120px;
+        }
+        
+        a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid #999;
+            font-weight: bold;
+            padding-bottom: 5px;
+            
+            &:hover {
+               border-bottom: 2px solid #fff;
+            }
         }
         
         h3 {
