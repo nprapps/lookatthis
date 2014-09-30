@@ -1,5 +1,9 @@
 @import "./lib/font-awesome/font-awesome";
 
+#up-next {
+    .container-fluid {max-width: 1000px;}
+}
+
 //up-next
 .next-post {
     margin-left: 40px;
@@ -140,7 +144,7 @@
                     color: #f60062;
                 }
 
-                i{font-size: 32px;}
+                i {font-size: 32px;}
 
             }
         }
@@ -148,15 +152,16 @@
 
     .up-next {
         position: relative;
-        background-color: #f60062;
+        background-color: #000;
         height: 150px;
         overflow: hidden;
         text-align: center;
         cursor: pointer;
 
         img {
-             .transition(all .3s ease-in);
              width: 100%;
+             opacity: .5;
+             border: 1px solid #666;
         }
 
 
@@ -170,10 +175,6 @@
 
                 h2, h3, p {
                     text-shadow: none;
-                }
-
-                img {
-                  opacity: .3;
                 }
 
             }
@@ -223,7 +224,7 @@
             padding-left: 20px;
 
             @media @screen-small-above {
-                top: 38%;
+                top: 30%;
             }
 
         }

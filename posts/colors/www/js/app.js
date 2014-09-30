@@ -336,7 +336,7 @@ var onSlideClick = function(e) {
 }
 
 var onNextPostClick = function(e) {
-    window.top.location = NEXT_POST_URL;
+    //window.top.location = NEXT_POST_URL;
 
     trackEvent([EVENT_CATEGORY, 'next-post']);
 
