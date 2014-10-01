@@ -294,7 +294,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                 height: 100%;
                 display: block;
                 overflow: auto;
-                padding-bottom: 50px; // to account for section nav
             }
 
         }
@@ -304,7 +303,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .titlecard-nav {
     
     .section-navigation {display: none;}
-    .section .slides .slidesContainer .slide {padding-bottom: 0;}
 }
 
 //full-bleed background images on sections and slides
@@ -337,6 +335,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         max-width: 900px;
         margin: 0 auto;
         padding: 20px;
+        padding-bottom: 50px; // to account for section nav
         @media @screen-small-above {
              padding: 20px 100px;
         }
@@ -443,8 +442,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
     
     .share-fact {
-        
-        
+ 
         @media @screen-small-above {
             border-top: 1px solid #fff;
             margin-top: 10px;
@@ -464,9 +462,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             @media @screen-small-above {
                  display: block;
                  font-size: 11px;
-                 color: #ccc;
+                 color: #fff;
                  clear: both;
                  padding-top: 10px;
+                 font-weight: normal;
              }
         }
         
@@ -559,7 +558,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
          h2 {
             font-family: 'Dancing Script', cursive, serif;
-             margin: 50px auto;
+             margin: 30px auto;
              font-size: 72px;
              line-height: 1.1;
              text-align: center;
@@ -580,6 +579,34 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                  text-align: justify;
                  font-weight: bold;
              }
+        }
+    }
+}
+
+.slide.fact.color-quote {
+
+    .full-block {
+        background: rgba(0,0,0,0.1);
+    }
+
+    .fact-text {
+        p {
+             font-family: 'Dancing Script', cursive, serif;
+             letter-spacing: 0;
+             font-size: 32px;
+             line-height: 1;
+             text-align: center;
+             
+             
+             @media @screen-small-above {
+                 font-size: 45px;
+             }
+         }
+         
+        h5 {
+            margin: 30px auto;
+            text-align: center;
+            max-width: 300px;
         }
     }
 }
