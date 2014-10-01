@@ -129,6 +129,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
+
+
 .primary-navigation {
     /*
 
@@ -299,6 +301,12 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
+.titlecard-nav {
+    
+    .section-navigation {display: none;}
+    .section .slides .slidesContainer .slide {padding-bottom: 0;}
+}
+
 //full-bleed background images on sections and slides
 .section, .slide {
     .background-size(cover);
@@ -440,7 +448,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         @media @screen-small-above {
             border-top: 1px solid #fff;
             margin-top: 10px;
-            padding-top: 35px;
+            padding-top: 25px;
         }
         
         h4 {
@@ -550,35 +558,15 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         color: #fff;
 
          h2 {
-             font-size: 12px;
-             font-weight: bold;
-             border-bottom: 3px solid #fff;
-             padding-bottom: 5px;
-             display: inline-block;
-             text-transform: uppercase;
-             letter-spacing: 6px;
-             padding-left: 6px;
-             
-             @media @screen-small-above {
-                 font-size: 16px;
-                 border-bottom: 4px solid #fff;
-                 letter-spacing: 3px;
-                 padding-left: 3px;
-             }
-         }
-         
-         p {
-             font-family: 'Dancing Script', cursive, serif;
-             margin: 10px auto;
-             font-size: 24px;
+            font-family: 'Dancing Script', cursive, serif;
+             margin: 50px auto;
+             font-size: 72px;
              line-height: 1.1;
              text-align: center;
              
              @media @screen-small-above {
-                 margin: 30px auto;
-                 font-size: 55px;
-                 line-height: 1.1;
-                 text-align: justify;
+                 font-size: 150px;
+
              }
          }
 
