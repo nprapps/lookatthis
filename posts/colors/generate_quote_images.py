@@ -10,6 +10,7 @@ TO RUN:
 """
 
 from collections import namedtuple
+from HTMLParser import HTMLParser
 import os
 import re
 import textwrap
@@ -27,10 +28,6 @@ CANVAS_HEIGHT = 640
 BODY_MARGIN = Margin(top=200, right=40, bottom=75, left=150)
 TEXT_MAX_WIDTH = CANVAS_WIDTH - (BODY_MARGIN.left + BODY_MARGIN.right)
 
-SIZE_MIN = 12
-SIZE_MAX = 24 
-SIZE_DELTA = 2 
-
 LINE_MIN = 16 
 LINE_MAX = 50
 LINE_DELTA = 2 
@@ -42,25 +39,44 @@ LOGO = Image.open('www/assets/look-logo.png')
 
 FOOTER = Image.open('www/assets/color-band.png')
 
+BODY_FONT_SIZE = 24
+BODY_FONT = ImageFont.truetype('www/assets/helveticaneuelt-roman.ttf', BODY_FONT_SIZE)
+TITLE_FONT_SIZE = 24
+TITLE_FONT = ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', TITLE_FONT_SIZE)
+LOGO_FONT_SIZE = 20
+LOGO_FONT = ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', LOGO_FONT_SIZE)
+SOURCE_FONT_SIZE = 12
+SOURCE_FONT = ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', SOURCE_FONT_SIZE)
+FOOTER_FONT_SIZE = 16
+FOOTER_FONT = ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', FOOTER_FONT_SIZE)
+
 ICONS = {}
 
 fonts = {}
 fonts['normal'] = {}
 fonts['bold'] = {}
 
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.fed = []
+
+    def handle_data(self, d):
+        self.fed.append(d)
+    
+    def get_data(self):
+        return ''.join(self.fed)
+
 def strip_tags(text):
-    text = text.replace('<p>', '')
-    text = text.replace('</p>', '')
-    text = text.replace('<i>', '')
-    text = text.replace('</i>', '')
-    text = text.replace('<em>', '')
-    text = text.replace('</em>', '')
-    text = text.replace('&#34;', '"')
-    text = text.replace('&quot;', '"')
-    text = text.replace('&mdash;', u'—')
-    
+    text = text.replace('</p>', 'GRAFBREAK')
+    text = text.replace('<br>', 'LINEBREAK')
+
+    s = MLStripper()
+    s.feed(text)
+    text = s.get_data()
+
     text = text.replace('--', u'—')
-    
+
     # Smart double quotes
     text = re.sub(r'([a-zA-Z0-9.,?!;:\'\"])"', u'”', text)
     text = text.replace('"', u'“')
@@ -69,15 +85,14 @@ def strip_tags(text):
     text = re.sub(r"([a-zA-Z0-9.,?!;:\"\'])'", u'’', text)
     text = text.replace("'", u'‘')
 
-    return text
+    return text 
 
-def compute_size(lines, fontsize):
-    font = fonts['bold'][fontsize]
+def compute_size(lines):
     width = 0
     height = 0
 
     for line in lines:
-        x, y = font.getsize(line)
+        x, y = BODY_FONT.getsize(line)
 
         width = max((width, x))
         height += y
@@ -87,32 +102,29 @@ def compute_size(lines, fontsize):
 def optimize_text(text, max_height):
     permutations = {}
     
-    for size in range(16, 24, 2):
-        for wrap_count in xrange(LINE_MIN, LINE_MAX + 1, LINE_DELTA):
-            lines = textwrap.wrap(text, wrap_count, replace_whitespace=False, drop_whitespace=False)
+    for wrap_count in xrange(LINE_MIN, LINE_MAX + 1, LINE_DELTA):
+        lines = textwrap.wrap(text, wrap_count)
 
-            width, height = compute_size(lines, size)
-            height += height / len(lines) * 3
+        width, height = compute_size(lines)
+        height += height / len(lines) * 3
 
-            # Throw away any that exceed canvas space
-            if width > TEXT_MAX_WIDTH:
-                continue
+        # Throw away any that exceed canvas space
+        if width > TEXT_MAX_WIDTH:
+            continue
 
-            if height > max_height:
-                continue
+        if height > max_height:
+            continue
 
-            permutations[(size, wrap_count)] = (width, height)
+        permutations[wrap_count] = (width, height)
 
-    optimal = (0, 0)
+    optimal = 0
 
     # Find the largest font size that's in the butter zone
     for k, v in permutations.items():
-        size, wrap_count = k
+        wrap_count = k
         width, height = v
 
-        if size > optimal[0]:
-            optimal = k
-        elif size == optimal[0] and wrap_count > optimal[1]:
+        if wrap_count > optimal:
             optimal = k
 
     return optimal
@@ -126,9 +138,7 @@ def render(slug, icon_filename, title, body, source):
 
     # Logo
     img.paste(LOGO, (40, 40), mask=LOGO)
-
-    font = fonts['bold'][20]
-    draw.text((40, 100), '#colorfacts', font=font, fill=(255, 255, 255))
+    draw.text((40, 100), '#colorfacts', font=LOGO_FONT, fill=(255, 255, 255))
 
     # Icon
     if icon_filename != '':
@@ -141,62 +151,67 @@ def render(slug, icon_filename, title, body, source):
 
         icon = ICONS[icon_filename]
 
-        img.paste(icon, (40, BODY_MARGIN.top - 50), mask=icon)
+        try:
+            img.paste(icon, (40, BODY_MARGIN.top - 50), mask=icon)
+        except ValueError:
+            print icon_filename
 
     # Title
     text = title.upper()
-    font = fonts['bold'][24]
-    width = font.getsize(text)[0]
+    width = TITLE_FONT.getsize(text)[0]
 
-    draw.text((BODY_MARGIN.left, BODY_MARGIN.top - 50), text, font=font, fill=(255, 255, 255))
+    draw.text((BODY_MARGIN.left, BODY_MARGIN.top - 50), text, font=TITLE_FONT, fill=(255, 255, 255))
     draw.line([(BODY_MARGIN.left, BODY_MARGIN.top - 24), (BODY_MARGIN.left + width, BODY_MARGIN.top - 24)], width=4, fill=(255, 255, 255))
 
     # Body
     text = strip_tags(unicode(body))
-    text = text.replace('\n\n', 'SPLITHERE')
 
     max_height = CANVAS_HEIGHT - (BODY_MARGIN.top + BODY_MARGIN.bottom) 
-    size, wrap_count = optimize_text(text, max_height)
+    wrap_count = optimize_text(text, max_height)
     lines = textwrap.wrap(text, wrap_count)
 
     out_lines = []
 
     for line in lines:
-        if 'SPLITHERE' in line:
-            parts = line.split('SPLITHERE')
-            out_lines.extend([parts[0], '', parts[1]])
+        if 'GRAFBREAK' in line:
+            parts = line.split('GRAFBREAK')
+            out_lines.append(parts[0].rstrip())
+
+            if len(parts) > 1:
+                out_lines.append('')
+                out_lines.append(parts[1].lstrip())
+        elif 'LINEBREAK' in line:
+            parts = line.split('LINEBREAK')
+            out_lines.append(parts[0].rstrip())
+
+            if len(parts) > 1:
+                out_lines.append(parts[1].lstrip())
         else:
             out_lines.append(line)
 
     y = BODY_MARGIN.top
 
     for i, line in enumerate(out_lines):
-        draw.text((BODY_MARGIN.left, y), line, font=fonts['normal'][size], fill=(255, 255, 255))
+        draw.text((BODY_MARGIN.left, y), line, font=BODY_FONT, fill=(255, 255, 255))
 
-        y += size * 1.25
+        y += BODY_FONT_SIZE * 1.25
 
     # Source
     if source:
-        text = 'Source: %s' % source
-        font = fonts['bold'][12]
-        width = font.getsize(text)[0]
-        draw.text((CANVAS_WIDTH - (15 + width), 585), text, font=font, fill=(255, 255, 255))
+        text = strip_tags(source)
+        width = SOURCE_FONT.getsize(text)[0]
+        draw.text((CANVAS_WIDTH - (15 + width), 585), text, font=SOURCE_FONT, fill=(255, 255, 255))
 
     # Footer
     img.paste(FOOTER, (0, CANVAS_HEIGHT - 35))
 
     text = 'http://n.pr/colors'
-    font = fonts['bold'][16]
-    width = font.getsize(text)[0]
-    draw.text((CANVAS_WIDTH - (15 + width), 618), text, font=font, fill=(255, 255, 255))
+    width = FOOTER_FONT.getsize(text)[0]
+    draw.text((CANVAS_WIDTH - (15 + width), 618), text, font=FOOTER_FONT, fill=(255, 255, 255))
 
     img.save('%s/%s.png' % (OUT_DIR, slug), 'PNG')
 
 def main():
-    for size in xrange(SIZE_MIN, SIZE_MAX + 1, SIZE_DELTA):
-        fonts['normal'][size] =  ImageFont.truetype('www/assets/helveticaneuelt-roman.ttf', size)
-        fonts['bold'][size] =  ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', size)
-
     slides = copytext.Copy('../../data/colors.xlsx')['content']
 
     if not os.path.exists(OUT_DIR):
