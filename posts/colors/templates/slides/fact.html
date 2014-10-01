@@ -19,21 +19,30 @@
                     
                     
                     <div class="share-fact">
-                        <h4>Collect and share</h4>
+                        
+                        
+                        <ul>
+                            <li class="share-image"><i class="fa fa-picture-o"></i> image</li>
+                            <li class="share-fb"><i class="fa fa-facebook"></i> share</li>
+                        </ul>
+                        
+                        <h6>Grab an image of this #colorfact and impress your friends with your color knowledge.</h6>
                     </div><!--/share-fact-->
                 </div>
                 
                 
             
             </div><!--full-block-content-->
+            
+            <div class="credit">
+                <p>{{ row.text3|smarty }}</p>
+            </div>
         </div><!--full-block-cell-->
         
         
 
         {% if row.media %}
-            <div class="credit">
-                {{ row.text3|smarty }}
-            </div>
+            
         {% endif %}
     </div><!--full-block-->
 </div><!--slide-->
