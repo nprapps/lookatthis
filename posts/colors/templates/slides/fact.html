@@ -1,4 +1,4 @@
-<div class="slide fact {% if row.extra_class %} {{ row.extra_class }} {% endif %}" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+<div class="slide fact {% if row.extra_class %} {{ row.extra_class }} {% endif %}" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %} {% if row.section %}data-section="{{ row.section }}"{% endif %}>
 
     <div class="text full-block">
         <div class="full-block-cell">
