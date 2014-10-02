@@ -39,7 +39,7 @@ LOGO = Image.open('www/assets/look-logo.png')
 
 FOOTER = Image.open('www/assets/color-band.png')
 
-BODY_FONT_SIZE = 24
+BODY_FONT_SIZE = 36
 BODY_FONT = ImageFont.truetype('www/assets/helveticaneuelt-roman.ttf', BODY_FONT_SIZE)
 TITLE_FONT_SIZE = 24
 TITLE_FONT = ImageFont.truetype('www/assets/helveticaneuelt-bd.ttf', TITLE_FONT_SIZE)
@@ -68,9 +68,6 @@ class MLStripper(HTMLParser):
         return ''.join(self.fed)
 
 def strip_tags(text):
-    text = text.replace('</p>', 'GRAFBREAK')
-    text = text.replace('<br>', 'LINEBREAK')
-
     s = MLStripper()
     s.feed(text)
     text = s.get_data()
@@ -129,7 +126,7 @@ def optimize_text(text, max_height):
 
     return optimal
 
-def render(slug, icon_filename, title, body, source):
+def render(slug, icon_filename, title, body):
     img = Image.new('RGB', (640, 640), (17, 17, 17))
     draw = ImageDraw.Draw(img)
 
@@ -170,37 +167,12 @@ def render(slug, icon_filename, title, body, source):
     wrap_count = optimize_text(text, max_height)
     lines = textwrap.wrap(text, wrap_count)
 
-    out_lines = []
-
-    for line in lines:
-        if 'GRAFBREAK' in line:
-            parts = line.split('GRAFBREAK')
-            out_lines.append(parts[0].rstrip())
-
-            if len(parts) > 1:
-                out_lines.append('')
-                out_lines.append(parts[1].lstrip())
-        elif 'LINEBREAK' in line:
-            parts = line.split('LINEBREAK')
-            out_lines.append(parts[0].rstrip())
-
-            if len(parts) > 1:
-                out_lines.append(parts[1].lstrip())
-        else:
-            out_lines.append(line)
-
     y = BODY_MARGIN.top
 
-    for i, line in enumerate(out_lines):
+    for i, line in enumerate(lines):
         draw.text((BODY_MARGIN.left, y), line, font=BODY_FONT, fill=(255, 255, 255))
 
         y += BODY_FONT_SIZE * 1.25
-
-    # Source
-    if source:
-        text = strip_tags(source)
-        width = SOURCE_FONT.getsize(text)[0]
-        draw.text((CANVAS_WIDTH - (15 + width), 585), text, font=SOURCE_FONT, fill=(255, 255, 255))
 
     # Footer
     img.paste(FOOTER, (0, CANVAS_HEIGHT - 35))
@@ -218,9 +190,9 @@ def main():
         os.mkdir(OUT_DIR)
 
     for slide in slides:
-        if slide['template'] == 'fact':
+        if slide['share_text']:
             print slide['slug']
-            render(slide['slug'], slide['fact_icon'], slide['text2'], slide['text1'], slide['text3'])
+            render(slide['slug'], slide['fact_icon'], slide['text2'], slide['share_text'])
 
 if __name__ == '__main__':
     main()
