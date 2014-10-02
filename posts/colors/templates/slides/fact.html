@@ -19,11 +19,17 @@
                     
                     
                     <div class="share-fact">
-                        
-                        
                         <ul>
-                            <li class="share-image"><i class="fa fa-picture-o"></i> shareable #colorfact image</li>
-                            <li class="share-fb"><i class="fa fa-facebook"></i> share</li>
+                            <li class="share-image">
+                                <a href="{{S3_BASE_URL}}/posts/{{DEPLOY_SLUG}}/assets/share-images/{{ row.slug }}.png" target="_blank">
+                                    <i class="fa fa-picture-o"></i> shareable #colorfact image
+                                </a>
+                            </li>
+                            <li class="share-fb">
+                                <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.post_metadata.facebook_app_id }}&amp;link={{ COPY.post_metadata.share_url|urlencode }}&amp;name={{ COPY.post_metadata.facebook_title|urlencode }}&amp;picture={{ S3_BASE_URL|urlencode }}%2posts%2{{DEPLOY_SLUG}}%2assets%2share-images%2{{ row.slug }}.png&amp;redirect_uri={{ COPY.post_metadata.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'image fact']);">
+                                <i class="fa fa-facebook"></i> share
+                                </a>
+                            </li>
                         </ul>
                         
                     </div><!--/share-fact-->
