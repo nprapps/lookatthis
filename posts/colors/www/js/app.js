@@ -203,9 +203,11 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('final-slide');
+        
 
         //$primaryNav.css('opacity', '1');
     } else {
@@ -216,9 +218,9 @@ var showNavigation = function() {
             animateArrows();
         }
 
-        $('body').removeClass('titlecard-nav');
+        $('body').removeClass('titlecard-nav final-slide');
+        
 
-        //$primaryNav.css('opacity', '1');
     }
 }
 

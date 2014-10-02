@@ -79,6 +79,14 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     left: 0;
     width: 100%;
     
+    .final-slide & {
+        display: none;
+    }
+    
+    .titlecard-nav & {
+        display: none;
+    }
+    
     
     li {
         height: 30px;
@@ -139,19 +147,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 
 .primary-navigation {
-    /*
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-
-    .touch & {
-            background-color: rgba(0,0,0,0.8);
-            height: 60px;
-        }
-
-        */
 
     .controlArrow {
         position: fixed;
@@ -305,11 +300,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
         }
     }
-}
-
-.titlecard-nav {
-    
-    .section-navigation {display: none;}
 }
 
 //full-bleed background images on sections and slides
