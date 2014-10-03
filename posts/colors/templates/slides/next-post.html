@@ -8,23 +8,25 @@
 
     <div class="primary-column">
         <div class="previous-post">
+            <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
+            
             <div class="looked-at">
                 <p>You just looked at</p>
                 <h2>{{ COPY.post_metadata.title|smarty }}</h2>
             </div><!-- /looked-at -->
             <img src="assets/{{ COPY.post_metadata.thumbnail_photo }}">
-            
-            <div class="share">
-                <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-                    <div class="share-button"></div>
-                    <h5>
-                        <i class="fa fa-share"></i>
-                        Share
-                    </h5>
-                </a>
-            </div>
-        </div>
-    </div>
+                
+            <h5>
+                <i class="fa fa-share"></i>
+                Share
+            </h5>
+                
+
+            </a><!-- share -->
+        </div><!-- previous post -->
+    </div><!-- primary column -->
+    
+    
     <div class="secondary-column">
     <a href="{{ row.text3 }}" target="_blank">
         <div class="up-next">
@@ -33,15 +35,7 @@
                 <div class="up-next-caption">
                         <p><span>Previously on</span> <b>Look At This</b></p>
                         <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
-                        <!--<h3><em>{{ row.text2|smarty }}</em></h3>-->
                 </div>
-
-                <div class="next-button-wrapper">
-                    <div class="next-button">
-                        <i class="fa fa-chevron-right"></i>
-                    </div>
-                </div>
-            </div><!-- /next-button-wrapper -->
         </div>
     </a>
     </div>

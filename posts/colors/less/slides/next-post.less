@@ -13,24 +13,19 @@
         }
     }
 
-
     .row {margin: 0;}
 
     .primary-column {
-        .make-sm-column(4);
+        .make-sm-column(5);
     }
 
     .secondary-column {
-        .make-sm-column(8);
+        .make-sm-column(7);
     }
 
     a {
         color: #fff;
         text-decoration: none;
-
-        &:hover {
-            //color: #f60062;
-        }
     }
 
     img {
@@ -46,21 +41,26 @@
         margin-top: 20px;
         background-color: #f60062;
         margin-bottom: 10px;
-
+        cursor: pointer;
+        
         img {
-            opacity: .3;
-            width: 100px;
+             width: 100px;
+             opacity: .5;
+        }
+        
+        &:hover {
+           img {
+               opacity: 1;
+           }
         }
 
         @media @screen-small-above {
             background-color: transparent;
             margin-top: 0;
             margin-left: 40px;
-            padding-top: 40%;
             margin-bottom: 0;
 
             img {
-                opacity: 1;
                 width: 100%;
             }
         }
@@ -69,16 +69,19 @@
             position: absolute;
             top: 20px;
             left: 120px;
+            text-shadow: 2px 2px 5px #555;
+            z-index: 1;
 
             @media @screen-small-above {
-                position: static;
+                top: 20px;
+                left: 0;
+                width: 100%;
             }
         }
 
         h2 {
-            text-transform: uppercase;
+            font-family: 'Dancing Script', cursive, serif;
             font-size: 14px;
-            font-weight: bold;
             margin: 0 0 20px 0;
             padding: 0;
 
@@ -87,22 +90,21 @@
             }
 
             @media @screen-medium-above {
-               font-size: 24px;
+               font-size: 18px;
             }
         }
 
         p {
-            font-size: 12px;
+            font-size: 11px;
             margin: 0 0 5px 0;
             padding: 0;
 
             @media @screen-small-above {
                 text-align: center;
+                text-transform: uppercase;
             }
 
-            @media @screen-medium-above {
-               font-size: 14px;
-            }
+            
 
         }
 
@@ -110,12 +112,13 @@
             font-size: 14px;
             text-transform: uppercase;
             text-align: center;
-            margin-top: 0;
-            cursor: pointer;
+            margin: 0;
+            padding: 10px;
             font-weight: bold;
             position: absolute;
             top: 30px;
             left: 20px;
+            text-shadow: 2px 2px 5px #555;
 
 
             i {
@@ -125,20 +128,12 @@
             }
 
             @media @screen-small-above {
-                margin-top: 20px;
-                position: static;
+                top: auto;
+                bottom: 10px;
+                left: 37%;
             }
 
-            @media @screen-medium-above {
-                font-size: 18px;
-
-                &:hover {
-                    color: #f60062;
-                }
-
-                i {font-size: 32px;}
-
-            }
+            
         }
     }
 
@@ -153,8 +148,12 @@
         img {
              width: 100%;
              opacity: .5;
-             border: 1px solid #666;
         }
+        
+        &:hover {
+            img {opacity: 1;}
+        }
+        
 
 
 
@@ -166,31 +165,19 @@
             font-size: 16px;
             font-weight: bold;
             text-transform: uppercase;
-            //padding-right: 90px;
-            margin: 0;
+            margin: 20% 0 0 0;
             text-shadow: 2px 2px 5px #000;
-             .transition(all .3s ease-in);
-
+ 
              @media @screen-small-above {
-                font-size: 30px;
-             }
-
-             @media @screen-medium-above {
-                 font-size: 50px;
+                font-size: 32px;
              }
         }
 
 
         p {
-            font-size: 11px;
-            margin: 0;
-            padding: 0 0 0 0;
-            text-shadow: 2px 2px 5px #000;
-            .transition(all .3s ease-in);
+            
 
-             @media @screen-small-above {
-                font-size: 13px;
-             }
+             
         }
 
         .up-next-caption-wrapper {
@@ -201,65 +188,38 @@
             padding-left: 20px;
             
             p {
-                margin-bottom: 100px;
+                
+                margin: 0;
+                padding: 0 0 0 0;
+                text-shadow: 2px 2px 5px #000;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+                
+                
+                 
                 span {
                     display: block;
                     padding-bottom: 5px;
+                    font-size: 9px;
+                    
+                    @media @screen-small-above {
+                        font-size: 11px;
+                     }
                 }
                 b {
-                    text-transform: uppercase;
+                    
                     font-weight: bold;
                     margin-bottom: 10px;
                     padding-bottom: 5px;
                     border-bottom: 3px solid #f60062;
+                    font-size: 13px;
+                    @media @screen-small-above {
+                        font-size: 14px;
+                     }
                 }
             }
         }
 
-        .next-button-wrapper {
-            position: absolute;
-            top: -20px;
-            right: 0;
-            display: none;
-
-
-            @media @screen-small-above {
-                top: 20%;
-                right: 20px;
-            }
-
-            @media @screen-medium-above {
-                 top: 34%;
-            }
-
-            .next-button {
-                position: absolute;
-                top: 0;
-                right: 0;
-                background-color: #f60062;
-                padding: 13px 15px 10px 15px;
-                height: 150px;
-
-                i {
-                    font-size: 20px;
-                    margin-top: 50px;
-                }
-
-                @media @screen-small-above {
-                    height: auto;
-
-                    i {margin-top: 0;}
-                }
-
-                @media @screen-medium-above {
-                    padding: 18px 20px 15px 20px;
-
-                    i {
-                        font-size: 30px;
-                    }
-                }
-            }
-        }
 
 
     }
