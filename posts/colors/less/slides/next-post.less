@@ -1,23 +1,16 @@
 @import "./lib/font-awesome/font-awesome";
 
-#up-next {
-    .container-fluid {max-width: 1000px;}
-}
-
 //up-next
 .next-post {
-    margin-left: 40px;
-
-    @media @screen-small-above {
-        width: 90%;
-        max-width: 1500px;
+    
+    .container-fluid {
+        padding: 20px;
+        max-width: 1000px;
         margin: 0 auto;
-        padding-top: 20%;
-    }
-
-    @media @screen-medium-above {
-       padding-top: 3%;
-       width: 80%;
+        
+        @media @screen-small-above {
+            padding: 20px 100px;
+        }
     }
 
 
@@ -99,7 +92,6 @@
         }
 
         p {
-            font-family: georgia, serif;
             font-size: 12px;
             margin: 0 0 5px 0;
             padding: 0;
@@ -170,16 +162,6 @@
             height: auto;
         }
 
-       @media @screen-medium-above {
-            &:hover {
-
-                h2, h3, p {
-                    text-shadow: none;
-                }
-
-            }
-        }
-
         h2 {
             font-size: 16px;
             font-weight: bold;
@@ -199,20 +181,15 @@
         }
 
 
-        p,h3 {
-            font-family: georgia, serif;
+        p {
             font-size: 11px;
             margin: 0;
             padding: 0 0 0 0;
             text-shadow: 2px 2px 5px #000;
             .transition(all .3s ease-in);
 
-             @media @screen-medium-above {
+             @media @screen-small-above {
                 font-size: 13px;
-             }
-
-             @media @screen-medium-above {
-               font-size: 20px;
              }
         }
 
@@ -222,11 +199,21 @@
             left: 0;
             width: 100%;
             padding-left: 20px;
-
-            @media @screen-small-above {
-                top: 30%;
+            
+            p {
+                margin-bottom: 100px;
+                span {
+                    display: block;
+                    padding-bottom: 5px;
+                }
+                b {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    padding-bottom: 5px;
+                    border-bottom: 3px solid #f60062;
+                }
             }
-
         }
 
         .next-button-wrapper {

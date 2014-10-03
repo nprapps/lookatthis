@@ -1,14 +1,19 @@
-<div class="slide" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
-    <div class="container-fluid next-post">
+<div class="slide next-post" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+
+<div class="text full-block">
+<div class="full-block-cell">
+
+    <div class="container-fluid">
     <div class="row">
 
     <div class="primary-column">
         <div class="previous-post">
             <div class="looked-at">
-                <p><em>You just looked at</em></p>
+                <p>You just looked at</p>
                 <h2>{{ COPY.post_metadata.title|smarty }}</h2>
             </div><!-- /looked-at -->
             <img src="assets/{{ COPY.post_metadata.thumbnail_photo }}">
+            
             <div class="share">
                 <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
                     <div class="share-button"></div>
@@ -26,9 +31,9 @@
             <img src="assets/{{ row.media }}">
             <div class="up-next-caption-wrapper">
                 <div class="up-next-caption">
-                        <p><em>Previously on Look At This</em></p>
+                        <p><span>Previously on</span> <b>Look At This</b></p>
                         <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
-                        <h3><em>{{ row.text2|smarty }}</em></h3>
+                        <!--<h3><em>{{ row.text2|smarty }}</em></h3>-->
                 </div>
 
                 <div class="next-button-wrapper">
@@ -42,6 +47,10 @@
     </div>
     </div><!-- row -->
     </div><!-- container -->
+    
+</div><!--full-block-cell-->
+</div><!--full-block-->
+
 </div><!-- slide -->
 
 <script type="text/javascript">
