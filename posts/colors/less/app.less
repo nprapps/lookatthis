@@ -361,7 +361,50 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     
 }
 
+.slide.quote {
 
+    .full-block-content {
+        max-width: 70%;
+        margin: 80px auto 0 auto;
+        @media @screen-small-above {
+            max-width: 1000px;
+        }
+    }
+
+    
+    p {
+         font-family: 'Dancing Script', cursive, serif;
+         letter-spacing: 0;
+         font-size: 32px;
+         line-height: 1;
+         margin: 0;
+         text-align: center;
+         
+         
+         @media @screen-small-above {
+             font-size: 60px;
+         }
+     }
+     
+    h5 {
+        margin: 30px auto;
+        line-height: 1.5;
+        font-weight: bold;
+        font-size: 20px;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+}
+
+#greenquote {
+
+    .fact-text {
+        p {
+            font-size: 36px;
+        }
+    }
+    
+}
 
 
 //fact slides
@@ -556,6 +599,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
    .full-block-content {
         max-width: 70%;
         margin: 0 auto;
+        padding: 0 100px;
         @media @screen-small-above {
             max-width: 900px;
         }
@@ -568,7 +612,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
          h2 {
             font-family: 'Dancing Script', cursive, serif;
-             margin: 30px auto;
+             margin: 0 auto;
              font-size: 72px;
              line-height: 1.1;
              text-align: center;
@@ -583,8 +627,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             font-size: 13px;
             margin: 0;
             letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
             @media @screen-small-above {
-                font-size: 24px;
+                font-size: 16px;
                 margin-top: 20px;
              }
              
@@ -604,41 +650,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.slide.fact.color-quote {
 
-    .full-block {
-        background: rgba(0,0,0,0.1);
-    }
-
-    .fact-text {
-        p {
-             font-family: 'Dancing Script', cursive, serif;
-             letter-spacing: 0;
-             font-size: 32px;
-             line-height: 1;
-             
-             
-             @media @screen-small-above {
-                 font-size: 60px;
-             }
-         }
-         
-        h5 {
-            margin: 30px auto;
-            line-height: 1.5;
-        }
-    }
-}
-
-#greenquote {
-
-    .fact-text {
-        p {
-            font-size: 36px;
-        }
-    }
-    
-}
 
 // intro
 

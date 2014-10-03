@@ -1,19 +1,13 @@
-<div class="slide quote" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+<div class="slide quote" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %} {% if row.section %}data-section="{{ row.section }}"{% endif %}>
 
     <div class="text full-block">
         <div class="full-block-cell">
-            <div class="full-block-content">
-                <div class="quote-image contained-image" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}></div>
-                <div class="quote-text">
-                    <blockquote>
-                        {{ row.text1|smarty }}
-                    </blockquote>
-                    <cite>
-                        {{ row.text2|smarty }}
-                    </cite>
-                </div><!--big-quote-text-->
+            <div class="full-block-content">            
+                    {{ row.text1|smarty }}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
+        
+        
 
         {% if row.media %}
             <div class="credit">
