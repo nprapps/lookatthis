@@ -2,11 +2,6 @@
 @import "./lib/font-awesome/font-awesome";
 @import "./lib/prefixer";
 @import "./share-modal.less";
-@import "./slides/fixed-image.less";
-@import "./slides/quote.less";
-@import "./slides/start.less";
-@import "./slides/titlecard.less";
-@import "./slides/video.less";
 @import "./slides/next-post.less";
 @import "./nudges.less";
 
@@ -345,20 +340,110 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 // start screen 
 
 #first {
-    overflow: hidden;
-    
-    h1 {
-        font-family: 'Dancing Script', cursive;
-        text-transform: none;
+    overflow: hidden; 
+}
+
+.start {
+
+    .full-block {
+        background-color: rgba(0,0,0,0.3);
     }
-    
-    h2 {
-        font-family:helvetica, sans-serif;
-        text-transform: uppercase;
-        font-size: 18px;
-        font-weight: bold;
+    .full-block-cell {
+        text-align: center;
+        color: #fff;
+        
+        
+        .look-branding {
+            img {
+                max-width: 50px;
+                display: block;
+                margin: 0 auto;
+                
+                @media @screen-small-above {
+                    max-width: 80px;
+                }
+            }
+            
+            h5 {
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 12px;
+                padding: 5px 0 10px 0;
+                border-bottom: 3px solid #f60062;
+                display: inline-block;
+                
+                @media @screen-small-above {
+                    font-size: 16px;
+                }
+            }
+        }
+
+         h1 {
+             font-family: 'Dancing Script', cursive;
+             font-size: 72px;
+             font-weight: bold;
+             margin: 0;
+             @media @screen-small-above {
+                 font-size: 120px;
+            }
+         }
+
+         h2 {
+            font-size: 13px;
+            font-family:helvetica, sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin: 5px 0;
+            letter-spacing: 2px;
+            
+            
+            @media @screen-small-above {
+                    margin: 5px 0 20px 0;
+                    font-size: 16px;
+            }
+        }
+        
+        h3 {
+            font-size: 10px;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+            @media @screen-small-above {
+                font-size: 12px; 
+            }
+        }
+        
+        h4 {
+            font-size: 9px;
+            margin: 5px 0 0 0;
+            @media @screen-small-above {
+                font-size: 11px;
+                margin: 10px 0 0 0;
+            }
+        }
+        
+        .btn.btn-go {
+            border-radius: 0;
+            background-color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin: 35px auto 0 auto;
+            text-align: center;
+             font-size: 18px;
+            padding: 0 22px;
+            line-height: 44px;
+
+
+            &:hover {
+                .no-touch & {
+                    background-color: #000;
+                    color: #fff;
+                    cursor: pointer;
+                }
+            }
+
+        }
     }
-    
 }
 
 .slide.quote {
@@ -689,22 +774,3 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     
     
 }
-
-// @media only screen and (orientation:portrait){
-//     body {
-//         -webkit-transform: rotate(90deg);
-//         -moz-transform: rotate(90deg);
-//         -o-transform: rotate(90deg);
-//         -ms-transform: rotate(90deg);
-//         transform: rotate(90deg);
-//      }
-//  }
-//  @media only screen and (orientation:landscape){
-//     body {
-//         -webkit-transform: rotate(0deg);
-//         -moz-transform: rotate(0deg);
-//         -o-transform: rotate(0deg);
-//         -ms-transform: rotate(0deg);
-//         transform: rotate(0deg);
-//      }
-//  }
