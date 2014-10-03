@@ -365,9 +365,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
     .full-block-content {
         max-width: 70%;
-        margin: 80px auto 0 auto;
+        margin: 0 auto;
         @media @screen-small-above {
             max-width: 1000px;
+            margin: 80px auto 0 auto;
         }
     }
 
@@ -387,12 +388,18 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
      }
      
     h5 {
-        margin: 30px auto;
-        line-height: 1.5;
+        
+        line-height: 1;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 13px;
         letter-spacing: 1px;
         text-align: center;
+        
+        @media @screen-small-above {
+             margin: 30px auto;
+             font-size: 20px;
+             line-height: 1.5;
+         }
     }
 }
 
@@ -619,6 +626,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
              
              @media @screen-small-above {
                  font-size: 150px;
+                 margin: -80px auto 0 auto;
 
              }
          }
