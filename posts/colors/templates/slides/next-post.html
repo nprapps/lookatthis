@@ -1,47 +1,20 @@
-<div class="slide next-post" id="{{ row.slug }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
-
+<div class="slide next-post" id="{{ row.slug }}">
+<div class="blur-background" style="background-image: url({{ row.text2 }});"></div>
 <div class="text full-block">
 <div class="full-block-cell">
 
-    <div class="container-fluid">
-    <div class="row">
+<div class="full-block-content">
 
-    <div class="primary-column">
-        <div class="previous-post">
-            <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
+<h5>Here's another good story from Look At This</h5>
+
+    <a href="{{ row.text3 }}" target="_blank" class="previously-on">
             
-            <div class="looked-at">
-                <p>You just looked at</p>
-                <h2>{{ COPY.post_metadata.title|smarty }}</h2>
-            </div><!-- /looked-at -->
-            <img src="assets/{{ COPY.post_metadata.thumbnail_photo }}">
-                
-            <h5>
-                <i class="fa fa-share"></i>
-                Share
-            </h5>
-                
-
-            </a><!-- share -->
-        </div><!-- previous post -->
-    </div><!-- primary column -->
-    
-    
-    <div class="secondary-column">
-    <a href="{{ row.text3 }}" target="_blank">
-        <div class="up-next">
-            <img src="assets/{{ row.media }}">
-            <div class="up-next-caption-wrapper">
-                <div class="up-next-caption">
-                        <p><span>Previously on</span> <b>Look At This</b></p>
-                        <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
-                </div>
-        </div>
+            
+            {{ row.text1|smarty }}
+            <h4>View</h4>
     </a>
-    </div>
-    </div><!-- row -->
-    </div><!-- container -->
-    
+
+ </div><!--full-block-content-->
 </div><!--full-block-cell-->
 </div><!--full-block-->
 

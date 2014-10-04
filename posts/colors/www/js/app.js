@@ -53,7 +53,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal, .audio-controls, .home',
+        fixedElements: '.primary-navigation, #share-modal, .audio-controls, .home, .share',
         resize: false,
         css3: true,
         loopHorizontal: false,

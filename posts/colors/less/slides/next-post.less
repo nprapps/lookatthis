@@ -1,226 +1,105 @@
 @import "./lib/font-awesome/font-awesome";
 
 //up-next
+
+
 .next-post {
+
+
+.blur-background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(7px);
+  -moz-filter: blur(7px);
+  -o-filter: blur(7px);
+  -ms-filter: blur(7px);
+  filter: blur(7px);
+}
+
+
+    .full-block {
+        background-color: rgba(0,0,0,0.7);
+        
+    }
     
-    .container-fluid {
-        padding: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
-        
-        @media @screen-small-above {
-            padding: 20px 100px;
-        }
-    }
-
-    .row {margin: 0;}
-
-    .primary-column {
-        .make-sm-column(5);
-    }
-
-    .secondary-column {
-        .make-sm-column(7);
-    }
-
-    a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    img {
-        display: block;
-        height: auto;
-        @media @screen-small-above {
-            width: 100%;
-        }
-    }
-
-    .previous-post {
-        position: relative;
-        margin-top: 20px;
-        background-color: #f60062;
-        margin-bottom: 10px;
-        cursor: pointer;
-        
-        img {
-             width: 100px;
-             opacity: .5;
-        }
-        
-        &:hover {
-           img {
-               opacity: 1;
-           }
-        }
-
-        @media @screen-small-above {
-            background-color: transparent;
-            margin-top: 0;
-            margin-left: 40px;
-            margin-bottom: 0;
-
-            img {
-                width: 100%;
-            }
-        }
-
-        .looked-at {
-            position: absolute;
-            top: 20px;
-            left: 120px;
-            text-shadow: 2px 2px 5px #555;
-            z-index: 1;
-
-            @media @screen-small-above {
-                top: 20px;
-                left: 0;
-                width: 100%;
-            }
-        }
-
-        h2 {
-            font-family: 'Dancing Script', cursive, serif;
-            font-size: 14px;
-            margin: 0 0 20px 0;
-            padding: 0;
-
-            @media @screen-small-above {
-                text-align: center;
-            }
-
-            @media @screen-medium-above {
-               font-size: 18px;
-            }
-        }
-
-        p {
-            font-size: 11px;
-            margin: 0 0 5px 0;
-            padding: 0;
-
-            @media @screen-small-above {
-                text-align: center;
-                text-transform: uppercase;
-            }
-
-            
-
-        }
-
-        h5 {
-            font-size: 14px;
-            text-transform: uppercase;
-            text-align: center;
-            margin: 0;
-            padding: 10px;
-            font-weight: bold;
-            position: absolute;
-            top: 30px;
-            left: 20px;
-            text-shadow: 2px 2px 5px #555;
-
-
-            i {
-                display: block;
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
-
-            @media @screen-small-above {
-                top: auto;
-                bottom: 10px;
-                left: 37%;
-            }
-
-            
-        }
-    }
-
-    .up-next {
-        position: relative;
-        background-color: #000;
-        height: 150px;
-        overflow: hidden;
+    
+    .full-block-cell {
         text-align: center;
-        cursor: pointer;
-
-        img {
-             width: 100%;
-             opacity: .5;
+        color: #fff;
+        text-shadow: 2px 2px 2px #000;
+        height: 80%;
+        vertical-align: top;
+        
+        .full-block-content {
+           max-width: 700px;
+           
         }
         
-        &:hover {
-            img {opacity: 1;}
-        }
-        
-
-
-
-        @media @screen-small-above {
-            height: auto;
-        }
-
-        h2 {
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin: 20% 0 0 0;
-            text-shadow: 2px 2px 5px #000;
- 
-             @media @screen-small-above {
-                font-size: 32px;
-             }
-        }
-
-
-        p {
+      .previously-on {
+            display: block;
+            background-color: rgba(0,0,0,0.5);
+            padding: 40px 70px;
             
-
-             
-        }
-
-        .up-next-caption-wrapper {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            padding-left: 20px;
             
-            p {
-                
-                margin: 0;
-                padding: 0 0 0 0;
-                text-shadow: 2px 2px 5px #000;
-                margin-bottom: 20px;
-                text-transform: uppercase;
-                
-                
-                 
-                span {
-                    display: block;
-                    padding-bottom: 5px;
-                    font-size: 9px;
-                    
-                    @media @screen-small-above {
-                        font-size: 11px;
-                     }
-                }
-                b {
-                    
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                    padding-bottom: 5px;
-                    border-bottom: 3px solid #f60062;
-                    font-size: 13px;
-                    @media @screen-small-above {
-                        font-size: 14px;
-                     }
+            &:hover {
+                h4 {
+                    color: #F21063;
+                    border-color: #F21063;
                 }
             }
         }
+        
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
 
-
-
+         h2 {
+             font-family: helvetica, arial, sans-serif;
+             font-size: 30px;
+             font-weight: bold;
+             margin: 20px 0 0 0;
+             text-transform: uppercase;
+             @media @screen-small-above {
+                 font-size: 36px;
+            }
+         }
+         
+         h3 {
+             font-family: georgia, serif;
+             @media @screen-small-above {
+                 font-size: 24px;
+            }
+         }
+         
+         h5 {
+            font-family: georgia, serif;
+            padding: 10px 0 10px 0;
+            border-bottom: 3px solid #f60062;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: normal;
+                
+            @media @screen-small-above {
+                font-size: 18px;
+            }
+        }
+        
+        h4 {
+            font-size: 12px;
+            border: 2px solid #ddd;
+            padding: 8px 10px 6px 10px;
+            display: inline-block;
+            color: #ddd;
+            text-transform: uppercase;
+        }
+  
     }
 }
