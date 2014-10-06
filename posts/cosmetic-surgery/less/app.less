@@ -116,24 +116,49 @@ h4 {
 }
 
 .share {
-    text-align: center;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 100;
     cursor: pointer;
     color: #fff;
     text-decoration: none;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    opacity: .8;
     
+    @media @screen-small-above {
+        right:20px;
+    }
+    
+    
+    b {
+        opacity: 0;
+        .transition(opacity 1s ease);
+    }
+    
+    i {
+        font-size: 16px;
+        padding-left: 3px;
+    }
     
     &:hover {
-          text-decoration: none;
-          color: #fff;
+       color: #fff;
+       text-decoration: none;
+       
+       b  {
+        opacity: 1;
+       }
     }
     
-    h5 {
-        font-size: 30px;
-        border: 1px solid #fff;
-        padding: 10px;
-        width: 200px;
-        margin: 0 auto;
+    .touch & {
+        b {display: none;} 
     }
+    
+    .titlecard-nav & {
+        display: none;
+    }   
 }
 
 .primary-navigation {
