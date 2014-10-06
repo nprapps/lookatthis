@@ -165,11 +165,39 @@
             height: auto;
         }
 
+        &:after {
+            font-family: "FontAwesome";
+            .transition(all .6s ease-in);
+            content: 'LOOK \f0da';
+            //content: 'LOOK \00bb';
+            display: block;
+            letter-spacing: 1px;
+            font-size: 17px;
+            padding: 30px 15px;
+            color: #fff;
+            opacity: 0;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background-color: #000;
+        }
+
        @media @screen-medium-above {
             &:hover {
 
-                h2, h3, p {
+                h2 {
+                    //background-color: @brand-primary;
+                    //background-color: rgba(246, 0, 98, 0.7);
                     text-shadow: none;
+                }
+
+                h3,p {
+                    opacity: 0;
+                }
+
+
+                &:after {
+                    opacity: .7;
                 }
 
                 img {

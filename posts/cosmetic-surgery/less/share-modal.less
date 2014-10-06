@@ -5,19 +5,28 @@
 
 .modal-content {
     background-color: #eee;
+    
+    
 
     border-radius: 0;
     .box-shadow(0 3px 3px rgba(0,0,0,.1));
+    
+    h4, h5, p {
+        font-family: "Gotham", helvetica, arial, sans-serif;
+        text-shadow: none;
+        text-align: left;
+        max-width: 100%;
+    }
 }
 
 .modal-body {
     overflow-x: hidden;
 
     a {
-        color: #333;
+        color: #444;
         &:hover,
         &:focus {
-        color: #f60062;
+        color: #333;
         }
     }
 }
@@ -35,11 +44,11 @@
             font-weight: bold;
             text-decoration: none;
             padding: 10px;
-            background-color: #333;
+            background-color: #444;
             color: #fff;
             &:hover,
             &:focus {
-            background-color: #f60062;
+            background-color: #222;
             color: #fff;
             }
         }
@@ -74,7 +83,7 @@
     .summary-text {
         margin: 0;
         font-size: 11px;
-        background-color: #fff;
+        background: rgba(255,255,255,0.8);        
         border: 1px solid #e3e3e3;
         padding: 5px 10px;
         color: #555;
@@ -140,6 +149,7 @@
         text-transform: uppercase;
         margin: 30px 0 20px 0;
         font-weight: bold;
+        
         @media (min-width: @screen-md-min) {
             //margin-left: 30px;
         }
@@ -161,12 +171,12 @@
         font-weight: bold;
         text-decoration: none;
         padding: 10px;
-        background-color: #333;
+        background-color: #444;
         color: #fff;
 
         &:hover,
         &:focus {
-        background-color: #f60062;
+        background-color: #222;
         color: #fff;
         }
     }
@@ -183,7 +193,7 @@
     position: relative;
     margin-top: 20px;
     padding: 5px;
-    background-color: #fff;
+    background: rgba(255,255,255,0.8);
     border-bottom: 2px solid #ddd;
     @media (min-width: @screen-sm-min) {
         padding: 20px;
@@ -335,7 +345,7 @@
         position: relative;
         margin-top: 10px;
         padding: 5px;
-        background-color: #fff;
+        background: rgba(255,255,255,0.8);
         overflow: hidden;
         border-bottom: 2px solid #ddd;
         @media (min-width: @screen-sm-min) {
