@@ -63,10 +63,50 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .share {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 10px;
     z-index: 100;
     cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    opacity: .8;
+    
+    @media @screen-small-above {
+        right:20px;
+    }
+    
+    
+    b {
+        opacity: 0;
+        .transition(opacity 1s ease);
+    }
+    
+    i {
+        font-size: 16px;
+        padding-left: 3px;
+    }
+    
+    &:hover {
+       color: #fff;
+       text-decoration: none;
+       
+       b  {
+        opacity: 1;
+       }
+    }
+    
+    .touch & {
+        b {display: none;} 
+    }
+    
+    .titlecard-nav & {
+        display: none;
+    }
+    
+    
 }
 
 .audio-controls {

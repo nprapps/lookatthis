@@ -1,6 +1,5 @@
 //up-next
 
-
 .next-post {
 
 
@@ -43,7 +42,11 @@
       .previously-on {
             display: block;
             background-color: rgba(0,0,0,0.5);
-            padding: 40px 70px;
+            padding: 20px;
+            
+            @media @screen-small-above {
+                 padding: 40px 70px;
+            }
             
             
             &:hover {
@@ -62,7 +65,7 @@
 
          h2 {
              font-family: helvetica, arial, sans-serif;
-             font-size: 30px;
+             font-size: 24px;
              font-weight: bold;
              margin: 20px 0 0 0;
              text-transform: uppercase;
@@ -73,9 +76,12 @@
          
          h3 {
              font-family: georgia, serif;
+             font-size: 14px;
+             margin: 10px 0;
              @media @screen-small-above {
                  font-size: 24px;
-            }
+                 margin: 20px 0;
+             }
          }
          
          h5 {
