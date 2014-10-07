@@ -1,0 +1,23 @@
+<div class="slide conclusion {% if row.extra_class %}{{ row.extra_class }}{% endif %}" id="{{ row.id }}"{% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+            
+            <div class="listen">
+            {{ row.text1|smarty }}
+            
+            <div class="audio-segment clearfix">
+            <a href="{{ row.text3 }}" target="_blank">
+            {{ row.text2 }}
+            </a>
+         </div>
+
+        </div>
+            {{ row.media_credit|smarty }}
+            
+                
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+    </div><!--full-block-->
+</div><!--slide-->
