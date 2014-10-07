@@ -613,13 +613,17 @@ h4 {
          margin-bottom: 10px;
          max-width: 70%;
          margin: 0 auto 10px auto;
+         text-shadow: 2px 2px 4px #111;
          
          @media @screen-small-above {
-            max-width: 55%;
             font-size: 38px;
             text-shadow: 2px 2px 2px #333;
             border-bottom: 1px solid #fff;
             padding-bottom: 20px;
+        }
+        
+        @media @screen-medium-above {
+            max-width: 55%;
         }
      }
 }
