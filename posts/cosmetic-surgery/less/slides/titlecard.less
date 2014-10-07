@@ -1,11 +1,14 @@
 //titlecard
 .titlecard {
-    .full-block {
-        background-color: rgba(0,0,0,0.3);
-    }
+    
     .full-block-cell {
         text-align: center;
         color: #fff;
+        
+        .full-block-content {
+            max-width: 900px;
+            
+        }
 
         
 
@@ -13,24 +16,28 @@
              font-size: 20px;
              text-transform: uppercase;
              font-weight: bold;
+             text-align: center;
+             
              @media @screen-small-above {
-                font-size: 24px;
-                margin-top: 50px;
+                font-size: 38px;
+                text-shadow: 2px 2px 2px #333;
+                border-bottom: 1px solid #fff;
+                padding-bottom: 20px;
             }
          }
-
-         h3 {
-            font-size: 30px;
-            font-weight: bold;
-            text-transform: uppercase;
-            @media @screen-small-above {
-                    font-size: 70px;
-            }
-        }
         
         ul {
             padding: 0;
             list-style-type: none;
         }
+        
+        li {
+            font-family: georgia;
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 2px #333;
+            text-align: center;
+        }
     }
 }
+
