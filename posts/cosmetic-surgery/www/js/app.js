@@ -53,7 +53,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        fixedElements: '.primary-navigation, #share-modal, .home, .share',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -366,6 +366,11 @@ var onClippyCopy = function(e) {
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
+    
+    //section menu
+    $( ".home" ).click(function() {
+      $.fn.fullpage.moveTo(0, 0);
+    });
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');

@@ -114,6 +114,36 @@ h4 {
     }
 }
 
+
+//navigation
+
+.home {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    opacity: .8;
+
+    p {
+        font-size: 18px;
+        cursor: pointer;
+        color: #fff;
+        
+        @media @screen-small-above {
+            font-size: 22px;
+        }
+        
+        &:hover {
+           color: #fff;
+        }
+        
+    }
+    .titlecard-nav & {
+        display: none;
+    }
+}
+
+
 .share {
     position: absolute;
     top: 15px;
@@ -126,6 +156,7 @@ h4 {
     font-size: 10px;
     text-transform: uppercase;
     opacity: .8;
+    text-shadow: 2px 2px 2px #000;
     
     @media @screen-small-above {
         right:20px;
