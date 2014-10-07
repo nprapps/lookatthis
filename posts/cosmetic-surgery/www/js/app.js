@@ -188,8 +188,9 @@ var showNavigation = function() {
             //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('final-slide');
 
-        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -198,9 +199,8 @@ var showNavigation = function() {
             animateArrows();
         }
 
-        $('body').removeClass('titlecard-nav');
+        $('body').removeClass('titlecard-nav final-slide');
 
-        //$primaryNav.css('opacity', '1');
     }
 }
 

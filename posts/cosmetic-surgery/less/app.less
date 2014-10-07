@@ -96,6 +96,19 @@ h4 {
 
 }
 
+//nudges
+
+.text-up {
+    .full-block {
+        background-color: rgba(0,0,0,0.5);
+    }
+}
+
+
+
+.slide {
+    .fa-square {font-size: 15px;}
+}
 
 
 .dark-overlay {
@@ -187,6 +200,10 @@ h4 {
     }
     
     .titlecard-nav & {
+        display: none;
+    }
+    
+    .final-slide & {
         display: none;
     }   
 }
@@ -574,6 +591,29 @@ h4 {
 
     }
 
+}
+
+/*intro slide */
+
+.intro {
+    
+    h2 {
+         font-size: 20px;
+         text-transform: uppercase;
+         font-weight: bold;
+         text-align: left;
+         margin-bottom: 10px;
+         
+         
+         @media @screen-small-above {
+            margin: 0 auto 10px auto;
+            max-width: 55%;
+            font-size: 38px;
+            text-shadow: 2px 2px 2px #333;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 20px;
+        }
+     }
 }
 
 
