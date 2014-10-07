@@ -70,8 +70,16 @@ p {
     @media @screen-medium-above {
         max-width: 55%;
     }
+    
+    
 
 }
+
+.quoted {
+    p {font-family: georgia;}
+}
+
+
 
 h4 {
     font-family: "georgia";
@@ -603,10 +611,10 @@ h4 {
          font-weight: bold;
          text-align: left;
          margin-bottom: 10px;
-         
+         max-width: 70%;
+         margin: 0 auto 10px auto;
          
          @media @screen-small-above {
-            margin: 0 auto 10px auto;
             max-width: 55%;
             font-size: 38px;
             text-shadow: 2px 2px 2px #333;
@@ -623,6 +631,14 @@ h4 {
 
 .full-block-content {
     max-width: 800px;
+    
+    padding-top: 40px;
+    
+    @media @screen-small-above {
+        padding-top: 0;
+    }
+    
+    
 
     p {
         max-width: 100%;
@@ -631,7 +647,12 @@ h4 {
     h3 {
         text-transform: uppercase;
         font-weight: bold;
-        font-size: 30px;
+        font-size: 18px;
+        margin-bottom: 10px;
+        
+        @media @screen-small-above {
+            font-size: 30px;
+        }
     }
     
     
