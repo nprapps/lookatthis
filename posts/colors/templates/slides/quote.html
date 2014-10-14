@@ -5,11 +5,16 @@
             <div class="full-block-content">            
                     {{ row.text1|smarty }}
             </div><!--full-block-content-->
-        </div><!--full-block-cell-->
-        
+            
+            {% if row.text3 %}
             <div class="credit">
                <p>{{ row.text3|smarty }}</p>
             </div>
+            {% endif %}
+            
+        </div><!--full-block-cell-->
+        
+            
      
     </div><!--full-block-->
 </div><!--slide-->

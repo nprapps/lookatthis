@@ -39,9 +39,12 @@
             
             </div><!--full-block-content-->
             
+            {% if row.text3 %}
             <div class="credit">
-                <p>{{ row.text3|smarty }}</p>
+               <p>{{ row.text3|smarty }}</p>
             </div>
+            {% endif %}
+            
         </div><!--full-block-cell-->
         
         
