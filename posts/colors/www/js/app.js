@@ -406,37 +406,24 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
-
     setUpFullPage();
     resize();
-    
-    $('#ex1-play').on('click', function(){
-		sound.stop().play();
-	});
-	$('#ex1-pause').on('click', function(){
-		sound.pause();
-	});
-	
 	
 	//audio
 	
-	$('#wes').mediaelementplayer({
+	$('#moodmusic').mediaelementplayer({
         features: ['playpause'],
         // width of audio player
         audioWidth: 40,
         // height of audio player
-        audioHeight: 30,        
+        audioHeight: 30,
+        loop: true,      
     });
     
     
     
-    var audiolab = $("#wes")[0];
-    $(".begin-audio").click(function() {
+    var audiolab = $("#moodmusic")[0];
+    $(".mood-music").click(function() {
       audiolab.play();
     });
 	
