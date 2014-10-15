@@ -63,12 +63,14 @@ var setUpFullPage = function() {
     });
 };
 
+/*
 var sound = new Howl({
   urls: ['assets/color-music.mp3'],
   autoplay: false,
   loop: true,
   volume: 0.7,
 });
+*/
 
 
 var onPageLoad = function() {
@@ -419,6 +421,24 @@ $(document).ready(function() {
 	$('#ex1-pause').on('click', function(){
 		sound.pause();
 	});
+	
+	
+	//audio
+	
+	$('#wes').mediaelementplayer({
+        features: ['playpause'],
+        // width of audio player
+        audioWidth: 40,
+        // height of audio player
+        audioHeight: 30,        
+    });
+    
+    
+    
+    var audiolab = $("#wes")[0];
+    $(".begin-audio").click(function() {
+      audiolab.play();
+    });
 	
 	//section menu
     $( ".home" ).click(function() {

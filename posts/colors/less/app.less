@@ -116,9 +116,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .audio-controls {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 60px;
     z-index: 100;
-    display: none;
 }
 
 .section-navigation {
@@ -139,8 +138,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     
     
     li {
-        height: 30px;
-        padding-top: 5px;
+        height: 50px;
+        padding-top: 20px;
         list-style-type: none;
         float: left;
         width: 14.285%;
@@ -154,6 +153,11 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                border-bottom: 3px solid #fff;
                padding-bottom: 5px;
            }
+        }
+        
+        @media @screen-small-above {
+            height: 30px;
+            padding-top: 5px;
         }
         
     }
@@ -552,7 +556,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .slide.fact {
 
     .full-block {
-        background: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.5);
     }
 
     .full-block-content {
