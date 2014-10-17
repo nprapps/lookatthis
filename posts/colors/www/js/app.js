@@ -414,7 +414,7 @@ $(document).ready(function() {
 	$('#moodmusic').mediaelementplayer({
         features: ['playpause'],
         // width of audio player
-        audioWidth: 40,
+        audioWidth: 30,
         // height of audio player
         audioHeight: 30,
         loop: true,      
