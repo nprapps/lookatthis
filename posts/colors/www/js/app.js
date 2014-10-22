@@ -417,6 +417,7 @@ $(document).ready(function() {
         audioWidth: 30,
         // height of audio player
         audioHeight: 30,
+        enableKeyboard: false,
         loop: true,      
     });
     
