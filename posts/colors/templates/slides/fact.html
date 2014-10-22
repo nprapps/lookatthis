@@ -26,7 +26,7 @@
                                 </a>
                             </li>
                             <li class="share-fb">
-                                <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.post_metadata.facebook_app_id }}&amp;link={{ COPY.post_metadata.share_url|urlencode }}&amp;name={{ COPY.post_metadata.facebook_title|urlencode }}&amp;picture={{ S3_BASE_URL|urlencode }}%2posts%2{{DEPLOY_SLUG}}%2assets%2share-images%2{{ row.slug }}.png&amp;redirect_uri={{ COPY.post_metadata.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'image fact']);">
+                                <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.post_metadata.facebook_app_id }}&amp;link={{ COPY.post_metadata.share_url|urlencode }}&amp;name={{ COPY.post_metadata.facebook_title|urlencode }}&amp;picture={{ S3_BASE_URL|urlencode }}%2Fposts%2F{{DEPLOY_SLUG}}%2Fassets%2Fshare-images%2F{{ row.slug }}.png&amp;redirect_uri={{ COPY.post_metadata.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'image fact']);">
                                 <i class="fa fa-facebook"></i> share
                                 </a>
                             </li>
