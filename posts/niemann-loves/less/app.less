@@ -261,21 +261,78 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-// @media only screen and (orientation:portrait){
-//     body {
-//         -webkit-transform: rotate(90deg);
-//         -moz-transform: rotate(90deg);
-//         -o-transform: rotate(90deg);
-//         -ms-transform: rotate(90deg);
-//         transform: rotate(90deg);
-//      }
-//  }
-//  @media only screen and (orientation:landscape){
-//     body {
-//         -webkit-transform: rotate(0deg);
-//         -moz-transform: rotate(0deg);
-//         -o-transform: rotate(0deg);
-//         -ms-transform: rotate(0deg);
-//         transform: rotate(0deg);
-//      }
-//  }
+//audio
+
+.audio-controls {
+    position: absolute;
+    top: 5px;
+    right: 40px;
+    z-index: 100;
+    
+    .titlecard-nav & {
+        display: none;
+    }
+    
+    .final-slide & {
+        display: none;
+    }
+    
+    .mejs-playpause-button {
+        cursor: pointer;
+        position: relative;
+        button {visibility: hidden;}
+    }
+    
+    .mejs-playpause-button.mejs-play {
+        &:before {
+            font-family: "FontAwesome";
+            content: '\f026';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 24px;
+            
+        }
+    }
+    
+    .mejs-playpause-button.mejs-pause {
+        &:before {
+            font-family: "FontAwesome";
+            content: '\f028';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 24px;
+            
+        }
+    }
+    
+    
+}
+
+
+.mood-music {
+    cursor: pointer;
+    color: #a6e2f8;
+    border-top: 1px solid #fff;
+    padding-top: 10px;
+    
+    &:hover {
+       color: #fff;
+    }
+    
+    @media @screen-small-above {
+        
+    }
+    
+    i {
+        font-size: 13px;
+        
+         @media @screen-small-above {
+            font-size:16px;
+        }
+    }
+}
+

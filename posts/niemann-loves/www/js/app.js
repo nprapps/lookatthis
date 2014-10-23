@@ -384,14 +384,29 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
+
 
     setUpFullPage();
     resize();
+    
+    //audio
+	
+	$('#moodmusic').mediaelementplayer({
+        features: ['playpause'],
+        // width of audio player
+        audioWidth: 30,
+        // height of audio player
+        audioHeight: 30,
+        enableKeyboard: false,
+        loop: false,      
+    });
+    
+    var audiolab = $("#moodmusic")[0];
+    
+    $(".btn-go").click(function() {
+      audiolab.play();
+      $.fn.fullpage.moveTo(0, 1);
+    });
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
