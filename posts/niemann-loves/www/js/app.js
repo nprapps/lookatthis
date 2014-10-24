@@ -392,13 +392,10 @@ $(document).ready(function() {
     //audio
 	
 	$('#moodmusic').mediaelementplayer({
-        features: ['playpause','stop','progress','duration'],
-        // width of audio player
-        //audioWidth: 30,
-        // height of audio player
-        //audioHeight: 30,
-        enableKeyboard: false,
-        loop: false,      
+        audioWidth: '100%',
+        audioHeight: 50,
+        features: ['playpause','progress'],
+            
     });
     
     var audiolab = $("#moodmusic")[0];
