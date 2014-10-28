@@ -309,7 +309,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             position: absolute;
             top: 15px;
             left: 20px;
-            font-size: 18px;
+            font-size: 16px;
             
         }
     }
@@ -322,7 +322,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             position: absolute;
             top: 15px;
             left: 20px;
-            font-size: 24px;
+            font-size: 16px;
             
         }
     }
@@ -345,7 +345,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 	left: 0;
 	height: 40px;
 	width: 100%;
-	background: #3a3c3d;	
+	background: rgba(0, 0, 0, 0.5);	
 	list-style: none;
 }
 
@@ -414,7 +414,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .mejs-container .mejs-controls .mejs-playpause-button {
 	cursor: pointer;
 	background: none;
-	width: 60px;
+	width: 45px;
+	opacity: .7;
 }
 .mejs-controls .mejs-playpause-button button {
 	margin:7px 8px;
@@ -431,28 +432,29 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 	display: block;
 	position: absolute;
 	width: 180px;
-	height: 15px;
+	height: 12px;
 	cursor: pointer;
 }
 .mejs-controls .mejs-time-rail .mejs-time-total {
 	padding: 1px;
-	margin: 10px 8px 0 0;
-	background: #262929;
-	border-bottom: #3d3f40 1px solid;
-	box-shadow: inset 1px 1px rgba(0, 0, 0, .4);
+	margin: 13px 8px 0 0;
+	background: transparent;	
 }
 .mejs-controls .mejs-time-rail .mejs-time-buffering {
 	width:100%;
-	background:#464849;
+	background:#111;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-loaded {
-	background: #464849;
+	background: transparent;
 	width: 0;
 }
 .mejs-controls .mejs-time-rail .mejs-time-current {
 	width: 0;
+	height: 2px;
+	margin-top: 3px;
 	background: #eee;
+	opacity: .7;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-handle {
@@ -470,11 +472,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .mejs-controls .mejs-time-rail .mejs-time-float {
 	position: absolute;
 	display: none;
-	background: #C2C8CF;
+	background: #ccc;
 	width: 36px;
 	height: 17px;
-	border-radius: 4px;
-	box-shadow:0 1px 1px rgba(0, 0, 0, .4);
 	top: -26px;
 	margin-left: -18px;
 	text-align: center;
