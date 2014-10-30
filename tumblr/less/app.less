@@ -482,6 +482,13 @@ body {
                 display: block;
                 max-width: 100%;
             }
+            
+            .photoset-250 { display: none; }
+            
+            @media (max-width: @screen-xs-max) {
+                .photoset-250 { display: block; }
+                .photoset-500 { display: none; }
+            }
 
             // Constrain permalink photosets to 700px
             .permalink-page & {
