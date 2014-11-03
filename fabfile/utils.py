@@ -50,6 +50,9 @@ def _deploy_to_s3(path='.gzip'):
     sync_gzip = 'aws s3 sync %s/ %s --acl "public-read" --content-encoding "gzip" --exclude "*" ' + include_flags + ' --cache-control "max-age=5" --region "us-east-1"'
     sync_assets = 'aws s3 sync %s/ %s --acl "public-read" --cache-control "max-age=86400" --region "us-east-1"'
 
+
+    print path.split('.gzip/')[1]
+
     for bucket in app_config.S3_BUCKETS:
         if path.split('.gzip/')[1].startswith('tumblr'):
             local(sync % (path, 's3://%s/%s/%s' % (
@@ -79,11 +82,20 @@ def _deploy_to_s3(path='.gzip'):
                 env.post_config.DEPLOY_SLUG
             )))
 
-        local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/posts/%s/assets/' % (
-            bucket,
-            app_config.PROJECT_SLUG,
-            env.post_config.DEPLOY_SLUG
-        )))
+
+        if path.split('.gzip/')[1].startswith('tumblr'):
+            local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/posts/%s/assets/' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                path.split('.gzip/')[1]
+            )))
+
+        else:
+            local(sync_assets % ('%s/assets/' % path, 's3://%s/%s/posts/%s/assets/' % (
+                bucket,
+                app_config.PROJECT_SLUG,
+                env.post_config.DEPLOY_SLUG
+            )))
 
 def _find_slugs(slug):
     posts = glob('%s/*' % app_config.POST_PATH)
