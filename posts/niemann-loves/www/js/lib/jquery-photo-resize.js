@@ -1,26 +1,3 @@
-/*
- * Copyright © 2012 by Scott Perry
- * Released under the MIT License; its terms are at the end of this file.
- *
- * This file depends on:
- * • jQuery (tested against 1.7.1)
- *   http://jquery.com/
- *
- * Basic logic of this file:
- * + if irsz_auto is true
- *   • when each image is loaded, each image is resized to fit with a smooth animation.
- *   • when the viewport is resized, each image is resized to fit as the window changes size.
- * • when the image is clicked, it toggles (smooth animation) between resized to fit and full size
- *
- * resized to fit means:
- * + if image aspect ratio is more extreme (less square) than 2:1/1:2
- *   • scale the smaller dimension between irsz_min_* and the original size,
- *     intermediates correspond to the dimension of the viewport minus irsz_padding[#]
- * - if the aspect ratio is sane
- *   • scale the image between irsz_min_* and the original size,
- *     intermediates fitting both dimensions within the viewport minus irsz_padding[#]
- */
-
 var irsz_selector = ".feature-pic",
     irsz_min_height = 100,
     irsz_min_width = 100,

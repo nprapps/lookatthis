@@ -5,6 +5,7 @@ import imp
 import os
 import time
 import urllib
+import codecs
 
 from cssmin import cssmin
 from flask import Markup, g, render_template, request
@@ -110,7 +111,7 @@ class JavascriptIncluder(Includer):
         for src in self.includes:
             src_paths.append('www/%s' % src)
 
-            with open('%s/www/%s' % (self.static_path, src)) as f:
+            with codecs.open('%s/www/%s' % (self.static_path, src),'r','utf-8') as f:
                 print '- compressing %s' % src
                 output.append(minify(f.read().encode('utf-8')))
 
