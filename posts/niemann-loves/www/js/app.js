@@ -48,7 +48,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        fixedElements: '.primary-navigation, .audio-controls, #photo-detail',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -252,14 +252,6 @@ var onDocumentKeyDown = function(e) {
     return true;
 }
 
-var onSlideClick = function(e) {
-    if (isTouch) {
-        $.fn.fullpage.moveSlideRight();
-    }
-
-    return true;
-}
-
 var onNextPostClick = function(e) {
     window.top.location = NEXT_POST_URL;
 
@@ -312,8 +304,6 @@ $(document).ready(function() {
     $nextPostImage = $('.next-post-image');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
 
     $arrows.on('touchstart', fakeMobileHover);

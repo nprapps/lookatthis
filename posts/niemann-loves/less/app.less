@@ -144,7 +144,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         }
 
         @media @screen-small-above {
-            right: 25px;
+            right: 10px;
             padding-top: 25px;
         }
         /*
@@ -250,27 +250,14 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.credit {
-    font-family: helvetica, arial, sans-serif;
-    position: absolute;
-    right: 15px;
-    bottom: 5px;
-    text-align: right;
-    font-size: 8px;
-    font-style: italic;
-    color: #fff;
-    padding-right: 3px;
-    @media @screen-small-above {
-         font-size: 10px;
-    }
-}
+
 
 //pic-wrap
 
 .pic-wrap {
 	margin: 0 auto;
 	position: relative;
-	opacity: 0;
+	opacity: 1;
 	.transition(opacity 30s ease);
 	
 	&.fade-wrap {
@@ -312,8 +299,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 //audio-reveal
 
 .slide.audio-reveal {
+    background: transparent url(../assets/chalkboard.jpg) top left;
     .background-size(auto);
-    background-position: top left;
     
     opacity: 1;
     //.transition(opacity 120s ease);
@@ -322,32 +309,132 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         opacity: 1;
     }
     
-    .full-block-content {
+    .full-block {
+        .background-size(cover);
+        background-position: center center;
+        position: relative;
+        z-index: 1;
+        
+        .full-block-content {
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+
+}
+
+//photo-detail
+#photo-detail {
+    img {
+        display: block;
         max-width: 100%;
+        height: auto;
+        margin: 0 auto;
     }
     
-    h3 {
+    .modal-lg {
+        @media @screen-small-above {
+             width: 75%;
+        }
+        
+    }
+    
+    
+    
+    .modal-content {
+        
+        .modal-body {
+            padding: 5px;
+        }
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #000;
+        font-size: 12px;
+        background-color: #fff;
+        cursor: pointer;
+        opacity: .7;
+        line-height: 1;
+        padding: 10px;
+        @media @screen-small-above {
+            top: 0;
+            right: 0;
+            font-size: 18px;
+        }
+    }
+    
+    .credit {
+        font-family: helvetica, arial, sans-serif;
+        position: absolute;
+        right: 10px;
+        bottom: -10px;
+        text-align: right;
+        font-size: 10px;
+        font-style: italic;
+        color: #fff;
         margin: 0;
-        text-align: center;
-        font-size: 13px; 
-        padding: 50px 0;
+        padding: 0 0 0 5px;
+        line-height: 1;
+        text-shadow: 1px 1px 5px #000;
+        @media @screen-small-above {
+             font-size: 12px;
+             bottom: 10px;
+        }
+    }
+}
+
+//story-conclusion
+
+.story-conclusion {
+    position: relative;
+    z-index: -1;
+    opacity: 0;
+}
+
+//photo modal trigger
+
+.photo-modal-trigger {
+    
+    .titlecard-nav & {
+        visibility: hidden;
     }
     
-   .full-block-content {
-        padding: 0;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    z-index: 100;
+    font-size: 10px;
+    cursor: pointer;
+    
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 6px;
+    background-color: #222;
+    opacity: .7;
+    border: 2px solid #fff;
+    
+    &:hover {
+        opacity: 1;
+    }
+    
+    i{
+        padding-right: 7px;
     }
 }
 
 //audio
 
-
-
 .audio-controls {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 100;
+    z-index: 99;
     width: 100%;
+    background-color: rgba(0,0,0,0.8);
+    padding-right: 120px;
     
     .titlecard-nav & {
         visibility: hidden;
@@ -407,7 +494,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 	left: 0;
 	height: 40px;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.1);	
 	list-style: none;
 }
 
@@ -515,7 +601,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 	width: 0;
 	height: 2px;
 	margin-top: 3px;
-	background: #eee;
+	background: #f60062;
 	opacity: .7;
 }
 
@@ -541,7 +627,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 	margin-left: -18px;
 	text-align: center;
 	color: #111;
-	opacity: .5;
+	opacity: .9;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-float-current {

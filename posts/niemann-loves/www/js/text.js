@@ -6,9 +6,9 @@ var pop = Popcorn( '#moodmusic');
 pop.code({
 	start: .5,
 	onStart: function( options ) {  
-		$('#pic-conclusion').removeClass('show-me');
-		$('.feature-pic').removeClass('fade-me');
-		$('.pic-wrap').addClass('fade-wrap');
+		//$('#pic-conclusion').removeClass('show-me');
+		//$('.feature-pic').removeClass('fade-me');
+		//$('.pic-wrap').addClass('fade-wrap');
 		//$('#s1b').css('background-image', 'url(' + 'img/antique-car.jpg' + ')');
 		//$("p").addClass("myClass yourClass");
 	}
@@ -18,8 +18,8 @@ pop.code({
 pop.code({
 	start: 39,
 	onStart: function( options ) {  
-		$('#pic-conclusion').addClass('show-me');
-		$('.feature-pic').addClass('fade-me');
+		//$('#pic-conclusion').addClass('show-me');
+		//$('.feature-pic').addClass('fade-me');
 		//$('#s1b').css('background-image', 'url(' + 'img/antique-car.jpg' + ')');
 		//$("p").addClass("myClass yourClass");
 	}
