@@ -111,9 +111,9 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    if ($w < 769) {
+   /* if ($w < 769) {
         mobileSuffix = '-sq';
-    }
+    }*/
 
     _.each($(slides), function(slide) {
 
@@ -336,8 +336,10 @@ $(document).ready(function() {
     var audiolab = $("#moodmusic")[0];
     
     $(".btn-go").click(function() {
+        $.fn.fullpage.moveSlideRight();
+        //what? why does the order change on mobile? $.fn.fullpage.moveTo(0, 0);
       audiolab.play();
-      $.fn.fullpage.moveTo(0, 1);
+      
     });
 
     // Redraw slides if the window resizes
