@@ -48,7 +48,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, .audio-controls, #photo-detail',
+        fixedElements: '.primary-navigation, .audio-controls, #photo-detail, .photo-modal-trigger',
         resize: false,
         css3: true,
         loopHorizontal: false,
