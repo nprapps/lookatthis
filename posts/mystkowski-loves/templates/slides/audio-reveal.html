@@ -1,0 +1,43 @@
+<div class="slide audio-reveal" id="{{ row.id }}">
+
+    <div class="full-block" {% if row.media %} style="background-image:url(assets/{{ row.media }});" {% endif %}>
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                    
+                    <!-- annotation modal fade-->
+<div id="photo-detail"  class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="close-modal" data-dismiss="modal"><i class="fa fa-times"></i></p>
+                <img src="assets/{{ row.media }}" alt="photo detail">
+                <!--<p class="credit">Anna Boiko-Weyrauch/NPR/Original photo courtesy of Middleton family</p>-->
+            </div>
+        </div>
+    </div>
+  </div><!-- #photo-detail -->
+
+<div class="story-conclusion">
+    <p>Richard Loeb, 18, and Nathan Leopold Jr., 19, after confessing to the murder of 14-year-old Robert "Bobby" Franks, Chicago, 1924. Both went to Stateville Prison in Joliet, Ill. Loeb was killed in prison in 1936 and Leopold was paroled in 1958.</p>
+    
+    <p>The photo is from "Gangsters & Grifters," the Chicago Tribune's new book edited by Erin Mystkowski. See more from the book <a href="http://galleries.apps.chicagotribune.com/chi-gangsters-grifters-chicago-crime-photos-20141112/">on the Tribune's website</a>, or buy it <a href="http://www.npr.org/books/titles/364085279/gangsters-grifters-classic-crime-photos-from-the-chicago-tribune">on Amazon</a>. And more from the newspaper's archives on Instagram: <a href="http://instagram.com/vintagetribune">@vintagetribune</a>.</p>
+    
+    <div class="share-list">
+        <h4>Everyone loves photos. <a href="http://lookatthisstory.tumblr.com/submit">Send us a photo you love</a> or Share Erin's story on: <a href="http://twitter.com/share?text={{ COPY.share.twitter_text|urlencode }}&amp;url={{ COPY.share.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'tweet', 'share']);"> Twitter</a>, <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.share.facebook_app_id }}&amp;link={{ COPY.share.share_url|urlencode }}&amp;name={{ COPY.share.facebook_title|urlencode }}&amp;picture={{ COPY.share.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.share.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'facebook', 'share']);">Facebook</a>, and <a href="mailto:?body={{ COPY.share.email_body|safe }}&subject={{ COPY.share.email_subject }}" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'email', 'share']);">Email</a></h4>
+    </div><!--share-list-->
+    
+    <div class="project-credits">
+        <h5>Project Credits: Produced by Wes Lindamood and Claire O'Neill Music: "<a href="https://www.marmosetmusic.com/singles/8855">Boy Ain't It Ever</a>" by Hannalee/Marmoset</h5>
+    </div><!--project-credits-->
+    
+</div><!--story-conclusion-->
+        
+        
+
+        
+    </div><!--full-block-content-->
+</div><!--full-block-cell-->
+
+       
+    </div><!--full-block-->
+</div><!--slide-->
