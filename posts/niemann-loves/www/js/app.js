@@ -327,8 +327,8 @@ $(document).ready(function() {
     
     $(".btn-go").click(function() {
         $.fn.fullpage.moveSlideRight();
-        //what? why does the order change on mobile? $.fn.fullpage.moveTo(0, 0);
-      audiolab.play();
+        $(".audio-reveal").addClass("active");
+        audiolab.play();
       
     });
 

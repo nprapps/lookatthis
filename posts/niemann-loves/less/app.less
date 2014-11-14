@@ -117,20 +117,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             left: 10px;
             padding-top: 25px;
         }
-
-        /*
-        .touch & {
-            left: 10px;
-            bottom: 5px;
-            background-color: #999;
-
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 105px;
-            }
-        }
-        */
     }
     .controlArrow.next {
         right: 0;
@@ -147,17 +133,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             right: 10px;
             padding-top: 25px;
         }
-        /*
-        .touch & {
-            bottom: 5px;
-            left: 135px;
 
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 25px;
-            }
-        }*/
     }
 
 }
@@ -250,76 +226,62 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-
-
-//pic-wrap
-
-.pic-wrap {
-	margin: 0 auto;
-	position: relative;
-	opacity: 1;
-	.transition(opacity 30s ease);
-	
-	&.fade-wrap {
-        opacity: 1;
-    }
-	
-	.feature-pic {
-		max-width: 100%;
-		max-height: 100%;
-		display: block;
-		margin: 0 auto;
-		.box-shadow(15px 17px 32px -2px rgba(0,0,0,0.5));
-		cursor: pointer;
-		.transition(opacity 15s ease);
-		
-		&.fade-me {
-            opacity: .3;
-        }
-	}
-	
-	#pic-conclusion {
-    	opacity: 0;
-    	position: absolute;
-    	top: 0;
-    	left: 0;
-    	z-index: 2;
-    	width: 100%;
-    	text-align: center;
-    	.transition(opacity 20s ease);
-    	
-    	&.show-me {
-            opacity: 1;
-        }
-	}
-}
-
-
-
 //audio-reveal
 
 .slide.audio-reveal {
     background: transparent url(../assets/chalkboard.jpg) top left;
     .background-size(auto);
     
-    opacity: 1;
-    //.transition(opacity 120s ease);
-    
-    &.active {
-        opacity: 1;
-    }
-    
     .full-block {
         .background-size(cover);
         background-position: center center;
         position: relative;
         z-index: 1;
+        opacity: 1;
+        .transition(opacity 20s ease);
         
-        .full-block-content {
-            max-width: 100%;
-            padding: 0;
+         //fade in full-block background image when titlecard button is clicked
+        &.active {
+            .full-block{
+                opacity: 1;
+            }
+            
         }
+        
+        //add mask over full block background image when story conclusion fades in
+        .full-block-cell {
+            background-color: rgba(0,0,0,0);
+            .transition(background-color 10s ease);
+            
+            &.light-mask {
+                background-color: rgba(0,0,0,0.8);
+            }
+            
+        }
+        
+        //story-conclusion
+        .story-conclusion {
+            position: relative;
+            z-index: -1;
+            opacity: 0;
+            .transition(opacity 10s ease);
+            margin: 0 auto;
+            max-width: 700px;
+            
+            p {
+                font-family: georgia, serif;
+            }
+            
+            &.thats-all-folks {
+                opacity: 1;
+                z-index: 1;
+            }
+        }
+        
     }
+   
+    
+    
 
 }
 
@@ -338,8 +300,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         }
         
     }
-    
-    
     
     .modal-content {
         
@@ -388,12 +348,46 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-//story-conclusion
+//pic-wrap
 
-.story-conclusion {
-    position: relative;
-    z-index: -1;
-    opacity: 0;
+.pic-wrap {
+	margin: 0 auto;
+	position: relative;
+	opacity: 1;
+	.transition(opacity 30s ease);
+	
+	&.fade-wrap {
+        opacity: 1;
+    }
+	
+	.feature-pic {
+		max-width: 100%;
+		max-height: 100%;
+		display: block;
+		margin: 0 auto;
+		.box-shadow(15px 17px 32px -2px rgba(0,0,0,0.5));
+		cursor: pointer;
+		.transition(opacity 15s ease);
+		
+		&.fade-me {
+            opacity: .3;
+        }
+	}
+	
+	#pic-conclusion {
+    	opacity: 0;
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	z-index: 2;
+    	width: 100%;
+    	text-align: center;
+    	.transition(opacity 20s ease);
+    	
+    	&.show-me {
+            opacity: 1;
+        }
+	}
 }
 
 //photo modal trigger
