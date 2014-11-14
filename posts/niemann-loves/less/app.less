@@ -232,21 +232,21 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     background: transparent url(../assets/chalkboard.jpg) top left;
     .background-size(auto);
     
+    //fade in full-block background image when titlecard button is clicked
+    &.active {
+        .full-block{
+            opacity: 1;
+        }
+        
+    }
+    
     .full-block {
         .background-size(cover);
         background-position: center center;
         position: relative;
         z-index: 1;
-        opacity: 1;
+        opacity: 0;
         .transition(opacity 20s ease);
-        
-         //fade in full-block background image when titlecard button is clicked
-        &.active {
-            .full-block{
-                opacity: 1;
-            }
-            
-        }
         
         //add mask over full block background image when story conclusion fades in
         .full-block-cell {
@@ -404,20 +404,20 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     z-index: 100;
     font-size: 10px;
     cursor: pointer;
-    
     text-transform: uppercase;
     font-weight: bold;
     padding: 0 6px;
     background-color: #222;
     opacity: .7;
     border: 2px solid #fff;
-    
-    &:hover {
-        opacity: 1;
-    }
+    .transition(opacity 5s ease);
     
     i{
         padding-right: 7px;
+    }
+    
+    &.fade-out {
+        opacity: 0;
     }
 }
 

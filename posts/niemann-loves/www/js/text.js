@@ -18,10 +18,11 @@ pop.code({
 
 //conclusion
 pop.code({
-	start: 3,
+	start: 42,
 	onStart: function( options ) {  
     	$('.story-conclusion').addClass('thats-all-folks');
     	$('.full-block-cell').addClass('light-mask');
+    	$('.photo-modal-trigger').addClass('fade-out');
     	
 		//$('#pic-conclusion').addClass('show-me');
 		//$('.feature-pic').addClass('fade-me');
