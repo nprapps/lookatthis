@@ -42,19 +42,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 }
 
 .primary-navigation {
-    /*
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-
-    .touch & {
-            background-color: rgba(0,0,0,0.8);
-            height: 60px;
-        }
-
-        */
 
     .controlArrow {
         position: fixed;
@@ -206,7 +193,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
     .full-block-cell {
         display: table-cell;
-        vertical-align: top;
+        vertical-align: middle;
         //padding-top: 20px;
         @media @screen-small-above {
             padding-top: 0;
@@ -219,9 +206,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .full-block-content {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px 40px 100px 40px;
         @media @screen-small-above {
-             padding: 20px 100px;
+             padding: 20px 100px 100px 100px;
         }
     }
 }
@@ -268,13 +255,65 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             margin: 0 auto;
             max-width: 700px;
             
+            a {
+                color: #f60062;
+                text-decoration: none;
+            
+              &:hover,
+              &:focus {
+                color: #ff0468;
+                text-decoration: underline;
+              }
+            
+            }
+            
             p {
+                
                 font-family: georgia, serif;
+                font-size: 13px;
+                
+                @media @screen-small-above {
+                    font-size: 18px;
+                    line-height: 1.7;
+                }
             }
             
             &.thats-all-folks {
                 opacity: 1;
                 z-index: 1;
+            }
+            
+            .share-list {
+                border-top: 1px solid #eee;
+                padding-top: 10px;
+                
+                h4 {
+                    font-family: georgia, serif;
+                    font-size: 16px;
+                    margin: 10px 0;
+                    line-height: 1.5;
+                
+                    @media @screen-small-above {
+                        margin: 20px 0;
+                        font-size: 22px;
+                    }
+                }
+            }
+            
+            .project-credits {
+                border-top: 1px solid #eee;
+                padding-top: 10px;
+                
+                h5 {
+                    line-height: 1.2;
+                    font-size: 11px;
+                    
+                    @media @screen-small-above {
+                        line-height: 1.5;
+                        font-size: 14px;
+                    }
+                    
+                    }
             }
         }
         
@@ -398,6 +437,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         visibility: hidden;
     }
     
+    .final-slide & {
+        visibility: hidden;
+    }
+    
     position: absolute;
     bottom: 0;
     right: 10px;
@@ -437,7 +480,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
     
     .final-slide & {
-        display: none;
+        visibility: hidden;
     }
     
     .mejs-playpause-button {

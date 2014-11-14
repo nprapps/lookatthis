@@ -177,11 +177,11 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('final-slide');
 
-        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -191,8 +191,8 @@ var showNavigation = function() {
         }
 
         $('body').removeClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
+        $('body').removeClass('final-slide');
+        
     }
 }
 
