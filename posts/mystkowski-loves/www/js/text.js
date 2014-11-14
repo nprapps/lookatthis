@@ -8,12 +8,13 @@ pop.code({
 	onStart: function( options ) {
     	$('.full-block-cell').removeClass('light-mask');
     	$('.story-conclusion').removeClass('thats-all-folks');
+    	$('.photo-modal-trigger').removeClass('fade-out');
 	}
 });
 
 //conclusion
 pop.code({
-	start: 97,
+	start: 100,
 	onStart: function( options ) {  
     	$('.story-conclusion').addClass('thats-all-folks');
     	$('.full-block-cell').addClass('light-mask');

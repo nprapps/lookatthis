@@ -180,7 +180,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 //full-bleed background images on sections and slides
 .section, .slide {
     .background-size(cover);
-    background-position: center center;
+    background-position: top left;
     position: relative;
 }
 
@@ -229,16 +229,16 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     
     .full-block {
         .background-size(cover);
-        background-position: center center;
+        background-position: top center;
         position: relative;
         z-index: 1;
         opacity: 0;
-        .transition(opacity 30s ease);
+        .transition(opacity 60s ease);
         
         //add mask over full block background image when story conclusion fades in
         .full-block-cell {
             background-color: rgba(0,0,0,0);
-            .transition(background-color 10s ease);
+            .transition(background-color 20s ease);
             
             &.light-mask {
                 background-color: rgba(0,0,0,0.8);
@@ -251,7 +251,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             position: relative;
             z-index: -1;
             opacity: 0;
-            .transition(opacity 10s ease);
+            .transition(opacity 20s ease);
             margin: 0 auto;
             max-width: 700px;
             
@@ -346,6 +346,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             padding: 5px;
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
+            background-color: #333;
         }
     }
     
@@ -353,9 +354,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         position: absolute;
         top: 0;
         right: 0;
-        color: #000;
+        color: #ddd;
         font-size: 12px;
-        background-color: #fff;
+        background-color: #333;
         cursor: pointer;
         opacity: .7;
         line-height: 1;
@@ -445,7 +446,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     bottom: 0;
     right: 10px;
     z-index: 100;
-    font-size: 10px;
+    font-size: 9px;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
@@ -456,7 +457,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .transition(opacity 5s ease);
     
     i{
-        padding-right: 7px;
+        padding-right: 4px;
+        font-size: 12px;
     }
     
     &.fade-out {
