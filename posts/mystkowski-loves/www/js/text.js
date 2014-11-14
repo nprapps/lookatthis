@@ -4,7 +4,7 @@ var pop = Popcorn( '#moodmusic');
 /////////////// !CHAPTER 1
 //start
 pop.code({
-	start: .5,
+	start: 1,
 	onStart: function( options ) {
     	$('.full-block-cell').removeClass('light-mask');
     	$('.story-conclusion').removeClass('thats-all-folks');
