@@ -46,6 +46,44 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
+    
+    resizeThePic();
+};
+
+
+
+var fitPic = function() {
+    $("#the-pic").toggleClass("fitme");
+    resizeThePic();
+};
+
+$('.photo-modal-trigger').click(function() {
+  $("#the-pic").toggleClass("fitme");
+  $(this).toggleClass("fill-frame");
+  resizeThePic();
+});
+
+var resizeThePic = function(){
+    //if we're in fit mode
+    if($("#the-pic").hasClass('fitme')){
+        var aspect = window.innerWidth / window.innerHeight;
+        var imageAspect = 4/3;
+        
+        //if we're trying to fit a vertical image
+        //else its a horizontal image
+        
+        if (aspect > imageAspect) {
+            
+            if (imageAspect > 1) { //horiz
+                $("#the-pic").css('width',(100 * (imageAspect) / aspect) + 'vw');                
+            } else { // vertical
+                $("#the-pic").css('height',(100 * (imageAspect) / aspect) + 'vh');            
+            }
+
+        } else {
+            $("#the-pic").css('width',"100vw");
+        }
+    }
 };
 
 var setUpFullPage = function() {

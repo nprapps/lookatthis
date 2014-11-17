@@ -1,20 +1,8 @@
 <div class="slide audio-reveal" id="{{ row.id }}">
 
-    <div class="full-block" {% if row.media %} style="background-image:url(assets/{{ row.media }});" {% endif %}>
+    <div id="the-pic" class="full-block" {% if row.media %} style="background-image:url(assets/{{ row.media }});" {% endif %}>
         <div class="full-block-cell">
             <div class="full-block-content">
-                    
-                    <!-- annotation modal fade-->
-<div id="photo-detail"  class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p class="close-modal" data-dismiss="modal"><i class="fa fa-times"></i></p>
-                <img src="assets/{{ row.media }}" alt="photo detail">
-            </div>
-        </div>
-    </div>
-  </div><!-- #photo-detail -->
 
 <div class="story-conclusion">
     {{ row.text1|smarty }}

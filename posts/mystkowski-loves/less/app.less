@@ -230,10 +230,17 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .full-block {
         .background-size(cover);
         background-position: top center;
+        background-repeat: no-repeat;
         position: relative;
         z-index: 1;
         opacity: 0;
         .transition(opacity 60s ease);
+        margin: 0 auto;
+        
+        &.fitme {
+            background-size: contain;
+            background-position: center center;   
+        }
         
         //add mask over full block background image when story conclusion fades in
         .full-block-cell {
@@ -454,6 +461,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     bottom: 0;
     right: 10px;
     z-index: 100;
+    width: 50px;
     font-size: 9px;
     cursor: pointer;
     text-transform: uppercase;
@@ -467,10 +475,26 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     i{
         padding-right: 4px;
         font-size: 12px;
+        position: absolute;
+        top: 6px;
+        left: 5px;
     }
     
     &.fade-out {
         opacity: 0;
+    }
+    .fit {
+        display: block;
+        padding-left: 17px;
+    } 
+    .fill {
+        display: none;
+        padding-left: 17px;
+    }
+    
+    &.fill-frame {
+        .fill {display: block;}
+        .fit {display: none;}   
     }
 }
 

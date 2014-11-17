@@ -46,48 +46,23 @@ var resize = function() {
     resizeThePic();
 };
 
-
-/*
-var featPic = $('#feat-pic'); // Get my img elem
-var pic_real_width, pic_real_height;
-$('#feat-pic') // Make in memory copy of image to avoid css issues
-.attr('src', $('#feat-pic').attr('src'))
-.load(function() {
-    pic_real_width = this.width;   // Note: $(this).width() will not
-    pic_real_height = this.height; // work for in memory images.
-    console.log(pic_real_width, pic_real_height);
-    
-    if (pic_real_width > pic_real_height) {
-        console.log("wider");
-    } else {
-        console.log("taller");
-    }
-});
-*/
-
 var fitPic = function() {
     $("#the-pic").toggleClass("fitme");
     resizeThePic();
 };
 
- $('#toggle-bg').click(function() {
-      $("#the-pic").toggleClass("fitme");
-      resizeThePic();
-    });
+$('#toggle-bg').click(function() {
+  $("#the-pic").toggleClass("fitme");
+  resizeThePic();
+});
 
 var resizeThePic = function(){
-    
-    //if we're in fit mode, do this stuff
-    
+    //if we're in fit mode
     if($("#the-pic").hasClass('fitme')){
         var aspect = window.innerWidth / window.innerHeight;
-        
         var imageAspect = 16/9;
         
-        //TODO: get the real ratio, either hardcoded or calculated
-        
         //if we're trying to fit a vertical image
-        
         //else its a horizontal image
         
         if (aspect > imageAspect) {
@@ -101,8 +76,6 @@ var resizeThePic = function(){
         } else {
             $("#the-pic").css('width',"100vw");
         }
-        
-        console.log('fitting');
     }
 };
 
