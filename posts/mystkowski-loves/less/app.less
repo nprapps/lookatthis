@@ -348,9 +348,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         
         .modal-body {
             padding: 5px;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
             background-color: #333;
+            
+            .touch & {
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            
         }
     }
     
