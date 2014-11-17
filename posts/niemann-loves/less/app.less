@@ -35,6 +35,8 @@ body {
     .transition(opacity 3s ease);
 }
 
+
+
 //typography
 
 h1,h2,h3,h4,h5,h6,p,ul,ol,li {
@@ -234,6 +236,14 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         z-index: 1;
         opacity: 0;
         .transition(opacity 20s ease);
+        margin: 0 auto;
+        
+        &.fitme {
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
         
         //add mask over full block background image when story conclusion fades in
         .full-block-cell {

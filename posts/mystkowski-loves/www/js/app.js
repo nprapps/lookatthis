@@ -297,7 +297,7 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    $fitImage = $('.fit-image');
+    //$fitImage = $('.fit-image');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
     $arrows = $('.controlArrow');
@@ -310,8 +310,6 @@ $(document).ready(function() {
 
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
-
-
 
     setUpFullPage();
     resize();

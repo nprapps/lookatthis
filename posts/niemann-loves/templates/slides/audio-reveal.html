@@ -1,21 +1,12 @@
 <div class="slide audio-reveal" id="{{ row.id }}">
 
-    <div class="full-block" {% if row.media %} style="background-image:url(assets/{{ row.media }});" {% endif %}>
+    <div id="the-pic" class="full-block" {% if row.media %} style="background-image:url(assets/niemann-love.jpg);" {% endif %}>
         <div class="full-block-cell">
             <div class="full-block-content">
+                
+                <h1 id="toggle-bg">toggle bg</h1>
                     
                     <!-- annotation modal fade-->
-<div id="photo-detail"  class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p class="close-modal" data-dismiss="modal"><i class="fa fa-times"></i></p>
-                <img src="assets/{{ row.media }}" alt="photo detail">
-                <!--<p class="credit">Anna Boiko-Weyrauch/NPR/Original photo courtesy of Middleton family</p>-->
-            </div>
-        </div>
-    </div>
-  </div><!-- #photo-detail -->
 
 <div class="story-conclusion">
     <p>Richard Loeb, 18, and Nathan Leopold Jr., 19, after confessing to the murder of 14-year-old Robert "Bobby" Franks, Chicago, 1924. Both went to Stateville Prison in Joliet, Ill. Loeb was killed in prison in 1936 and Leopold was paroled in 1958.</p>
