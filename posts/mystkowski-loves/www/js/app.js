@@ -14,6 +14,7 @@ var $fitImage;
 var $primaryNav;
 var $arrows;
 var $startCardButton;
+var $thePic;
 var mobileSuffix;
 var isTouch = Modernizr.touch;
 var aspectWidth = 16;
@@ -22,6 +23,7 @@ var optimalWidth;
 var optimalHeight;
 var w;
 var h;
+
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
 var slideStartTime = moment();
@@ -33,8 +35,6 @@ var resize = function() {
     $h = $(window).height();
 
     $slides.width($w);
-    
-    //$fitImage.height($h);
     
     optimalWidth = ($h * aspectWidth) / aspectHeight;
     optimalHeight = ($w * aspectHeight) / aspectWidth;
@@ -50,22 +50,17 @@ var resize = function() {
     resizeThePic();
 };
 
-
-
-var fitPic = function() {
-    $("#the-pic").toggleClass("fitme");
-    resizeThePic();
-};
-
 $('.photo-modal-trigger').click(function() {
-  $("#the-pic").toggleClass("fitme");
+  $thePic.toggleClass("fitme");
   $(this).toggleClass("fill-frame");
   resizeThePic();
 });
 
 var resizeThePic = function(){
     //if we're in fit mode
-    if($("#the-pic").hasClass('fitme')){
+    if(!$thePic.hasClass('fitme')){
+        $thePic.css('width','');
+    } else {
         var aspect = window.innerWidth / window.innerHeight;
         var imageAspect = 4/3;
         
@@ -75,13 +70,13 @@ var resizeThePic = function(){
         if (aspect > imageAspect) {
             
             if (imageAspect > 1) { //horiz
-                $("#the-pic").css('width',(100 * (imageAspect) / aspect) + 'vw');                
+                $thePic.css('width',(100 * (imageAspect) / aspect) + 'vw');                
             } else { // vertical
-                $("#the-pic").css('height',(100 * (imageAspect) / aspect) + 'vh');            
+                $thePic.css('height',(100 * (imageAspect) / aspect) + 'vh');            
             }
 
         } else {
-            $("#the-pic").css('width',"100vw");
+            $thePic.css('width','');
         }
     }
 };
@@ -335,7 +330,7 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    //$fitImage = $('.fit-image');
+    $thePic = $('#the-pic');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
     $arrows = $('.controlArrow');
