@@ -2,7 +2,7 @@
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $upNext = null;
-var NAV_HEIGHT = 75;
+//var NAV_HEIGHT = 75;
 // TODO: use deploy slug
 var EVENT_CATEGORY = 'lookatthis';
 var MESSAGE_DELIMITER = ';';
@@ -10,6 +10,7 @@ var MESSAGE_DELIMITER = ';';
 var $w;
 var $h;
 var $slides;
+var $fitImage;
 var $primaryNav;
 var $arrows;
 var $startCardButton;
@@ -32,6 +33,9 @@ var resize = function() {
     $h = $(window).height();
 
     $slides.width($w);
+    
+    //$fitImage.height($h);
+    
     optimalWidth = ($h * aspectWidth) / aspectHeight;
     optimalHeight = ($w * aspectHeight) / aspectWidth;
 
@@ -156,13 +160,11 @@ var showNavigation = function() {
 
         $prevArrow.removeClass('active');
         $prevArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
 
         $('body').addClass('titlecard-nav');
 
-        //$primaryNav.css('opacity', '1');
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -295,9 +297,9 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
+    $fitImage = $('.fit-image');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
