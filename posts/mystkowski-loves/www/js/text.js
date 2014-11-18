@@ -26,10 +26,8 @@ pop.code({
 
 //up-next
 pop.code({
-    start: 3,
-	end: 4,
-	//start: 153,
-	//end: 154,
+	start: 153,
+	end: 154,
 	onStart: function( options ) {  
     	$('.next').addClass('please-proceed');
 	}
