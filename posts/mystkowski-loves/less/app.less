@@ -61,8 +61,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        //opacity: 0;
-        //.transition(opacity 0.5s ease);
         opacity: .3;
         
         .titlecard-nav & {
@@ -108,6 +106,11 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .controlArrow.next {
         right: 0;
         padding: 0 0 0 5px;
+        z-index: -1;
+        
+        &.please-proceed {
+            z-index: 1;
+        }
 
         &:before {
             font-family: "FontAwesome";
