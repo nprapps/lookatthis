@@ -1,16 +1,24 @@
-<div class="slide audio-reveal" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+<div class="slide audio-reveal" id="{{ row.id }}">
 
-    <div class="text full-block">
+    <div id="the-pic" class="full-block" {% if row.media %} style="background-image:url(assets/{{ row.media }});" {% endif %}>
         <div class="full-block-cell">
             <div class="full-block-content">
-                {{ row.text1|smarty }}
-            </div><!--full-block-content-->
-        </div><!--full-block-cell-->
 
-        {% if row.media %}
-            <div class="credit">
-                {{ row.media_credit|smarty }}
-            </div>
-        {% endif %}
+<div class="story-conclusion">
+    {{ row.text1|smarty }}
+    
+    <div class="share-list">
+        <h4>Everyone loves photos. <a href="http://lookatthisstory.tumblr.com/submit">Send us one you love</a> or share Erin&rsquo;s story on: <a href="http://twitter.com/share?text={{ COPY.post_metadata.twitter_text|urlencode }}&amp;url={{ COPY.post_metadata.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'tweet', 'share']);"> Twitter</a>, <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.post_metadata.facebook_app_id }}&amp;link={{ COPY.post_metadata.share_url|urlencode }}&amp;name={{ COPY.post_metadata.facebook_title|urlencode }}&amp;picture={{ COPY.post_metadata.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.post_metadata.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'facebook', 'share']);">Facebook</a> or via <a href="mailto:?body={{ COPY.post_metadata.email_body|safe }}&subject={{ COPY.post_metadata.email_subject }}" onclick="_gaq.push(['_trackEvent', '{{ PROJECT_SLUG }}', 'email', 'share']);">email</a></h4>
+    </div><!--share-list-->
+    
+    <div class="project-credits">
+        {{ row.text2|smarty }}
+    </div><!--project-credits-->
+    
+</div><!--story-conclusion-->
+        
+    </div><!--full-block-content-->
+</div><!--full-block-cell-->
+
     </div><!--full-block-->
 </div><!--slide-->

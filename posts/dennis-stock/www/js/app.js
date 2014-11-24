@@ -2,7 +2,7 @@
 var $nextPostTitle = null;
 var $nextPostImage = null;
 var $upNext = null;
-var NAV_HEIGHT = 75;
+//var NAV_HEIGHT = 75;
 // TODO: use deploy slug
 var EVENT_CATEGORY = 'lookatthis';
 var MESSAGE_DELIMITER = ';';
@@ -10,9 +10,11 @@ var MESSAGE_DELIMITER = ';';
 var $w;
 var $h;
 var $slides;
+var $fitImage;
 var $primaryNav;
 var $arrows;
 var $startCardButton;
+var $thePic;
 var mobileSuffix;
 var isTouch = Modernizr.touch;
 var aspectWidth = 16;
@@ -21,14 +23,11 @@ var optimalWidth;
 var optimalHeight;
 var w;
 var h;
+
 var hasTrackedKeyboardNav = false;
 var hasTrackedSlideNav = false;
 var slideStartTime = moment();
 var completion = 0;
-
-/*var onStartCardButtonClick = function() {
-    $.fn.fullpage.moveSlideRight();
-}*/
 
 var resize = function() {
 
@@ -36,7 +35,7 @@ var resize = function() {
     $h = $(window).height();
 
     $slides.width($w);
-
+    
     optimalWidth = ($h * aspectWidth) / aspectHeight;
     optimalHeight = ($w * aspectHeight) / aspectWidth;
 
@@ -47,13 +46,47 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
+    
+    resizeThePic();
+};
+
+$('.photo-modal-trigger').click(function() {
+  $thePic.toggleClass("fitme");
+  $(this).toggleClass("fill-frame");
+  resizeThePic();
+});
+
+var resizeThePic = function(){
+    //if we're in fit mode
+    if(!$thePic.hasClass('fitme')){
+        $thePic.css('width','');
+    } else {
+        var aspect = window.innerWidth / window.innerHeight;
+        var imageAspect = 4/3;
+        
+        //if we're trying to fit a vertical image
+        //else its a horizontal image
+        
+        if (aspect > imageAspect) {
+            
+            if (imageAspect > 1) { //horiz
+                $thePic.css('width',(100 * (imageAspect) / aspect) + 'vw');                
+            } else { // vertical
+                $thePic.css('height',(100 * (imageAspect) / aspect) + 'vh');            
+            }
+
+        } else {
+            $thePic.css('width','');
+        }
+    }
 };
 
 var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        keyboardScrolling: false,
+        fixedElements: '.primary-navigation, .audio-controls, #photo-detail, .photo-modal-trigger',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -116,9 +149,9 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    if ($w < 769) {
+   /* if ($w < 769) {
         mobileSuffix = '-sq';
-    }
+    }*/
 
     _.each($(slides), function(slide) {
 
@@ -142,9 +175,6 @@ var getBackgroundImage = function(container) {
         if ($(container).css('background-image') === 'none') {
             $(container).css('background-image', 'url(' + image_path + ')');
         }
-        if ($(container).hasClass('contained-image-container')) {
-            setImages($(container));
-        }
 
      }
 };
@@ -164,13 +194,11 @@ var showNavigation = function() {
 
         $prevArrow.removeClass('active');
         $prevArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
 
         $('body').addClass('titlecard-nav');
 
-        //$primaryNav.css('opacity', '1');
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -185,11 +213,11 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('final-slide');
 
-        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -199,8 +227,8 @@ var showNavigation = function() {
         }
 
         $('body').removeClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
+        $('body').removeClass('final-slide');
+        
     }
 }
 
@@ -223,57 +251,6 @@ var fadeInArrows = _.debounce(function() {
     //$arrows.css('opacity', 1)
 }, 1);
 
-
-var setImages = function(container) {
-    /*
-    * Image resizer from the Wolves lightbox + sets background image on a div.
-    */
-
-    // Grab Wes's properly sized width.
-    var imageWidth = w;
-
-    // Sometimes, this is wider than the window, shich is bad.
-    if (imageWidth > $w) {
-        imageWidth = $w;
-    }
-
-    // Set the hight as a proportion of the image width.
-    var imageHeight = ((imageWidth * aspectHeight) / aspectWidth);
-
-    // Sometimes the lightbox width is greater than the window height.
-    // Center it vertically.
-    if (imageWidth > $h) {
-        imageTop = (imageHeight - $h) / 2;
-    }
-
-    // Sometimes the lightbox height is greater than the window height.
-    // Resize the image to fit.
-    if (imageHeight > $h) {
-        imageWidth = ($h * aspectWidth) / aspectHeight;
-        imageHeight = $h;
-    }
-
-    // Sometimes the lightbox width is greater than the window width.
-    // Resize the image to fit.
-    if (imageWidth > $w) {
-        imageHeight = ($w * aspectHeight) / aspectWidth;
-        imageWidth = $w;
-    }
-
-    // Set the top and left offsets. Image bottom includes offset for navigation
-    var imageBottom = ($h - imageHeight) / 2 + 70;
-    var imageLeft = ($w - imageWidth) / 2;
-
-    // Set styles on the map images.
-    $(container).css({
-        'width': imageWidth + 'px',
-        'height': imageHeight + 'px',
-        'bottom': imageBottom + 'px',
-        'left': imageLeft + 'px',
-    });
-
-};
-
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
@@ -283,12 +260,6 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var timeOnSlide = (now - slideStartTime);
 
     trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex.toString(), timeOnSlide]);
-}
-
-var onResize = function(e) {
-    if ($('.slide.active').hasClass('image-split')) {
-        setImages($('.slide.active').find('.contained-image-container')[0]);
-    }
 }
 
 var onDocumentKeyDown = function(e) {
@@ -314,14 +285,6 @@ var onDocumentKeyDown = function(e) {
     }
 
     // jquery.fullpage handles actual scrolling
-    return true;
-}
-
-var onSlideClick = function(e) {
-    if (isTouch) {
-        $.fn.fullpage.moveSlideRight();
-    }
-
     return true;
 }
 
@@ -368,23 +331,19 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
+    $thePic = $('#the-pic');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
 
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
-
-
 
     setUpFullPage();
     resize();
@@ -401,13 +360,14 @@ $(document).ready(function() {
     var audiolab = $("#moodmusic")[0];
     
     $(".btn-go").click(function() {
-      audiolab.play();
-      $.fn.fullpage.moveTo(0, 1);
+        $.fn.fullpage.moveSlideRight();
+        $(".audio-reveal").addClass("active");
+        audiolab.play();
+      
     });
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
 });
