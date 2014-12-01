@@ -1056,7 +1056,7 @@ body {
     
     .tag-header:after {
         content:""; 
-        background: #f60062; 
+        background: @look-pink; 
         position: absolute; 
         bottom: 0; 
         left: 39%; 
@@ -1084,6 +1084,30 @@ body {
                     .make-sm-column-offset(1);
                     .make-md-column(6);
                     .make-md-column-offset(0);
+                    
+                    .text-wrapper {
+                        img {margin: 15px 0;}
+                        p {
+                            font-family: georgia, serif;
+                            font-size: 14px;
+                            margin: 0;
+                            
+                            a {
+                               color: #000;
+                               text-decoration: none; 
+                            }
+                            
+                            strong, b {
+                                font-family: 'Gotham SSm', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                                font-size: 18px;
+                                font-weight: normal;
+                                color: @look-pink;
+                                
+                            }
+                            
+                            
+                        }
+                    }
                 }
             }
             
