@@ -309,9 +309,6 @@ body {
 
 #post-wrap {
     .make-sm-column(12);
-    // .make-sm-column-offset(1);
-    // .make-md-column(8);
-    // .make-md-column-offset(2);
 
     .permalink-page & {
         .make-sm-column(12);
@@ -324,16 +321,6 @@ body {
 
     .permalink-page & {
         padding-top: 0;
-    }
-
-    .tag-header {
-        .make-sm-column(10);
-        .make-sm-column-offset(1);
-        .make-md-column(8);
-        .make-md-column-offset(2);
-
-        color: @text-color;
-        font-weight: bold;
     }
 
     .post {
@@ -797,10 +784,8 @@ body {
             .index-page & {
                 .make-sm-column(10);
                 .make-sm-column-offset(1);
-                // .make-sm-column-pull(2);
                 .make-md-column(8);
                 .make-md-column-offset(2);
-                // .make-md-column-pull(2);
             }
 
             .permalink-page & {
@@ -821,7 +806,7 @@ body {
             }
         }
 
-
+        /*
         .tags {
             margin-top: @line-height-computed * 2;
             margin-bottom: @line-height-computed;
@@ -851,6 +836,7 @@ body {
                 margin-bottom: @line-height-computed;
             }
         }
+        */
 
 
         .post-notes {
@@ -978,8 +964,9 @@ body {
                 }
             }
         }
+        
     }
-
+    
     #posts > .post:first-child .post-header:before {
         display: none;
     }
@@ -1024,6 +1011,31 @@ body {
             -webkit-font-smoothing: antialiased;
         }
     }
+}
+
+
+//Tag Page: custom layout for all tag pages
+.tag-page {
+    #post-wrap {
+        .post {
+            
+            //posts tagged features
+            &.features {
+                .post-header,
+                .post-meta {
+                    display: none;
+                }
+                
+                .post-content {
+                    .make-sm-column(10);
+                    .make-sm-column-offset(1);
+                    .make-md-column(6);
+                    .make-md-column-offset(0);
+                }
+            }
+            
+        }
+    } 
 }
 
 // Center logged-in tumblr controls in fixed nav bar
