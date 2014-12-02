@@ -93,7 +93,11 @@ body {
 
 .npr img {
     height: 24px;
-    margin-bottom: 15px;
+    margin-bottom: 7px;
+    @media @screen-small-above {
+         height: 24px;
+         margin-bottom: 15px;
+    }
 }
 
 .blog-header {
@@ -110,9 +114,13 @@ body {
 
     h1 {
         margin: 5px 0;
-        font-size: 36px;
+        font-size: 26px;
         letter-spacing: 3px;
         text-align: center;
+        
+        @media @screen-small-above {
+            font-size: 36px;
+        }
 
         a {
             
@@ -121,15 +129,6 @@ body {
             line-height: 1.1;
             margin-left: -0.05em;
             text-decoration: none;
-
-
-            @media (min-width: @screen-md){
-                
-            }
-
-            @media (min-width: 1400px){
-               
-            }
         }
     }
 
@@ -141,32 +140,19 @@ body {
     .description {
         color: #fff;
         font-family: @font-family-serif;
-        font-size: 18px;
+        font-size: 14px;
         -webkit-font-smoothing: antialiased;
         margin-bottom: @line-height-computed;
         text-align: center;
+        
+        @media @screen-small-above {
+            font-size: 18px;
+        }
 
         a {
             color: #fff;
             opacity: 0.8;
             margin-left: 20px;
-        }
-    }
-
-    @media screen and (max-width: @screen-sm-max){
-
-        h2 {
-            margin-bottom: 0;
-        }
-
-        h1 {
-            a {
-                font-size: 8vw;
-            }
-        }
-
-        .description {
-            font-size: @font-size-small;
         }
     }
 
@@ -207,7 +193,7 @@ nav {
         }
         
         ul {
-            width: 325px;
+            width: 295px;
             padding: 30px 0 0 0;
             margin: 0 auto;
             list-style-type: none;
