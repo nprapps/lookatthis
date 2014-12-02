@@ -66,7 +66,13 @@ body {
     background: #fff;
 
     &.permalink-page {
-        padding-top: 40px + @grid-gutter-width / 2;
+        
+        padding-top: 20px;
+        
+        @media @screen-small-above {
+                padding-top: 30px;
+        }
+        
     }
 }
 
@@ -171,31 +177,60 @@ body {
 
 
 //header nav
-#header-nav {
+nav {
+    
+    .permalink-page & {
+        //background: @look-pink;
+    }
+    
+    #header-nav {
         .make-sm-column(12);
         .make-md-column(8);
         .make-md-column-offset(2);
         margin-bottom: 0;
-
+        
+        .permalink-page & {
+            
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            @media @screen-small-above {
+               //margin-bottom: 40px;
+            }
+            
+            li {
+                
+                
+                
+            }
+            
+        }
         
         ul {
-            width: 393px;
+            width: 325px;
             padding: 30px 0 0 0;
             margin: 0 auto;
             list-style-type: none;
-            
+            @media @screen-small-above {
+                width: 393px;
+            }
             
         }
 
         li {
             float: left;
-            padding: 0 15px;
-            font-size: 13px;
+            padding: 0 10px;
+            font-size: 10px;
             border-left: 1px solid #777;
             line-height: 1;
             
             &:first-child{
                 border: none;            
+            }
+            
+            @media @screen-small-above {
+                padding: 0 15px;
+                font-size: 13px;
             }
         }
 
@@ -209,7 +244,9 @@ body {
                 color: @look-pink;
             }
         }
+    }
 }
+
 
 .fixed-nav {
     display: table;
@@ -230,6 +267,12 @@ body {
             position: absolute;
             top: 40px;
             margin-bottom: 60px;
+            
+            .nav-wrapper {
+                display: block;
+                width: 250px;
+                margin: 0 auto;
+            }
         }
 
         .index-page & {
@@ -265,18 +308,21 @@ body {
 
     .npr {
         a {
-            // display: block;
-            height: 25px;
+            
+            height: 22px;
             line-height: 25px;
 
             img {
                 display: inline-block;
+                margin-bottom: 0;
+                height: 20px;
             }
         }
     }
 
     a {
         color: #fff;
+        text-decoration: none;
     }
 
     .social {
@@ -313,6 +359,7 @@ body {
 
 #post-wrap {
     .make-sm-column(12);
+    margin-bottom: 20px;
 
     .permalink-page & {
         .make-sm-column(12);
@@ -325,7 +372,7 @@ body {
     
     @media @screen-small-above {
             padding-top: @line-height-computed * 2;
-        }
+    }
     
 
     .permalink-page & {
@@ -333,6 +380,7 @@ body {
     }
 
     .post {
+        padding-top: 10px;
         margin-bottom: @line-height-computed;
 
         h3 {
@@ -754,6 +802,7 @@ body {
                     display: block;
                     content: ' ';
                     border-top: 1px solid #ddd;
+                    margin-top: 5px;
                     margin-bottom: @line-height-computed;
                 }
             }
@@ -814,39 +863,6 @@ body {
                 float: right;
             }
         }
-
-        /*
-        .tags {
-            margin-top: @line-height-computed * 2;
-            margin-bottom: @line-height-computed;
-
-            @media (max-width: @screen-xs-max) {
-                position: static;
-            }
-            .tag {
-                display: inline-block;
-                position: relative;
-                background: #ccc;
-                color: @white;
-                font-size: 13px;
-                line-height: 18px;
-                padding: 3px 5px;
-                margin-right: 5px;
-                margin-bottom: 5px;
-
-                &:hover {
-                    background: @brand-primary;
-                    color: @white;
-                    text-decoration: none;
-                }
-            }
-
-            .permalink-page & {
-                margin-bottom: @line-height-computed;
-            }
-        }
-        */
-
 
         .post-notes {
             .make-row();
@@ -1033,11 +1049,12 @@ body {
         font-family: georgia, serif;
         font-size: 20px;
         padding-bottom: 10px;
-        margin: 0 0 30px 0;
+        margin: 0;
         
         @media @screen-small-above {
             font-size: 40px;
             padding-bottom: 15px;
+            margin: 0 0 30px 0;
         }
         
         @media @screen-medium-above {
@@ -1063,8 +1080,9 @@ body {
     }
     
     #post-wrap {
+        
         .post {
-            
+            padding-top: 0;
             //posts tagged features
             &.features {
                 .post-header,
