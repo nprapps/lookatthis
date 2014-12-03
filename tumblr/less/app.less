@@ -175,30 +175,28 @@ nav {
         .make-md-column-offset(2);
         margin-bottom: 0;
         
+        @media @screen-small-above {
+           border-bottom: 1px solid #ddd;
+           padding-bottom: 20px;
+        }
+        
         .permalink-page & {
             
             padding-bottom: 20px;
             border-bottom: 1px solid #ddd;
             margin-bottom: 20px;
-            @media @screen-small-above {
-               //margin-bottom: 40px;
-            }
             
-            li {
-                
-                
-                
-            }
             
         }
         
         ul {
             width: 257px;
-            padding: 30px 0 0 0;
+            padding: 20px 0 0 0;
             margin: 0 auto;
             list-style-type: none;
             @media @screen-small-above {
-                width: 325px;
+                padding: 30px 0 0 0;
+                width: 318px;
             }
             
         }
