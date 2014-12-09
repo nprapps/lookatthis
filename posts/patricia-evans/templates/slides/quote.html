@@ -1,4 +1,4 @@
-<div class="slide quote" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+<div class="slide quote{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
 
     <div class="text full-block">
         <div class="full-block-cell">
