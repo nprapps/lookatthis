@@ -17,24 +17,19 @@
         background-position: top left;
         @media @screen-small-above {
             height: 100%;
-            background-position: center center;
+            background-position: top center;
         }
     }
 
     .quote-text {
-        position: absolute;
-        top: 225px;
-        right: 0;
-        padding: 20px 20px 70px 20px;
+        position: relative;
         color: #ddd;
 
         @media @screen-small-above {
-            top: auto;
-            bottom: 90px;
-            right: 25px;
-            max-width: 300px;
+            left: 35px;
+            max-width: 420px;
             padding: 20px;
-            background-color: rgba(0,0,0,.8);
+            background-color: rgba(0,0,0,.7);
         }
 
         blockquote {
@@ -43,9 +38,20 @@
             padding: 0;
 
             font-size: 13px;
+            p {
+                font-size: 18px;
+            }
+
             @media @screen-small-above {
                 font-size: 18px;
             }
+        }
+    }
+
+    &.quote-right {
+        .quote-text {
+            left: auto;
+            right: 10px;
         }
     }
 }
