@@ -256,6 +256,33 @@ p,ul,ol,li {
     }
 }
 
+//full-bleed
+.slide.full-bleed {
+    
+    .full-block-content {
+        max-width: 70%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    }
+
+    
+}
+
+
+//side-by-side
+.slide.side-by-side {
+    
+    .full-block {
+        background: rgba(0,0,0,0.8);
+    }
+    
+}
+
+
+
 .credit {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
@@ -300,21 +327,4 @@ p,ul,ol,li {
     }
 }
 
-// @media only screen and (orientation:portrait){
-//     body {
-//         -webkit-transform: rotate(90deg);
-//         -moz-transform: rotate(90deg);
-//         -o-transform: rotate(90deg);
-//         -ms-transform: rotate(90deg);
-//         transform: rotate(90deg);
-//      }
-//  }
-//  @media only screen and (orientation:landscape){
-//     body {
-//         -webkit-transform: rotate(0deg);
-//         -moz-transform: rotate(0deg);
-//         -o-transform: rotate(0deg);
-//         -ms-transform: rotate(0deg);
-//         transform: rotate(0deg);
-//      }
-//  }
+
