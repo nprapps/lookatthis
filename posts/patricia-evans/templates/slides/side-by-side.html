@@ -1,0 +1,22 @@
+<div class="slide side-by-side {% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                
+                <div class="side-by-side-wrapper">
+                    <div class="first-side">
+                        {{ row.text1|smarty }}
+                    </div>
+                    
+                    <div class="second-side">
+                        {{ row.text2}}
+                    </div>
+                </div>
+               
+                
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+
+    </div><!--full-block-->
+</div><!--slide-->
