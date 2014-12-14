@@ -14,6 +14,16 @@
 // Global variables
 @img-root: "../assets";
 
+// Color screens
+@darker-overlay: rgba(0,0,0,0.7);
+@black-screen: rgba(0,0,0,0.8);
+
+@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@caption-screen-dark: rgba(175, 0, 71, 0.7);
+@caption-screen-light: rgba(153, 9, 71, 0.7);
+
+
+
 // Breakpoints
 @screen-mega-above: ~"screen and (min-width: 1440px)";
 @screen-large-above: ~"screen and (min-width: 1201px)";
@@ -244,13 +254,14 @@ p,ul,ol,li {
 
 
     .full-block-content {
-        max-width: 900px;
+        max-width: 70%;
         margin: 0 auto;
         padding: 20px;
         font-size: 21px;
         line-height: 30px;
         text-shadow: #000 1px 2px 1px;
         @media @screen-small-above {
+            max-width: 1000px;
              padding: 20px 100px;
         }
     }
@@ -264,15 +275,47 @@ p,ul,ol,li {
         margin: 0 auto;
         @media @screen-small-above {
             max-width: 1000px;
-            margin: 0 auto;
         }
+        
+    }
     
-        /*
-        .bleed-box {
-            padding: 20px;
-            background: rgba(246,0,98,0.35);
+    .bleed-box {
+        padding: 20px;
+        background: @caption-screen-dark;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        
+        p {
+            font-size: 20px;
+            line-height: 1.5;
+            text-shadow: none;
+            max-width: 700px;
+            margin: 15px auto;
         }
-        */
+    }
+    
+    //using full bleed capitons on b/w images
+    &.caption-screen-light {
+        .bleed-box{
+            background: @caption-screen-light;
+        }
+        
+    }
+    
+}
+
+//full-bleed
+.slide.single-image {
+    
+    .full-block-content {
+        max-width: 70%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 1000px;
+        }
+        
     }
     
     .full-block-content:after {
@@ -283,11 +326,18 @@ p,ul,ol,li {
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(82,3,37,0.5);
+        background: rgba(0,0,0,0.8);
         z-index: -1;
         height: 100%;
     }
-
+    
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 10px solid #fff;
+    }
+    
     
 }
 
@@ -295,7 +345,7 @@ p,ul,ol,li {
 
 .slide.framed-image {
     .full-block {
-        background: rgba(42,0,19,0.8);
+        background: @darker-overlay;
         
         .full-block-content {
             max-width: 70%;
@@ -303,6 +353,7 @@ p,ul,ol,li {
             @media @screen-small-above {
                 max-width: 1300px;
                 margin: 0 auto;
+                padding: 20px 120px 20px 100px;
             }
         }
         
@@ -311,7 +362,7 @@ p,ul,ol,li {
             
             .first-side {
                 vertical-align: middle;
-                background: rgba(246,0,98,0.35);
+                background: @side-by-side-screen;
                 padding: 20px;
                 
                 img {
@@ -387,7 +438,7 @@ p,ul,ol,li {
         }
     }
     .second-side {
-        background: rgba(246,0,98,0.35);
+        background: @side-by-side-screen;
         vertical-align: middle;
         padding: 20px;
     }
@@ -398,7 +449,7 @@ p,ul,ol,li {
 .slide.side-by-side {
     
     .full-block {
-        background: rgba(0,0,0,0.8);
+        background: @darker-overlay;
         
         .full-block-content {
             max-width: 70%;
@@ -406,6 +457,7 @@ p,ul,ol,li {
             @media @screen-small-above {
                 max-width: 1000px;
                 margin: 0 auto;
+                padding: 20px 120px 20px 100px;
             }
             
             .side-by-side-wrapper {
@@ -413,7 +465,7 @@ p,ul,ol,li {
                 
                 .first-side {
                     vertical-align: middle;
-                    background: rgba(246,0,98,0.35);
+                    background: @side-by-side-screen;
                     
                     @media @screen-small-above {
                         display: table-cell;
@@ -439,6 +491,7 @@ p,ul,ol,li {
                         display: block;
                         width: 100%;
                         height: auto;
+                        border: 10px solid #fff;
                         
                         .box-shadow(5px 5px 10px rgba(0,0,0,.9));
                         
