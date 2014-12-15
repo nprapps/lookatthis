@@ -280,12 +280,15 @@ p,ul,ol,li {
     }
     
     .bleed-box {
-        padding: 20px;
+        padding: 10px 20px 30px 20px;
         background: @caption-screen-dark;
         position: absolute;
         bottom: 0;
         right: 0;
         width: 100%;
+        @media @screen-small-above {
+            padding: 20px;
+        }
         
         p {
             font-size: 20px;
@@ -293,6 +296,13 @@ p,ul,ol,li {
             text-shadow: none;
             max-width: 700px;
             margin: 15px auto;
+            font-size: 11px;
+            @media @screen-small-above {
+                font-size: 13px;
+            }
+            @media @screen-medium-above {
+                font-size: 18px;
+            }
         }
     }
     
@@ -368,8 +378,6 @@ p,ul,ol,li {
             
             .first-side {
                 vertical-align: middle;
-                background: @side-by-side-screen;
-                padding: 20px;
                 margin-bottom: 20px;
                 
                 img {
@@ -382,6 +390,11 @@ p,ul,ol,li {
                 @media @screen-medium-above {
                     display: table-cell;
                     width: 50%;
+                    
+                    img {
+                        position: relative;
+                        left: -20px; 
+                    }
                 }
             
                 p {
@@ -400,10 +413,14 @@ p,ul,ol,li {
             
             .second-side {
                 margin-bottom: 20px;
+                padding: 20px;
+                background: @side-by-side-screen;
                 
                 @media @screen-medium-above {
                     display: table-cell;
+                    vertical-align: middle;
                     width: 50%;
+                    
                 }
                 
                 p {
@@ -439,7 +456,7 @@ p,ul,ol,li {
     
 }
 
-/*image on left*/
+/*image on left
 #a {
     .first-side {
         background: transparent;
@@ -459,7 +476,7 @@ p,ul,ol,li {
         padding: 20px;
     }
 }
-
+*/
 
 //side-by-side (vertical)
 .slide.side-by-side {
@@ -554,16 +571,18 @@ p,ul,ol,li {
 .caption {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
-    right: 25px;
+    right: 10px;
     bottom: 10px;
     text-align: right;
     font-size: 10px;
     font-style: italic;
     color: #fff;
-    text-shadow: 2px 2px 5px #000;
+    
     @media @screen-small-above {
+         right: 25px;
          font-size: 12px;
          max-width: 200px;
+         text-shadow: 2px 2px 5px #000;
     }
 }
 
