@@ -20,6 +20,7 @@
 
 @side-by-side-screen: rgba(295, 37, 115, 0.6);
 @caption-screen-dark: rgba(175, 0, 71, 0.7);
+@pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
 
 
@@ -265,6 +266,7 @@ p,ul,ol,li {
              padding: 20px 100px;
         }
     }
+
 }
 
 //full-bleed
@@ -603,7 +605,7 @@ p,ul,ol,li {
 
 /* share panel */
 .modal-body, .conclusion {
-
+    
     h3 {
         font-size: 16px;
         margin: 0 auto;
@@ -829,3 +831,25 @@ p,ul,ol,li {
         }
     }
 }
+
+.infographic { 
+    p {
+        font-family: "Gotham", helvetica, arial, sans-serif;
+        font-size: 20px;
+        padding: 20px 0;
+        margin: 0;
+        border-top: 1px solid #aaa;
+        .number {
+            font-size: 28px;
+        }
+    }
+    h2 {
+        font-size: 38px;
+        margin-bottom: 20px;
+    }
+}
+.number {
+    font-weight: bold;
+    color: @pink;
+}
+
