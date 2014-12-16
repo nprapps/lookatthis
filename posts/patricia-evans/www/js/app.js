@@ -52,7 +52,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        fixedElements: '.primary-navigation, #share-modal, .home, .share',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -187,8 +187,9 @@ var showNavigation = function() {
             //'opacity': 0,
             'display': 'none'
         });
+        
+        $('body').addClass('final-slide');
 
-        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -197,9 +198,7 @@ var showNavigation = function() {
             animateArrows();
         }
 
-        $('body').removeClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
+        $('body').removeClass('titlecard-nav final-slide');
     }
 }
 
@@ -356,6 +355,11 @@ var rmFakeMobileHover = function() {
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
+    
+    //section menu
+    $( ".home" ).click(function() {
+      $.fn.fullpage.moveTo(0, 0);
+    });
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
