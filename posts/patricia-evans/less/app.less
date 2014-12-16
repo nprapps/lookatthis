@@ -401,7 +401,7 @@ p,ul,ol,li {
 .slide.single-image {
     
     .full-block-content {
-        max-width: 70%;
+        max-width: 100%;
         margin: 0 auto;
         @media @screen-small-above {
             max-width: 800px;
@@ -426,7 +426,10 @@ p,ul,ol,li {
         display: block;
         width: 100%;
         height: auto;
-        border: 10px solid #fff;
+        
+        @media @screen-small-above {
+            border: 10px solid #fff;
+        }
     }
     
     
@@ -438,9 +441,19 @@ p,ul,ol,li {
     .full-block {
         background: @darker-overlay;
         
+        .full-block-cell {
+            vertical-align: middle;
+        }
+        
         .full-block-content {
-            max-width: 70%;
+            
             margin: 0 auto;
+            max-width: 100%; 
+            
+            @media @screen-small-above {
+                max-width: 70%; 
+            }
+            
             @media @screen-medium-above {
                 max-width: 1300px;
                 margin: 0 auto;
@@ -453,13 +466,19 @@ p,ul,ol,li {
             
             .first-side {
                 vertical-align: middle;
-                margin-bottom: 20px;
+                
+                @media @screen-small-above {
+                    margin-bottom: 20px;  
+                }
                 
                 img {
                     display: block;
                     width: 100%;
                     height: auto;
-                    border: 10px solid #fff;
+                                        
+                    @media @screen-small-above {
+                        border: 10px solid #fff;
+                    }
                 }
                 
                 @media @screen-medium-above {
@@ -487,9 +506,12 @@ p,ul,ol,li {
             }
             
             .second-side {
-                margin-bottom: 20px;
                 padding: 20px;
                 background: @side-by-side-screen;
+                
+                @media @screen-small-above {
+                    margin-bottom: 20px;
+                }
                 
                 @media @screen-medium-above {
                     display: table-cell;
@@ -518,7 +540,9 @@ p,ul,ol,li {
                     display: block;
                     width: 100%;
                     height: auto;
-                    border: 10px solid #fff;
+                    @media @screen-small-above {
+                        border: 10px solid #fff;
+                    }
                     
                     @media @screen-medium-above {
                         margin-left: 20px;                    
@@ -559,9 +583,18 @@ p,ul,ol,li {
     .full-block {
         background: @darker-overlay;
         
+        .full-block-cell {
+            vertical-align: middle;
+        }
+        
         .full-block-content {
-            max-width: 70%;
             margin: 0 auto;
+            max-width: 100%; 
+            
+            @media @screen-small-above {
+                max-width: 70%; 
+            }
+            
             @media @screen-medium-above {
                 max-width: 1000px;
                 margin: 0 auto;
@@ -574,7 +607,11 @@ p,ul,ol,li {
                 .first-side {
                     vertical-align: middle;
                     background: @side-by-side-screen;
-                    margin-bottom: 20px;
+                    
+                    
+                    @media @screen-small-above {
+                        margin-bottom: 20px;
+                    }
                     
                     @media @screen-medium-above {
                         display: table-cell;
@@ -598,7 +635,10 @@ p,ul,ol,li {
                 }
                 
                 .second-side {
-                    margin-bottom: 20px;
+                    
+                     @media @screen-small-above {
+                        margin-bottom: 20px; 
+                     }
                     
                     @media @screen-medium-above {
                         display: table-cell;
@@ -609,9 +649,10 @@ p,ul,ol,li {
                         display: block;
                         width: 100%;
                         height: auto;
-                        border: 10px solid #fff;
                         
-                        .box-shadow(5px 5px 10px rgba(0,0,0,.9));
+                        @media @screen-small-above {
+                            border: 10px solid #fff;  
+                        }
                         
                          @media @screen-medium-above {
                             margin-left: 20px;                    
