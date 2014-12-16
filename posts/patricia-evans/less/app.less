@@ -946,24 +946,49 @@ p,ul,ol,li {
     }
 }
 
-.infographic { 
-    p {
-        font-family: "Gotham", helvetica, arial, sans-serif;
-        font-size: 20px;
-        padding: 20px 0;
-        margin: 0;
-        border-top: 1px solid #aaa;
-        .number {
-            font-size: 28px;
-        }
-    }
+.infographic {
+    display: table;
+    font-family: "Gotham", helvetica, arial, sans-serif;
+    height: 60vh;
     h2 {
         font-size: 38px;
         margin-bottom: 20px;
     }
-}
-.number {
-    font-weight: bold;
-    color: @pink;
+    .building-wrapper {
+        float: left;
+        width: 150px;
+    }
+    .building {
+        border: 2px solid #fff;
+    }
+    .infographic-labels {
+        float: left;
+        width: 200px;
+        margin-left: 20px;
+        display: table;
+    }
+    .infographic-copy {
+        margin-left: 380px;
+    }
+    .building .infographic-section {
+        background-color: @caption-screen-dark;
+    }
+    .building .infographic-section:not(:first-child) {
+        border-top: 2px solid #fff;
+    }
+    .infographic-labels .infographic-section {
+        display: table-row;
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .infographic-section-inner {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .number {
+        font-size: 24px;
+        font-weight: bold;
+        color: @pink;
+    }
 }
 
