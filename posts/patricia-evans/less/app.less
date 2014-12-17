@@ -989,46 +989,62 @@ p,ul,ol,li {
 .infographic {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
-    height: 60vh;
+    height: 50vh;
     h2 {
         font-size: 38px;
         margin-bottom: 20px;
     }
+    .graph-footer {
+        font-family: "Gotham", helvetica, arial, sans-serif;
+        font-size: 15px;
+        text-align: center;
+    }
     .building-wrapper {
         float: left;
-        width: 150px;
+        width: 180px;
     }
     .building {
         border: 2px solid #fff;
     }
     .infographic-labels {
         float: left;
-        width: 200px;
-        margin-left: 20px;
-        display: table;
+        width: 150px;
+        margin-left: 10px;
     }
     .infographic-copy {
-        margin-left: 380px;
+        margin-left: 350px;
     }
-    .building .infographic-section {
+    .infographic-intro {
+        width: 360px;
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 15px;
+    }
+    .infographic-section {
+        display: table;
+        width: 100%;
+    }
+    .building .infographic-section-inner {
         background-color: @caption-screen-dark;
+        text-align: center;
+    }
+    .building .non-return .infographic-section-inner {
+        background-color: transparent;
     }
     .building .infographic-section:not(:first-child) {
         border-top: 2px solid #fff;
     }
-    .infographic-labels .infographic-section {
-        display: table-row;
-        font-size: 16px;
-        line-height: 20px;
+    .infographic-labels .infographic-section:not(:first-child) {
+        margin-top: 3px;
     }
     .infographic-section-inner {
+        line-height: 20px;
+        font-size: 14px;
         display: table-cell;
         vertical-align: middle;
     }
     .number {
-        font-size: 24px;
         font-weight: bold;
-        color: @pink;
     }
 }
 
