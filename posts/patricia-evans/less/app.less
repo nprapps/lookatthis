@@ -342,6 +342,46 @@ p,ul,ol,li {
 
 }
 
+//framed-text 
+
+.slide.framed-text {
+    
+    .full-block-cell {
+        vertical-align: middle;
+    }
+    
+    .full-block-content {
+        max-width: 100%;
+        margin: 0 auto;
+        
+        .framed-text-box {
+            margin: 0 auto;
+            background: rgba(195, 26, 86, 0.7);
+            padding: 20px;
+            
+            @media @screen-small-above {
+                max-width: 500px;
+                background: rgba(195, 26, 86, 0.7);
+                padding: 100px 60px;
+            }
+            
+            p {
+                text-shadow: none;
+                line-height: 1.5;
+                font-size: 11px;
+                @media @screen-small-above {
+                    font-size: 13px;
+                }
+                @media @screen-medium-above {
+                    font-size: 16px;
+                }
+                
+            }
+        }
+        
+    }
+}
+
 //full-bleed
 .slide.full-bleed {
     
