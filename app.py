@@ -10,7 +10,7 @@ import json
 from flask import Blueprint, Flask, render_template, render_template_string
 
 import app_config
-from render_utils import make_context, smarty_filter, urlencode_filter, CSSIncluder, JavascriptIncluder
+from render_utils import make_context, smarty_filter, urlencode_filter, number_filter, CSSIncluder, JavascriptIncluder
 import static
 import static_post
 import static_theme
@@ -19,6 +19,7 @@ app = Flask(__name__)
 
 app.jinja_env.filters['smarty'] = smarty_filter
 app.jinja_env.filters['urlencode'] = urlencode_filter
+app.jinja_env.filters['format_number'] = number_filter
 
 posts = Blueprint('posts', __name__, template_folder='posts/')
 
