@@ -989,9 +989,9 @@ p,ul,ol,li {
 .infographic {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
-    height: 80vh;
+    height: 85vh;
     float: left;
-    margin-right: 40px;
+    margin-right: 20px;
     h2 {
         font-size: 38px;
         margin-bottom: 20px;
@@ -1005,7 +1005,7 @@ p,ul,ol,li {
     }
     .building-wrapper {
         float: left;
-        width: 200px;
+        width: 220px;
     }
     .building {
         border: 2px solid #fff;
@@ -1014,15 +1014,31 @@ p,ul,ol,li {
         display: table;
         width: 100%;
     }
-    .building .infographic-section-inner {
+    .infographic-section-inner {
         background-color: @caption-screen-dark;
         text-align: center;
-        padding: 0 10px;
+        padding: 0 5px;
     }
-    .building .non-return .infographic-section-inner {
+    .non-return .infographic-section-inner {
         background-color: transparent;
     }
-    .building .infographic-section:not(:first-child) {
+    .rental-vouchers .infographic-section-inner {
+        background-color: rgba(215,118,45,0.7);
+    }
+    .mixed-income .infographic-section-inner {
+        background-color: rgba(6,99,128,0.7);
+    }
+    .left-ph .infographic-section-inner {
+        background-color: transparent;
+    }
+    .left-section .infographic-section-inner {
+        background-color: rgba(0,0,0,0.5);
+    }
+    .left-section .infographic-section-inner p {
+        display: inline-block;
+        /*display: none;*/
+    }
+    .infographic-section:not(:first-child) {
         border-top: 1px solid #fff;
     }
     .infographic-labels .infographic-section:not(:first-child) {
@@ -1038,6 +1054,7 @@ p,ul,ol,li {
         font-weight: bold;
         font-size: 21px;
     }
+
 }
 .infographic-copy {
     padding-top: 81px;
