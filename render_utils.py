@@ -234,3 +234,8 @@ def smarty_filter(s):
 
     return Markup(s)
 
+def number_filter(value, fmt="{:,.0f}"):
+    """
+    Format numbers, default format is integer with commas
+    """
+    return fmt.format(float(value))
