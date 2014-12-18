@@ -1,7 +1,7 @@
 {# text2 is a list of spreadsheets to draw data from #}
 {% set graphs = row.text2.split(',') %}
 
-<div class="slide {% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+<div class="slide infographic-slide{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
 
     <div class="text full-block">
         <div class="full-block-cell">
@@ -9,8 +9,8 @@
                 {% for graph in graphs %}
                 <div class="infographic">
                     <div class="infographic-intro">
-                        {% if COPY.post_metadata['%s_title' % graph] %}
-                        <h2>{{ COPY.post_metadata['%s_title' % graph] }}</h2>
+                        {% if COPY.post_metadata['%s_title' % graph]|smarty %}
+                        <h2>{{ COPY.post_metadata['%s_title' % graph]|smarty }}</h2>
                         {% endif %}
                     </div>
                     <div class="building-wrapper">
