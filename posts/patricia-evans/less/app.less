@@ -369,6 +369,7 @@ p,ul,ol,li {
                 text-shadow: none;
                 line-height: 1.5;
                 font-size: 11px;
+                padding-bottom: 5px;
                 @media @screen-small-above {
                     font-size: 13px;
                 }
@@ -439,6 +440,10 @@ p,ul,ol,li {
 
 //full-bleed
 .slide.single-image {
+    
+    .full-block-cell {
+        vertical-align: middle;
+    }
     
     .full-block-content {
         max-width: 100%;
@@ -563,8 +568,9 @@ p,ul,ol,li {
                 p {
                     text-shadow: none;
                     font-size: 11px;
-                    
                     line-height: 1.5;
+                    padding-bottom: 5px;
+                    
                     @media @screen-medium-above {
                         font-size: 13px;
                         margin-right: 40px;                    
@@ -647,7 +653,7 @@ p,ul,ol,li {
                 .first-side {
                     vertical-align: middle;
                     background: @side-by-side-screen;
-                    
+                    padding: 10px;
                     
                     @media @screen-small-above {
                         margin-bottom: 20px;
@@ -656,17 +662,16 @@ p,ul,ol,li {
                     @media @screen-medium-above {
                         display: table-cell;
                         width: 50%;
+                        padding: 20px;
                     }
                 
                     p {
                         text-shadow: none;
                         font-size: 11px;
-                        margin-right: 20px;
-                        padding: 10px;
                         line-height: 1.5;
+                        padding-bottom: 5px;
                         @media @screen-small-above {
                             font-size: 13px;
-                            padding: 20px;
                         }
                         @media @screen-medium-above {
                             font-size: 16px;
