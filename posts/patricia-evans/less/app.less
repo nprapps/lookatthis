@@ -365,16 +365,21 @@ p,ul,ol,li {
                 padding: 100px 60px;
             }
             
+            @media @screen-medium-above {
+                max-width: 800px;
+            }
+            
             p {
                 text-shadow: none;
                 line-height: 1.5;
                 font-size: 11px;
                 padding-bottom: 5px;
                 @media @screen-small-above {
-                    font-size: 13px;
-                }
-                @media @screen-medium-above {
                     font-size: 16px;
+                }
+                
+                @media @screen-mega-above {
+                    font-size: 24px;   
                 }
                 
             }
@@ -414,10 +419,10 @@ p,ul,ol,li {
             margin: 15px auto;
             font-size: 11px;
             @media @screen-small-above {
-                font-size: 13px;
+                font-size: 16px;
             }
-            @media @screen-medium-above {
-                font-size: 18px;
+            @media @screen-mega-above {
+                font-size: 24px;   
             }
         }
     }
@@ -495,12 +500,8 @@ p,ul,ol,li {
             margin: 0 auto;
             max-width: 100%; 
             
-            @media @screen-small-above {
-                max-width: 70%; 
-            }
-            
             @media @screen-medium-above {
-                max-width: 1300px;
+                max-width: 1800px;
                 margin: 0 auto;
                 padding: 20px 100px 20px 100px;
             }
@@ -511,8 +512,9 @@ p,ul,ol,li {
             
             .first-side {
                 vertical-align: middle;
+                margin-bottom: 10px;
                 
-                @media @screen-small-above {
+                @media @screen-medium-above {
                     margin-bottom: 20px;  
                 }
                 
@@ -541,10 +543,10 @@ p,ul,ol,li {
                     line-height: 1.5;
                     font-size: 11px;
                     @media @screen-small-above {
-                        font-size: 13px;
-                    }
-                    @media @screen-medium-above {
                         font-size: 16px;
+                    }
+                    @media @screen-mega-above {
+                        font-size: 24px;   
                     }
                     
                 }
@@ -571,14 +573,19 @@ p,ul,ol,li {
                     line-height: 1.5;
                     padding-bottom: 5px;
                     
-                    @media @screen-medium-above {
-                        font-size: 13px;
-                        margin-right: 40px;                    
+                    @media @screen-small-above {
+                        font-size: 16px;
                     }
                     
                     @media @screen-medium-above {
-                        font-size: 16px;
+                        margin-right: 40px;                    
                     }
+                    
+                    @media @screen-mega-above {
+                        font-size: 24px;   
+                    }
+                    
+                    
                     
                 }
                 
@@ -638,13 +645,17 @@ p,ul,ol,li {
             max-width: 100%; 
             
             @media @screen-small-above {
-                max-width: 70%; 
+                max-width: 80%; 
             }
             
             @media @screen-medium-above {
                 max-width: 1000px;
                 margin: 0 auto;
                 padding: 20px 100px 20px 100px;
+            }
+            
+            @media @screen-large-above {
+                max-width: 1200px;
             }
             
             .side-by-side-wrapper {
@@ -654,8 +665,9 @@ p,ul,ol,li {
                     vertical-align: middle;
                     background: @side-by-side-screen;
                     padding: 10px;
+                    margin-bottom: 10px;
                     
-                    @media @screen-small-above {
+                    @media @screen-medium-above {
                         margin-bottom: 20px;
                     }
                     
@@ -671,11 +683,12 @@ p,ul,ol,li {
                         line-height: 1.5;
                         padding-bottom: 5px;
                         @media @screen-small-above {
-                            font-size: 13px;
-                        }
-                        @media @screen-medium-above {
                             font-size: 16px;
                         }
+                        @media @screen-mega-above {
+                            font-size: 24px;   
+                        }
+
                     }
                 }
                 
@@ -742,7 +755,7 @@ p,ul,ol,li {
     @media @screen-small-above {
          right: 25px;
          font-size: 12px;
-         max-width: 200px;
+         max-width: 400px;
          //text-shadow: 2px 2px 5px #000;
     }
 }
@@ -770,7 +783,6 @@ p,ul,ol,li {
         margin: 0 auto;
         text-transform: uppercase;
         font-weight: bold;
-        max-width: 700px;
         @media @screen-small-above {
             font-size: 20px;
             margin-bottom: 10px;
@@ -900,7 +912,7 @@ p,ul,ol,li {
     }
 
 .full-block-content {
-    max-width: 800px;
+    max-width: 1000px;
     
     padding-top: 40px;
     
@@ -945,6 +957,9 @@ p,ul,ol,li {
             
             @media @screen-small-above {
                 font-size: 14px;
+            }
+            @media @screen-mega-above {
+                font-size: 18px;   
             }
         }
     
@@ -1036,7 +1051,7 @@ p,ul,ol,li {
     .left-section .infographic-section-inner {
         background-color: rgba(0,0,0,0.5);
     }
-    .infographic-section:not(:first-child) {
+    .infographic-section:not(:first-child) .infographic-section-inner {
         border-top: 1px solid #fff;
     }
     .infographic-labels .infographic-section:not(:first-child) {
@@ -1055,7 +1070,26 @@ p,ul,ol,li {
 
 }
 .infographic-copy {
-    padding-top: 61px;
+    
+    background: @side-by-side-screen;
+    padding: 20px;
+    
+    @media @screen-small-above {
+        margin-top: 62px;
+    }
+    
+    
+    p{
+        font-size: 12px;
+        text-shadow: none;
+        line-height: 1.5;
+        @media @screen-small-above {
+            font-size: 16px;
+        }
+        @media @screen-mega-above {
+            font-size: 24px;   
+        }
+    }
 }
 .infographic-slide.dark-overlay {
     .full-block-content:after {
