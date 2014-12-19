@@ -990,11 +990,11 @@ p,ul,ol,li {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
     height: 85vh;
-    float: left;
+    width: 100%;
     margin-right: 20px;
     h2 {
-        font-size: 38px;
-        margin-bottom: 20px;
+        font-size: 30px;
+        margin-bottom: 10px;
         text-align: center;
     }
     p {
@@ -1002,10 +1002,6 @@ p,ul,ol,li {
         margin: 0;
         line-height: 1.1;
         text-shadow: none;
-    }
-    .building-wrapper {
-        float: left;
-        width: 220px;
     }
     .building {
         border: 2px solid #fff;
@@ -1018,6 +1014,7 @@ p,ul,ol,li {
         background-color: @caption-screen-dark;
         text-align: center;
         padding: 0 5px;
+        overflow: hidden;
     }
     .non-return .infographic-section-inner {
         background-color: transparent;
@@ -1034,10 +1031,6 @@ p,ul,ol,li {
     .left-section .infographic-section-inner {
         background-color: rgba(0,0,0,0.5);
     }
-    .left-section .infographic-section-inner p {
-        display: inline-block;
-        /*display: none;*/
-    }
     .infographic-section:not(:first-child) {
         border-top: 1px solid #fff;
     }
@@ -1046,18 +1039,18 @@ p,ul,ol,li {
     }
     .infographic-section-inner {
         line-height: 20px;
-        font-size: 13px;
+        font-size: 1.7vh;
         display: table-cell;
         vertical-align: middle;
     }
     .number {
         font-weight: bold;
-        font-size: 21px;
+        font-size: 2.6vh;
     }
 
 }
 .infographic-copy {
-    padding-top: 81px;
+    padding-top: 61px;
 }
 .infographic-slide.dark-overlay {
     .full-block-content:after {

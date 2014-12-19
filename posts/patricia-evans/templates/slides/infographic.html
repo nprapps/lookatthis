@@ -6,36 +6,46 @@
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
-                {% for graph in graphs %}
-                <div class="infographic">
-                    <div class="infographic-intro">
-                        {% if COPY.post_metadata['%s_title' % graph]|smarty %}
-                        <h2>{{ COPY.post_metadata['%s_title' % graph]|smarty }}</h2>
-                        {% endif %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="infographic-copy">
+                            {{ row.text1|smarty }}
+                        </div>
                     </div>
-                    <div class="building-wrapper">
-                        <div class="building">
-                            {% for data_row in COPY[graph] %}
-                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}">
-                                <div class="infographic-section-inner" style="height: {{ data_row.height }}vh;">
-                                    {% if data_row.number %}
-                                    <p class="number-wrapper">
-                                        <span class="number">{{ data_row.number|format_number }}</span> 
-                                        {% if data_row.percent %}({{ data_row.percent }}%){% endif %}
-                                    </p>
-                                    <p>
-                                        {{ data_row.label }}
-                                    </p>
-                                    {% endif %}
+                    <div class="col-md-6">
+                        <div class="row">
+                            {% for graph in graphs %}
+                            <div class="col-sm-6">
+                                <div class="infographic">
+                                    <div class="infographic-intro">
+                                        {% if COPY.post_metadata['%s_title' % graph]|smarty %}
+                                        <h2>{{ COPY.post_metadata['%s_title' % graph]|smarty }}</h2>
+                                        {% endif %}
+                                    </div>
+                                    <div class="building-wrapper">
+                                        <div class="building">
+                                            {% for data_row in COPY[graph] %}
+                                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}">
+                                                <div class="infographic-section-inner" style="height: {{ data_row.height }}vh;">
+                                                    {% if data_row.number %}
+                                                    <p class="number-wrapper">
+                                                        <span class="number">{{ data_row.number|format_number }}</span> 
+                                                        {% if data_row.percent %}({{ data_row.percent }}%){% endif %}
+                                                    </p>
+                                                    <p>
+                                                        {{ data_row.label }}
+                                                    </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
                     </div>
-                </div>
-                {% endfor %}
-                <div class="infographic-copy">
-                    {{ row.text1|smarty }}
                 </div>
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
