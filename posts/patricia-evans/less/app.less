@@ -751,7 +751,7 @@ p,ul,ol,li {
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.4);
         z-index: -1;
         height: 100%;
     }
@@ -889,6 +889,10 @@ p,ul,ol,li {
 /* conclusion slide */
 
 .conclusion {
+    
+    .full-block {
+        background: @darker-overlay;
+    }
 
 .full-block-content {
     max-width: 800px;
@@ -897,6 +901,14 @@ p,ul,ol,li {
     
     @media @screen-small-above {
         padding-top: 0;
+    }
+    
+    a {
+        color: @look-pink;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
     }
     
     
@@ -923,7 +935,12 @@ p,ul,ol,li {
         p {
             font-family: gotham, helvetica, arial;
             text-shadow: none;
-            font-size: 14px;
+            font-size: 12px;
+            line-height: 1.6;
+            
+            @media @screen-small-above {
+                font-size: 14px;
+            }
         }
     
     
@@ -935,29 +952,8 @@ p,ul,ol,li {
             img {
                 max-width: 90px;
                 float: left;
-                margin-right: 10px
+                margin-right: 20px;
             }
-    
-            a {
-                color: #fff;
-    
-                text-decoration: none;
-    
-                h5 {
-                    margin: 0;
-                    font-size: 20px;
-                    font-weight: bold;
-                    margin-left: 100px;
-                }
-    
-                p {
-                    color: #777;
-                    font-size: 14px;
-                    margin-left: 100px;
-    
-                }
-            }
-    
         }
     
     }
@@ -978,9 +974,13 @@ p,ul,ol,li {
             }
             p {
                 font-family: gotham, helvetica, sans-serif;
-                font-size: 12px;
+                font-size: 11px;
                 color: #ccc;
                 text-shadow: none;
+                line-height: 1.4;
+                @media @screen-small-above {
+                font-size: 13px;
+                }
             }
         }
     }
