@@ -25,8 +25,8 @@
                                     <div class="building-wrapper">
                                         <div class="building">
                                             {% for data_row in COPY[graph] %}
-                                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}">
-                                                <div class="infographic-section-inner" style="height: {{ data_row.height }}vh;">
+                                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}" style="height: {{ data_row.height }}vh;">
+                                                <div class="infographic-section-inner">
                                                     {% if data_row.number %}
                                                     <p class="number-wrapper">
                                                         <span class="number">{{ data_row.number|format_number }}</span> 
