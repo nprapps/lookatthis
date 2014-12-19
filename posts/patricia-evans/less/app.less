@@ -1046,7 +1046,23 @@ p,ul,ol,li {
 
 }
 .infographic-copy {
-    padding-top: 61px;
+    
+    background: @side-by-side-screen;
+    padding: 20px;
+    
+    @media @screen-small-above {
+        margin-top: 62px;
+    }
+    
+    
+    p{
+        font-size: 12px;
+        text-shadow: none;
+        line-height: 1.5;
+        @media @screen-small-above {
+            font-size: 16px;
+        }
+    }
 }
 .infographic-slide.dark-overlay {
     .full-block-content:after {
