@@ -15,7 +15,7 @@
                     <div class="col-md-6">
                         <div class="row">
                             {% for graph in graphs %}
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="infographic">
                                     <div class="infographic-intro">
                                         {% if COPY.post_metadata['%s_title' % graph]|smarty %}
@@ -25,7 +25,7 @@
                                     <div class="building-wrapper">
                                         <div class="building">
                                             {% for data_row in COPY[graph] %}
-                                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}" style="height: {{ data_row.height }}vh;">
+                                            <div class="infographic-section{% if data_row.class %} {{ data_row.class }}{% endif %}" style="height: {{ data_row.height }}%;">
                                                 <div class="infographic-section-inner">
                                                     <p class="number-wrapper">
                                                         {% if data_row.number %}
