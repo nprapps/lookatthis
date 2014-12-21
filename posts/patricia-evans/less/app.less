@@ -1009,13 +1009,15 @@ p,ul,ol,li {
 .infographic {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
-    height: 85vh;
     width: 100%;
     margin-right: 20px;
     h2 {
-        font-size: 30px;
+        font-size: 20px;
         margin-bottom: 10px;
         text-align: center;
+        @media @screen-small-above {
+            font-size: 30px;
+        }
     }
     p {
         font-family: "Gotham", helvetica, arial, sans-serif;
@@ -1023,8 +1025,14 @@ p,ul,ol,li {
         line-height: 1.1;
         text-shadow: none;
     }
-    .building {
+    .building-wrapper {
         border: 2px solid #fff;
+    }
+    .building {
+        height: 50vh;
+        @media @screen-small-above {
+            height: 80vh;
+        }
     }
     .infographic-section {
         display: table;
@@ -1054,11 +1062,8 @@ p,ul,ol,li {
     .infographic-section:not(:first-child) .infographic-section-inner {
         border-top: 1px solid #fff;
     }
-    .infographic-labels .infographic-section:not(:first-child) {
-        margin-top: 3px;
-    }
     .infographic-section-inner {
-        line-height: 20px;
+        line-height: 1;
         font-size: 1.6vh;
         display: table-cell;
         vertical-align: middle;
@@ -1103,6 +1108,13 @@ p,ul,ol,li {
         background: rgba(0,0,0,0.5);
         z-index: -1;
         height: 100%;
+    }
+}
+.infographic-slide {
+    .full-block {
+        .full-block-content {
+          max-width: 90%;
+        }
     }
 }
 
