@@ -1011,9 +1011,14 @@ p,ul,ol,li {
     width: 100%;
     margin-right: 20px;
     h2 {
-        font-size: 15px;
+        font-size: 12px;
         margin-bottom: 10px;
         text-align: center;
+        
+        @screen-tiny-above
+        {
+           font-size: 16px; 
+        }
         @media @screen-small-above {
             font-size: 30px;
         }
@@ -1127,7 +1132,7 @@ p,ul,ol,li {
 .infographic-slide {
     .full-block {
         .full-block-content {
-          max-width: 85%;
+          max-width: 1800px;
         }
     }
 }
