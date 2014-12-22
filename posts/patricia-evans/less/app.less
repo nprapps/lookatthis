@@ -154,7 +154,7 @@ p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -164,16 +164,15 @@ p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        //opacity: 0;
-        //.transition(opacity 0.5s ease);
         opacity: 1;
 
         @media @screen-small-above {
             top: 40%;
-
             height: 100px;
             font-size: 30px;
             border: 3px solid #fff;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: .3;
 
             &:hover {
                 background-color: #fff;
@@ -233,17 +232,6 @@ p,ul,ol,li {
             right: 25px;
             padding-top: 25px;
         }
-        /*
-        .touch & {
-            bottom: 5px;
-            left: 135px;
-
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 25px;
-            }
-        }*/
     }
 
 }
