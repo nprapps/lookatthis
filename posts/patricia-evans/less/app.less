@@ -1021,7 +1021,7 @@ p,ul,ol,li {
         border: 2px solid #fff;
     }
     .building {
-        height: 300px;
+        height: 380px;
         @media @screen-small-above {
             height: 500px;
         }
@@ -1036,11 +1036,11 @@ p,ul,ol,li {
         padding: 0 5px;
         overflow: hidden;
         line-height: 1;
-        font-size: 1.4vh;
+        font-size: 11px;
         display: table-cell;
         vertical-align: middle;
         @media @screen-small-above {
-            font-size: 1.6vh;
+            font-size: 13px;
         }
     }
     .non-return .infographic-section-inner {
@@ -1062,14 +1062,21 @@ p,ul,ol,li {
         border-top: 1px solid #fff;
     }
     .number-wrapper {
-        font-size: 1.6vh;
+        font-size: 11px;
         @media @screen-small-above {
             font-weight: bold;
-            font-size: 2.1vh;
+            font-size: 15px;
         }
     }
 
 }
+#infographic1 {
+    .infographic { display: none; }
+    @media @screen-small-above {
+        .infographic { display: block; }
+    }
+}
+
 .infographic-copy {
     
     background: @darker-overlay;
