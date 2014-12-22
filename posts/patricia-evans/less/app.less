@@ -1005,11 +1005,27 @@ p,ul,ol,li {
     }
 }
 
+.infographic-wrapper {
+    .col-xs-6 {
+        &.plan {
+            padding-right: 5px;
+            @media @screen-small-above {
+                padding-right: 15px;
+            }
+        }
+        &.reality {
+            padding-left: 5px;
+            @media @screen-small-above {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
 .infographic {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
     width: 100%;
-    margin-right: 20px;
     h2 {
         font-size: 12px;
         margin-bottom: 10px;
@@ -1049,10 +1065,10 @@ p,ul,ol,li {
     .infographic-section-inner {
         background-color: @caption-screen-dark;
         text-align: center;
-        padding: 0 5px;
+        padding: 0 3px;
         overflow: hidden;
         line-height: 1;
-        font-size: 11px;
+        font-size: 8px;
         display: table-cell;
         vertical-align: middle;
         @media @screen-small-above {
@@ -1081,9 +1097,9 @@ p,ul,ol,li {
         border-top: 1px solid #fff;
     }
     .number-wrapper {
-        font-size: 11px;
+        font-size: 8px;
+        font-weight: bold;
         @media @screen-small-above {
-            font-weight: bold;
             font-size: 15px;
         }
     }
