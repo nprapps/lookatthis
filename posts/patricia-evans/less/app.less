@@ -154,7 +154,7 @@ p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.6);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -166,7 +166,7 @@ p,ul,ol,li {
         cursor: pointer;
         //opacity: 0;
         //.transition(opacity 0.5s ease);
-        opacity: .3;
+        opacity: 1;
 
         @media @screen-small-above {
             top: 40%;
@@ -330,7 +330,7 @@ p,ul,ol,li {
     .full-block-content {
         max-width: 70%;
         margin: 0 auto;
-        padding: 20px 20px 40px 20px;
+        padding: 20px 60px 40px 60px;
         font-size: 21px;
         line-height: 30px;
         text-shadow: #000 1px 2px 1px;
@@ -726,20 +726,6 @@ p,ul,ol,li {
     
     
     
-}
-
-/*tall book image */
-#b {
-    .full-block-content {
-        @media @screen-medium-above {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        @media @screen-large-above {
-            max-width: 1000px;
-        }
-    }
 }
 
 /*.credit {
@@ -1140,3 +1126,22 @@ p,ul,ol,li {
     }
 }
 
+/* nudges */
+
+/*tall book image */
+#b {
+    .full-block-content {
+        @media @screen-medium-above {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media @screen-large-above {
+            max-width: 1000px;
+        }
+    }
+}
+
+#l {
+    background-position: top right;
+}
