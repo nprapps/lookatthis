@@ -25,6 +25,10 @@
 @pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
 
+//typography
+
+@small-type: 13px;
+
 
 
 // Breakpoints
@@ -367,7 +371,7 @@ p,ul,ol,li {
             p {
                 text-shadow: none;
                 line-height: 1.5;
-                font-size: 11px;
+                font-size: @small-type;
                 padding-bottom: 5px;
                 @media @screen-small-above {
                     font-size: 16px;
@@ -412,7 +416,7 @@ p,ul,ol,li {
             text-shadow: none;
             max-width: 700px;
             margin: 15px auto;
-            font-size: 11px;
+            font-size: @small-type;
             @media @screen-small-above {
                 font-size: 16px;
             }
@@ -431,9 +435,9 @@ p,ul,ol,li {
     
     //using full bleed capitons on pink images
     &.pink-image {
-        .bleed-box{
+       /* .bleed-box{
             background: @darker-overlay;
-        }  
+        }  */
     }
     
 }
@@ -538,7 +542,7 @@ p,ul,ol,li {
                 p {
                     text-shadow: none;
                     line-height: 1.5;
-                    font-size: 11px;
+                    font-size: @small-type;
                     @media @screen-small-above {
                         font-size: 16px;
                     }
@@ -566,7 +570,7 @@ p,ul,ol,li {
                 
                 p {
                     text-shadow: none;
-                    font-size: 11px;
+                    font-size: @small-type;
                     line-height: 1.5;
                     padding-bottom: 5px;
                     
@@ -575,7 +579,7 @@ p,ul,ol,li {
                     }
                     
                     @media @screen-medium-above {
-                        margin-right: 40px;                    
+                        //margin-right: 40px;                    
                     }
                     
                     @media @screen-mega-above {
@@ -675,7 +679,7 @@ p,ul,ol,li {
                 
                     p {
                         text-shadow: none;
-                        font-size: 11px;
+                        font-size: @small-type;
                         line-height: 1.5;
                         padding-bottom: 5px;
                         @media @screen-small-above {
