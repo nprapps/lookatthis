@@ -330,13 +330,13 @@ p,ul,ol,li {
     .full-block-content {
         max-width: 70%;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px 20px 40px 20px;
         font-size: 21px;
         line-height: 30px;
         text-shadow: #000 1px 2px 1px;
         @media @screen-small-above {
             max-width: 1000px;
-             padding: 20px 100px;
+             padding: 20px 100px 40px 100px;
         }
     }
 
@@ -454,7 +454,10 @@ p,ul,ol,li {
         max-width: 100%;
         margin: 0 auto;
         @media @screen-small-above {
-            max-width: 800px;
+            max-width: 700px;
+        }
+        @media @screen-mega-above {
+            max-width: 900px;
         }
         
     }
@@ -503,7 +506,6 @@ p,ul,ol,li {
             @media @screen-medium-above {
                 max-width: 1800px;
                 margin: 0 auto;
-                padding: 20px 100px 20px 100px;
             }
         }
         
@@ -649,13 +651,12 @@ p,ul,ol,li {
             }
             
             @media @screen-medium-above {
-                max-width: 1000px;
+                max-width: 900px;
                 margin: 0 auto;
-                padding: 20px 100px 20px 100px;
             }
             
             @media @screen-large-above {
-                max-width: 1200px;
+                max-width: 1100px;
             }
             
             .side-by-side-wrapper {
@@ -727,6 +728,20 @@ p,ul,ol,li {
     
 }
 
+/*tall book image */
+#b {
+    .full-block-content {
+        @media @screen-medium-above {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media @screen-large-above {
+            max-width: 1000px;
+        }
+    }
+}
+
 /*.credit {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
@@ -745,7 +760,7 @@ p,ul,ol,li {
 .caption {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
-    right: 10px;
+    right: 20px;
     bottom: 10px;
     text-align: right;
     font-size: 10px;
@@ -755,8 +770,7 @@ p,ul,ol,li {
     @media @screen-small-above {
          right: 25px;
          font-size: 12px;
-         max-width: 400px;
-         //text-shadow: 2px 2px 5px #000;
+         max-width: 1000px;
     }
 }
 
