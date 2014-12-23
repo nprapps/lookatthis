@@ -366,7 +366,8 @@ nav {
     .post {
         padding-top: 10px;
         margin-bottom: @line-height-computed;
-
+        .clearfix();
+        
         h3 {
             margin-top: 0;
             line-height: 1.1;
@@ -1066,15 +1067,12 @@ nav {
     
     #post-wrap {
         
+        .post {
+            &:before,&:after {display: none;}
+        }
+        
         #posts > .post:nth-child(2n) {
-            &:before,
-            &:after {
-                content: " ";
-                display: table;
-            }
-            &:after {
-                clear: both;
-            }
+            .clearfix();
         }
         
         .post {
