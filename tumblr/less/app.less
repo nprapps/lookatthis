@@ -1066,10 +1066,24 @@ nav {
     
     #post-wrap {
         
+        #posts > .post:nth-child(2n) {
+            &:before,
+            &:after {
+                content: " ";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+        }
+        
         .post {
             padding-top: 0;
             //posts tagged features
             &.stories {
+                
+                
+                
                 .post-header,
                 .post-meta {
                     display: none;
