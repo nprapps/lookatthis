@@ -928,6 +928,48 @@ p,ul,ol,li {
         }
     }
     
+    .share-panel {
+        
+        
+        .share-story {
+            
+            width: 100px;
+            float: none;
+            margin: 10px auto;
+            
+            @media @screen-tiny-above {
+                width: auto;
+                margin: 10px 10px 10px 0;
+                float: left;
+            }
+            
+            a {
+                width: 100px;
+                font-size: 11px;
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: bold;
+                text-decoration: none;
+                text-align: center;
+                padding: 5px;
+                background-color: #000;
+                color: #fff;
+
+                &:hover,
+                &:focus {
+                background-color: @look-pink;
+                color: #fff;
+                }
+
+                @media @screen-tiny-above {
+                    width: auto;
+                    font-size: 12px;
+                    padding: 5px 10px;
+                }
+            }
+            
+        }
+    }
     
 
     p {
@@ -939,11 +981,14 @@ p,ul,ol,li {
         font-weight: bold;
         font-size: 18px;
         margin-bottom: 10px;
+        text-align: center;
         
-        @media @screen-small-above {
-            font-size: 30px;
+        @media @screen-tiny-above {
+            text-align: left;
+            font-size: 22px;
         }
     }
+    
     
     
     
