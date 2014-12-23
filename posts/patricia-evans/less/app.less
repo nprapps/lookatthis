@@ -970,9 +970,14 @@ p,ul,ol,li {
             padding: 10px;
     
             img {
-                max-width: 90px;
+                max-width: 70px;
                 float: left;
                 margin-right: 20px;
+                
+                @media @screen-small-above {
+                    max-width: 90px;
+                }
+                
             }
         }
     
