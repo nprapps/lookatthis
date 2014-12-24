@@ -207,6 +207,7 @@ p,ul,ol,li {
 }
 
 .primary-navigation {
+    // Reset the box-sizing
 
     .controlArrow {
         position: fixed;
@@ -227,6 +228,7 @@ p,ul,ol,li {
         display: none;
         cursor: pointer;
         opacity: 1;
+        .box-sizing(border-box);
 
         @media @screen-small-above {
             top: 40%;
@@ -387,6 +389,14 @@ p,ul,ol,li {
         @media @screen-small-above {
             max-width: 1000px;
              padding: 20px 100px 40px 100px;
+        }
+        
+        // Reset the box-sizing
+
+        *,
+        *:before,
+        *:after {
+          .box-sizing(border-box);
         }
     }
 
