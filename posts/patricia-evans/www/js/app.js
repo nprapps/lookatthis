@@ -116,7 +116,7 @@ var findImages = function(slides) {
     mobileSuffix = '';
 
     if ($w < 769) {
-        //mobileSuffix = '-sq';
+        mobileSuffix = '-sm';
     }
 
     _.each($(slides), function(slide) {
