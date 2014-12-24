@@ -168,6 +168,8 @@ var showNavigation = function() {
         });
 
         $('body').addClass('titlecard-nav');
+        
+        $('.next').addClass('animated shake');
 
         //$primaryNav.css('opacity', '1');
     }
@@ -199,6 +201,7 @@ var showNavigation = function() {
         }
 
         $('body').removeClass('titlecard-nav final-slide');
+        $('.next').removeClass('animated shake');
     }
 }
 

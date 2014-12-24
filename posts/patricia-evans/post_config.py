@@ -4,4 +4,3 @@ DEPLOY_SLUG = 'publichousing'
 #shared copy 
 
 #local copy https://docs.google.com/spreadsheet/ccc?key=0AsbgU6Ugtx7udDI2cU1Jd0U4SDhsNWw4QVFTWGo2Qmc
-
