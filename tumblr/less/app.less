@@ -366,7 +366,8 @@ nav {
     .post {
         padding-top: 10px;
         margin-bottom: @line-height-computed;
-
+        .clearfix();
+        
         h3 {
             margin-top: 0;
             line-height: 1.1;
@@ -1067,9 +1068,20 @@ nav {
     #post-wrap {
         
         .post {
+            &:before,&:after {display: none;}
+        }
+        
+        #posts > .post:nth-child(2n) {
+            .clearfix();
+        }
+        
+        .post {
             padding-top: 0;
             //posts tagged features
             &.stories {
+                
+                
+                
                 .post-header,
                 .post-meta {
                     display: none;

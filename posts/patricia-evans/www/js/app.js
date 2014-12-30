@@ -116,7 +116,7 @@ var findImages = function(slides) {
     mobileSuffix = '';
 
     if ($w < 769) {
-        //mobileSuffix = '-sq';
+        mobileSuffix = '-sm';
     }
 
     _.each($(slides), function(slide) {
@@ -168,6 +168,8 @@ var showNavigation = function() {
         });
 
         $('body').addClass('titlecard-nav');
+        
+        $('.next').addClass('animated shake');
 
         //$primaryNav.css('opacity', '1');
     }
@@ -199,6 +201,7 @@ var showNavigation = function() {
         }
 
         $('body').removeClass('titlecard-nav final-slide');
+        $('.next').removeClass('animated shake');
     }
 }
 
@@ -336,22 +339,6 @@ var trackEvent = function(args) {
     _gaq.push(args)
 }
 
-var fakeMobileHover = function() {
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
-}
-
-var rmFakeMobileHover = function() {
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
-}
-
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -374,9 +361,6 @@ $(document).ready(function() {
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
-
-    $arrows.on('touchstart', fakeMobileHover);
-    $arrows.on('touchend', rmFakeMobileHover);
 
     
 

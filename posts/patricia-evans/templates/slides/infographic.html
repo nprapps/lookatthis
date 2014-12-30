@@ -13,9 +13,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="row">
+                        <div class="row infographic-wrapper">
                             {% for graph in graphs %}
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 {% if loop.first %} plan{% else %} reality{% endif %}">
                                 <div class="infographic">
                                     <div class="infographic-intro">
                                         {% if COPY.post_metadata['%s_title' % graph]|smarty %}

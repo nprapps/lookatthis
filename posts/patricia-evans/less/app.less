@@ -25,6 +25,10 @@
 @pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
 
+//typography
+
+@small-type: 13px;
+
 
 
 // Breakpoints
@@ -48,6 +52,57 @@ body {
     .transition(opacity 3s ease);
 }
 
+//animation
+
+.animated {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-delay:2s;
+  -moz-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+          animation-name: shake;
+}
+
 //typography
 
 h1,h2,h3,h4,h5,h6 {
@@ -62,20 +117,23 @@ p,ul,ol,li {
 
 .home {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
     z-index: 100;
     opacity: .8;
+    padding: 10px 0 0 10px;
+
 
     p {
         font-size: 18px;
         cursor: pointer;
         color: #fff;
-        text-shadow: none;
+        text-shadow: 2px 2px 2px #000;
         
         @media @screen-small-above {
             font-size: 22px;
-            text-shadow: 2px 2px 2px #000;
         }
         
         &:hover {
@@ -95,8 +153,11 @@ p,ul,ol,li {
 
 .share {
     position: absolute;
-    top: 15px;
-    right: 10px;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    padding: 15px 10px 0 0;
     z-index: 100;
     cursor: pointer;
     color: #fff;
@@ -105,10 +166,11 @@ p,ul,ol,li {
     font-size: 10px;
     text-transform: uppercase;
     opacity: .8;
+    text-shadow: 2px 2px 2px #000;
+    text-align: right;
     
     @media @screen-small-above {
         right:20px;
-        text-shadow: 2px 2px 2px #000;
     }
     
     
@@ -145,6 +207,7 @@ p,ul,ol,li {
 }
 
 .primary-navigation {
+    // Reset the box-sizing
 
     .controlArrow {
         position: fixed;
@@ -154,7 +217,7 @@ p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -164,16 +227,16 @@ p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        //opacity: 0;
-        //.transition(opacity 0.5s ease);
-        opacity: .3;
+        opacity: 1;
+        .box-sizing(border-box);
 
         @media @screen-small-above {
             top: 40%;
-
             height: 100px;
             font-size: 30px;
             border: 3px solid #fff;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: .3;
 
             &:hover {
                 background-color: #fff;
@@ -233,23 +296,12 @@ p,ul,ol,li {
             right: 25px;
             padding-top: 25px;
         }
-        /*
-        .touch & {
-            bottom: 5px;
-            left: 135px;
-
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 25px;
-            }
-        }*/
     }
 
 }
 
 .titlecard-nav .primary-navigation .controlArrow {
-    opacity: .7;
+    opacity: 1;
     @media @screen-small-above {
         opacity: 1;
     }
@@ -330,13 +382,21 @@ p,ul,ol,li {
     .full-block-content {
         max-width: 70%;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px 60px 40px 60px;
         font-size: 21px;
         line-height: 30px;
         text-shadow: #000 1px 2px 1px;
         @media @screen-small-above {
             max-width: 1000px;
-             padding: 20px 100px;
+             padding: 20px 100px 40px 100px;
+        }
+        
+        // Reset the box-sizing
+
+        *,
+        *:before,
+        *:after {
+          .box-sizing(border-box);
         }
     }
 
@@ -372,7 +432,7 @@ p,ul,ol,li {
             p {
                 text-shadow: none;
                 line-height: 1.5;
-                font-size: 11px;
+                font-size: @small-type;
                 padding-bottom: 5px;
                 @media @screen-small-above {
                     font-size: 16px;
@@ -417,7 +477,7 @@ p,ul,ol,li {
             text-shadow: none;
             max-width: 700px;
             margin: 15px auto;
-            font-size: 11px;
+            font-size: @small-type;
             @media @screen-small-above {
                 font-size: 16px;
             }
@@ -436,9 +496,9 @@ p,ul,ol,li {
     
     //using full bleed capitons on pink images
     &.pink-image {
-        .bleed-box{
+       /* .bleed-box{
             background: @darker-overlay;
-        }  
+        }  */
     }
     
 }
@@ -454,7 +514,10 @@ p,ul,ol,li {
         max-width: 100%;
         margin: 0 auto;
         @media @screen-small-above {
-            max-width: 800px;
+            max-width: 700px;
+        }
+        @media @screen-mega-above {
+            max-width: 900px;
         }
         
     }
@@ -503,7 +566,6 @@ p,ul,ol,li {
             @media @screen-medium-above {
                 max-width: 1800px;
                 margin: 0 auto;
-                padding: 20px 100px 20px 100px;
             }
         }
         
@@ -541,7 +603,7 @@ p,ul,ol,li {
                 p {
                     text-shadow: none;
                     line-height: 1.5;
-                    font-size: 11px;
+                    font-size: @small-type;
                     @media @screen-small-above {
                         font-size: 16px;
                     }
@@ -569,7 +631,7 @@ p,ul,ol,li {
                 
                 p {
                     text-shadow: none;
-                    font-size: 11px;
+                    font-size: @small-type;
                     line-height: 1.5;
                     padding-bottom: 5px;
                     
@@ -578,7 +640,7 @@ p,ul,ol,li {
                     }
                     
                     @media @screen-medium-above {
-                        margin-right: 40px;                    
+                        //margin-right: 40px;                    
                     }
                     
                     @media @screen-mega-above {
@@ -649,13 +711,12 @@ p,ul,ol,li {
             }
             
             @media @screen-medium-above {
-                max-width: 1000px;
+                max-width: 900px;
                 margin: 0 auto;
-                padding: 20px 100px 20px 100px;
             }
             
             @media @screen-large-above {
-                max-width: 1200px;
+                max-width: 1100px;
             }
             
             .side-by-side-wrapper {
@@ -679,7 +740,7 @@ p,ul,ol,li {
                 
                     p {
                         text-shadow: none;
-                        font-size: 11px;
+                        font-size: @small-type;
                         line-height: 1.5;
                         padding-bottom: 5px;
                         @media @screen-small-above {
@@ -745,18 +806,18 @@ p,ul,ol,li {
 .caption {
     font-family: helvetica, arial, sans-serif;
     position: absolute;
-    right: 10px;
+    right: 20px;
     bottom: 10px;
     text-align: right;
     font-size: 10px;
     font-style: italic;
     color: #fff;
+    line-height: 14px;
     
     @media @screen-small-above {
          right: 25px;
          font-size: 12px;
-         max-width: 400px;
-         //text-shadow: 2px 2px 5px #000;
+         max-width: 1000px;
     }
 }
 
@@ -928,6 +989,48 @@ p,ul,ol,li {
         }
     }
     
+    .share-panel {
+        
+        
+        .share-story {
+            
+            width: 100px;
+            float: none;
+            margin: 10px auto;
+            
+            @media @screen-tiny-above {
+                width: auto;
+                margin: 10px 10px 10px 0;
+                float: left;
+            }
+            
+            a {
+                width: 100px;
+                font-size: 11px;
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: bold;
+                text-decoration: none;
+                text-align: center;
+                padding: 5px;
+                background-color: #000;
+                color: #fff;
+
+                &:hover,
+                &:focus {
+                background-color: @look-pink;
+                color: #fff;
+                }
+
+                @media @screen-tiny-above {
+                    width: auto;
+                    font-size: 12px;
+                    padding: 5px 10px;
+                }
+            }
+            
+        }
+    }
     
 
     p {
@@ -939,11 +1042,14 @@ p,ul,ol,li {
         font-weight: bold;
         font-size: 18px;
         margin-bottom: 10px;
+        text-align: center;
         
-        @media @screen-small-above {
-            font-size: 30px;
+        @media @screen-tiny-above {
+            text-align: left;
+            font-size: 22px;
         }
     }
+    
     
     
     
@@ -970,9 +1076,14 @@ p,ul,ol,li {
             padding: 10px;
     
             img {
-                max-width: 90px;
+                max-width: 70px;
                 float: left;
                 margin-right: 20px;
+                
+                @media @screen-small-above {
+                    max-width: 90px;
+                }
+                
             }
         }
     
@@ -991,6 +1102,10 @@ p,ul,ol,li {
                 font-weight: bold;
                 text-transform: uppercase;
                 color: #ccc;
+                text-align: center;
+                @media @screen-tiny-above {
+                    text-align: left;
+                }
             }
             p {
                 font-family: gotham, helvetica, sans-serif;
@@ -1006,17 +1121,38 @@ p,ul,ol,li {
     }
 }
 
+.infographic-wrapper {
+    .col-xs-6 {
+        &.plan {
+            padding-right: 5px;
+            @media @screen-small-above {
+                padding-right: 15px;
+            }
+        }
+        &.reality {
+            padding-left: 5px;
+            @media @screen-small-above {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
 .infographic {
     display: table;
     font-family: "Gotham", helvetica, arial, sans-serif;
     width: 100%;
-    margin-right: 20px;
     h2 {
-        font-size: 20px;
+        font-size: 12px;
         margin-bottom: 10px;
         text-align: center;
+        
+        @screen-tiny-above
+        {
+           font-size: 16px; 
+        }
         @media @screen-small-above {
-            font-size: 30px;
+            font-size: 20px;
         }
     }
     p {
@@ -1033,7 +1169,7 @@ p,ul,ol,li {
         border: 2px solid #fff;
     }
     .building {
-        height: 300px;
+        height: 380px;
         @media @screen-small-above {
             height: 500px;
         }
@@ -1045,14 +1181,17 @@ p,ul,ol,li {
     .infographic-section-inner {
         background-color: @caption-screen-dark;
         text-align: center;
-        padding: 0 5px;
+        padding: 0 3px;
         overflow: hidden;
         line-height: 1;
-        font-size: 1.4vh;
+        font-size: 8px;
         display: table-cell;
         vertical-align: middle;
         @media @screen-small-above {
-            font-size: 1.6vh;
+            font-size: 12px;
+        }
+        @media @screen-large-above {
+            font-size: 13px;
         }
     }
     .non-return .infographic-section-inner {
@@ -1074,14 +1213,21 @@ p,ul,ol,li {
         border-top: 1px solid #fff;
     }
     .number-wrapper {
-        font-size: 1.6vh;
+        font-size: 8px;
+        font-weight: bold;
         @media @screen-small-above {
-            font-weight: bold;
-            font-size: 2.1vh;
+            font-size: 15px;
         }
     }
 
 }
+#infographic1 {
+    .infographic { display: none; }
+    @media @screen-small-above {
+        .infographic { display: block; }
+    }
+}
+
 .infographic-copy {
     
     background: @darker-overlay;
@@ -1093,7 +1239,7 @@ p,ul,ol,li {
     
     
     p{
-        font-size: 12px;
+        font-size: @small-type;
         text-shadow: none;
         line-height: 1.5;
         @media @screen-small-above {
@@ -1121,8 +1267,27 @@ p,ul,ol,li {
 .infographic-slide {
     .full-block {
         .full-block-content {
-          max-width: 85%;
+          max-width: 1400px;
         }
     }
 }
 
+/* nudges */
+
+/*tall book image */
+#b {
+    .full-block-content {
+        @media @screen-medium-above {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media @screen-large-above {
+            max-width: 1000px;
+        }
+    }
+}
+
+#l, #u {
+    background-position: top right;
+}
