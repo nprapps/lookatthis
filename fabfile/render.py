@@ -82,8 +82,8 @@ def render_all():
         g.compiled_includes = compiled_includes
 
         view = app.__dict__['_post']
-        content = view(env.slug)
+        content = view(env.slug).data
 
     with open(path, 'w') as f:
-        f.write(content.encode('utf-8'))
+        f.write(content)
 
