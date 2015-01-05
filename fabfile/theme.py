@@ -6,8 +6,8 @@ Commands that render and copy the theme
 
 from fabric.api import execute, local, task, require
 from fabric.state import env
+import flat
 from render import less, copytext_js
-import utils
 
 import app
 import app_config
@@ -41,10 +41,10 @@ def render():
         g.compiled_includes = compiled_includes
 
         view = static_theme.__dict__['_theme']
-        content = view()
+        content = view().data
 
     with open(path, 'w') as f:
-        f.write(content.encode('utf-8'))
+        f.write(content)
 
     local('pbcopy < tumblr/www/index.html')
     print 'The Tumblr theme HTML has been copied to your clipboard.'
@@ -72,5 +72,16 @@ def deploy():
 
     execute('update')
     render()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/tumblr/')
-    utils._deploy_to_s3('.gzip/tumblr/')
+
+    flat.deploy_folder(
+        '%s/www' % env.static_path,
+        '%s/%s' % (app_config.PROJECT_SLUG, env.static_path),
+        max_age=app_config.DEFAULT_MAX_AGE,
+        ignore=['%s/www/assets/*' % env.static_path]
+    )
+
+    flat.deploy_folder(
+        '%s/www/assets' % env.static_path,
+        '%s/%s/assets' % (app_config.PROJECT_SLUG, env.static_path),
+        max_age=app_config.ASSETS_MAX_AGE
+    )

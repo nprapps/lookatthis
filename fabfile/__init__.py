@@ -3,15 +3,17 @@
 import imp
 import os
 
+import boto
 from fabric.api import local, require, settings, task
 from fabric.state import env
 
-import app
+import app as flat_app
 import app_config
 
 # Other fabfiles
 import assets
 import data
+import flat
 import issues
 import render
 import text
@@ -51,6 +53,23 @@ def development():
     app_config.configure_targets(env.settings)
 
 """
+Running the app
+"""
+@task
+def app(port='8000'):
+    """
+    Serve app.py.
+    """
+    local('gunicorn -b 0.0.0.0:%s --debug --reload app:wsgi_app' % port)
+
+@task
+def tests():
+    """
+    Run Python unit tests.
+    """
+    local('nosetests')
+
+"""
 Deployment
 
 Changes to deployment requires a full-stack test. Deployment
@@ -79,8 +98,19 @@ def deploy(slug=''):
 
     update()
     render.render_all()
-    utils._gzip('%s/www/' % (env.static_path), '.gzip/posts/%s' % env.slug)
-    utils._deploy_to_s3('.gzip/posts/%s' % env.slug)
+
+    flat.deploy_folder(
+        '%s/www' % env.static_path,
+        '%s/%s' % (app_config.PROJECT_SLUG, env.static_path),
+        max_age=app_config.DEFAULT_MAX_AGE,
+        ignore=['%s/assets/*' % env.static_path]
+    )
+
+    flat.deploy_folder(
+        '%s/www/assets' % env.static_path,
+        '%s/%s/assets' % (app_config.PROJECT_SLUG, env.static_path),
+        max_age=app_config.ASSETS_MAX_AGE
+    )
 
 """
 App-specific commands
@@ -154,22 +184,23 @@ def sitemap():
 
     app_config.configure_targets(env.get('settings', None))
 
-    with app.app.test_request_context(path='sitemap.xml'):
-        print 'Rendering sitemap.xml' 
+    with flat_app.app.test_request_context(path='sitemap.xml'):
+        print 'Rendering sitemap.xml'
 
-        view = app.__dict__['_sitemap']
-        content = view()
+        view = flat_app.__dict__['_sitemap']
+        content = view().data
 
     with open('.sitemap.xml', 'w') as f:
-        f.write(content.encode('utf-8'))
+        f.write(content)
 
-    sync = 'aws s3 cp .sitemap.xml s3://%s/%s/sitemap.xml --acl "public-read" --cache-control "max-age=5" --region "us-east-1"'
+    s3 = boto.connect_s3()
 
-    for bucket in app_config.S3_BUCKETS:
-        local(sync % ( 
-            bucket,
-            app_config.PROJECT_SLUG
-        ))
+    flat.deploy_file(
+        s3,
+        '.sitemap.xml',
+        app_config.PROJECT_SLUG,
+        app_config.DEFAULT_MAX_AGE
+    )
 
 """
 Destruction

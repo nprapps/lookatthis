@@ -13,6 +13,12 @@ from fabric.state import env
 import app
 import app_config
 
+def _fake_context(path):
+    """
+    Create a fact request context for a given path.
+    """
+    return app.app.test_request_context(path=path)
+
 @task
 def less():
     """
@@ -82,8 +88,8 @@ def render_all():
         g.compiled_includes = compiled_includes
 
         view = app.__dict__['_post']
-        content = view(env.slug)
+        content = view(env.slug).data
 
     with open(path, 'w') as f:
-        f.write(content.encode('utf-8'))
+        f.write(content)
 

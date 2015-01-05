@@ -136,7 +136,7 @@ A flask app is used to run the project locally. It will automatically recompile 
 
 ```
 workon $PROJECT_SLUG
-python app.py
+fab app
 ```
 
 Visit [localhost:8000](http://localhost:8000) in your browser.
@@ -196,7 +196,7 @@ The app template is outfitted with a few ``fab`` utility functions that make pul
 To update the latest document, simply run:
 
 ```
-fab text.update
+fab post:$SLUG text.update
 ```
 
 Note: ``text.update`` runs automatically whenever ``fab render`` is called.

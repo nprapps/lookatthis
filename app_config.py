@@ -33,13 +33,29 @@ POST_PATH = 'posts'
 """
 DEPLOYMENT
 """
-PRODUCTION_S3_BUCKETS = ['apps.npr.org', 'apps2.npr.org']
-STAGING_S3_BUCKETS = ['stage-apps.npr.org']
-ASSETS_S3_BUCKET = 'assets.apps.npr.org'
+PRODUCTION_S3_BUCKET = {
+    'bucket_name': 'apps.npr.org',
+    'region': 'us-east-1'
+}
+
+STAGING_S3_BUCKET = {
+    'bucket_name': 'stage-apps.npr.org',
+    'region': 'us-east-1'
+}
+
+ASSETS_S3_BUCKET = {
+    'bucket_name': 'assets.apps.npr.org',
+    'region': 'us-east-1'
+}
+
+DEFAULT_MAX_AGE = 20
+ASSETS_MAX_AGE = 86400
+
 
 # These variables will be set at runtime. See configure_targets() below
-S3_BUCKETS = []
-S3_BASE_URL = ''
+S3_BUCKET = None
+S3_BASE_URL = None
+S3_DEPLOY_URL = None
 DEBUG = True
 
 """
@@ -51,7 +67,7 @@ COPY_PATH = 'data/copy.xlsx'
 """
 SHARING
 """
-SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKETS[0], PROJECT_SLUG)
+SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
 
 """
 ADS
@@ -73,7 +89,7 @@ TUMBLR_GOOGLE_ANALYTICS = {
 
 PROJECT_GOOGLE_ANALYTICS = {
     'ACCOUNT_ID': 'UA-5828686-4',
-    'DOMAIN': PRODUCTION_S3_BUCKETS[0],
+    'DOMAIN': PRODUCTION_S3_BUCKET,
 }
 
 DISQUS_UUID = 'e90a2863-0148-11e4-93ac-14109fed4b76'
@@ -110,8 +126,9 @@ def configure_targets(deployment_target):
     Configure deployment targets. Abstracted so this can be
     overriden for rendering before deployment.
     """
-    global S3_BUCKETS
+    global S3_BUCKET
     global S3_BASE_URL
+    global S3_DEPLOY_URL
     global DEBUG
     global DEPLOYMENT_TARGET
     global APP_LOG_PATH
@@ -119,26 +136,30 @@ def configure_targets(deployment_target):
     global TUMBLR_NAME
 
     if deployment_target == 'production':
-        S3_BUCKETS = PRODUCTION_S3_BUCKETS
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        S3_BUCKET = PRODUCTION_S3_BUCKET
+        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET['bucket_name'], PROJECT_SLUG)
+        S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET['bucket_name'], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'npr-news'
         DEBUG = False
         TUMBLR_NAME = 'lookatthisstory'
     elif deployment_target == 'staging':
-        S3_BUCKETS = STAGING_S3_BUCKETS
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        S3_BUCKET = STAGING_S3_BUCKET
+        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET['bucket_name'], PROJECT_SLUG)
+        S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET['bucket_name'], PROJECT_SLUG)
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         TUMBLR_NAME = 'stage-lookatthis'
     elif deployment_target == 'development':
-        S3_BUCKETS = STAGING_S3_BUCKETS
+        S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'http://127.0.0.1:8000'
+        S3_DEPLOY_URL = None
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         TUMBLR_NAME = 'dev-lookatthis'
     else:
-        S3_BUCKETS = []
+        S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:8000'
+        S3_DEPLOY_URL = None
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         APP_LOG_PATH = '/tmp/%s.app.log' % PROJECT_SLUG
