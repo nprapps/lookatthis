@@ -3,10 +3,11 @@
 import imp
 import os
 
+import boto
 from fabric.api import local, require, settings, task
 from fabric.state import env
 
-import app
+import app as flat_app
 import app_config
 
 # Other fabfiles
@@ -183,14 +184,14 @@ def sitemap():
 
     app_config.configure_targets(env.get('settings', None))
 
-    with app.app.test_request_context(path='sitemap.xml'):
+    with flat_app.app.test_request_context(path='sitemap.xml'):
         print 'Rendering sitemap.xml'
 
-        view = app.__dict__['_sitemap']
-        content = view()
+        view = flat_app.__dict__['_sitemap']
+        content = view().data
 
     with open('.sitemap.xml', 'w') as f:
-        f.write(content.encode('utf-8'))
+        f.write(content)
 
     s3 = boto.connect_s3()
 
