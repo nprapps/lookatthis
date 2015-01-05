@@ -13,6 +13,12 @@ from fabric.state import env
 import app
 import app_config
 
+def _fake_context(path):
+    """
+    Create a fact request context for a given path.
+    """
+    return app.app.test_request_context(path=path)
+
 @task
 def less():
     """

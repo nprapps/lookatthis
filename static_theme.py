@@ -4,7 +4,7 @@ import imp
 import json
 
 import copytext
-from flask import Blueprint, render_template
+from flask import Blueprint, make_response, render_template
 from render_utils import flatten_app_config
 from render_utils import make_context, CSSIncluder, JavascriptIncluder
 import static
@@ -47,4 +47,4 @@ def _theme():
 
     context['tumblr_name'] = app_config.TUMBLR_NAME
 
-    return render_template('theme.html', **context)
+    return make_response(render_template('theme.html', **context))
