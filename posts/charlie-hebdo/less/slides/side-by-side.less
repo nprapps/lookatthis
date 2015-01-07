@@ -28,25 +28,32 @@
 
                 .first-side {
                     vertical-align: middle;
-                    background: @side-by-side-screen;
-                    padding: 10px;
                     margin-bottom: 10px;
 
                     @media @screen-medium-above {
                         margin-bottom: 20px;
                     }
 
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                    }
+
                     @media @screen-medium-above {
                         display: table-cell;
                         width: 50%;
-                        padding: 20px;
+
+                        img {
+                            position: relative;
+                            left: -20px;
+                        }
                     }
 
                     p {
                         text-shadow: none;
-                        font-size: @small-type;
                         line-height: 1.5;
-                        padding-bottom: 5px;
+                        font-size: @small-type;
                         @media @screen-small-above {
                             font-size: 16px;
                         }
@@ -58,14 +65,40 @@
                 }
 
                 .second-side {
+                    padding: 20px;
+                    background: @side-by-side-screen;
 
-                     @media @screen-small-above {
+                    @media @screen-small-above {
                         margin-bottom: 20px;
-                     }
+                    }
 
                     @media @screen-medium-above {
                         display: table-cell;
+                        vertical-align: middle;
                         width: 50%;
+
+                    }
+
+                    p {
+                        text-shadow: none;
+                        font-size: @small-type;
+                        line-height: 1.5;
+                        padding-bottom: 5px;
+
+                        @media @screen-small-above {
+                            font-size: 16px;
+                        }
+
+                        @media @screen-medium-above {
+                            //margin-right: 40px;
+                        }
+
+                        @media @screen-mega-above {
+                            font-size: 20px;
+                        }
+
+
+
                     }
 
                     img {
@@ -73,14 +106,12 @@
                         width: 100%;
                         height: auto;
 
-                         @media @screen-medium-above {
+                        @media @screen-medium-above {
                             margin-left: 20px;
                         }
                     }
                 }
-
             }
         }
-
     }
 }
