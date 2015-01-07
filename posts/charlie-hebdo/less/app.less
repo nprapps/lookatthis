@@ -579,7 +579,7 @@ p,ul,ol,li {
         }
     }
 
-    padding-top: 40px;
+    padding-top: 60px;
     a {
         color: @look-pink;
         text-decoration: none;
@@ -592,7 +592,8 @@ p,ul,ol,li {
         .share-story {
             width: 100px;
             float: none;
-            margin: 10px auto;
+            margin: 10px 0;
+            display: inline-block;
 
             @media @screen-tiny-above {
                 width: auto;
@@ -609,7 +610,7 @@ p,ul,ol,li {
                 text-decoration: none;
                 text-align: center;
                 padding: 5px;
-                background-color: #000;
+                background-color: @side-by-side-screen;
                 color: #fff;
 
                 &:hover,
