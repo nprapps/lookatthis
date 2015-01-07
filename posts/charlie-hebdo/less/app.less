@@ -544,21 +544,42 @@ p,ul,ol,li {
 
 /* conclusion slide */
 
-.conclusion {
+.next-post {
 
     .full-block {
         background: @darker-overlay;
     }
 
-.full-block-content {
-    max-width: 1000px;
+    .project-credits {
+        margin: 0 auto 20px auto;
 
-    padding-top: 40px;
+        border-top: 1px solid #fff;
+        font-family: gotham, helvetica, sans-serif;
 
-    @media @screen-small-above {
-        padding-top: 0;
+        h6 {
+            font-size: 16px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ccc;
+            text-align: center;
+            @media @screen-tiny-above {
+                text-align: left;
+            }
+        }
+        p {
+            font-family: gotham, helvetica, sans-serif;
+            font-size: 11px;
+            color: #ccc;
+            text-shadow: none;
+            line-height: 1.4;
+            @media @screen-small-above {
+                font-size: 13px;
+            }
+        }
     }
 
+    padding-top: 60px;
     a {
         color: @look-pink;
         text-decoration: none;
@@ -568,13 +589,11 @@ p,ul,ol,li {
     }
 
     .share-panel {
-
-
         .share-story {
-
             width: 100px;
             float: none;
-            margin: 10px auto;
+            margin: 10px 0;
+            display: inline-block;
 
             @media @screen-tiny-above {
                 width: auto;
@@ -591,7 +610,7 @@ p,ul,ol,li {
                 text-decoration: none;
                 text-align: center;
                 padding: 5px;
-                background-color: #000;
+                background-color: @side-by-side-screen;
                 color: #fff;
 
                 &:hover,
@@ -606,96 +625,25 @@ p,ul,ol,li {
                     padding: 5px 10px;
                 }
             }
-
         }
     }
-
 
     p {
         max-width: 100%;
     }
 
-    h3 {
-        text-transform: uppercase;
-        font-weight: bold;
+    .up-next-caption {
+        h3 {
+        font-weight: normal;
         font-size: 18px;
         margin-bottom: 10px;
         text-align: center;
+        text-transform: none;
 
         @media @screen-tiny-above {
-            text-align: left;
             font-size: 22px;
         }
     }
-
-
-
-
-    .listen {
-        margin-bottom: 20px;
-        p {
-            font-family: gotham, helvetica, arial;
-            text-shadow: none;
-            font-size: 12px;
-            line-height: 1.6;
-
-            @media @screen-small-above {
-                font-size: 14px;
-            }
-            @media @screen-mega-above {
-                font-size: 18px;
-            }
-        }
-
-
-        .audio-segment {
-
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-
-            img {
-                max-width: 70px;
-                float: left;
-                margin-right: 20px;
-
-                @media @screen-small-above {
-                    max-width: 90px;
-                }
-
-            }
-        }
-
-    }
-
-    .project-credits {
-
-            margin: 0 auto 20px auto;
-
-            border-top: 1px solid #fff;
-            font-family: gotham, helvetica, sans-serif;
-
-            h6 {
-                font-size: 16px;
-                margin: 15px 0;
-                font-weight: bold;
-                text-transform: uppercase;
-                color: #ccc;
-                text-align: center;
-                @media @screen-tiny-above {
-                    text-align: left;
-                }
-            }
-            p {
-                font-family: gotham, helvetica, sans-serif;
-                font-size: 11px;
-                color: #ccc;
-                text-shadow: none;
-                line-height: 1.4;
-                @media @screen-small-above {
-                font-size: 13px;
-                }
-            }
-        }
     }
 }
 
