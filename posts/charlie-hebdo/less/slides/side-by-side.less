@@ -1,0 +1,90 @@
+.slide.side-by-side {
+    .full-block {
+        background: @darker-overlay;
+
+        .full-block-cell {
+            vertical-align: middle;
+        }
+
+        .full-block-content {
+            margin: 0 auto;
+            max-width: 100%;
+
+            @media @screen-small-above {
+                max-width: 80%;
+            }
+
+            @media @screen-medium-above {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            @media @screen-large-above {
+                max-width: 1100px;
+            }
+
+            .side-by-side-wrapper {
+                display: table;
+
+                .first-side {
+                    vertical-align: middle;
+                    background: @side-by-side-screen;
+                    padding: 10px;
+                    margin-bottom: 10px;
+
+                    @media @screen-medium-above {
+                        margin-bottom: 20px;
+                    }
+
+                    @media @screen-medium-above {
+                        display: table-cell;
+                        width: 50%;
+                        padding: 20px;
+                    }
+
+                    p {
+                        text-shadow: none;
+                        font-size: @small-type;
+                        line-height: 1.5;
+                        padding-bottom: 5px;
+                        @media @screen-small-above {
+                            font-size: 16px;
+                        }
+                        @media @screen-mega-above {
+                            font-size: 20px;
+                        }
+
+                    }
+                }
+
+                .second-side {
+
+                     @media @screen-small-above {
+                        margin-bottom: 20px;
+                     }
+
+                    @media @screen-medium-above {
+                        display: table-cell;
+                        width: 50%;
+                    }
+
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+
+                        @media @screen-small-above {
+                            border: 10px solid #fff;
+                        }
+
+                         @media @screen-medium-above {
+                            margin-left: 20px;
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
+}
