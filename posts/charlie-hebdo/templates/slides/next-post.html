@@ -3,26 +3,31 @@
     <div class="row">
 
     <div class="primary-column">
-        <div class="previous-post">
-            <div class="looked-at">
-                <p><em>You just looked at</em></p>
-                <h2>{{ COPY.post_metadata.title }}</h2>
-            </div><!-- /looked-at -->
-            <img src="assets/{{ COPY.post_metadata.thumbnail_photo }}">
-            <div class="share">
-                <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-                    <div class="share-button"></div>
-                    <h5>
-                        <i class="fa fa-share"></i>
-                        Share
-                    </h5>
-                </a>
-            </div>
-        </div>
+        <div class="share-panel share-panel-section clearfix">
+
+            <h3>Share your thoughts</h3>
+
+            <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
+
+                <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
+
+
+                <p class="share-story">
+                    <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
+                </p>
+
+            <div class="email-friend">
+
+                </div><!-- / email-friend -->
+            </div><!-- / share-panel-section -->
+
+            <!--project credits -->
+
+            {{ row.media_credit|smarty }}
     </div>
     <div class="secondary-column">
         <div class="up-next">
-            <img src="{{ row.media }}">
+            <img src="assets/{{ row.media }}">
             <div class="up-next-caption-wrapper">
                 <div class="up-next-caption">
                         <p><em>Up Next</em></p>
