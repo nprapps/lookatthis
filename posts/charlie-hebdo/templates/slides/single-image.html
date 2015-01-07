@@ -1,9 +1,9 @@
 <div class="slide single-image {% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
 
     <div class="text full-block">
-        <div class="full-block-cell">
-            <div class="full-block-content">
-                    {{ row.text1|smarty }}
+        <div class="full-block-cell" style="background-image: url({{ row.text1|smarty }})">
+            <div class="full-block-content" >
+
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
 
