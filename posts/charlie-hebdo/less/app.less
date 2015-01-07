@@ -33,7 +33,7 @@
 @black-screen: rgba(0,0,0,0.8);
 
 @look-pink: #F60062;
-@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@side-by-side-screen: #4B5358;
 @caption-screen-dark: rgba(175, 0, 71, 0.7);
 @pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
@@ -257,6 +257,32 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         padding: 20px;
         @media @screen-small-above {
              padding: 20px 100px;
+        }
+    }
+}
+
+.caption {
+    padding: 10px 20px 30px 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    @media @screen-small-above {
+        padding: 20px;
+    }
+
+    p {
+        font-size: 20px;
+        line-height: 1.5;
+        text-shadow: none;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: @small-type;
+        @media @screen-small-above {
+            font-size: 16px;
+        }
+        @media @screen-mega-above {
+            font-size: 20px;
         }
     }
 }
