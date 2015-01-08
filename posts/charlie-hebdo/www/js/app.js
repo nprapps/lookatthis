@@ -350,7 +350,7 @@ var rmFakeMobileHover = function() {
     $(this).css({
         'background-color': 'rgba(0, 0, 0, 0.5)',
         'color': '#fff',
-        'opacity': .5
+        'opacity': 1
     });
 }
 
