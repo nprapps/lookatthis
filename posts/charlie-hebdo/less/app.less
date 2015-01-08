@@ -546,12 +546,8 @@ p,ul,ol,li {
 
 .next-post {
 
-    .full-block {
-        background: @darker-overlay;
-    }
-
     .project-credits {
-        margin: 0 auto 20px auto;
+        margin: 30px auto 20px auto;
 
         border-top: 1px solid #fff;
         font-family: gotham, helvetica, sans-serif;
@@ -579,7 +575,6 @@ p,ul,ol,li {
         }
     }
 
-    padding-top: 60px;
     a {
         color: @look-pink;
         text-decoration: none;
@@ -597,7 +592,7 @@ p,ul,ol,li {
 
             @media @screen-tiny-above {
                 width: auto;
-                margin: 10px 10px 10px 0;
+                margin: 0 5px 5px 0;
                 float: left;
             }
 
@@ -621,8 +616,7 @@ p,ul,ol,li {
 
                 @media @screen-tiny-above {
                     width: auto;
-                    font-size: 12px;
-                    padding: 5px 10px;
+                    padding: 5px 8px;
                 }
             }
         }
@@ -644,6 +638,14 @@ p,ul,ol,li {
             font-size: 22px;
         }
     }
+    }
+
+    height: 100%;
+    display: table;
+
+    .row {
+        display: table-cell;
+        vertical-align: middle;
     }
 }
 

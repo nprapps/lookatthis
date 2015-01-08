@@ -3,28 +3,29 @@
 //up-next
 .next-post {
     margin-left: 40px;
-
+    padding-top: 3%;
     @media @screen-small-above {
         width: 90%;
         max-width: 1500px;
         margin: 0 auto;
-        padding-top: 20%;
     }
 
     @media @screen-medium-above {
-       padding-top: 3%;
-       width: 80%;
+        padding-top: 0;
+        width: 80%;
     }
 
 
-    .row {margin: 0;}
+    .row {
+        margin: 0;
+    }
 
     .primary-column {
-        .make-sm-column(4);
+        .make-md-column(4);
     }
 
     .secondary-column {
-        .make-sm-column(8);
+        .make-md-column(8);
     }
 
     a {
@@ -41,108 +42,6 @@
         height: auto;
         @media @screen-small-above {
             width: 100%;
-        }
-    }
-
-    .previous-post {
-        position: relative;
-        margin-top: 20px;
-        background-color: #f60062;
-        margin-bottom: 10px;
-
-        img {
-            opacity: .3;
-            width: 100px;
-        }
-
-        @media @screen-small-above {
-            background-color: transparent;
-            margin-top: 0;
-            margin-left: 40px;
-            padding-top: 40%;
-            margin-bottom: 0;
-
-            img {
-                opacity: 1;
-                width: 100%;
-            }
-        }
-
-        .looked-at {
-            position: absolute;
-            top: 20px;
-            left: 120px;
-
-            @media @screen-small-above {
-                position: static;
-            }
-        }
-
-        h2 {
-            text-transform: uppercase;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0 0 20px 0;
-            padding: 0;
-
-            @media @screen-small-above {
-                text-align: center;
-            }
-
-            @media @screen-medium-above {
-               font-size: 24px;
-            }
-        }
-
-        p {
-            font-family: georgia, serif;
-            font-size: 12px;
-            margin: 0 0 5px 0;
-            padding: 0;
-
-            @media @screen-small-above {
-                text-align: center;
-            }
-
-            @media @screen-medium-above {
-               font-size: 14px;
-            }
-
-        }
-
-        h5 {
-            font-size: 14px;
-            text-transform: uppercase;
-            text-align: center;
-            margin-top: 0;
-            cursor: pointer;
-            font-weight: bold;
-            position: absolute;
-            top: 30px;
-            left: 20px;
-
-
-            i {
-                display: block;
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
-
-            @media @screen-small-above {
-                margin-top: 20px;
-                position: static;
-            }
-
-            @media @screen-medium-above {
-                font-size: 18px;
-
-                &:hover {
-                    color: #f60062;
-                }
-
-                i{font-size: 32px;}
-
-            }
         }
     }
 
