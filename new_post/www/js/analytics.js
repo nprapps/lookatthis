@@ -3,7 +3,7 @@
  */
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', APP_CONFIG.PROJECT_GOOGLE_ANALYTICS.ACCOUNT_ID]);
-_gaq.push(['_setDomainName', APP_CONFIG.PROJECT_GOOGLE_ANALYTICS.DOMAIN]);
+_gaq.push(['_setDomainName', APP_CONFIG.PROJECT_GOOGLE_ANALYTICS.DOMAIN.bucket_name]);
 //_gaq.push(['_setCustomVar', 1, 'BC', '', 3]);
 // _gaq.push(['_setCustomVar', 2, 'Topics', APP_CONFIG.GOOGLE_ANALYTICS.TOPICS, 3]);
 //_gaq.push(['_setCustomVar', 3, 'Program ID', '', 3]);
@@ -74,7 +74,7 @@ _comscore.push({ c1: "2", c2: "17691522" });
     var d = new Image(1, 1);
     d.onerror = d.onload = function () { d.onerror = d.onload = null; };
     d.src = ["//secure-us.imrworldwide.com/cgi-bin/m?ci=us-803244h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
-})();   
+})();
 
 /*
  * Chartbeat
