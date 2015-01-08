@@ -26,9 +26,9 @@ var hasTrackedSlideNav = false;
 var slideStartTime = moment();
 var completion = 0;
 
-/*var onStartCardButtonClick = function() {
+var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
-}*/
+}
 
 var resize = function() {
 
@@ -157,13 +157,18 @@ var showNavigation = function() {
 
     if ($slides.first().hasClass('active')) {
         if (!$arrows.hasClass('active')) {
-            animateArrows();
+            // animateArrows();
         }
 
         var $prevArrow = $arrows.filter('.prev');
+        var $nextArrow = $arrows.filter('.next');
 
         $prevArrow.removeClass('active');
         $prevArrow.css({
+            //'opacity': 0,
+            'display': 'none'
+        });
+        $nextArrow.css({
             //'opacity': 0,
             'display': 'none'
         });
@@ -374,14 +379,14 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $primaryNav = $('.primary-navigation');
-    //$startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
 
     $nextPostTitle = $('.next-post-title');
     $nextPostImage = $('.next-post-image');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
+    $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
 
