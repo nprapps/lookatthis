@@ -26,6 +26,7 @@
 
             .side-by-side-wrapper {
                 display: table;
+                margin: 0 auto;
 
                 .first-side {
                     vertical-align: middle;
@@ -39,6 +40,7 @@
                         display: block;
                         width: 100%;
                         height: auto;
+                        max-width: 450px;
                     }
 
                     @media @screen-medium-above {
@@ -68,6 +70,7 @@
                 .second-side {
                     padding: 20px;
                     background: @side-by-side-screen;
+                    max-width: 450px;
 
                     @media @screen-small-above {
                         margin-bottom: 20px;
@@ -98,6 +101,9 @@
                             font-size: 20px;
                         }
 
+                        &.number {
+                            font-family: "Gotham", Helvetica, Arial, sans-serif;
+                        }
 
 
                     }
