@@ -116,9 +116,9 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    if ($w < 769) {
-        mobileSuffix = '-sq';
-    }
+    // if ($w < 769) {
+    //     mobileSuffix = '-sq';
+    // }
 
     _.each($(slides), function(slide) {
 
@@ -348,9 +348,9 @@ var fakeMobileHover = function() {
 
 var rmFakeMobileHover = function() {
     $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
+        'background-color': 'rgba(0, 0, 0, 0.5)',
         'color': '#fff',
-        'opacity': .3
+        'opacity': .5
     });
 }
 
