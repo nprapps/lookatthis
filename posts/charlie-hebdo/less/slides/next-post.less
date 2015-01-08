@@ -2,7 +2,7 @@
 
 //up-next
 .next-post {
-    margin-left: 40px;
+    margin: 0 40px;
     padding-top: 3%;
     @media @screen-small-above {
         width: 90%;
@@ -80,13 +80,14 @@
         }
 
         h2 {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: bold;
             text-transform: uppercase;
             //padding-right: 90px;
             margin: 0;
             text-shadow: 2px 2px 5px #000;
              .transition(all .3s ease-in);
+             margin-bottom: 8px;
 
              @media @screen-small-above {
                 font-size: 30px;
@@ -100,10 +101,12 @@
 
         p,h3 {
             font-family: georgia, serif;
-            font-size: 11px;
+            font-size: 14px;
             margin: 0;
             padding: 0 0 0 0;
             text-shadow: 2px 2px 5px #000;
+            text-transform: none;
+            font-weight: normal;
             .transition(all .3s ease-in);
 
              @media @screen-medium-above {
@@ -120,7 +123,7 @@
             top: 20px;
             left: 0;
             width: 100%;
-            padding-left: 20px;
+            padding: 0 10px;
 
             @media @screen-small-above {
                 top: 38%;

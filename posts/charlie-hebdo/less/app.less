@@ -419,7 +419,7 @@ p,ul,ol,li {
 
     h3 {
         font-size: 16px;
-        margin: 0 auto;
+        margin: 0 auto 10px;
         text-transform: uppercase;
         font-weight: bold;
         @media @screen-small-above {
@@ -558,10 +558,7 @@ p,ul,ol,li {
             font-weight: bold;
             text-transform: uppercase;
             color: #ccc;
-            text-align: center;
-            @media @screen-tiny-above {
-                text-align: left;
-            }
+            text-align: left;
         }
         p {
             font-family: gotham, helvetica, sans-serif;
@@ -585,16 +582,9 @@ p,ul,ol,li {
 
     .share-panel {
         .share-story {
-            width: 100px;
-            float: none;
-            margin: 10px 0;
-            display: inline-block;
-
-            @media @screen-tiny-above {
-                width: auto;
-                margin: 0 5px 5px 0;
-                float: left;
-            }
+            margin: 0 5px 5px 0;
+            width: auto;
+            float: left;
 
             a {
                 width: 100px;
@@ -626,19 +616,19 @@ p,ul,ol,li {
         max-width: 100%;
     }
 
-    .up-next-caption {
-        h3 {
-        font-weight: normal;
-        font-size: 18px;
-        margin-bottom: 10px;
-        text-align: center;
-        text-transform: none;
+    // .up-next-caption {
+    //     h3 {
+    //     font-weight: normal;
+    //     font-size: 18px;
+    //     margin-bottom: 10px;
+    //     text-align: center;
+    //     text-transform: none;
 
-        @media @screen-tiny-above {
-            font-size: 22px;
-        }
-    }
-    }
+    //     @media @screen-tiny-above {
+    //         font-size: 22px;
+    //     }
+    // }
+    // }
 
     height: 100%;
     display: table;
