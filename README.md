@@ -217,6 +217,10 @@ If a slide needs style adjustments but not a new markup structure, use the `id` 
 
 ### Deploying a post
 
+When deploying a post, make sure the deploy slug is what you want it to be. The slug defaults to the name of the folder, but can be overridden in `posts/$SLUG/post_config.py`. Define the variable `DEPLOY_SLUG` to what you want the published slug to be.
+
+Also, make sure that the variable `NUM_SLIDES_AFTER_CONTENT` is equal to the number of slides *after* the last piece of story content. For example, if there is a share slide and an up next slide, the number should be 2. This is important for tracking completion rates in our analytics.
+
 Deploy posts with the following command:
 ```
 fab post:$SLUG staging deploy
