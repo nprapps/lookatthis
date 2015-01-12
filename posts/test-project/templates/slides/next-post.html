@@ -1,45 +1,19 @@
-<div class="slide{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %} {% if row.media %} data-bgimage="{{ row.media }}" {% endif %}">
-    <div class="container-fluid next-post">
-    <div class="row">
-
-    <div class="primary-column">
-        <div class="previous-post">
-            <div class="looked-at">
-                <p><em>You just looked at</em></p>
-                <h2>{{ COPY.post_metadata.title|smarty }}</h2>
-            </div><!-- /looked-at -->
-            <img src="assets/{{ COPY.post_metadata.thumbnail_photo }}">
-            <div class="share">
-                <a class="share" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-                    <div class="share-button"></div>
-                    <h5>
-                        <i class="fa fa-share"></i>
-                        Share
-                    </h5>
+<div class="slide next-post{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+    <div class="blur-background" data-bgimage='{{ row.media }}'></div>
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                <h5>Here's another good story from Look At This</h5>
+                <a href="{{ row.text3 }}" target="_blank" class="previously-on">
+                    <h2>{{ row.text1|smarty }}</h2>
+                    <h3>{{ row.text2|smarty }}</h3>
+                    <h4>View</h4>
                 </a>
-            </div>
-        </div>
-    </div>
-    <div class="secondary-column">
-        <div class="up-next">
-            <img src="{{ row.media }}">
-            <div class="up-next-caption-wrapper">
-                <div class="up-next-caption">
-                        <p><em>Up Next</em></p>
-                        <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
-                        <h3><em>{{ row.text2|smarty }}</em></h3>
-                </div>
 
-                <div class="next-button-wrapper">
-                    <div class="next-button">
-                        <i class="fa fa-chevron-right"></i>
-                    </div>
-                </div>
-            </div><!-- /next-button-wrapper -->
-        </div>
-    </div>
-    </div><!-- row -->
-    </div><!-- container -->
+             </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+    </div><!--full-block-->
+
 </div><!-- slide -->
 
 <script type="text/javascript">

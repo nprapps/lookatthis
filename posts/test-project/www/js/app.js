@@ -133,7 +133,7 @@ var findImages = function(slides) {
     _.each($(slides), function(slide) {
 
         getBackgroundImage(slide);
-        var containedImage = $(slide).find('.contained-image-container, .contained-image');
+        var containedImage = $(slide).find('.blur-background');
         getBackgroundImage(containedImage);
     });
 };
