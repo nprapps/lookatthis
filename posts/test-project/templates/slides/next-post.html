@@ -1,21 +1,13 @@
-<div class="slide next-post{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
-    <div class="blur-background" data-bgimage="{{ row.media }}"></div>
-    <div class="text full-block">
-        <div class="full-block-cell">
-            <div class="full-block-content">
-                <h5>Here's another good story from Look At This</h5>
-                <a href="{{ row.text3 }}" target="_blank" class="previously-on">
-                    <h2>{{ row.text1|smarty }}</h2>
-                    <h3>{{ row.text2|smarty }}</h3>
-                    <h4>View</h4>
-                </a>
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+    <h5>Here's another good story from Look At This</h5>
+    <a href="{{ row.text3 }}" target="_blank" class="previously-on">
+        <h2>{{ row.text1|smarty }}</h2>
+        <h3>{{ row.text2|smarty }}</h3>
+        <h4>View</h4>
+    </a>
 
-             </div><!--full-block-content-->
-        </div><!--full-block-cell-->
-    </div><!--full-block-->
-
-</div><!-- slide -->
-
-<script type="text/javascript">
-    window.NEXT_POST_URL = "{{ row.text3 }}";
-</script>
+    <script type="text/javascript">
+        window.NEXT_POST_URL = "{{ row.text3 }}";
+    </script>
+{% endblock %}

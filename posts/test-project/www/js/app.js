@@ -131,32 +131,30 @@ var findImages = function(slides) {
     }
 
     _.each($(slides), function(slide) {
-
-        getBackgroundImage(slide);
-        var containedImage = $(slide).find('.blur-background');
-        getBackgroundImage(containedImage);
+        loadImages($(slide));
     });
 };
 
-var getBackgroundImage = function(container) {
+var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
-    if ($(container).data('bgimage')) {
-
-        var image_filename = $(container).data('bgimage').split('.')[0];
-        var image_extension = '.' + $(container).data('bgimage').split('.')[1];
+    var $container = $slide.find('.bg-image');
+    if ($container.data('bgimage')) {
+        var image_filename = $container.data('bgimage').split('.')[0];
+        var image_extension = '.' + $container.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($(container).css('background-image') === 'none') {
-            $(container).css('background-image', 'url(' + image_path + ')');
+        if ($container.css('background-image') === 'none') {
+            $container.css('background-image', 'url(' + image_path + ')');
         }
-        if ($(container).hasClass('contained-image-container')) {
-            setImages($(container));
-        }
+    }
 
-     }
+    var $images = $slide.find('img.lazy-load');
+    for (i = 0; i < $images.length; i++) {
+        var image = $images.eq(i).data('src');
+        $images.eq(i).attr('src', 'assets/' + image);
+    }
 };
 
 var showNavigation = function() {
@@ -233,57 +231,6 @@ var fadeInArrows = _.debounce(function() {
     //$arrows.css('opacity', 1)
 }, 1);
 
-
-var setImages = function(container) {
-    /*
-    * Image resizer from the Wolves lightbox + sets background image on a div.
-    */
-
-    // Grab Wes's properly sized width.
-    var imageWidth = w;
-
-    // Sometimes, this is wider than the window, shich is bad.
-    if (imageWidth > $w) {
-        imageWidth = $w;
-    }
-
-    // Set the hight as a proportion of the image width.
-    var imageHeight = ((imageWidth * aspectHeight) / aspectWidth);
-
-    // Sometimes the lightbox width is greater than the window height.
-    // Center it vertically.
-    if (imageWidth > $h) {
-        imageTop = (imageHeight - $h) / 2;
-    }
-
-    // Sometimes the lightbox height is greater than the window height.
-    // Resize the image to fit.
-    if (imageHeight > $h) {
-        imageWidth = ($h * aspectWidth) / aspectHeight;
-        imageHeight = $h;
-    }
-
-    // Sometimes the lightbox width is greater than the window width.
-    // Resize the image to fit.
-    if (imageWidth > $w) {
-        imageHeight = ($w * aspectHeight) / aspectWidth;
-        imageWidth = $w;
-    }
-
-    // Set the top and left offsets. Image bottom includes offset for navigation
-    var imageBottom = ($h - imageHeight) / 2 + 70;
-    var imageLeft = ($w - imageWidth) / 2;
-
-    // Set styles on the map images.
-    $(container).css({
-        'width': imageWidth + 'px',
-        'height': imageHeight + 'px',
-        'bottom': imageBottom + 'px',
-        'left': imageLeft + 'px',
-    });
-
-};
-
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
@@ -293,12 +240,6 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var timeOnSlide = (now - slideStartTime);
 
     ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
-}
-
-var onResize = function(e) {
-    if ($('.slide.active').hasClass('image-split')) {
-        setImages($('.slide.active').find('.contained-image-container')[0]);
-    }
 }
 
 var onDocumentKeyDown = function(e) {
@@ -400,6 +341,5 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
 });
