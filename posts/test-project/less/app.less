@@ -2,12 +2,14 @@
 @import "./lib/font-awesome/font-awesome";
 @import "./lib/prefixer";
 @import "./share-modal.less";
-@import "./slides/fixed-image.less";
-@import "./slides/quote.less";
+@import "./slides/conclusion.less";
+@import "./slides/framed-text.less";
+@import "./slides/full-bleed.less";
+@import "./slides/next-post.less";
+@import "./slides/side-by-side.less";
+@import "./slides/single-image.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
-@import "./slides/video.less";
-@import "./slides/next-post.less";
 @import "./nudges.less";
 
 
@@ -24,6 +26,17 @@
 @screen-small: ~"screen and (max-width: 767px)";
 @screen-tiny-above: ~"screen and (min-width: 481px)";
 @screen-tiny: ~"screen and (max-width: 480px)";
+
+@darker-overlay: rgba(0,0,0,0.7);
+@black-screen: rgba(0,0,0,0.8);
+
+@look-pink: #F60062;
+
+@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@caption-screen-dark: rgba(175, 0, 71, 0.7);
+@pink: rgba(200, 66, 119, 1);
+@caption-screen-light: rgba(153, 9, 71, 0.7);
+@small-type: 13px;
 
 body {
     color: #fff;

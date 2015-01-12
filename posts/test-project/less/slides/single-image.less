@@ -1,0 +1,55 @@
+.slide.single-image {
+    background: transparent url(../assets/chalkboard.jpg) top left;
+    .full-block-cell {
+        vertical-align: top;
+        @media @screen-small-above {
+            vertical-align: middle;
+        }
+    }
+
+    .full-block-content {
+        max-width: 100%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 700px;
+        }
+        @media @screen-medium-above {
+            max-width: 1000px;
+        }
+        height: auto;
+    }
+
+    .full-block-content:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        // background-color: rgba(0,0,0,0.8);
+        z-index: -1;
+        height: 100%;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+
+        @media @screen-small-above {
+            border: 2px solid #f0f0f0;
+        }
+    }
+
+    .box {
+        background: @side-by-side-screen;
+
+        @media @screen-small-above {
+            margin-bottom: 20px;
+        }
+        .caption {
+            padding: 15px 20px 20px;
+        }
+    }
+}
