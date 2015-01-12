@@ -1,36 +1,22 @@
 // Global state
-var $nextPostTitle = null;
-var $nextPostImage = null;
 var $upNext = null;
-var NAV_HEIGHT = 75;
-// TODO: use deploy slug
-var MESSAGE_DELIMITER = ';';
-
 var $w;
 var $h;
 var $slides;
-var $primaryNav;
 var $arrows;
 var $startCardButton;
+var isTouch = Modernizr.Touch;
 var mobileSuffix;
-var isTouch = Modernizr.touch;
 var aspectWidth = 16;
 var aspectHeight = 9;
 var optimalWidth;
 var optimalHeight;
 var w;
 var h;
-var hasTrackedKeyboardNav = false;
-var hasTrackedSlideNav = false;
-var slideStartTime = moment();
+var slideStartTime = new Date();
 var completion = 0;
 
-/*var onStartCardButtonClick = function() {
-    $.fn.fullpage.moveSlideRight();
-}*/
-
 var resize = function() {
-
     $w = $(window).width();
     $h = $(window).height();
 
@@ -62,7 +48,6 @@ var setUpFullPage = function() {
     });
 };
 
-
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
     $('body').css('opacity', 1);
@@ -70,13 +55,10 @@ var onPageLoad = function() {
 };
 
 // after a new slide loads
-
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
-
     showNavigation();
-
-    slideStartTime = moment();
+    slideStartTime = Date.now();
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
@@ -104,24 +86,13 @@ var setSlidesForLazyLoading = function(slideIndex) {
     * Sets up a list of slides based on your position in the deck.
     * Lazy-loads images in future slides because of reasons.
     */
-
     var slides = [
-        $slides[slideIndex - 2],
-        $slides[slideIndex - 1],
-        $slides[slideIndex],
-        $slides[slideIndex + 1],
-        $slides[slideIndex + 2]
+        $slides.eq(slideIndex - 2),
+        $slides.eq(slideIndex - 1),
+        $slides.eq(slideIndex),
+        $slides.eq(slideIndex + 1),
+        $slides.eq(slideIndex + 2)
     ];
-
-    findImages(slides);
-
-}
-
-var findImages = function(slides) {
-    /*
-    * Set background images on slides.
-    * Should get square images for mobile.
-    */
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
@@ -130,10 +101,11 @@ var findImages = function(slides) {
         mobileSuffix = '-sq';
     }
 
-    _.each($(slides), function(slide) {
-        loadImages($(slide));
-    });
-};
+    for (var i = 0; i < slides.length; i++) {
+        loadImages(slides[i]);
+    };
+
+}
 
 var loadImages = function($slide) {
     /*
@@ -151,9 +123,11 @@ var loadImages = function($slide) {
     }
 
     var $images = $slide.find('img.lazy-load');
-    for (i = 0; i < $images.length; i++) {
-        var image = $images.eq(i).data('src');
-        $images.eq(i).attr('src', 'assets/' + image);
+    if ($images.length > 0) {
+        for (var i = 0; i < $images.length; i++) {
+            var image = $images.eq(i).data('src');
+            $images.eq(i).attr('src', 'assets/' + image);
+        }
     }
 };
 
@@ -172,13 +146,11 @@ var showNavigation = function() {
 
         $prevArrow.removeClass('active');
         $prevArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
 
         $('body').addClass('titlecard-nav');
 
-        //$primaryNav.css('opacity', '1');
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -193,11 +165,8 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('active');
         $nextArrow.css({
-            //'opacity': 0,
             'display': 'none'
         });
-
-        //$primaryNav.css('opacity', '1');
     } else {
         /*
         * All of the other cards? Arrows and navs.
@@ -207,8 +176,6 @@ var showNavigation = function() {
         }
 
         $('body').removeClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
     }
 }
 
@@ -220,49 +187,25 @@ var animateArrows = function() {
 
     if ($arrows.hasClass('active')) {
         $arrows.css('display', 'block');
-        fadeInArrows();
     }
 };
-
-var fadeInArrows = _.debounce(function() {
-    /*
-    * Debounce makes you do crazy things.
-    */
-    //$arrows.css('opacity', 1)
-}, 1);
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-
-    var now = moment();
-    var timeOnSlide = (now - slideStartTime);
-
+    var timeOnSlide = Math.abs(new Date() - slideStartTime);
     ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
 }
 
+/*var onStartCardButtonClick = function() {
+    $.fn.fullpage.moveSlideRight();
+}*/
+
 var onDocumentKeyDown = function(e) {
-    if (hasTrackedKeyboardNav) {
-        return true;
+    if (e.which === 39) {
+        ANALYTICS.useKeyboardNavigation();
     }
-
-    switch (e.which) {
-
-        //left
-        case 37:
-
-        //right
-        case 39:
-            ANALYTICS.useKeyboardNavigation();
-            break;
-
-        // escape
-        case 27:
-            break;
-
-    }
-
     // jquery.fullpage handles actual scrolling
     return true;
 }
@@ -271,7 +214,6 @@ var onSlideClick = function(e) {
     if (isTouch) {
         $.fn.fullpage.moveSlideRight();
     }
-
     return true;
 }
 
@@ -314,18 +256,13 @@ $(document).ready(function() {
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
-    $primaryNav = $('.primary-navigation');
     //$startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
-
-    $nextPostTitle = $('.next-post-title');
-    $nextPostImage = $('.next-post-image');
     $upNext = $('.up-next');
 
     //$startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
-
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
