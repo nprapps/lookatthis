@@ -4,7 +4,6 @@ var $nextPostImage = null;
 var $upNext = null;
 var NAV_HEIGHT = 75;
 // TODO: use deploy slug
-var EVENT_CATEGORY = 'lookatthis';
 var MESSAGE_DELIMITER = ';';
 
 var $w;
@@ -53,7 +52,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         autoScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal, .home',
+        fixedElements: '.primary-navigation, #share-modal',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -80,12 +79,23 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     slideStartTime = moment();
 
     // Completion tracking
-    how_far = (slideIndex + 1) / $slides.length;
+    how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        trackEvent([EVENT_CATEGORY, 'completion', completion.toString()]);
+        if (completion === 0.25) {
+            ANALYTICS.completeTwentyFivePercent();
+        }
+        else if (completion === 0.5) {
+            ANALYTICS.completeFiftyPercent();
+        }
+        else if (completion === 0.75) {
+            ANALYTICS.completeSeventyFivePercent();
+        }
+        else if (completion === 1) {
+            ANALYTICS.completeOneHundredPercent();
+        }
     }
 };
 
@@ -116,9 +126,9 @@ var findImages = function(slides) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    // if ($w < 769) {
-    //     mobileSuffix = '-sq';
-    // }
+    if ($w < 769) {
+        mobileSuffix = '-sq';
+    }
 
     _.each($(slides), function(slide) {
 
@@ -282,7 +292,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     var now = moment();
     var timeOnSlide = (now - slideStartTime);
 
-    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex.toString(), timeOnSlide]);
+    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
 }
 
 var onResize = function(e) {
@@ -303,8 +313,7 @@ var onDocumentKeyDown = function(e) {
 
         //right
         case 39:
-            trackEvent([EVENT_CATEGORY, 'keyboard-nav']);
-            hasTrackedKeyboardNav = true;
+            ANALYTICS.useKeyboardNavigation();
             break;
 
         // escape
@@ -326,16 +335,11 @@ var onSlideClick = function(e) {
 }
 
 var onNextPostClick = function(e) {
+    e.preventDefault();
+
+    ANALYTICS.trackEvent('next-post');
     window.top.location = NEXT_POST_URL;
-
-    trackEvent([EVENT_CATEGORY, 'next-post']);
-
     return true;
-}
-
-var trackEvent = function(args) {
-    args.splice(0, 0, '_trackEvent');
-    _gaq.push(args)
 }
 
 var fakeMobileHover = function() {
@@ -348,9 +352,9 @@ var fakeMobileHover = function() {
 
 var rmFakeMobileHover = function() {
     $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.5)',
+        'background-color': 'rgba(0, 0, 0, 0.2)',
         'color': '#fff',
-        'opacity': 1
+        'opacity': .3
     });
 }
 
@@ -360,16 +364,12 @@ var rmFakeMobileHover = function() {
 var onClippyCopy = function(e) {
     alert('Copied to your clipboard!');
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
+    ANALYTICS.copySummary();
 }
 
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
-
-    $( ".home" ).click(function() {
-      $.fn.fullpage.moveTo(0, 0);
-    });
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
