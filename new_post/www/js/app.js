@@ -35,7 +35,7 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
-    var anchors = [];
+    var anchors = ['_'];
     for (var i = 0; i < copy.content.length; i++) {
         anchors.push(copy.content[i][0]);
     }
@@ -54,8 +54,11 @@ var setUpFullPage = function() {
 };
 
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0)
-    $('body').css('opacity', 1);
+    setSlidesForLazyLoading(0);
+    $('.section').css({
+      'opacity': 1,
+      'visibility': 'visible',
+    });
     showNavigation();
 };
 
