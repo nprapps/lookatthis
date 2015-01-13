@@ -35,7 +35,7 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
-    var anchors = [];
+    var anchors = ['_'];
     for (var i = 0; i < copy.content.length; i++) {
         anchors.push(copy.content[i][0]);
     }
