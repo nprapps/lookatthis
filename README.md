@@ -217,6 +217,17 @@ If a slide needs style adjustments but not a new markup structure, use the `id` 
 }
 ```
 
+### Lazy loading images
+
+Images in the `foreground_media` and `background_media` columns in the spreadsheet 
+are automatically lazy loaded for you.
+
+To add images that are lazy-loaded yourself, you will need to use some special markup:
+
+    <img class="lazy-load" data-src="myimage.jpg" alt="I'm being lazy" />
+
+Note that `myimage.jpg` is relative to the assets directory.
+
 ### Deploying a post
 
 When deploying a post, make sure the deploy slug is what you want it to be. The slug defaults to the name of the folder, but can be overridden in `posts/$SLUG/post_config.py`. Define the variable `DEPLOY_SLUG` to what you want the published slug to be.
