@@ -169,25 +169,27 @@ Each slide requires a unique ID, defined in the `id` column of the content sprea
 
 Each slideshow comes with these default templates.
 
-* `slide`: A default slide with no special styles.
-* `titlecard`: A slide for dividing sections of a post, includes title and subtitle.
-* `start`: A titlecard that includes Look At This branding, author and date.
+* `conclusion`: Promo for corresponding NPR story and share buttons.
 * `framed-text`: A framed box of text in the center of the screen in front of a background image.
 * `full-bleed`: A bottom bar of text in front of a background image.
-* `side-by-side`: An image (on the left) next to a block of text (on the right).
-* `conclusion`: Promo for corresponding NPR story and share buttons.
 * `next-post`: A slide that should be used at the end of a post to promote the share panel and the next post.
+* `side-by-side`: An image (on the left) next to a block of text (on the right).
+* `slide`: A default slide with no special styles.
+* `start`: A titlecard that includes Look At This branding, author and date.
+* `titlecard`: A slide for dividing sections of a post, includes title and subtitle.
 
-### Text fields
+### Text and image fields
 
-|   template  |                         text_1                          |  text_2  |        text_3        |
-|:-----------:|:-----------------------------------------------------:  |:--------:|:---------------------:|
-|    slide    | Text to go in the center of slide. Requires \<p\> tags. | N/A      | N/A                   |
-|  titlecard  |                         Title                           | Subtitle | N/A                   |
-|    start    |                         Title                           | Subtitle | Text for begin button |
-|    quote    |                       Quotation                         | Citation | N/A                   |
-| fixed-image |          Text to appear in upper-right corner           | N/A      | N/A                   |
-|  next-post  |               The title of the next post                | Caption  | Link to next post     |
+|   template   |                         text_1                          |  text_2  |        text_3         |  foreground_image  |
+|:------------:|:-------------------------------------------------------:|:--------:|:---------------------:|:------------------:|
+|  conclusion  |                 Promo other NPR content                 | Credits  | N/A                   | N/A                |
+| framed-text  |           Text to frame. Require \<p\> tags.            | N/A      | N/A                   | N/A                |
+|  full-bleed  | Text to go at the bottom of slide. Requires \<p\> tags. | N/A      | N/A                   | N/A                |
+|  next-post   |               The title of the next post                | Caption  | Link to next post     | N/A                |
+| side-by-side |               Text to go next to image                  | N/A      | N/A                   | Image filename     |
+|    slide     | Text to go in the center of slide. Requires \<p\> tags. | N/A      | N/A                   | N/A                |
+|    start     |                         Title                           | Subtitle | Text for begin button | N/A                |
+|  titlecard   |                         Title                           | Subtitle | N/A                   | N/A                |
 
 ### Creating a new template
 
