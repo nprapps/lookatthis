@@ -6,8 +6,8 @@
     </div>
     <h1>{{ row.text1|smarty }}</h1>
     <h2>{{ row.text2|smarty }}</h2>
-    <h3>{{ row.author|smarty }}</h3>
-    <h4>{{ row.date|smarty }}</h4>
+    <h3>{{ COPY.post_metadata.author|smarty }}</h3>
+    <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
 
     <!--<button class="btn btn-go">{{ row.text3 }}</button>-->
 {% endblock %}
