@@ -54,7 +54,7 @@ var setUpFullPage = function() {
 };
 
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0)
+    setSlidesForLazyLoading(0);
     $('body').css('opacity', 1);
     showNavigation();
 };
