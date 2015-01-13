@@ -1,0 +1,52 @@
+.slide.full-bleed {
+    .full-block-content {
+        max-width: 70%;
+        margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 1000px;
+        }
+
+    }
+
+    .bleed-box {
+        padding: 10px 20px 30px 20px;
+        background: @caption-screen-dark;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        @media @screen-small-above {
+            padding: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.5;
+            text-shadow: none;
+            max-width: 700px;
+            margin: 15px auto;
+            font-size: @small-type;
+            @media @screen-small-above {
+                font-size: 16px;
+            }
+            @media @screen-mega-above {
+                font-size: 20px;
+            }
+        }
+    }
+
+    //using full bleed capitons on b/w images
+    &.caption-screen-light {
+        .bleed-box{
+            background: @caption-screen-light;
+        }
+    }
+
+    //using full bleed capitons on pink images
+    &.pink-image {
+       /* .bleed-box{
+            background: @darker-overlay;
+        }  */
+    }
+
+}

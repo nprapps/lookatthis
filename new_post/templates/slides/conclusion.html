@@ -1,39 +1,25 @@
-<div class="slide conclusion {% if row.extra_class %}{{ row.extra_class }}{% endif %}" id="{{ row.id }}"{% if row.media %} data-bgimage="{{ row.media }}" {% endif %}>
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+    <div class="learn-more">
+        <h3>Learn More</h3>
+        <div class="story-description clearfix">
+            {{ row.text1|smarty }}
+        </div>
+    </div>
 
-    <div class="text full-block">
-        <div class="full-block-cell">
-            <div class="full-block-content">
+    <div class="share-panel share-panel-section clearfix">
+        <h3>Share your thoughts</h3>
+        <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', '{{ DEPLOY_SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
 
-            <div class="listen">
-                <h3>Learn More</h3>
-                <div class="audio-segment clearfix">
-                    {{ row.text1|smarty }}
-                </div>
-            </div>
+        <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ DEPLOY_SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
 
-        <div class="share-panel share-panel-section clearfix">
+        <p class="share-story">
+            <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ DEPLOY_SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
+        </p>
+    </div><!-- / share-panel-section -->
 
-                <h3>Share your thoughts</h3>
-
-                <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
-
-                    <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
-
-
-                    <p class="share-story">
-                        <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
-                    </p>
-
-                <div class="email-friend">
-
-                    </div><!-- / email-friend -->
-                </div><!-- / share-panel-section -->
-
-                <!--project credits -->
-
-                {{ row.media_credit|smarty }}
-
-            </div><!--full-block-content-->
-        </div><!--full-block-cell-->
-    </div><!--full-block-->
-</div><!--slide-->
+    <div class="project-credits">
+        <h6>Project Credits</h6>
+        {{ row.text2|smarty }}
+    </div>
+{% endblock %}

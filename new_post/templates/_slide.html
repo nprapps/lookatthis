@@ -1,0 +1,20 @@
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}">
+    {% if row.background_media %}
+    <div class="bg-image" data-bgimage="{{ row.background_media }}"></div>
+    {% endif %}
+
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                {% block slide_content %}
+                {% endblock %}
+            </div><!--full-block-content-->
+        </div><!--full-block-cell-->
+
+        {% if row.media %}
+            <div class="credit">
+                {{ row.media_credit|smarty }}
+            </div>
+        {% endif %}
+    </div><!--full-block-->
+</div><!--slide-->

@@ -35,7 +35,10 @@
              font-weight: bold;
              margin: 0;
              @media @screen-small-above {
-                 font-size: 90px;
+                 font-size: 55px;
+            }
+            @media @screen-large-above {
+                font-size: 85px;
             }
          }
 
@@ -45,9 +48,13 @@
             font-weight: normal;
             margin: 5px 0;
 
+            p:first-child {
+                margin: 20px 0;
+            }
+
             @media @screen-small-above {
-                    margin: 5px 0 30px 0;
-                    font-size: 30px;
+                margin: 5px 0 30px 0;
+                font-size: 24px;
             }
         }
 

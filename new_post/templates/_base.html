@@ -15,9 +15,10 @@
     {% block extra_css %}{% endblock extra_css %}
     {{ CSS.render('css/app.min.css') }}
 
-    <!-- JS -->
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.render('js/app-header.min.js') }}
+
+    <!-- JS -->
 
     {% include '%s/templates/_social_tags.html' % slug %}
 
@@ -36,18 +37,12 @@
     {% endblock content %}
     {% block wide_content %}
     {% endblock wide_content %}
-    {% include "%s/templates/_share_modal.html" % slug %}
 
     {% endblock outer_content %}
 
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/jquery.fullpage.js') }}
-    {{ JS.push('js/lib/underscore.js') }}
-    {{ JS.push('js/lib/bootstrap.js') }}
-    {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
-    {{ JS.push('js/lib/jquery.jplayer.min.js') }}
-    {{ JS.push('js/lib/humanize.js') }}
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
