@@ -22,7 +22,7 @@ class FakeTime:
 # See: http://stackoverflow.com/questions/264224/setting-the-gzip-timestamp-from-python
 gzip.time = FakeTime()
 
-def deploy_file(connection, src, dst, max_age, warn_threshold=0):
+def deploy_file(connection, src, dst, max_age):
     """
     Deploy a single file to S3, if the local version is different.
 
@@ -61,8 +61,6 @@ def deploy_file(connection, src, dst, max_age, warn_threshold=0):
         local_md5.update(output.getvalue())
         local_md5 = local_md5.hexdigest()
 
-        file_size = output.tell()
-
         if local_md5 == s3_md5:
             print 'Skipping %s (has not changed)' % src
         else:
@@ -70,7 +68,6 @@ def deploy_file(connection, src, dst, max_age, warn_threshold=0):
             k.set_contents_from_string(output.getvalue(), headers, policy='public-read')
     # Non-gzip file
     else:
-        file_size = os.path.getsize(src)
         with open(src, 'rb') as f:
             local_md5 = hashlib.md5()
             local_md5.update(f.read())
@@ -81,9 +78,6 @@ def deploy_file(connection, src, dst, max_age, warn_threshold=0):
         else:
             print 'Uploading %s --> %s' % (src, dst)
             k.set_contents_from_filename(src, headers, policy='public-read')
-
-    if warn_threshold > 0 and file_size > warn_threshold:
-        print 'Heads up! %s is rather large (%dkb to be exact)' % (src, file_size / 1024)
 
 def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[], warn_threshold=0):
     """
@@ -120,7 +114,14 @@ def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[], warn_
     s3 = boto.connect_s3()
 
     for src, dst in to_deploy:
-        deploy_file(s3, src, dst, max_age, warn_threshold)
+        deploy_file(s3, src, dst, max_age)
+
+    if warn_threshold > 0:
+        print "\n"
+        for src, dst in to_deploy:
+            file_size = os.path.getsize(src)
+            if file_size > warn_threshold:
+                print '%s is rather large (%dkb to be exact)' % (src, file_size / 1024)
 
 def delete_folder(dst):
     """

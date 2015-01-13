@@ -103,8 +103,7 @@ def deploy(slug=''):
         '%s/www' % env.static_path,
         '%s/%s' % (app_config.PROJECT_SLUG, env.static_path),
         max_age=app_config.DEFAULT_MAX_AGE,
-        ignore=['%s/assets/*' % env.static_path],
-        warn_threshold=app_config.WARN_THRESHOLD
+        ignore=['%s/assets/*' % env.static_path]
     )
 
     flat.deploy_folder(
