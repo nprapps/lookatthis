@@ -35,7 +35,12 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
+    var anchors = [];
+    for (var i = 0; i < copy.content.length; i++) {
+        anchors.push(copy.content[i][0]);
+    }
     $.fn.fullpage({
+        anchors: (APP_CONFIG.DEBUG) ? anchors : false,
         autoScrolling: false,
         verticalCentered: false,
         fixedElements: '.primary-navigation, #share-modal',
