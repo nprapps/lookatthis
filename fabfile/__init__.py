@@ -118,6 +118,14 @@ App-specific commands
 
 @task
 def post(slug):
+    """
+    Set the post to work on.
+    """
+    # Force root path every time
+    fab_path = os.path.realpath(os.path.dirname(__file__))
+    root_path = os.path.join(fab_path, '..')
+    os.chdir(root_path)
+
     env.slug = utils._find_slugs(slug)
 
     if not env.slug:
