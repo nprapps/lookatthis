@@ -11,9 +11,9 @@
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
 
-        {% if row.media_credit %}
+        {% if row.caption_and_credit %}
             <div class="credit">
-                {{ row.media_credit|smarty }}
+                {{ row.caption_and_credit|smarty }}
             </div>
         {% endif %}
     </div><!--full-block-->
