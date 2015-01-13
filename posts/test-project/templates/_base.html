@@ -15,11 +15,6 @@
     {% block extra_css %}{% endblock extra_css %}
     {{ CSS.render('css/app.min.css') }}
 
-    {{ JS.push('js/lib/modernizr.js') }}
-    {{ JS.render('js/app-header.min.js') }}
-
-    <!-- JS -->
-
     {% include '%s/templates/_social_tags.html' % slug %}
 
     {% block extra_head %}
@@ -40,6 +35,7 @@
 
     {% endblock outer_content %}
 
+    {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/jquery.fullpage.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}

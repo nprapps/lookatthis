@@ -103,13 +103,15 @@ def deploy(slug=''):
         '%s/www' % env.static_path,
         '%s/%s' % (app_config.PROJECT_SLUG, env.static_path),
         max_age=app_config.DEFAULT_MAX_AGE,
-        ignore=['%s/assets/*' % env.static_path]
+        ignore=['%s/assets/*' % env.static_path],
+        warn_threshold=app_config.WARN_THRESHOLD
     )
 
     flat.deploy_folder(
         '%s/www/assets' % env.static_path,
         '%s/%s/assets' % (app_config.PROJECT_SLUG, env.static_path),
-        max_age=app_config.ASSETS_MAX_AGE
+        max_age=app_config.ASSETS_MAX_AGE,
+        warn_threshold=app_config.WARN_THRESHOLD
     )
 
 """
@@ -118,6 +120,14 @@ App-specific commands
 
 @task
 def post(slug):
+    """
+    Set the post to work on.
+    """
+    # Force root path every time
+    fab_path = os.path.realpath(os.path.dirname(__file__))
+    root_path = os.path.join(fab_path, '..')
+    os.chdir(root_path)
+
     env.slug = utils._find_slugs(slug)
 
     if not env.slug:
