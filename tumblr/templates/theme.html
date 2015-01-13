@@ -40,6 +40,7 @@
         {{ JS.push('js/app_config.js') }}
         {{ JS.render('js/app-header.min.js') }}
 
+        {block:IndexPage}
         <meta name="twitter:card" content="summary">
         <meta property="og:title" content="{Title}" />
         <meta property="og:url" content="http://lookatthisstory.tumblr.com/" />
@@ -48,6 +49,54 @@
         <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
         <meta property="og:site_name" content="NPR.org" />
         <meta property="fb:app_id" content="138837436154588" />
+        {/block:IndexPage}
+        {block:TagPage}
+        <meta name="twitter:card" content="summary">
+        <meta property="og:title" content="{Title}" />
+        <meta property="og:url" content="http://lookatthisstory.tumblr.com/" />
+        <meta property="og:type" content="blog" />
+        <meta property="og:description" content="Stories about how you see the world" />
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        <meta property="og:site_name" content="NPR.org" />
+        <meta property="fb:app_id" content="138837436154588" />
+        {/block:TagPage}
+        {block:PermalinkPage}
+        <meta name="twitter:card" content="summary">
+        <meta property="og:title" content="{Title}{block:PostTitle} – {PostTitle}{/block:PostTitle}" />
+        <meta property="og:url" content="{Permalink}/" />
+        <meta property="og:type" content="blog" />
+        <meta property="og:description" content="{block:PostSummary}{PostSummary}{/block:PostSummary}" />
+        {block:Posts}
+        {block:Text}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Text}
+        {block:Quote}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Quote}
+        {block:Audio}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Audio}
+        {block:Video}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Video}
+        {block:Link}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Link}
+        {block:Chat}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Chat}
+        {block:Answer}
+        <meta property="og:image" content="{{ S3_BASE_URL }}/assets/og_image.png" />
+        {/block:Answer}
+        {block:Photo}
+        <meta property="og:image" content="{PhotoURL-HighRes}"/>
+        {/block:Photo}
+        {/block:Posts}
+
+        <meta property="og:site_name" content="NPR.org" />
+        <meta property="fb:app_id" content="138837436154588" />
+        {/block:PermalinkPage}
+
 
     </head>
     <body class="{block:IndexPage}index-page{/block:IndexPage}{block:PermalinkPage}permalink-page{/block:PermalinkPage}{block:TagPage} tag-page{/block:TagPage}">
@@ -65,7 +114,7 @@
             </div>
         </header>
         {/block:IndexPage}
-        
+
         <nav>
             <div class="container-fluid">
                 <div class="row">
@@ -102,7 +151,7 @@
                     {block:Posts}
                         <article class="post {TagsAsClasses} {block:Text}text{/block:Text}{block:Quote}quote{/block:Quote}{block:Link}link{/block:Link}{block:Video}video{/block:Video}{block:Audio}audio{/block:Audio}{block:Photo}photo{/block:Photo}{block:Photoset}photoset{/block:Photoset}{block:Panorama}panorama{/block:Panorama}{block:Chat}chat{/block:Chat}{block:Answer}answer{/block:Answer}">
 
-                            
+
                                 {block:IndexPage}
                                 <div class="post-header">
                                         {block:NewDayDate}
@@ -202,8 +251,8 @@
                                     </div><!-- end .post-content-wrapper -->
                                 </div><!-- end .post-content -->
 
-                            
-                       
+
+
 
                             {block:PermalinkPage}
                                 {block:PostNotes}
