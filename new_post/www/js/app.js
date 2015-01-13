@@ -40,7 +40,7 @@ var setUpFullPage = function() {
         anchors.push(copy.content[i][0]);
     }
     $.fn.fullpage({
-        anchors: (APP_CONFIG.DEBUG) ? anchors : false,
+        anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
         autoScrolling: false,
         verticalCentered: false,
         fixedElements: '.primary-navigation, #share-modal',
