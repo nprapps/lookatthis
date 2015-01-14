@@ -206,9 +206,9 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
 }
 
-/*var onStartCardButtonClick = function() {
+var onStartCardButtonClick = function() {
     $.fn.fullpage.moveSlideRight();
-}*/
+}
 
 var onDocumentKeyDown = function(e) {
     if (e.which === 39) {
@@ -264,11 +264,11 @@ $(document).ready(function() {
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
-    //$startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
+    $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
     $arrows.on('touchstart', fakeMobileHover);
