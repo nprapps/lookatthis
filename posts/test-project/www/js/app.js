@@ -146,19 +146,7 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        if (!$arrows.hasClass('active')) {
-            animateArrows();
-        }
-
-        var $prevArrow = $arrows.filter('.prev');
-
-        $prevArrow.removeClass('active');
-        $prevArrow.css({
-            'display': 'none'
-        });
-
-        $('body').addClass('titlecard-nav');
-
+        $arrows.hide();
     }
 
     else if ($slides.last().hasClass('active')) {
