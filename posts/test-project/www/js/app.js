@@ -124,14 +124,13 @@ var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-    var $container = $slide.find('.bg-image');
-    if ($container.data('bgimage')) {
-        var image_filename = $container.data('bgimage').split('.')[0];
-        var image_extension = '.' + $container.data('bgimage').split('.')[1];
+    if ($slide.data('bgimage')) {
+        var image_filename = $slide.data('bgimage').split('.')[0];
+        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($container.css('background-image') === 'none') {
-            $container.css('background-image', 'url(' + image_path + ')');
+        if ($slide.css('background-image') === 'none') {
+            $slide.css('background-image', 'url(' + image_path + ')');
         }
     }
 
