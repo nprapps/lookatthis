@@ -46,6 +46,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
         autoScrolling: false,
+        keyboardScrolling: false,
         verticalCentered: false,
         fixedElements: '.primary-navigation, #share-modal',
         resize: false,
@@ -235,9 +236,14 @@ var onArrowsClick = function() {
 }
 
 var onDocumentKeyDown = function(e) {
-    if (e.which === 39) {
+    if (e.which === 37 || e.which === 39) {
         lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
+        if (e.which === 37) {
+            $.fn.fullpage.moveSlideLeft();
+        } else if (e.which === 39) {
+            $.fn.fullpage.moveSlideRight();
+        }
     }
     // jquery.fullpage handles actual scrolling
     return true;
