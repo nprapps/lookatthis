@@ -17,6 +17,7 @@ var h;
 var slideStartTime = new Date();
 var completion = 0;
 var arrowTest;
+var lastSlideExitEvent;
 
 
 var resize = function() {
@@ -216,7 +217,7 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     * Called when leaving a slide.
     */
     var timeOnSlide = Math.abs(new Date() - slideStartTime);
-    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
+    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide, lastSlideExitEvent);
 }
 
 var onFirstRightArrowClick = function() {
@@ -225,11 +226,17 @@ var onFirstRightArrowClick = function() {
 }
 
 var onStartCardButtonClick = function() {
+    lastSlideExitEvent = 'go';
     $.fn.fullpage.moveSlideRight();
+}
+
+var onArrowsClick = function() {
+    lastSlideExitEvent = 'arrow';
 }
 
 var onDocumentKeyDown = function(e) {
     if (e.which === 39) {
+        lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
     }
     // jquery.fullpage handles actual scrolling
@@ -238,6 +245,7 @@ var onDocumentKeyDown = function(e) {
 
 var onSlideClick = function(e) {
     if (isTouch) {
+        lastSlideExitEvent = 'tap';
         $.fn.fullpage.moveSlideRight();
     }
     return true;
@@ -290,6 +298,7 @@ $(document).ready(function() {
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
+    $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
