@@ -4,6 +4,7 @@ var $w;
 var $h;
 var $slides;
 var $arrows;
+var $nextArrow;
 var $startCardButton;
 var isTouch = Modernizr.Touch;
 var mobileSuffix;
@@ -15,6 +16,8 @@ var w;
 var h;
 var slideStartTime = new Date();
 var completion = 0;
+var arrowTest;
+
 
 var resize = function() {
     $w = $(window).width();
@@ -146,6 +149,9 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
+        /*
+        * Don't show arrows on titlecard
+        */
         $arrows.hide();
     }
 
@@ -154,37 +160,56 @@ var showNavigation = function() {
         * Last card gets no next arrow but does have the nav.
         */
         if (!$arrows.hasClass('active')) {
-            animateArrows();
+            showArrows();
         }
 
-        var $nextArrow = $arrows.filter('.next');
-
         $nextArrow.removeClass('active');
-        $nextArrow.css({
-            'display': 'none'
-        });
+        $nextArrow.hide();
+    } else if ($slides.eq(1).hasClass('active')) {
+        showArrows();
+
+        switch (arrowTest) {
+            case 'bright-arrow':
+                $nextArrow.addClass('titlecard-nav');
+                break;
+            case 'bouncy-arrow':
+                $nextArrow.addClass('shake animated titlecard-nav');
+                break;
+            default:
+                break;
+        }
+
+        $nextArrow.on('click', onFirstRightArrowClick);
     } else {
         /*
         * All of the other cards? Arrows and navs.
         */
         if ($arrows.filter('active').length != $arrows.length) {
-            animateArrows();
+            showArrows();
         }
+        $nextArrow.removeClass('shake animated titlecard-nav');
 
-        $('body').removeClass('titlecard-nav');
+        $nextArrow.off('click', onFirstRightArrowClick);
     }
 }
 
-var animateArrows = function() {
+var showArrows = function() {
     /*
-    * Everything looks better faded. Hair; jeans; arrows.
+    * Show the arrows.
     */
     $arrows.addClass('active');
-
-    if ($arrows.hasClass('active')) {
-        $arrows.css('display', 'block');
-    }
+    $arrows.show();
 };
+
+var determineArrowTest = function() {
+    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
+    var test = possibleTests[getRandomInt(0, possibleTests.length)]
+    return test;
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
@@ -192,6 +217,11 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     */
     var timeOnSlide = Math.abs(new Date() - slideStartTime);
     ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
+}
+
+var onFirstRightArrowClick = function() {
+    var timeOnSlide = Math.abs(new Date() - slideStartTime);
+    ANALYTICS.firstRightArrowClick(arrowTest, timeOnSlide);
 }
 
 var onStartCardButtonClick = function() {
@@ -254,6 +284,7 @@ $(document).ready(function() {
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
+    $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
     $startCardButton.on('click', onStartCardButtonClick);
@@ -271,6 +302,7 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    arrowTest = determineArrowTest();
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);

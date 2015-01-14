@@ -227,6 +227,10 @@ var ANALYTICS = (function () {
         trackEvent('slide-exit', slide_index, time_on_slide);
     }
 
+    var firstRightArrowClick = function(test, time_on_slide) {
+        trackEvent('first-right-arrow-clicked', test, time_on_slide);
+    }
+
     return {
         'setupAll': setupAll,
         'trackEvent': trackEvent,
@@ -244,7 +248,8 @@ var ANALYTICS = (function () {
         'completeFiftyPercent': completeFiftyPercent,
         'completeSeventyFivePercent': completeSeventyFivePercent,
         'completeOneHundredPercent': completeOneHundredPercent,
-        'exitSlide': exitSlide
+        'exitSlide': exitSlide,
+        'firstRightArrowClick': firstRightArrowClick
     };
 }());
 
