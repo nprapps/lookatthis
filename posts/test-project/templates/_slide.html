@@ -10,11 +10,12 @@
                 {% endblock %}
             </div><!--full-block-content-->
         </div><!--full-block-cell-->
-
-        {% if row.caption_and_credit %}
-            <div class="credit">
-                {{ row.caption_and_credit|smarty }}
-            </div>
-        {% endif %}
     </div><!--full-block-->
+
+    {% if row.caption_and_credit %}
+    <div class="credit">
+        {{ row.caption_and_credit|smarty }}
+    </div>
+    {% endif %}    
+    
 </div><!--slide-->
