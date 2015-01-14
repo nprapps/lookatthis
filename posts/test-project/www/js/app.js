@@ -6,7 +6,7 @@ var $slides;
 var $arrows;
 var $nextArrow;
 var $startCardButton;
-var isTouch = Modernizr.Touch;
+var isTouch = Modernizr.touch;
 var mobileSuffix;
 var aspectWidth = 16;
 var aspectHeight = 9;
