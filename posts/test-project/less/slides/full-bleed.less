@@ -1,20 +1,21 @@
 .slide.full-bleed {
+    .full-block-cell {
+        vertical-align: bottom;
+    }
+
     .full-block-content {
-        max-width: 70%;
-        margin: 0 auto;
+        padding: 0;
+
         @media @screen-small-above {
             max-width: 1000px;
         }
-
     }
 
     .bleed-box {
-        padding: 10px 20px 30px 20px;
+        padding: 10px 20px 20px 20px;
         background: @caption-screen-dark;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 100%;
+            /*width: 100%;*/
+
         @media @screen-small-above {
             padding: 20px;
         }
@@ -40,13 +41,6 @@
         .bleed-box{
             background: @caption-screen-light;
         }
-    }
-
-    //using full bleed capitons on pink images
-    &.pink-image {
-       /* .bleed-box{
-            background: @darker-overlay;
-        }  */
     }
 
 }
