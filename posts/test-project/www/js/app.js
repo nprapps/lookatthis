@@ -18,6 +18,7 @@ var slideStartTime = new Date();
 var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
+var hammer;
 
 
 var resize = function() {
@@ -289,6 +290,20 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
+var onSwipeLeft = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swipeleft';    
+        $.fn.fullpage.moveSlideRight();
+    }
+}
+
+var onSwipeRight = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swiperight';
+        $.fn.fullpage.moveSlideLeft();      
+    }
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -306,6 +321,9 @@ $(document).ready(function() {
     $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
+    hammer = new Hammer(document.body);
+    hammer.on('swipeleft', onSwipeLeft);
+    hammer.on('swiperight', onSwipeRight);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
