@@ -1,7 +1,4 @@
-<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}">
-    {% if row.background_media %}
-    <div class="bg-image" data-bgimage="{{ row.background_media }}"></div>
-    {% endif %}
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}">
 
     <div class="text full-block">
         <div class="full-block-cell">
@@ -9,12 +6,15 @@
                 {% block slide_content %}
                 {% endblock %}
             </div><!--full-block-content-->
-        </div><!--full-block-cell-->
 
-        {% if row.caption_and_credit %}
+            {% if row.caption_and_credit %}
             <div class="credit">
                 {{ row.caption_and_credit|smarty }}
             </div>
-        {% endif %}
+            {% endif %}    
+
+        </div><!--full-block-cell-->
     </div><!--full-block-->
+
+    
 </div><!--slide-->

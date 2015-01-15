@@ -47,6 +47,52 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
 
+.animated {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+          animation-name: shake;
+}
+
 .primary-navigation {
     .controlArrow {
         position: fixed;
@@ -122,7 +168,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.titlecard-nav .primary-navigation .controlArrow {
+.primary-navigation .controlArrow.titlecard-nav {
     opacity: .7;
     @media @screen-small-above {
         opacity: 1;
@@ -187,11 +233,15 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 // full width container within a section or slide
 .full-block {
     display: table;
+    table-layout: fixed;
     width: 100%;
     height: 100%;
+    position: relative;
+    z-index: 1;
 
     .full-block-cell {
         display: table-cell;
+        position: relative;
         vertical-align: top;
         padding-top: 20px;
         @media @screen-small-above {
@@ -212,20 +262,12 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    .background-size(cover);
-    background-position: center center;
+img {
+    max-width: 100%;
 }
 
 .dark-overlay {
-    .bg-image:after {
+    &:after {
         display: block;
         content: ' ';
         position: absolute;
@@ -238,26 +280,16 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.blur-background {
-    .bg-image {
-        -webkit-filter: blur(7px);
-        -moz-filter: blur(7px);
-        -o-filter: blur(7px);
-        -ms-filter: blur(7px);
-        filter: blur(7px);
-    }
-}
-
 .credit {
     font-family: helvetica, arial, sans-serif;
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
+    padding-right: 20px;
     text-align: right;
     font-size: 10px;
     color: #fff;
     line-height: 14px;
     @media @screen-small-above {
+         position: absolute;
+         bottom: 10px;    
          right: 25px;
          font-size: 12px;
          max-width: 1000px;

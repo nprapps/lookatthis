@@ -223,8 +223,12 @@ var ANALYTICS = (function () {
 
     // SLIDES
 
-    var exitSlide = function(slide_index, time_on_slide) {
-        trackEvent('slide-exit', slide_index, time_on_slide);
+    var exitSlide = function(slide_index, time_on_slide, last_slide_exit_event) {
+        trackEvent('slide-exit', slide_index, time_on_slide, last_slide_exit_event);
+    }
+
+    var firstRightArrowClick = function(test, time_on_slide) {
+        trackEvent('first-right-arrow-clicked', test, time_on_slide);
     }
 
     return {
@@ -244,7 +248,8 @@ var ANALYTICS = (function () {
         'completeFiftyPercent': completeFiftyPercent,
         'completeSeventyFivePercent': completeSeventyFivePercent,
         'completeOneHundredPercent': completeOneHundredPercent,
-        'exitSlide': exitSlide
+        'exitSlide': exitSlide,
+        'firstRightArrowClick': firstRightArrowClick
     };
 }());
 

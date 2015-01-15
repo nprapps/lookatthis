@@ -4,8 +4,9 @@ var $w;
 var $h;
 var $slides;
 var $arrows;
+var $nextArrow;
 var $startCardButton;
-var isTouch = Modernizr.Touch;
+var isTouch = Modernizr.touch;
 var mobileSuffix;
 var aspectWidth = 16;
 var aspectHeight = 9;
@@ -15,6 +16,9 @@ var w;
 var h;
 var slideStartTime = new Date();
 var completion = 0;
+var arrowTest;
+var lastSlideExitEvent;
+
 
 var resize = function() {
     $w = $(window).width();
@@ -42,6 +46,7 @@ var setUpFullPage = function() {
     $.fn.fullpage({
         anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
         autoScrolling: false,
+        keyboardScrolling: false,
         verticalCentered: false,
         fixedElements: '.primary-navigation, #share-modal',
         resize: false,
@@ -119,14 +124,13 @@ var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-    var $container = $slide.find('.bg-image');
-    if ($container.data('bgimage')) {
-        var image_filename = $container.data('bgimage').split('.')[0];
-        var image_extension = '.' + $container.data('bgimage').split('.')[1];
+    if ($slide.data('bgimage')) {
+        var image_filename = $slide.data('bgimage').split('.')[0];
+        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($container.css('background-image') === 'none') {
-            $container.css('background-image', 'url(' + image_path + ')');
+        if ($slide.css('background-image') === 'none') {
+            $slide.css('background-image', 'url(' + image_path + ')');
         }
     }
 
@@ -146,19 +150,10 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        if (!$arrows.hasClass('active')) {
-            animateArrows();
-        }
-
-        var $prevArrow = $arrows.filter('.prev');
-
-        $prevArrow.removeClass('active');
-        $prevArrow.css({
-            'display': 'none'
-        });
-
-        $('body').addClass('titlecard-nav');
-
+        /*
+        * Don't show arrows on titlecard
+        */
+        $arrows.hide();
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -166,53 +161,88 @@ var showNavigation = function() {
         * Last card gets no next arrow but does have the nav.
         */
         if (!$arrows.hasClass('active')) {
-            animateArrows();
+            showArrows();
         }
 
-        var $nextArrow = $arrows.filter('.next');
-
         $nextArrow.removeClass('active');
-        $nextArrow.css({
-            'display': 'none'
-        });
+        $nextArrow.hide();
+    } else if ($slides.eq(1).hasClass('active')) {
+        showArrows();
+
+        switch (arrowTest) {
+            case 'bright-arrow':
+                $nextArrow.addClass('titlecard-nav');
+                break;
+            case 'bouncy-arrow':
+                $nextArrow.addClass('shake animated titlecard-nav');
+                break;
+            default:
+                break;
+        }
+
+        $nextArrow.on('click', onFirstRightArrowClick);
     } else {
         /*
         * All of the other cards? Arrows and navs.
         */
         if ($arrows.filter('active').length != $arrows.length) {
-            animateArrows();
+            showArrows();
         }
+        $nextArrow.removeClass('shake animated titlecard-nav');
 
-        $('body').removeClass('titlecard-nav');
+        $nextArrow.off('click', onFirstRightArrowClick);
     }
 }
 
-var animateArrows = function() {
+var showArrows = function() {
     /*
-    * Everything looks better faded. Hair; jeans; arrows.
+    * Show the arrows.
     */
     $arrows.addClass('active');
-
-    if ($arrows.hasClass('active')) {
-        $arrows.css('display', 'block');
-    }
+    $arrows.show();
 };
+
+var determineArrowTest = function() {
+    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
+    var test = possibleTests[getRandomInt(0, possibleTests.length)]
+    return test;
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
     var timeOnSlide = Math.abs(new Date() - slideStartTime);
-    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
+    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide, lastSlideExitEvent);
 }
 
-/*var onStartCardButtonClick = function() {
+var onFirstRightArrowClick = function() {
+    var timeOnSlide = Math.abs(new Date() - slideStartTime);
+    ANALYTICS.firstRightArrowClick(arrowTest, timeOnSlide);
+}
+
+var onStartCardButtonClick = function() {
+    lastSlideExitEvent = 'go';
     $.fn.fullpage.moveSlideRight();
-}*/
+}
+
+var onArrowsClick = function() {
+    lastSlideExitEvent = 'arrow';
+}
 
 var onDocumentKeyDown = function(e) {
-    if (e.which === 39) {
+    if (e.which === 37 || e.which === 39) {
+        lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
+        if (e.which === 37) {
+            $.fn.fullpage.moveSlideLeft();
+        } else if (e.which === 39) {
+            $.fn.fullpage.moveSlideRight();
+        }
     }
     // jquery.fullpage handles actual scrolling
     return true;
@@ -220,6 +250,7 @@ var onDocumentKeyDown = function(e) {
 
 var onSlideClick = function(e) {
     if (isTouch) {
+        lastSlideExitEvent = 'tap';
         $.fn.fullpage.moveSlideRight();
     }
     return true;
@@ -264,13 +295,15 @@ $(document).ready(function() {
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
-    //$startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
+    $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
+    $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
+    $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
@@ -283,6 +316,7 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    arrowTest = determineArrowTest();
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
