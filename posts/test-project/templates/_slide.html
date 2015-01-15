@@ -1,10 +1,10 @@
+{% block slide_wrapper %}
 <div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}">
-
+    {% block slide_body %}
     <div class="text full-block">
         <div class="full-block-cell">
             <div class="full-block-content">
-                {% block slide_content %}
-                {% endblock %}
+                {% block slide_content %}{% endblock slide_content %}
             </div><!--full-block-content-->
 
             {% if row.caption_and_credit %}
@@ -15,6 +15,6 @@
 
         </div><!--full-block-cell-->
     </div><!--full-block-->
-
-    
+    {% endblock slide_body %}
 </div><!--slide-->
+{% endblock slide_wrapper %}
