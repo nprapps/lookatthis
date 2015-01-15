@@ -31,6 +31,8 @@ Changing environment requires a full-stack test.
 An environment points to both a server and an S3
 bucket.
 """
+env.post_root = 'lookatthis/posts'
+
 @task
 def production():
     """
@@ -101,14 +103,14 @@ def deploy(slug=''):
 
     flat.deploy_folder(
         '%s/www' % env.static_path,
-        '%s/%s' % (app_config.PROJECT_SLUG, env.static_path),
+        '%s/%s' % (env.post_root, env.post_config.DEPLOY_SLUG),
         max_age=app_config.DEFAULT_MAX_AGE,
         ignore=['%s/assets/*' % env.static_path]
     )
 
     flat.deploy_folder(
         '%s/www/assets' % env.static_path,
-        '%s/%s/assets' % (app_config.PROJECT_SLUG, env.static_path),
+        '%s/%s/assets' % (env.post_root, env.post_config.DEPLOY_SLUG),
         max_age=app_config.ASSETS_MAX_AGE,
         warn_threshold=app_config.WARN_THRESHOLD
     )
