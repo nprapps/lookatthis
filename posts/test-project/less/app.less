@@ -1,5 +1,12 @@
 @import "./lib/bootstrap/bootstrap";
+
+/*
+* Fonts: To use FontAwesome, uncomment font-awesome, comment out the custom font,
+* and tweak the controlArrow CSS rules later in this file.
+*/
 @import "./lib/lookatthis-font.less";
+//@import "./lib/font-awesome/font-awesome";
+
 @import "./lib/prefixer";
 @import "./share-modal.less";
 @import "./slides/conclusion.less";
@@ -145,6 +152,15 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             display: block;
         }
 
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
+            font-family: "FontAwesome";
+            content: '\f104';
+            display: block;
+        }
+        */
+
         @media @screen-small-above {
             left: 10px;
             padding-top: 25px;
@@ -158,8 +174,16 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
             font-family: "lookatthis";
             content: "\e800";
             display: block;
-
         }
+
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
+            font-family: "FontAwesome";
+            content: "\f105";
+            display: block;
+        }
+        */
 
         @media @screen-small-above {
             right: 25px;
