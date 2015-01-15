@@ -1,5 +1,5 @@
 @import "./lib/bootstrap/bootstrap";
-@import "./lib/lookatthis-font.less";
+// @import "./lib/lookatthis-font.less";
 @import "./lib/prefixer";
 @import "./share-modal.less";
 @import "./slides/conclusion.less";
@@ -10,6 +10,7 @@
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
 @import "./nudges.less";
+@import "./lib/font-awesome/font-awesome.less";
 
 // Global variables
 @img-root: "../assets";
@@ -97,12 +98,12 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .controlArrow {
         position: fixed;
         top: 40%;
-        width: 50px;
+        width: 30px;
         font-size: 24px;
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.3);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -112,7 +113,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        opacity: .3;
+        opacity: .4;
 
         @media @screen-small-above {
             top: 40%;
@@ -140,8 +141,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         left: 0;
 
         &:before {
-            font-family: "lookatthis";
-            content: '\e801';
+            font-family: "FontAwesome";
+            content: '\f104';
             display: block;
         }
 
@@ -155,8 +156,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         padding: 0 0 0 5px;
 
         &:before {
-            font-family: "lookatthis";
-            content: "\e800";
+            font-family: "FontAwesome";
+            content: "\f105";
             display: block;
 
         }
