@@ -188,12 +188,12 @@ var ANALYTICS = (function () {
         trackEvent('new-comment');
     }
 
-    var actOnFeaturedTweet = function(action, tweet_url) {
-        trackEvent('featured-tweet-action', action, null, tweet_url);
+    var actOnFeaturedTweet = function(action, tweetUrl) {
+        trackEvent('featured-tweet-action', action, null, tweetUrl);
     }
 
-    var actOnFeaturedFacebook = function(action, post_url) {
-        trackEvent('featured-facebook-action', action, null, post_url);
+    var actOnFeaturedFacebook = function(action, postUrl) {
+        trackEvent('featured-facebook-action', action, null, postUrl);
     }
 
     var copySummary = function() {
