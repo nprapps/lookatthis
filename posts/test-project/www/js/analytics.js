@@ -228,11 +228,11 @@ var ANALYTICS = (function () {
 
     // SLIDES
 
-    var exitSlide = function(slide_index, last_slide_exit_event) {
+    var exitSlide = function(slideIndex, lastSlideExitEvent) {
         var currentTime = new Date();
         timeOnLastSlide = Math.abs(currentTime - slideStartTime);
         slideStartTime = currentTime;
-        trackEvent('slide-exit', slide_index, timeOnLastSlide, last_slide_exit_event);
+        trackEvent('slide-exit', slideIndex, timeOnLastSlide, lastSlideExitEvent);
     }
 
     var firstRightArrowClick = function(test) {
