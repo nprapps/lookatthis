@@ -18,7 +18,7 @@ var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
 var hammer;
-
+var firstRightArrowClicked = false;
 
 var resize = function() {
     $w = $(window).width();
@@ -219,7 +219,10 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
 }
 
 var onFirstRightArrowClick = function() {
-    ANALYTICS.firstRightArrowClick(arrowTest);
+    if (firstRightArrowClicked === false) {
+        ANALYTICS.firstRightArrowClick(arrowTest);
+        firstRightArrowClicked = true;
+    }
 }
 
 var onStartCardButtonClick = function() {
