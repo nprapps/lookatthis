@@ -6,8 +6,12 @@ var _gaq = _gaq || [];
 
 var ANALYTICS = (function () {
 
-    // Global time tracking variables
+    /* 
+     * Global time tracking variables
+     */
+    // The time the current slide was pulled up
     var slideStartTime =  new Date();
+    // The time spent on the previous slide, for use in slide-specific tests
     var timeOnLastSlide = null;
 
     /*
@@ -235,6 +239,7 @@ var ANALYTICS = (function () {
         trackEvent('slide-exit', slideIndex, timeOnLastSlide, lastSlideExitEvent);
     }
 
+    // This depends on exitSlide executing
     var firstRightArrowClick = function(test) {
         trackEvent('first-right-arrow-clicked', test, timeOnLastSlide);
     }
