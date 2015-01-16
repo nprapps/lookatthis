@@ -14,10 +14,10 @@ var optimalWidth;
 var optimalHeight;
 var w;
 var h;
-var slideStartTime = new Date();
 var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
+var hammer;
 
 
 var resize = function() {
@@ -71,7 +71,6 @@ var onPageLoad = function() {
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
     showNavigation();
-    slideStartTime = Date.now();
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
@@ -216,13 +215,11 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-    var timeOnSlide = Math.abs(new Date() - slideStartTime);
-    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide, lastSlideExitEvent);
+    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
 }
 
 var onFirstRightArrowClick = function() {
-    var timeOnSlide = Math.abs(new Date() - slideStartTime);
-    ANALYTICS.firstRightArrowClick(arrowTest, timeOnSlide);
+    ANALYTICS.firstRightArrowClick(arrowTest);
 }
 
 var onStartCardButtonClick = function() {
@@ -289,6 +286,20 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
+var onSwipeLeft = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swipeleft';    
+        $.fn.fullpage.moveSlideRight();
+    }
+}
+
+var onSwipeRight = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swiperight';
+        $.fn.fullpage.moveSlideLeft();      
+    }
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -306,6 +317,9 @@ $(document).ready(function() {
     $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
+    hammer = new Hammer(document.body);
+    hammer.on('swipeleft', onSwipeLeft);
+    hammer.on('swiperight', onSwipeRight);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
