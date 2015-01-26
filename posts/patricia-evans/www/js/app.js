@@ -6,6 +6,7 @@ var $slides;
 var $arrows;
 var $nextArrow;
 var $startCardButton;
+var $homeButton;
 var isTouch = Modernizr.touch;
 var mobileSuffix;
 var aspectWidth = 16;
@@ -274,6 +275,13 @@ var rmFakeMobileHover = function() {
 }
 
 /*
+ * Go home!
+ */
+var onHomeClick = function() {
+    $.fn.fullpage.moveTo(0, 0);
+}
+
+/*
  * Text copied to clipboard.
  */
 var onClippyCopy = function(e) {
@@ -286,6 +294,7 @@ $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
 
+    $homeButton = $('.home');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
@@ -293,6 +302,7 @@ $(document).ready(function() {
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
+    $homeButton.on('click', onHomeClick);
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
