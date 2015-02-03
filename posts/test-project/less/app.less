@@ -1,18 +1,35 @@
 @import "./lib/bootstrap/bootstrap";
-@import "./lib/font-awesome/font-awesome";
+
+/*
+* Fonts: To use FontAwesome, uncomment font-awesome, comment out the custom font,
+* and tweak the controlArrow CSS rules later in this file.
+*/
+@import "./lib/lookatthis-font.less";
+//@import "./lib/font-awesome/font-awesome";
+
 @import "./lib/prefixer";
 @import "./share-modal.less";
-@import "./slides/fixed-image.less";
-@import "./slides/quote.less";
+@import "./slides/conclusion.less";
+@import "./slides/framed-text.less";
+@import "./slides/full-bleed.less";
+@import "./slides/next-post.less";
+@import "./slides/side-by-side.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
-@import "./slides/video.less";
-@import "./slides/next-post.less";
 @import "./nudges.less";
-
 
 // Global variables
 @img-root: "../assets";
+
+@darker-overlay: rgba(0,0,0,0.7);
+@black-screen: rgba(0,0,0,0.8);
+@look-pink: #F60062;
+@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@caption-screen-dark: rgba(175, 0, 71, 0.7);
+@pink: rgba(200, 66, 119, 1);
+@caption-screen-light: rgba(153, 9, 71, 0.7);
+
+@small-type: 13px;
 
 // Breakpoints
 @screen-mega-above: ~"screen and (min-width: 1440px)";
@@ -31,31 +48,59 @@ body {
     font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #111;
-    opacity: 0;
-    .transition(opacity 3s ease);
 }
-
-//typography
 
 h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
 
+.animated {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+          animation-name: shake;
+}
+
 .primary-navigation {
-    /*
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-
-    .touch & {
-            background-color: rgba(0,0,0,0.8);
-            height: 60px;
-        }
-
-        */
-
     .controlArrow {
         position: fixed;
         top: 40%;
@@ -64,7 +109,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 1);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -74,8 +119,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        //opacity: 0;
-        //.transition(opacity 0.5s ease);
         opacity: .3;
 
         @media @screen-small-above {
@@ -104,61 +147,52 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         left: 0;
 
         &:before {
+            font-family: "lookatthis";
+            content: '\e801';
+            display: block;
+        }
+
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
             font-family: "FontAwesome";
             content: '\f104';
             display: block;
         }
+        */
 
         @media @screen-small-above {
             left: 10px;
             padding-top: 25px;
         }
-
-        /*
-        .touch & {
-            left: 10px;
-            bottom: 5px;
-            background-color: #999;
-
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 105px;
-            }
-        }
-        */
     }
     .controlArrow.next {
         right: 0;
         padding: 0 0 0 5px;
 
         &:before {
+            font-family: "lookatthis";
+            content: "\e800";
+            display: block;
+        }
+
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
             font-family: "FontAwesome";
             content: "\f105";
             display: block;
-
         }
+        */
 
         @media @screen-small-above {
             right: 25px;
             padding-top: 25px;
         }
-        /*
-        .touch & {
-            bottom: 5px;
-            left: 135px;
-
-            @media @screen-small-above {
-                background-color: #fff;
-                left: auto;
-                right: 25px;
-            }
-        }*/
     }
-
 }
 
-.titlecard-nav .primary-navigation .controlArrow {
+.primary-navigation .controlArrow.titlecard-nav {
     opacity: .7;
     @media @screen-small-above {
         opacity: 1;
@@ -173,6 +207,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     -ms-touch-action: none;
 }
 .section {
+    visibility: hidden;
+    opacity: 0;
+    .transition(opacity 3s ease);
+
     position: relative;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -205,7 +243,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                 display: block;
                 overflow: auto;
             }
-
         }
     }
 }
@@ -220,12 +257,15 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 // full width container within a section or slide
 .full-block {
     display: table;
+    table-layout: fixed;
     width: 100%;
     height: 100%;
-
+    position: relative;
+    z-index: 1;
 
     .full-block-cell {
         display: table-cell;
+        position: relative;
         vertical-align: top;
         padding-top: 20px;
         @media @screen-small-above {
@@ -246,36 +286,37 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
-.credit {
-    font-family: helvetica, arial, sans-serif;
-    position: absolute;
-    right: 15px;
-    bottom: 5px;
-    text-align: right;
-    font-size: 8px;
-    font-style: italic;
-    color: #fff;
-    padding-right: 3px;
-    @media @screen-small-above {
-         font-size: 10px;
+img {
+    max-width: 100%;
+}
+
+.dark-overlay .full-block {
+    &:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        height: 100%;
+        z-index: -1;
     }
 }
 
-// @media only screen and (orientation:portrait){
-//     body {
-//         -webkit-transform: rotate(90deg);
-//         -moz-transform: rotate(90deg);
-//         -o-transform: rotate(90deg);
-//         -ms-transform: rotate(90deg);
-//         transform: rotate(90deg);
-//      }
-//  }
-//  @media only screen and (orientation:landscape){
-//     body {
-//         -webkit-transform: rotate(0deg);
-//         -moz-transform: rotate(0deg);
-//         -o-transform: rotate(0deg);
-//         -ms-transform: rotate(0deg);
-//         transform: rotate(0deg);
-//      }
-//  }
+.credit {
+    font-family: helvetica, arial, sans-serif;
+    padding-right: 20px;
+    text-align: right;
+    font-size: 10px;
+    color: #fff;
+    line-height: 14px;
+    @media @screen-small-above {
+         position: absolute;
+         bottom: 10px;    
+         right: 25px;
+         font-size: 12px;
+         max-width: 1000px;
+    }
+}

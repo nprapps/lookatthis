@@ -55,26 +55,21 @@ What's in here?
 
 The project contains the following folders and important files:
 
-* ``confs`` -- Server configuration files for nginx and uwsgi. Edit the templates then ``fab <ENV> servers.render_confs``, don't edit anything in ``confs/rendered`` directly.
 * ``data`` -- Data files, such as those used to generate HTML.
 * ``fabfile`` -- [Fabric](http://docs.fabfile.org/en/latest/) commands for automating setup, deployment, data processing, etc.
 * ``etc`` -- Miscellaneous scripts and metadata for project bootstrapping.
-* ``jst`` -- Javascript ([Underscore.js](http://documentcloud.github.com/underscore/#template)) templates.
-* ``less`` -- [LESS](http://lesscss.org/) files, will be compiled to CSS and concatenated for deployment.
+* ``new-post`` -- The default new post template.
+* ``posts`` -- Where Look At This posts live
+* ``posts/$SLUG/templates/slides`` -- Slide templates for a particular post
+* ``posts/%SLUG/less/slides`` -- `.less` files for post slide templates
 * ``templates`` -- HTML ([Jinja2](http://jinja.pocoo.org/docs/)) templates, to be compiled locally.
-* ``tests`` -- Python unit tests.
-* ``www`` -- Static and compiled assets to be deployed. (a.k.a. "the output")
-* ``www/assets`` -- A symlink to an S3 bucket containing binary assets (images, audio).
-* ``www/live-data`` -- "Live" data deployed to S3 via cron jobs or other mechanisms. (Not deployed with the rest of the project.)
-* ``www/test`` -- Javascript tests and supporting files.
 * ``app.py`` -- A [Flask](http://flask.pocoo.org/) app for rendering the project locally.
 * ``app_config.py`` -- Global project configuration for scripts, deployment, etc.
-* ``copytext.py`` -- Code supporting the [Editing workflow](#editing-workflow)
-* ``crontab`` -- Cron jobs to be installed as part of the project.
-* ``public_app.py`` -- A [Flask](http://flask.pocoo.org/) app for running server-side code.
 * ``render_utils.py`` -- Code supporting template rendering.
 * ``requirements.txt`` -- Python requirements.
 * ``static.py`` -- Static Flask views used in both ``app.py`` and ``public_app.py``.
+* ``static_post.py`` -- Helper Flask views for compiling posts
+* ``static_post.py`` -- Helper Flask views for compiling Tumblr theme
 
 Bootstrap the project
 ---------------------
@@ -90,12 +85,10 @@ Then bootstrap the project:
 
 ```
 cd lookatthis
-mkvirtualenv --no-site-packages lookatthis
+mkvirtualenv lookatthis
 pip install -r requirements.txt
 npm install
 ```
-
-**Problems installing requirements?** You may need to run the pip command as ``ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install -r requirements.txt`` to work around an issue with OSX.
 
 Hide project secrets
 --------------------
@@ -120,15 +113,6 @@ Syncing these assets requires running a couple different commands at the right t
 
 Unfortunantely, there is no automatic way to know when a file has been intentionally deleted from the server or your local directory. When you want to simultaneously remove a file from the server and your local environment (i.e. it is not needed in the project any longer), run ```fab post:$SLUG assets.rm:"file_name_here.jpg"```
 
-Adding a page to the site
--------------------------
-
-A site can have any number of rendered pages, each with a corresponding template and view. To create a new one:
-
-* Add a template to the ``templates`` directory. Ensure it extends ``_base.html``.
-* Add a corresponding view function to ``app.py``. Decorate it with a route to the page name, i.e. ``@app.route('/filename.html')``
-* By convention only views that end with ``.html`` and do not start with ``_``  will automatically be rendered when you call ``fab render``.
-
 Run the project
 ---------------
 
@@ -148,19 +132,115 @@ Working with posts on the command line revolves around the `fab post:$SLUG` comm
 ### Starting a new post
 
 1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
-2.  Copy the [sample copy spreadsheet](https://docs.google.com/a/tylerjfisher.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE&usp=drive_web#gid=1) into a new spreadsheet and copy the URL. That URL should be pasted in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_URL``.
-
-Read about how to work with the copy spreadsheet [here](https://github.com/nprapps/lookatthis/wiki/Creating-Slideshows).
+2.  Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE&usp=drive_web#gid=1) into a new spreadsheet and copy the URL. That URL should be pasted in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_URL``.
 
 ### Working on an existing post
 
 If you are working on a post that already exists in the repo for the first time, be sure to run `fab post:$SLUG update` to get the assets and copytext spreadsheet.
 
+### Creating new slides
+
+The default COPY document has several sheets. You will create new slides in the `content` sheet. Each slide is one row in this sheet. Each row includes:
+
+* `id`: a unique ID for the slide (see below for guidelines)
+* `template`: the name of the slide template
+* `text1`, `text2`, `text3`: fields for the various pieces of text your template requires (see below for guidelines)
+* `media`: images or video that your template will use (not required)
+* `media_credit`: Photo/video credit (not the caption)
+* `caption`: Caption for the photo
+* `color`: a background color for the slide (not required)
+* `author`: Author of the post (only on the title post)
+* `date`: Date of publication
+* `extra_class`: An extra class for style changes that don't require a change in the markup. Examples include `dark-overlay` and `blur-background`.
+
+You may use `<em>` and `<strong>` in any of the text fields, when appropriate. You should avoid using `<h1>` or other context-specific tags.
+
+### IDs
+
+Each slide requires a unique ID, defined in the `id` column of the content spreadsheet. Each ID should use good slug style: all lowercase, descriptive of the content and uses dashes between words. For example:
+
+* __Bad__: `slide1`, `slide2`, `slide3`
+* __Good__: names that describe the content on the page.
+
+* __Bad__: `To The Border`, `toTheBorder`, `totheborder`
+* __Good__: `to-the-border`
+
+### Slide templates
+
+Each slideshow comes with these default templates.
+
+* `conclusion`: Promo for corresponding NPR story and share buttons.
+* `framed-text`: A framed box of text in the center of the screen in front of a background image.
+* `full-bleed`: A bottom bar of text in front of a background image.
+* `next-post`: A slide that should be used at the end of a post to promote the share panel and the next post.
+* `side-by-side`: An image (on the left) next to a block of text (on the right).
+* `slide`: A default slide with no special styles.
+* `start`: A titlecard that includes Look At This branding, author and date.
+* `titlecard`: A slide for dividing sections of a post, includes title and subtitle.
+
+### Text and image fields
+
+|   template   |                         text_1                          |  text_2  |        text_3         |  foreground_image  |
+|:------------:|:-------------------------------------------------------:|:--------:|:---------------------:|:------------------:|
+|  conclusion  |                 Promo other NPR content                 | Credits  | N/A                   | N/A                |
+| framed-text  |           Text to frame. Require \<p\> tags.            | N/A      | N/A                   | N/A                |
+|  full-bleed  | Text to go at the bottom of slide. Requires \<p\> tags. | N/A      | N/A                   | N/A                |
+|  next-post   |               The title of the next post                | Caption  | Link to next post     | N/A                |
+| side-by-side |               Text to go next to image                  | N/A      | N/A                   | Image filename     |
+|    slide     | Text to go in the center of slide. Requires \<p\> tags. | N/A      | N/A                   | N/A                |
+|    start     |                         Title                           | Subtitle | Text for begin button | N/A                |
+|  titlecard   |                         Title                           | Subtitle | N/A                   | N/A                |
+
+### Creating a new template
+
+New templates should be created when the content requires a slide with a different markup structure than any of the existing templates.
+
+To create a new template, follow these steps:
+
+1. Go into the `posts` repo on your local machine, find the post you are working on, and navigate to the `templates` folder.
+2. In the `slides` folder, create a new `.html` file with the name of your template, i.e. `essay.html`
+3. Navigate back to the root of your post, and go to the `less` folder.
+4. In the `slides` folder, create a new `.less` file with the name of your template, i.e. `essay.less`
+5. Finally, in `app.less`, add an import line that imports your new `.less` file, i.e. `@import "./slides/essay.less"`.
+
+You can now use this template in the `template` column of your `content` spreadsheet.
+
+### Making style adjustments
+
+If a slide needs style adjustments but not a new markup structure, use the `id` of the slide to make adjustments in CSS. Open the `nudges.less` file in your post's `less` directory to make these adjustments. For example:
+
+```
+#to-the-border {
+    p {
+        font-size: 20px;
+    }
+}
+```
+
+### Lazy loading images
+
+Images in the `foreground_media` and `background_media` columns in the spreadsheet 
+are automatically lazy loaded for you.
+
+To add images that are lazy-loaded yourself, you will need to use some special markup:
+
+    <img class="lazy-load" data-src="myimage.jpg" alt="I'm being lazy" />
+
+Note that `myimage.jpg` is relative to the assets directory.
+
+### Handling icon fonts
+
+The default new post template only includes commonly used icon fonts for performance. To use all of FontAwesome, uncomment the `@import` statement in `app.less` and comment out the custom font. You'll also need to comment out and uncomment the next and previous control arrow button rules later in `app.less`. 
+
 ### Deploying a post
+
+When deploying a post, make sure the deploy slug is what you want it to be. The slug defaults to the name of the folder, but can be overridden in `posts/$SLUG/post_config.py`. Define the variable `DEPLOY_SLUG` to what you want the published slug to be.
+
+Also, make sure that the variable `NUM_SLIDES_AFTER_CONTENT` is equal to the number of slides *after* the last piece of story content. For example, if there is a share slide and an up next slide, the number should be 2. This is important for tracking completion rates in our analytics.
 
 Deploy posts with the following command:
 ```
-fab post:$SLUG staging deploy 
+fab post:$SLUG staging deploy
 ```
 
 This function will deploy the static assets to S3, and can be found at stage-apps.npr.org/lookatthis/posts/$SLUG.
@@ -173,14 +253,14 @@ If you want to delete a post, use the following command:
 fab post:$SLUG delete
 ```
 
-**Do not** specify a deployment target. This will also delete all assets related to the post in the assets rig. 
+**Do not** specify a deployment target. This will also delete all assets related to the post in the assets rig.
 
 COPY editing
 ------------
 
 This app uses a Google Spreadsheet for a simple key/value store that provides an editing workflow.
 
-View the [sample copy spreadsheet](https://docs.google.com/spreadsheet/pub?key=0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc#gid=0).
+View the [sample copy spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE).
 
 This document is specified in ``app_config`` with the variable ``COPY_GOOGLE_DOC_KEY``. To use your own spreadsheet, change this value to reflect your document's key (found in the Google Docs URL after ``&key=``).
 
@@ -233,58 +313,6 @@ about_url
 download_label
 download_url
 ```
-
-Arbitrary Google Docs
-----------------------
-Sometimes, our projects need to read data from a Google Doc that's not involved with the COPY rig. In this case, we've got a class for you to download and parse an arbitrary Google Doc to a CSV.
-
-This solution will download the uncached version of the document, unlike those methods which use the "publish to the Web" functionality baked into Google Docs. Published versions can take up to 15 minutes up update!
-
-First, export a valid Google username (email address) and password to your environment.
-
-```
-export APPS_GOOGLE_EMAIL=foo@gmail.com
-export APPS_GOOGLE_PASS=MyPaSsW0rd1!
-```
-
-Then, you can load up the `GoogleDoc` class in `etc/gdocs.py` to handle the task of authenticating and downloading your Google Doc.
-
-Here's an example of what you might do:
-
-```
-import csv
-
-from etc.gdoc import GoogleDoc
-
-def read_my_google_doc():
-    doc = {}
-    doc['key'] = '0ArVJ2rZZnZpDdEFxUlY5eDBDN1NCSG55ZXNvTnlyWnc'
-    doc['gid'] = '4'
-    doc['file_format'] = 'csv'
-    doc['file_name'] = 'gdoc_%s.%s' % (doc['key'], doc['file_format'])
-
-    g = GoogleDoc(**doc)
-    g.get_auth()
-    g.get_document()
-
-    with open('data/%s' % doc['file_name'], 'wb') as readfile:
-        csv_file = list(csv.DictReader(readfile))
-
-    for line_number, row in enumerate(csv_file):
-        print line_number, row
-
-read_my_google_doc()
-```
-
-Google documents will be downloaded to `data/gdoc.csv` by default.
-
-You can pass the class many keyword arguments if you'd like; here's what you can change:
-* gid AKA the sheet number
-* key AKA the Google Docs document ID
-* file_format (xlsx, csv, json)
-* file_name (to download to)
-
-See `etc/gdocs.py` for more documentation.
 
 Compile static assets
 ---------------------

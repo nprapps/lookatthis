@@ -146,7 +146,7 @@ class CSSIncluder(Includer):
             else:
                 src_paths.append('www/%s' % src)
 
-            with open('%s/www/%s' % (self.static_path, src)) as f:
+            with codecs.open('%s/www/%s' % (self.static_path, src), encoding='utf-8') as f:
                 print '- compressing %s' % src
                 output.append(cssmin(f.read().encode('utf-8')))
 

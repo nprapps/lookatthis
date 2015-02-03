@@ -25,6 +25,9 @@ gzip.time = FakeTime()
 def deploy_file(connection, src, dst, max_age):
     """
     Deploy a single file to S3, if the local version is different.
+
+    If warn_threshold is a positive integer N, we warn if the file is bigger
+    is larger than N bytes.
     """
     bucket = connection.get_bucket(app_config.S3_BUCKET['bucket_name'])
 
@@ -76,7 +79,7 @@ def deploy_file(connection, src, dst, max_age):
             print 'Uploading %s --> %s' % (src, dst)
             k.set_contents_from_filename(src, headers, policy='public-read')
 
-def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[]):
+def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[], warn_threshold=0):
     """
     Deploy a folder to S3, checking each file to see if it has changed.
     """
@@ -112,6 +115,13 @@ def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[]):
 
     for src, dst in to_deploy:
         deploy_file(s3, src, dst, max_age)
+
+    if warn_threshold > 0:
+        print "\n"
+        for src, dst in to_deploy:
+            file_size = os.path.getsize(src)
+            if file_size > warn_threshold:
+                print '%s is rather large (%dkb to be exact)' % (src, file_size / 1024)
 
 def delete_folder(dst):
     """

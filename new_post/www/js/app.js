@@ -1,36 +1,26 @@
 // Global state
-var $nextPostTitle = null;
-var $nextPostImage = null;
 var $upNext = null;
-var NAV_HEIGHT = 75;
-// TODO: use deploy slug
-var MESSAGE_DELIMITER = ';';
-
 var $w;
 var $h;
 var $slides;
-var $primaryNav;
 var $arrows;
+var $nextArrow;
 var $startCardButton;
-var mobileSuffix;
 var isTouch = Modernizr.touch;
+var mobileSuffix;
 var aspectWidth = 16;
 var aspectHeight = 9;
 var optimalWidth;
 var optimalHeight;
 var w;
 var h;
-var hasTrackedKeyboardNav = false;
-var hasTrackedSlideNav = false;
-var slideStartTime = moment();
 var completion = 0;
+var arrowTest;
+var lastSlideExitEvent;
+var hammer;
 
-/*var onStartCardButtonClick = function() {
-    $.fn.fullpage.moveSlideRight();
-}*/
 
 var resize = function() {
-
     $w = $(window).width();
     $h = $(window).height();
 
@@ -49,8 +39,14 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
+    var anchors = ['_'];
+    for (var i = 0; i < copy.content.length; i++) {
+        anchors.push(copy.content[i][0]);
+    }
     $.fn.fullpage({
+        anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
         autoScrolling: false,
+        keyboardScrolling: false,
         verticalCentered: false,
         fixedElements: '.primary-navigation, #share-modal',
         resize: false,
@@ -62,21 +58,19 @@ var setUpFullPage = function() {
     });
 };
 
-
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0)
-    $('body').css('opacity', 1);
+    setSlidesForLazyLoading(0);
+    $('.section').css({
+      'opacity': 1,
+      'visibility': 'visible',
+    });
     showNavigation();
 };
 
 // after a new slide loads
-
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
-
     showNavigation();
-
-    slideStartTime = moment();
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
@@ -104,24 +98,13 @@ var setSlidesForLazyLoading = function(slideIndex) {
     * Sets up a list of slides based on your position in the deck.
     * Lazy-loads images in future slides because of reasons.
     */
-
     var slides = [
-        $slides[slideIndex - 2],
-        $slides[slideIndex - 1],
-        $slides[slideIndex],
-        $slides[slideIndex + 1],
-        $slides[slideIndex + 2]
+        $slides.eq(slideIndex - 2),
+        $slides.eq(slideIndex - 1),
+        $slides.eq(slideIndex),
+        $slides.eq(slideIndex + 1),
+        $slides.eq(slideIndex + 2)
     ];
-
-    findImages(slides);
-
-}
-
-var findImages = function(slides) {
-    /*
-    * Set background images on slides.
-    * Should get square images for mobile.
-    */
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
@@ -130,33 +113,33 @@ var findImages = function(slides) {
         mobileSuffix = '-sq';
     }
 
-    _.each($(slides), function(slide) {
+    for (var i = 0; i < slides.length; i++) {
+        loadImages(slides[i]);
+    };
 
-        getBackgroundImage(slide);
-        var containedImage = $(slide).find('.contained-image-container, .contained-image');
-        getBackgroundImage(containedImage);
-    });
-};
+}
 
-var getBackgroundImage = function(container) {
+var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
-    if ($(container).data('bgimage')) {
-
-        var image_filename = $(container).data('bgimage').split('.')[0];
-        var image_extension = '.' + $(container).data('bgimage').split('.')[1];
+    if ($slide.data('bgimage')) {
+        var image_filename = $slide.data('bgimage').split('.')[0];
+        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($(container).css('background-image') === 'none') {
-            $(container).css('background-image', 'url(' + image_path + ')');
+        if ($slide.css('background-image') === 'none') {
+            $slide.css('background-image', 'url(' + image_path + ')');
         }
-        if ($(container).hasClass('contained-image-container')) {
-            setImages($(container));
-        }
+    }
 
-     }
+    var $images = $slide.find('img.lazy-load');
+    if ($images.length > 0) {
+        for (var i = 0; i < $images.length; i++) {
+            var image = $images.eq(i).data('src');
+            $images.eq(i).attr('src', 'assets/' + image);
+        }
+    }
 };
 
 var showNavigation = function() {
@@ -166,21 +149,10 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        if (!$arrows.hasClass('active')) {
-            animateArrows();
-        }
-
-        var $prevArrow = $arrows.filter('.prev');
-
-        $prevArrow.removeClass('active');
-        $prevArrow.css({
-            //'opacity': 0,
-            'display': 'none'
-        });
-
-        $('body').addClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
+        /*
+        * Don't show arrows on titlecard
+        */
+        $arrows.hide();
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -188,149 +160,96 @@ var showNavigation = function() {
         * Last card gets no next arrow but does have the nav.
         */
         if (!$arrows.hasClass('active')) {
-            animateArrows();
+            showArrows();
         }
 
-        var $nextArrow = $arrows.filter('.next');
-
         $nextArrow.removeClass('active');
-        $nextArrow.css({
-            //'opacity': 0,
-            'display': 'none'
-        });
+        $nextArrow.hide();
+    } else if ($slides.eq(1).hasClass('active')) {
+        showArrows();
 
-        //$primaryNav.css('opacity', '1');
+        switch (arrowTest) {
+            case 'bright-arrow':
+                $nextArrow.addClass('titlecard-nav');
+                break;
+            case 'bouncy-arrow':
+                $nextArrow.addClass('shake animated titlecard-nav');
+                break;
+            default:
+                break;
+        }
+
+        $nextArrow.on('click', onFirstRightArrowClick);
     } else {
         /*
         * All of the other cards? Arrows and navs.
         */
         if ($arrows.filter('active').length != $arrows.length) {
-            animateArrows();
+            showArrows();
         }
+        $nextArrow.removeClass('shake animated titlecard-nav');
 
-        $('body').removeClass('titlecard-nav');
-
-        //$primaryNav.css('opacity', '1');
+        $nextArrow.off('click', onFirstRightArrowClick);
     }
 }
 
-var animateArrows = function() {
+var showArrows = function() {
     /*
-    * Everything looks better faded. Hair; jeans; arrows.
+    * Show the arrows.
     */
     $arrows.addClass('active');
-
-    if ($arrows.hasClass('active')) {
-        $arrows.css('display', 'block');
-        fadeInArrows();
-    }
+    $arrows.show();
 };
 
-var fadeInArrows = _.debounce(function() {
-    /*
-    * Debounce makes you do crazy things.
-    */
-    //$arrows.css('opacity', 1)
-}, 1);
+var determineArrowTest = function() {
+    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
+    var test = possibleTests[getRandomInt(0, possibleTests.length)]
+    return test;
+}
 
-
-var setImages = function(container) {
-    /*
-    * Image resizer from the Wolves lightbox + sets background image on a div.
-    */
-
-    // Grab Wes's properly sized width.
-    var imageWidth = w;
-
-    // Sometimes, this is wider than the window, shich is bad.
-    if (imageWidth > $w) {
-        imageWidth = $w;
-    }
-
-    // Set the hight as a proportion of the image width.
-    var imageHeight = ((imageWidth * aspectHeight) / aspectWidth);
-
-    // Sometimes the lightbox width is greater than the window height.
-    // Center it vertically.
-    if (imageWidth > $h) {
-        imageTop = (imageHeight - $h) / 2;
-    }
-
-    // Sometimes the lightbox height is greater than the window height.
-    // Resize the image to fit.
-    if (imageHeight > $h) {
-        imageWidth = ($h * aspectWidth) / aspectHeight;
-        imageHeight = $h;
-    }
-
-    // Sometimes the lightbox width is greater than the window width.
-    // Resize the image to fit.
-    if (imageWidth > $w) {
-        imageHeight = ($w * aspectHeight) / aspectWidth;
-        imageWidth = $w;
-    }
-
-    // Set the top and left offsets. Image bottom includes offset for navigation
-    var imageBottom = ($h - imageHeight) / 2 + 70;
-    var imageLeft = ($w - imageWidth) / 2;
-
-    // Set styles on the map images.
-    $(container).css({
-        'width': imageWidth + 'px',
-        'height': imageHeight + 'px',
-        'bottom': imageBottom + 'px',
-        'left': imageLeft + 'px',
-    });
-
-};
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-
-    var now = moment();
-    var timeOnSlide = (now - slideStartTime);
-
-    ANALYTICS.exitSlide(slideIndex.toString(), timeOnSlide);
+    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
 }
 
-var onResize = function(e) {
-    if ($('.slide.active').hasClass('image-split')) {
-        setImages($('.slide.active').find('.contained-image-container')[0]);
-    }
+var onFirstRightArrowClick = function() {
+    ANALYTICS.firstRightArrowClick(arrowTest);
+}
+
+var onStartCardButtonClick = function() {
+    lastSlideExitEvent = 'go';
+    $.fn.fullpage.moveSlideRight();
+}
+
+var onArrowsClick = function() {
+    lastSlideExitEvent = 'arrow';
 }
 
 var onDocumentKeyDown = function(e) {
-    if (hasTrackedKeyboardNav) {
-        return true;
+    if (e.which === 37 || e.which === 39) {
+        lastSlideExitEvent = 'keyboard';
+        ANALYTICS.useKeyboardNavigation();
+        if (e.which === 37) {
+            $.fn.fullpage.moveSlideLeft();
+        } else if (e.which === 39) {
+            $.fn.fullpage.moveSlideRight();
+        }
     }
-
-    switch (e.which) {
-
-        //left
-        case 37:
-
-        //right
-        case 39:
-            ANALYTICS.useKeyboardNavigation();
-            break;
-
-        // escape
-        case 27:
-            break;
-
-    }
-
     // jquery.fullpage handles actual scrolling
     return true;
 }
 
 var onSlideClick = function(e) {
     if (isTouch) {
+        lastSlideExitEvent = 'tap';
         $.fn.fullpage.moveSlideRight();
     }
-
     return true;
 }
 
@@ -367,26 +286,40 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
+var onSwipeLeft = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swipeleft';    
+        $.fn.fullpage.moveSlideRight();
+    }
+}
+
+var onSwipeRight = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'swiperight';
+        $.fn.fullpage.moveSlideLeft();      
+    }
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
 
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
-    $primaryNav = $('.primary-navigation');
-    //$startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
-
-    $nextPostTitle = $('.next-post-title');
-    $nextPostImage = $('.next-post-image');
+    $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
-    //$startCardButton.on('click', onStartCardButtonClick);
+    $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
-
+    $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
+    hammer = new Hammer(document.body);
+    hammer.on('swipeleft', onSwipeLeft);
+    hammer.on('swiperight', onSwipeRight);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
@@ -397,9 +330,9 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    arrowTest = determineArrowTest();
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(window).resize(onResize);
     $(document).keydown(onDocumentKeyDown);
 });

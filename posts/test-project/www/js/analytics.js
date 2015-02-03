@@ -5,6 +5,15 @@
 var _gaq = _gaq || [];
 
 var ANALYTICS = (function () {
+
+    /* 
+     * Global time tracking variables
+     */
+    // The time the current slide was pulled up
+    var slideStartTime =  new Date();
+    // The time spent on the previous slide, for use in slide-specific tests
+    var timeOnLastSlide = null;
+
     /*
      * Google Analytics
      */
@@ -183,12 +192,12 @@ var ANALYTICS = (function () {
         trackEvent('new-comment');
     }
 
-    var actOnFeaturedTweet = function(action, tweet_url) {
-        trackEvent('featured-tweet-action', action, null, tweet_url);
+    var actOnFeaturedTweet = function(action, tweetUrl) {
+        trackEvent('featured-tweet-action', action, null, tweetUrl);
     }
 
-    var actOnFeaturedFacebook = function(action, post_url) {
-        trackEvent('featured-facebook-action', action, null, post_url);
+    var actOnFeaturedFacebook = function(action, postUrl) {
+        trackEvent('featured-facebook-action', action, null, postUrl);
     }
 
     var copySummary = function() {
@@ -223,8 +232,16 @@ var ANALYTICS = (function () {
 
     // SLIDES
 
-    var exitSlide = function(slide_index, time_on_slide) {
-        trackEvent('slide-exit', slide_index, time_on_slide);
+    var exitSlide = function(slideIndex, lastSlideExitEvent) {
+        var currentTime = new Date();
+        timeOnLastSlide = Math.abs(currentTime - slideStartTime);
+        slideStartTime = currentTime;
+        trackEvent('slide-exit', slideIndex, timeOnLastSlide, lastSlideExitEvent);
+    }
+
+    // This depends on exitSlide executing
+    var firstRightArrowClick = function(test) {
+        trackEvent('first-right-arrow-clicked', test, timeOnLastSlide);
     }
 
     return {
@@ -244,7 +261,8 @@ var ANALYTICS = (function () {
         'completeFiftyPercent': completeFiftyPercent,
         'completeSeventyFivePercent': completeSeventyFivePercent,
         'completeOneHundredPercent': completeOneHundredPercent,
-        'exitSlide': exitSlide
+        'exitSlide': exitSlide,
+        'firstRightArrowClick': firstRightArrowClick
     };
 }());
 
