@@ -1,33 +1,27 @@
 // Global state
-var $nextPostTitle = null;
-var $nextPostImage = null;
 var $upNext = null;
-//var NAV_HEIGHT = 75;
-// TODO: use deploy slug
-var EVENT_CATEGORY = 'lookatthis';
-var MESSAGE_DELIMITER = ';';
-
 var $w;
 var $h;
 var $slides;
-var $fitImage;
-var $primaryNav;
 var $arrows;
+var $nextArrow;
 var $startCardButton;
-var $thePic;
-var mobileSuffix;
 var isTouch = Modernizr.touch;
+var mobileSuffix;
 var aspectWidth = 16;
 var aspectHeight = 9;
 var optimalWidth;
 var optimalHeight;
 var w;
 var h;
-
-var hasTrackedKeyboardNav = false;
-var hasTrackedSlideNav = false;
-var slideStartTime = moment();
 var completion = 0;
+var arrowTest;
+var lastSlideExitEvent;
+var hammer;
+var audiolab;
+
+var $fitImage;
+var $thePic;
 
 var resize = function() {
 
@@ -35,7 +29,7 @@ var resize = function() {
     $h = $(window).height();
 
     $slides.width($w);
-    
+
     optimalWidth = ($h * aspectWidth) / aspectHeight;
     optimalHeight = ($w * aspectHeight) / aspectWidth;
 
@@ -46,7 +40,7 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
-    
+
     resizeThePic();
 };
 
@@ -63,16 +57,16 @@ var resizeThePic = function(){
     } else {
         var aspect = window.innerWidth / window.innerHeight;
         var imageAspect = 4/3;
-        
+
         //if we're trying to fit a vertical image
         //else its a horizontal image
-        
+
         if (aspect > imageAspect) {
-            
+
             if (imageAspect > 1) { //horiz
-                $thePic.css('width',(100 * (imageAspect) / aspect) + 'vw');                
+                $thePic.css('width',(100 * (imageAspect) / aspect) + 'vw');
             } else { // vertical
-                $thePic.css('height',(100 * (imageAspect) / aspect) + 'vh');            
+                $thePic.css('height',(100 * (imageAspect) / aspect) + 'vh');
             }
 
         } else {
@@ -129,54 +123,47 @@ var setSlidesForLazyLoading = function(slideIndex) {
     */
 
     var slides = [
-        $slides[slideIndex - 2],
-        $slides[slideIndex - 1],
-        $slides[slideIndex],
-        $slides[slideIndex + 1],
-        $slides[slideIndex + 2]
+        $slides.eq(slideIndex - 2),
+        $slides.eq(slideIndex - 1),
+        $slides.eq(slideIndex),
+        $slides.eq(slideIndex + 1),
+        $slides.eq(slideIndex + 2)
     ];
-
-    findImages(slides);
-
-}
-
-var findImages = function(slides) {
-    /*
-    * Set background images on slides.
-    * Should get square images for mobile.
-    */
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-   /* if ($w < 769) {
+    if ($w < 769) {
         mobileSuffix = '-sq';
-    }*/
+    }
 
-    _.each($(slides), function(slide) {
+    for (var i = 0; i < slides.length; i++) {
+        loadImages(slides[i]);
+    };
 
-        getBackgroundImage(slide);
-        var containedImage = $(slide).find('.contained-image-container, .contained-image');
-        getBackgroundImage(containedImage);
-    });
-};
+}
 
-var getBackgroundImage = function(container) {
+var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-
-    if ($(container).data('bgimage')) {
-
-        var image_filename = $(container).data('bgimage').split('.')[0];
-        var image_extension = '.' + $(container).data('bgimage').split('.')[1];
+    if ($slide.data('bgimage')) {
+        var image_filename = $slide.data('bgimage').split('.')[0];
+        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($(container).css('background-image') === 'none') {
-            $(container).css('background-image', 'url(' + image_path + ')');
+        if ($slide.css('background-image') === 'none') {
+            $slide.css('background-image', 'url(' + image_path + ')');
         }
+    }
 
-     }
+    var $images = $slide.find('img.lazy-load');
+    if ($images.length > 0) {
+        for (var i = 0; i < $images.length; i++) {
+            var image = $images.eq(i).data('src');
+            $images.eq(i).attr('src', 'assets/' + image);
+        }
+    }
 };
 
 var showNavigation = function() {
@@ -186,19 +173,10 @@ var showNavigation = function() {
     */
 
     if ($slides.first().hasClass('active')) {
-        if (!$arrows.hasClass('active')) {
-            animateArrows();
-        }
-
-        var $prevArrow = $arrows.filter('.prev');
-
-        $prevArrow.removeClass('active');
-        $prevArrow.css({
-            'display': 'none'
-        });
-
-        $('body').addClass('titlecard-nav');
-
+        /*
+        * Don't show arrows on titlecard
+        */
+        $arrows.hide();
     }
 
     else if ($slides.last().hasClass('active')) {
@@ -206,101 +184,107 @@ var showNavigation = function() {
         * Last card gets no next arrow but does have the nav.
         */
         if (!$arrows.hasClass('active')) {
-            animateArrows();
+            showArrows();
         }
 
-        var $nextArrow = $arrows.filter('.next');
-
         $nextArrow.removeClass('active');
-        $nextArrow.css({
-            'display': 'none'
-        });
-        
-        $('body').addClass('final-slide');
+        $nextArrow.hide();
+    } else if ($slides.eq(1).hasClass('active')) {
+        showArrows();
 
+        switch (arrowTest) {
+            case 'bright-arrow':
+                $nextArrow.addClass('titlecard-nav');
+                break;
+            case 'bouncy-arrow':
+                $nextArrow.addClass('shake animated titlecard-nav');
+                break;
+            default:
+                break;
+        }
+
+        $nextArrow.on('click', onFirstRightArrowClick);
     } else {
         /*
         * All of the other cards? Arrows and navs.
         */
         if ($arrows.filter('active').length != $arrows.length) {
-            animateArrows();
+            showArrows();
         }
+        $nextArrow.removeClass('shake animated titlecard-nav');
 
-        $('body').removeClass('titlecard-nav');
-        $('body').removeClass('final-slide');
-        
+        $nextArrow.off('click', onFirstRightArrowClick);
     }
 }
 
-var animateArrows = function() {
+var showArrows = function() {
     /*
-    * Everything looks better faded. Hair; jeans; arrows.
+    * Show the arrows.
     */
     $arrows.addClass('active');
-
-    if ($arrows.hasClass('active')) {
-        $arrows.css('display', 'block');
-        fadeInArrows();
-    }
+    $arrows.show();
 };
 
-var fadeInArrows = _.debounce(function() {
-    /*
-    * Debounce makes you do crazy things.
-    */
-    //$arrows.css('opacity', 1)
-}, 1);
+var determineArrowTest = function() {
+    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
+    var test = possibleTests[getRandomInt(0, possibleTests.length)]
+    return test;
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
+    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
+}
 
-    var now = moment();
-    var timeOnSlide = (now - slideStartTime);
+var onFirstRightArrowClick = function() {
+    ANALYTICS.firstRightArrowClick(arrowTest);
+}
 
-    trackEvent([EVENT_CATEGORY, 'slide-exit', slideIndex.toString(), timeOnSlide]);
+var onStartCardButtonClick = function() {
+    lastSlideExitEvent = 'go';
+    $.fn.fullpage.moveSlideRight();
+    audiolab.play();
+}
+
+var onArrowsClick = function() {
+    lastSlideExitEvent = 'arrow';
 }
 
 var onDocumentKeyDown = function(e) {
-    if (hasTrackedKeyboardNav) {
-        return true;
+    if (e.which === 37 || e.which === 39) {
+        lastSlideExitEvent = 'keyboard';
+        ANALYTICS.useKeyboardNavigation();
+        if (e.which === 37) {
+            $.fn.fullpage.moveSlideLeft();
+        } else if (e.which === 39) {
+            $.fn.fullpage.moveSlideRight();
+        }
     }
-
-    switch (e.which) {
-
-        //left
-        case 37:
-
-        //right
-        case 39:
-            trackEvent([EVENT_CATEGORY, 'keyboard-nav']);
-            hasTrackedKeyboardNav = true;
-            break;
-
-        // escape
-        case 27:
-            break;
-
-    }
-
     // jquery.fullpage handles actual scrolling
     return true;
 }
 
-var onNextPostClick = function(e) {
-    window.top.location = NEXT_POST_URL;
-
-    trackEvent([EVENT_CATEGORY, 'next-post']);
-
+var onSlideClick = function(e) {
+    if (isTouch) {
+        lastSlideExitEvent = 'tap';
+        $.fn.fullpage.moveSlideRight();
+    }
     return true;
 }
 
-var trackEvent = function(args) {
-    args.splice(0, 0, '_trackEvent');
-    _gaq.push(args)
-}
+var onNextPostClick = function(e) {
+    e.preventDefault();
 
+    ANALYTICS.trackEvent('next-post');
+    window.top.location = NEXT_POST_URL;
+    return true;
+}
 var fakeMobileHover = function() {
     $(this).css({
         'background-color': '#fff',
@@ -331,39 +315,36 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    $thePic = $('#the-pic');
     $navButton = $('.primary-navigation-btn');
-    $primaryNav = $('.primary-navigation');
+    $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
-
-    $nextPostTitle = $('.next-post-title');
-    $nextPostImage = $('.next-post-image');
+    $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    audiolab = $("#moodmusic")[0];
+    $thePic = $('.the-pic');
 
+    $startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
-
+    $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
 
+    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    var clippy = new ZeroClipboard($(".clippy"));
+    clippy.on('ready', function(readyEvent) {
+        clippy.on('aftercopy', onClippyCopy);
+    });
+
     setUpFullPage();
     resize();
-    
+
     //audio
-	
+
 	$('#moodmusic').mediaelementplayer({
         audioWidth: '100%',
         audioHeight: 50,
         features: ['playpause','progress'],
-            
-    });
-    
-    var audiolab = $("#moodmusic")[0];
-    
-    $(".btn-go").click(function() {
-        $.fn.fullpage.moveSlideRight();
-        $(".audio-reveal").addClass("active");
-        audiolab.play();
-      
     });
 
     // Redraw slides if the window resizes

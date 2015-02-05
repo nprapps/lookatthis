@@ -97,3 +97,15 @@ else:
 # Boilerplate
 if __name__ == '__main__':
     print 'This command has been removed! Please run "fab app" instead!'
+
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--port')
+    args = parser.parse_args()
+    server_port = 8000
+
+    if args.port:
+        server_port = int(args.port)
+
+    app.run(host='0.0.0.0', port=server_port, debug=app_config.DEBUG)
