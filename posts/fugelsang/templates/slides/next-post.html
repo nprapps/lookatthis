@@ -1,0 +1,25 @@
+<div class="slide next-post" id="{{ row.id }}">
+<div class="blur-background" style="background-image: url({{ row.text2 }});"></div>
+<div class="text full-block">
+<div class="full-block-cell">
+
+<div class="full-block-content">
+
+<h5>Here's another good story from Look At This</h5>
+
+    <a href="{{ row.text3 }}" target="_blank" class="previously-on">
+            
+            
+            {{ row.text1|smarty }}
+            <h4>View</h4>
+    </a>
+
+ </div><!--full-block-content-->
+</div><!--full-block-cell-->
+</div><!--full-block-->
+
+</div><!-- slide -->
+
+<script type="text/javascript">
+    window.NEXT_POST_URL = "{{ row.text3 }}";
+</script>

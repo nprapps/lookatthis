@@ -1,0 +1,35 @@
+{% extends '%s/templates/_base.html' % slug %}
+
+{% block header_content %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="section">
+    {% for row in COPY.content %}
+        {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
+    {% endfor %}
+</div>
+<div class="primary-navigation" style="opacity:1;">
+    <div class="controlArrow prev"></div>
+    <div class="controlArrow next"></div>
+</div>
+
+<div class="audio-controls">
+    <audio id="moodmusic">
+        <source src="assets/fugelsang-new.mp3" type="audio/mp3">
+        <source src="assets/mystkowski.ogg" type="audio/ogg">
+    </audio>
+</div>
+
+<p class="photo-modal-trigger">
+        <i class="fa fa-picture-o"></i> 
+        <span class="fit">Fit</span>
+        <span class="fill">Fill</span>
+</p><!--photo-modal-->
+
+{% endblock %}
+
+{% block wide_content %}
+{% endblock %}
