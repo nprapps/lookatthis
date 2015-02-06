@@ -1,0 +1,9 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+<div class="foreground-image">
+        <img src="assets/{{ row.foreground_media }}" alt="{{ row.caption|smarty }}">
+    </div>
+    <div class="subtitle bleed-box">
+        {{ row.text1 }}
+    </div>
+{% endblock %}

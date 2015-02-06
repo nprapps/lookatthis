@@ -3,13 +3,13 @@ var pop = Popcorn( '#moodmusic');
 
 /////////////// !CHAPTER 1
 //start
-pop.code({
-	start: 32,
-	end: 33,
-	onStart: function( options ) {
-    	$.fn.fullpage.moveSlideRight();
-	}
-});
+// pop.code({
+// 	start: 32,
+// 	end: 33,
+// 	onStart: function( options ) {
+//     	$.fn.fullpage.moveSlideRight();
+// 	}
+// });
 
 //conclusion
 // pop.code({

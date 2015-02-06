@@ -18,10 +18,11 @@ var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
 var hammer;
-var audiolab;
-
-var $fitImage;
-var $thePic;
+var $player;
+var $playerButton;
+var $play;
+var $pause;
+var slideSwitchTime = null;
 
 var resize = function() {
 
@@ -40,39 +41,6 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
-
-    resizeThePic();
-};
-
-$('.photo-modal-trigger').click(function() {
-  $thePic.toggleClass("fitme");
-  $(this).toggleClass("fill-frame");
-  resizeThePic();
-});
-
-var resizeThePic = function(){
-    //if we're in fit mode
-    if(!$thePic.hasClass('fitme')){
-        $thePic.css('width','');
-    } else {
-        var aspect = window.innerWidth / window.innerHeight;
-        var imageAspect = 4/3;
-
-        //if we're trying to fit a vertical image
-        //else its a horizontal image
-
-        if (aspect > imageAspect) {
-
-            if (imageAspect > 1) { //horiz
-                $thePic.css('width',(100 * (imageAspect) / aspect) + 'vw');
-            } else { // vertical
-                $thePic.css('height',(100 * (imageAspect) / aspect) + 'vh');
-            }
-
-        } else {
-            $thePic.css('width','');
-        }
-    }
 };
 
 var setUpFullPage = function() {
@@ -80,7 +48,7 @@ var setUpFullPage = function() {
         autoScrolling: false,
         verticalCentered: false,
         keyboardScrolling: false,
-        fixedElements: '.primary-navigation, .audio-controls, #photo-detail, .photo-modal-trigger',
+        fixedElements: '.primary-navigation, .player, #photo-detail, .photo-modal-trigger',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -106,13 +74,30 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     slideStartTime = moment();
 
+    if ($('#slide-' + slideAnchor).data('slide-end-time')) {
+        slideSwitchTime = $('#slide-' + slideAnchor).data('slide-end-time');
+    } else {
+        slideSwitchTime = null;
+    }
+
     // Completion tracking
-    how_far = (slideIndex + 1) / $slides.length;
+    how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
-        trackEvent([EVENT_CATEGORY, 'completion', completion.toString()]);
+        if (completion === 0.25) {
+            ANALYTICS.completeTwentyFivePercent();
+        }
+        else if (completion === 0.5) {
+            ANALYTICS.completeFiftyPercent();
+        }
+        else if (completion === 0.75) {
+            ANALYTICS.completeSeventyFivePercent();
+        }
+        else if (completion === 1) {
+            ANALYTICS.completeOneHundredPercent();
+        }
     }
 };
 
@@ -249,7 +234,7 @@ var onFirstRightArrowClick = function() {
 var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'go';
     $.fn.fullpage.moveSlideRight();
-    audiolab.play();
+    AUDIO.setUpPlayer();
 }
 
 var onArrowsClick = function() {
@@ -320,8 +305,10 @@ $(document).ready(function() {
     $arrows = $('.controlArrow');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
-    audiolab = $("#moodmusic")[0];
-    $thePic = $('.the-pic');
+    $player = $('#player');
+    $playerButton = $('.player-button');
+    $play = $('.play');
+    $pause = $('.pause');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -329,6 +316,7 @@ $(document).ready(function() {
     $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
+    $playerButton.on('click', AUDIO.toggleAudio);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
@@ -338,14 +326,6 @@ $(document).ready(function() {
 
     setUpFullPage();
     resize();
-
-    //audio
-
-	$('#moodmusic').mediaelementplayer({
-        audioWidth: '100%',
-        audioHeight: 50,
-        features: ['playpause','progress'],
-    });
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
