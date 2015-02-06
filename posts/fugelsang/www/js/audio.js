@@ -8,7 +8,7 @@ var AUDIO = (function() {
         });
 
         $player.jPlayer('setMedia', {
-            mp3: 'assets/fugelsang-new.mp3'
+            mp3: 'assets/fugel-narr.mp3'
         }).jPlayer('play');
 
         $play.hide();
