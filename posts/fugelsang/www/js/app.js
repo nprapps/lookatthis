@@ -332,6 +332,19 @@ $(document).ready(function() {
     setUpFullPage();
     resize();
 
+    $player.jPlayer({
+        swfPath: 'js/lib',
+        loop: false,
+        supplied: 'mp3',
+        timeupdate: AUDIO.onTimeupdate,
+        cssSelectorAncestor: "#jp_container_1",
+        smoothPlayBar: true
+    });
+
+    $player.jPlayer('setMedia', {
+        mp3: 'assets/fugel-narr.mp3'
+    });
+
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);

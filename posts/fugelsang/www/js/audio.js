@@ -1,16 +1,6 @@
 var AUDIO = (function() {
     var setUpPlayer = function() {
-        $player.jPlayer({
-            swfPath: 'js/lib',
-            loop: false,
-            supplied: 'mp3',
-            timeupdate: onTimeupdate
-        });
-
-        $player.jPlayer('setMedia', {
-            mp3: 'assets/fugel-narr.mp3'
-        }).jPlayer('play');
-
+        $player.jPlayer('play');
         $play.hide();
         $pause.show();
     }
@@ -19,13 +9,13 @@ var AUDIO = (function() {
         var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
         $('.current-time').text(timeText);
 
-        var totalTime = e.jPlayer.status.duration;
+        // var totalTime = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
 
-        // animate progress bar
-        var percentage = position / totalTime;
+        // // animate progress bar
+        // var percentage = position / totalTime;
 
-        $('.bar').width($('.player-progress').width() * percentage);
+        // $('.bar').width($('.player-progress').width() * percentage);
 
         if (position > slideSwitchTime && slideSwitchTime !== null) {
             $.fn.fullpage.moveSlideRight();
@@ -74,5 +64,6 @@ var AUDIO = (function() {
     return {
         'toggleAudio': toggleAudio,
         'setUpPlayer': setUpPlayer,
+        'onTimeupdate': onTimeupdate
     }
 }());
