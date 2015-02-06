@@ -23,6 +23,7 @@ var $playerButton;
 var $play;
 var $pause;
 var slideSwitchTime = null;
+var $animatedElements = null;
 
 var resize = function() {
 
@@ -74,11 +75,15 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     slideStartTime = moment();
 
-    if ($('#slide-' + slideAnchor).data('slide-end-time')) {
-        slideSwitchTime = $('#slide-' + slideAnchor).data('slide-end-time');
+    var $thisSlide = $('#slide-' + slideAnchor);
+
+    if ($thisSlide.data('slide-end-time')) {
+        slideSwitchTime = $thisSlide.data('slide-end-time');
     } else {
         slideSwitchTime = null;
     }
+
+    $animatedElements = $thisSlide.find('.animated');
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);

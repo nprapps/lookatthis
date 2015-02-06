@@ -31,6 +31,16 @@ var AUDIO = (function() {
             $.fn.fullpage.moveSlideRight();
         }
 
+        if ($animatedElements) {
+            for (var i = 0; i < $animatedElements.length; i++) {
+                var entranceTime = $animatedElements.eq(i).data('entrance');
+
+                if (position > entranceTime) {
+                    $animatedElements.eq(i).css('opacity', 1);
+                }
+            }
+        }
+
     }
 
     var _resumePlayer = function() {
