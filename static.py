@@ -47,11 +47,15 @@ def audio(slug, filename):
             if len(ranges) > 1:
                 end = int(ranges[1])
 
-            # status = 206
+            if begin != 0 or end != size - 1:
+                status = 206
+
             headers.add('Accept-Ranges', 'bytes')
             headers.add('Content-Range', 'bytes %i-%i/%i' % (begin, end, end - begin) )
 
         headers.add('Content-Length', str( (end - begin) + 1) )
+
+        print headers
 
         response = Response(
             file(path),
