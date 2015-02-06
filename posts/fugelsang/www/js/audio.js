@@ -34,9 +34,13 @@ var AUDIO = (function() {
         if ($animatedElements) {
             for (var i = 0; i < $animatedElements.length; i++) {
                 var entranceTime = $animatedElements.eq(i).data('entrance');
+                var exitTime = $animatedElements.eq(i).data('exit');
 
                 if (position > entranceTime) {
                     $animatedElements.eq(i).css('opacity', 1);
+                }
+                if (position > exitTime) {
+                    $animatedElements.eq(i).css('opacity', 0);
                 }
             }
         }
