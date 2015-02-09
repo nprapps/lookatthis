@@ -20,7 +20,6 @@ var AUDIO = (function() {
                     break;
                 }
                 else {
-                    console.log(currentIndex, i);
                     $.fn.fullpage.moveTo(0, i);
                     break;
                 }
