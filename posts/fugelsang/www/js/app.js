@@ -18,6 +18,7 @@ var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
 var hammer;
+var $playerWrapper;
 var $player;
 var $playerButton;
 var $play;
@@ -310,6 +311,7 @@ $(document).ready(function() {
     $arrows = $('.controlArrow');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
     $play = $('.play');
