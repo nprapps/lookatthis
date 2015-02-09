@@ -14,6 +14,7 @@ var optimalWidth;
 var optimalHeight;
 var w;
 var h;
+var currentIndex;
 var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
@@ -71,19 +72,11 @@ var onPageLoad = function() {
 
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
-
     showNavigation();
-
     slideStartTime = moment();
+    currentIndex = slideIndex;
 
     var $thisSlide = $('#slide-' + slideAnchor);
-
-    if ($thisSlide.data('slide-end-time')) {
-        slideSwitchTime = $thisSlide.data('slide-end-time');
-    } else {
-        slideSwitchTime = null;
-    }
-
     $animatedElements = $thisSlide.find('.animated');
 
     // Completion tracking
