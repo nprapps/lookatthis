@@ -239,8 +239,12 @@ var onFirstRightArrowClick = function() {
 
 var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'go';
-    $.fn.fullpage.moveSlideRight();
-    AUDIO.setUpPlayer();
+    $('.start').css('opacity', 0);
+    $('.start').one("webkitTransitionEnd transitionend", function(event) {
+        $.fn.fullpage.moveSlideRight();
+        $('#slide-intro').css('opacity', 1);
+        AUDIO.setUpPlayer();
+    });
 }
 
 var onArrowsClick = function() {
