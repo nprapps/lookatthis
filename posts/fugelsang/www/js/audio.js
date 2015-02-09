@@ -1,6 +1,7 @@
 var AUDIO = (function() {
     var setUpPlayer = function() {
         $player.jPlayer('play');
+
         $play.hide();
         $pause.show();
     }

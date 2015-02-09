@@ -249,6 +249,7 @@ def _assets_upload(local_path, s3_key):
 
     s3_key.set_metadata('md5', local_md5)
     s3_key.set_contents_from_filename(local_path)
+    s3_key.set_acl('public-read')
 
 def _assets_delete(local_path, s3_key):
     """

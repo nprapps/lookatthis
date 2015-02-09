@@ -26,17 +26,17 @@ def copy_js(slug):
     return copy, 200, { 'content-type': 'application/javascript' }
 
 # Audio route to serve range headers for Safari.
-@static.route('/posts/<string:slug>/assets/<string:filename>.mp3')
+@static.route('/posts/<string:slug>/assets/<string:filename>.ogg')
 def audio(slug, filename):
     from flask import Response, request
 
-    path = 'posts/%s/www/assets/%s.mp3' % (slug, filename)
+    path = 'posts/%s/www/assets/%s.ogg' % (slug, filename)
     with open(path) as f:
         headers = Headers()
         headers.add('Content-Disposition', 'attachment', filename=filename)
         headers.add('Content-Transfer-Encoding','binary')
 
-        status = 200
+        status = 206
         size = os.path.getsize(path)
         begin = 0
         end = size - 1
@@ -51,11 +51,10 @@ def audio(slug, filename):
                 status = 206
 
             headers.add('Accept-Ranges', 'bytes')
-            headers.add('Content-Range', 'bytes %i-%i/%i' % (begin, end, end - begin) )
+            headers.add('Content-Range', 'bytes %i-%i/%i' % (begin, end - 1, end - begin) )
+
 
         headers.add('Content-Length', str( (end - begin) + 1) )
-
-        print headers
 
         response = Response(
             file(path),
@@ -64,6 +63,8 @@ def audio(slug, filename):
             headers = headers,
             direct_passthrough = True
         )
+
+        print response.headers
 
         return response
 
