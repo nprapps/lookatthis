@@ -240,10 +240,11 @@ var onFirstRightArrowClick = function() {
 var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'go';
     $('.start').css('opacity', 0);
+    AUDIO.setUpPlayer();
     $('.start').one("webkitTransitionEnd transitionend", function(event) {
         $.fn.fullpage.moveSlideRight();
         $('#slide-intro').css('opacity', 1);
-        AUDIO.setUpPlayer();
+        $playerWrapper.css('opacity', 1);
     });
 }
 
