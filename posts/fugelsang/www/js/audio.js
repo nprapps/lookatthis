@@ -10,13 +10,23 @@ var AUDIO = (function() {
         var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
         $('.current-time').text(timeText);
 
-        // var totalTime = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
 
-        // // animate progress bar
-        // var percentage = position / totalTime;
+        for (var i = 0; i < $slides.length; i++) {
+            var endTime = $slides.eq(i).data('slide-end-time');
 
-        // $('.bar').width($('.player-progress').width() * percentage);
+            if (position < endTime && currentIndex > 0) {
+                if (i === currentIndex) {
+                    break;
+                }
+                else {
+                    console.log(currentIndex, i);
+                    $.fn.fullpage.moveTo(0, i);
+                    break;
+                }
+            }
+
+        }
 
         if (position > slideSwitchTime && slideSwitchTime !== null) {
             $.fn.fullpage.moveSlideRight();
