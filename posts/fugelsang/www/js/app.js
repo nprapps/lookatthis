@@ -120,7 +120,7 @@ var setSlidesForLazyLoading = function(slideIndex) {
     mobileSuffix = '';
 
     if ($w < 769) {
-        mobileSuffix = '-sq';
+        // mobileSuffix = '-sq';
     }
 
     for (var i = 0; i < slides.length; i++) {
@@ -247,14 +247,6 @@ var onArrowsClick = function() {
     lastSlideExitEvent = 'arrow';
 }
 
-var onSlideClick = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'tap';
-        $.fn.fullpage.moveSlideRight();
-    }
-    return true;
-}
-
 var onNextPostClick = function(e) {
     e.preventDefault();
 
@@ -305,7 +297,6 @@ $(document).ready(function() {
     $pause = $('.pause');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
     $arrows.on('click', onArrowsClick);
     $arrows.on('touchstart', fakeMobileHover);
