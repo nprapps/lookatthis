@@ -24,6 +24,7 @@ var $player;
 var $playerButton;
 var $play;
 var $pause;
+var $playAgain;
 var slideEndTime = null;
 var $animatedElements = null;
 
@@ -299,6 +300,7 @@ $(document).ready(function() {
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
+    $playAgain = $('.play-again');
     $play = $('.play');
     $pause = $('.pause');
 
@@ -309,6 +311,7 @@ $(document).ready(function() {
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
     $playerButton.on('click', AUDIO.toggleAudio);
+    $playAgain.on('click', AUDIO.reset);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));

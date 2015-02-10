@@ -1,13 +1,54 @@
-{% extends '%s/templates/_slide.html' % slug %}
-{% block slide_content %}
-    <h5>Here's another good story from Look At This</h5>
-    <a href="{{ row.text3 }}" target="_blank" class="previously-on">
-        <h2>{{ row.text1|smarty }}</h2>
-        <h3>{{ row.text2|smarty }}</h3>
-        <h4>View</h4>
-    </a>
+<div class="slide" id="{{ row.id }}" style="{% if row.color %} background-color: {{ row.color }}; {% endif %}" data-slide-end-time="{{ row.slide_end_time }}" data-bgimage="{{ row.background_media }}">
+    <div class="container-fluid next-post">
+    <div class="row">
 
-    <script type="text/javascript">
-        window.NEXT_POST_URL = "{{ row.text3 }}";
-    </script>
-{% endblock %}
+    <div class="primary-column">
+        <div class="share-panel share-panel-section clearfix">
+            <button class="btn btn-lg btn-go play-again"><i class="fa fa-play"></i> Play again</button>
+
+            <h3>Share your thoughts</h3>
+
+            <p class="share-story"><a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a></p>
+
+                <p class="share-story"><a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a></p>
+
+
+                <p class="share-story">
+                    <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
+                </p>
+
+            <div class="email-friend">
+
+                </div><!-- / email-friend -->
+            </div><!-- / share-panel-section -->
+
+            <div class="project-credits">
+                <h6>Project Credits</h6>
+                {{ row.media_credit|smarty }}
+            </div>
+    </div>
+    <div class="secondary-column">
+        <div class="up-next">
+            <img src="{{ row.foreground_media }}">
+            <div class="up-next-caption-wrapper">
+                <div class="up-next-caption">
+                        <p><em>Up Next</em></p>
+                        <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
+                        <h3>{{ row.text2|smarty }}</h3>
+                </div>
+
+                <div class="next-button-wrapper">
+                    <div class="next-button">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div><!-- /next-button-wrapper -->
+        </div>
+    </div>
+    </div><!-- row -->
+    </div><!-- container -->
+</div><!-- slide -->
+
+<script type="text/javascript">
+    window.NEXT_POST_URL = "{{ row.text3 }}";
+</script>

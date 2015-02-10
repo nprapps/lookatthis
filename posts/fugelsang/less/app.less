@@ -1,7 +1,7 @@
 @import "./lib/bootstrap/bootstrap";
 @import "./lib/font-awesome/font-awesome";
 @import "./lib/prefixer";
-//@import "./share-modal.less";
+@import "./share-modal.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
 @import "./slides/next-post.less";
@@ -242,6 +242,34 @@ h2 {
              padding: 20px 100px 100px 100px;
         }
     }
+}
+
+
+.btn.btn-go {
+    border-radius: 0;
+    background-color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+     font-size: 14px;
+    padding: 0 15px;
+    line-height: 32px;
+
+    @media @screen-small-above {
+        padding: 0 22px;
+        font-size: 18px;
+        line-height: 44px;
+    }
+
+
+    &:hover {
+        .no-touch & {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
 }
 
 .player-wrapper {
