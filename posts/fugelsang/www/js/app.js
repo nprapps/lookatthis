@@ -332,7 +332,7 @@ $(document).ready(function() {
     });
 
     $player.jPlayer('setMedia', {
-        mp3: 'http://assets.apps.npr.org/lookatthis/fugelsang/fugel-narr3.mp3'
+        mp3: 'http://assets.apps.npr.org/lookatthis/fugelsang/fugel-final.mp3'
     });
 
     // Redraw slides if the window resizes
