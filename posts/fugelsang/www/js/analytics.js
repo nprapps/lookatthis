@@ -235,10 +235,6 @@ var ANALYTICS = (function () {
         trackEvent('slide-exit', slide_index, timeOnLastSlide, last_slide_exit_event);
     }
 
-    var firstRightArrowClick = function(test) {
-        trackEvent('first-right-arrow-clicked', test, timeOnLastSlide);
-    }
-
     return {
         'setupAll': setupAll,
         'trackEvent': trackEvent,
@@ -257,7 +253,6 @@ var ANALYTICS = (function () {
         'completeSeventyFivePercent': completeSeventyFivePercent,
         'completeOneHundredPercent': completeOneHundredPercent,
         'exitSlide': exitSlide,
-        'firstRightArrowClick': firstRightArrowClick
     };
 }());
 
