@@ -99,7 +99,7 @@
 
                     &:hover,
                     &:focus {
-                        background-color: @look-pink;
+                        background-color: @pink;
                         color: #fff;
                     }
 
@@ -281,6 +281,15 @@
         margin-bottom: 20px;
         background-color: #000;
         color: #fff;
+
+        &:hover,
+        &:focus {
+            .no-touch & {
+                background-color: @pink;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
     }
 
     .project-credits {
