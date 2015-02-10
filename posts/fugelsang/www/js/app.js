@@ -24,7 +24,7 @@ var $player;
 var $playerButton;
 var $play;
 var $pause;
-var slideSwitchTime = null;
+var slideEndTime = null;
 var $animatedElements = null;
 
 var resize = function() {
@@ -78,6 +78,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     var $thisSlide = $('#slide-' + slideAnchor);
     $animatedElements = $thisSlide.find('.animated');
+    slideEndTime = $thisSlide.data('slide-end-time');
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);

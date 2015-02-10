@@ -24,17 +24,12 @@ var AUDIO = (function() {
                     break;
                 }
             }
-
-        }
-
-        if (position > slideSwitchTime && slideSwitchTime !== null) {
-            $.fn.fullpage.moveSlideRight();
         }
 
         if ($animatedElements) {
             for (var i = 0; i < $animatedElements.length; i++) {
-                var entranceTime = $animatedElements.eq(i).data('entrance');
-                var exitTime = $animatedElements.eq(i).data('exit');
+                var entranceTime = $animatedElements.eq(i).data('entrance') || null;
+                var exitTime = $animatedElements.eq(i).data('exit') || slideEndTime - 1;
 
                 if (position > entranceTime) {
                     $animatedElements.eq(i).css('opacity', 1);
