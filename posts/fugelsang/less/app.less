@@ -558,7 +558,7 @@ h2 {
     position: fixed;
     bottom: 0;
     height: 5rem;
-    background: #333;
+    background: rgba(0,0,0,0.8);
     line-height: 5rem;
 
     .controls {
@@ -570,6 +570,7 @@ h2 {
     }
 
     .player-progress {
+        cursor: pointer;
         position: absolute;
         left: 5rem;
         top: 0;
@@ -590,7 +591,7 @@ h2 {
         }
     }
     .playback-info {
-        right: 5.5rem;
+        right: 1rem;
         text-align: right;
         line-height: 1;
         .vertical-center;
@@ -604,17 +605,17 @@ h2 {
 .player-button:hover {
     display: block;
     .square(5rem);
-    background: @look-pink;
+    background: @pink;
     color: #fff;
     line-height: 5rem;
     text-align: center;
-    font-size: @font-size-base * 3;
+    font-size: @font-size-base * 2;
 
 
     .no-touch & {
         &:hover {
             color: #fff;
-            background: lighten(@look-pink, 10%);
+            background: lighten(@pink, 10%);
             text-decoration: none;
         }
     }
@@ -622,7 +623,7 @@ h2 {
     .touch & {
         &:active {
             color: #fff;
-            background: lighten(@look-pink, 10%);
+            background: lighten(@pink, 10%);
             text-decoration: none;
         }
     }
