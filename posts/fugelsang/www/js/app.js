@@ -246,20 +246,6 @@ var onArrowsClick = function() {
     lastSlideExitEvent = 'arrow';
 }
 
-var onDocumentKeyDown = function(e) {
-    if (e.which === 37 || e.which === 39) {
-        lastSlideExitEvent = 'keyboard';
-        ANALYTICS.useKeyboardNavigation();
-        if (e.which === 37) {
-            $.fn.fullpage.moveSlideLeft();
-        } else if (e.which === 39) {
-            $.fn.fullpage.moveSlideRight();
-        }
-    }
-    // jquery.fullpage handles actual scrolling
-    return true;
-}
-
 var onSlideClick = function(e) {
     if (isTouch) {
         lastSlideExitEvent = 'tap';
