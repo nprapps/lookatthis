@@ -16,7 +16,6 @@ var w;
 var h;
 var currentIndex;
 var completion = 0;
-var arrowTest;
 var lastSlideExitEvent;
 var hammer;
 var $playerWrapper;
@@ -52,7 +51,7 @@ var setUpFullPage = function() {
         autoScrolling: false,
         verticalCentered: false,
         keyboardScrolling: false,
-        fixedElements: '.primary-navigation, .player, #photo-detail, .photo-modal-trigger',
+        fixedElements: '.player',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -66,14 +65,12 @@ var setUpFullPage = function() {
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
     $('body').css('opacity', 1);
-    showNavigation();
 };
 
 // after a new slide loads
 
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
-    showNavigation();
     slideStartTime = moment();
     currentIndex = slideIndex;
 
@@ -152,84 +149,11 @@ var loadImages = function($slide) {
     }
 };
 
-var showNavigation = function() {
-    /*
-    * Nav doesn't exist by default.
-    * This function loads it up.
-    */
-
-    if ($slides.first().hasClass('active')) {
-        /*
-        * Don't show arrows on titlecard
-        */
-        $arrows.hide();
-    }
-
-    else if ($slides.last().hasClass('active')) {
-        /*
-        * Last card gets no next arrow but does have the nav.
-        */
-        if (!$arrows.hasClass('active')) {
-            showArrows();
-        }
-
-        $nextArrow.removeClass('active');
-        $nextArrow.hide();
-    } else if ($slides.eq(1).hasClass('active')) {
-        showArrows();
-
-        switch (arrowTest) {
-            case 'bright-arrow':
-                $nextArrow.addClass('titlecard-nav');
-                break;
-            case 'bouncy-arrow':
-                $nextArrow.addClass('shake animated titlecard-nav');
-                break;
-            default:
-                break;
-        }
-
-        $nextArrow.on('click', onFirstRightArrowClick);
-    } else {
-        /*
-        * All of the other cards? Arrows and navs.
-        */
-        if ($arrows.filter('active').length != $arrows.length) {
-            showArrows();
-        }
-        $nextArrow.removeClass('shake animated titlecard-nav');
-
-        $nextArrow.off('click', onFirstRightArrowClick);
-    }
-}
-
-var showArrows = function() {
-    /*
-    * Show the arrows.
-    */
-    $arrows.addClass('active');
-    $arrows.show();
-};
-
-var determineArrowTest = function() {
-    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
-    var test = possibleTests[getRandomInt(0, possibleTests.length)]
-    return test;
-}
-
-var getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
     ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
-}
-
-var onFirstRightArrowClick = function() {
-    ANALYTICS.firstRightArrowClick(arrowTest);
 }
 
 var onStartCardButtonClick = function() {
@@ -241,10 +165,6 @@ var onStartCardButtonClick = function() {
         $('#slide-intro').css('opacity', 1);
         $playerWrapper.css('opacity', 1);
     });
-}
-
-var onArrowsClick = function() {
-    lastSlideExitEvent = 'arrow';
 }
 
 var onNextPostClick = function(e) {
@@ -284,10 +204,7 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
-    $arrows = $('.controlArrow');
-    $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
@@ -298,9 +215,6 @@ $(document).ready(function() {
 
     $startCardButton.on('click', onStartCardButtonClick);
     $upNext.on('click', onNextPostClick);
-    $arrows.on('click', onArrowsClick);
-    $arrows.on('touchstart', fakeMobileHover);
-    $arrows.on('touchend', rmFakeMobileHover);
     $playerButton.on('click', AUDIO.toggleAudio);
     $playAgain.on('click', AUDIO.reset);
 
