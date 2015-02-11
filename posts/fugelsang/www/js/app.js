@@ -212,14 +212,47 @@ var onLikeStoryButtonsClick = function(e) {
     $likeStory.hide();
 
     if ($(this).hasClass('yes')) {
+        ANALYTICS.trackEvent('like-story', 'yes');
+
         if (callToActionTest === 'follow-us') {
             $follow.show();
         } else {
             $support.show();
         }
     } else {
+        ANALYTICS.trackEvent('like-story', 'no');
         $didNotLike.show();
     }
+}
+
+var onFollowBtnsClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    if ($this.hasClass('tu')) {
+        ANALYTICS.trackEvent('follow-btn-click', 'tumblr', null, likeStoryTest);
+    } else if ($this.hasClass('fb')) {
+        ANALYTICS.trackEvent('follow-btn-click', 'facebook', null, likeStoryTest);
+    } else {
+        ANALYTICS.trackEvent('follow-btn-click', 'twitter', null, likeStoryTest);
+    }
+
+    window.top.location = link
+    return true;
+}
+
+var onSupportBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('support-btn-click', likeStoryTest);
+
+    window.top.location = link
+    return true;
 }
 
 $(document).ready(function() {
@@ -238,7 +271,9 @@ $(document).ready(function() {
     $likeStory = $('.like-story');
     $likeStoryButtons = $('.btn-like-story');
     $follow = $('.follow');
+    $followBtns = $('.btn-follow');
     $support = $('.support');
+    $supportBtn = $('.btn-support');
     $didNotLike = $('.did-not-like');
 
     $startCardButton.on('click', onStartCardButtonClick);
@@ -246,6 +281,8 @@ $(document).ready(function() {
     $playerButton.on('click', AUDIO.toggleAudio);
     $playAgain.on('click', AUDIO.reset);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $followBtns.on('click', onFollowBtnsClick);
+    $supportBtn.on('click', onSupportBtnClick);
 
     setUpFullPage();
     resize();
