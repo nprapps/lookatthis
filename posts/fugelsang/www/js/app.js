@@ -162,7 +162,7 @@ var loadImages = function($slide) {
     if ($images.length > 0) {
         for (var i = 0; i < $images.length; i++) {
             var image = $images.eq(i).data('src');
-            $images.eq(i).attr('src', 'assets/' + image);
+            $images.eq(i).attr('src', image);
         }
     }
 };
