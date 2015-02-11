@@ -1,12 +1,12 @@
-@import "./lib/font-awesome/font-awesome";
-
 .next-post-wrapper {
     display: table;
     margin: 0 auto;
 
     .primary-column {
+        .follow, .support, .like-story, .did-not-like {
+            display: none;
+        }
         padding: 20px;
-        //background: @side-by-side-screen;
         max-width: 450px;
 
         @media @screen-small-above {
@@ -42,48 +42,8 @@
             }
         }
 
-        .facebook-share {
-            .facebook-post  {
-                margin-top: 10px;
-
-                @media @screen-small-above {
-                    margin-top: 20px;
-                }
-            }
-        }
-
         .share-panel {
-
-            h4, h5, p {
-                font-family: "Gotham", helvetica, arial, sans-serif;
-                text-shadow: none;
-                text-align: left;
-                max-width: 100%;
-            }
-
-            h4 {
-                font-size: 12px;
-                padding-bottom: 0;
-                @media @screen-small-above {
-                    font-size: 18px;
-                }
-            }
-
-            p {
-                color: #333;
-            }
-
-            a {
-                color: #444;
-                &:hover,
-                &:focus {
-                    color: #333;
-                }
-            }
-
-            .email-friend, .share-section {
-                border: none;
-            }
+            b { padding: 0 5px; }
 
             .share-story {
                 margin: 10px 10px 10px 0;
@@ -108,21 +68,8 @@
                         padding: 5px 10px;
                     }
                 }
-                b {padding: 0 5px;}
 
                 float: left;
-            }
-
-            .story-summary {
-                clear: both;
-                .clippy {
-                    background-color: #7a96cc;
-                    color: #fff;
-                    &:hover,
-                    &:focus {
-                        color: #fff;
-                    }
-                }
             }
         }
     }
@@ -226,7 +173,7 @@
             padding: 0 10px;
 
             @media @screen-small-above {
-                top: 38%;
+                top: 33%;
             }
 
         }

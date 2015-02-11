@@ -26,6 +26,13 @@ var $pause;
 var $playAgain;
 var slideEndTime = null;
 var $animatedElements = null;
+var likeStoryTest;
+var callToActionTest;
+var $likeStory;
+var $likeStoryButtons;
+var $follow;
+var $support;
+var $didNotLike;
 
 var resize = function() {
 
@@ -174,29 +181,45 @@ var onNextPostClick = function(e) {
     window.top.location = NEXT_POST_URL;
     return true;
 }
-var fakeMobileHover = function() {
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
+
+var determineTests = function() {
+    var possibleLikeStoryTests = ['like-story', 'no-like-story'];
+    var possibleCallToActionTests = ['follow-us', 'support-npr'];
+
+    likeStoryTest = possibleLikeStoryTests[getRandomInt(0, possibleLikeStoryTests.length)];
+    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
+
+    console.log(likeStoryTest, callToActionTest);
+
+    if (likeStoryTest === 'like-story') {
+        $likeStory.show();
+    } else {
+        if (callToActionTest === 'follow-us') {
+            $follow.show();
+        } else {
+            $support.show();
+        }
+    }
 }
 
-var rmFakeMobileHover = function() {
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
-/*
- * Text copied to clipboard.
- */
-var onClippyCopy = function(e) {
-    alert('Copied to your clipboard!');
+var onLikeStoryButtonsClick = function(e) {
+    e.preventDefault();
 
-    _gaq.push(['_trackEvent', EVENT_CATEGORY, 'summary-copied']);
+    $likeStory.hide();
+
+    if ($(this).hasClass('yes')) {
+        if (callToActionTest === 'follow-us') {
+            $follow.show();
+        } else {
+            $support.show();
+        }
+    } else {
+        $didNotLike.show();
+    }
 }
 
 $(document).ready(function() {
@@ -212,20 +235,21 @@ $(document).ready(function() {
     $playAgain = $('.play-again');
     $play = $('.play');
     $pause = $('.pause');
+    $likeStory = $('.like-story');
+    $likeStoryButtons = $('.btn-like-story');
+    $follow = $('.follow');
+    $support = $('.support');
+    $didNotLike = $('.did-not-like');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $upNext.on('click', onNextPostClick);
     $playerButton.on('click', AUDIO.toggleAudio);
     $playAgain.on('click', AUDIO.reset);
-
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
 
     setUpFullPage();
     resize();
+    determineTests();
 
     $player.jPlayer({
         swfPath: 'js/lib',

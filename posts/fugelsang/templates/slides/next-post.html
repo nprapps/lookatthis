@@ -4,26 +4,44 @@
 <div class="next-post-wrapper">
     <div class="primary-column">
         <div class="share-panel share-panel-section clearfix">
-            <button class="btn btn-lg btn-go play-again"><i class="fa fa-play"></i> Play again</button>
+            <div class="follow">
+                <h3>Follow Look At This for more stories</h3>
 
-            <h3>Share your thoughts</h3>
+                <p class="share-story">
+                    <a href="http://lookatthis.tumblr.com"><i class="fa fa-tumblr share-icon"></i> <b>Tumblr</b></a>
+                </p>
 
-            <p class="share-story">
-                <a href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'email', 'share-discuss']);"><i class="fa fa-envelope share-icon"></i> <b>Email</b></a>
-            </p>
-
-            <p class="share-story">
-                <a href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'facebook', 'share-discuss']);"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a>
-            </p>
+                <p class="share-story">
+                    <a href="https://www.facebook.com/nprradiopictures"><i class="fa fa-facebook share-icon"></i> <b> Facebook</b></a>
+                </p>
 
 
-            <p class="share-story">
-                <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', 'lookatthis:{{ SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
-            </p>
+                <p class="share-story">
+                    <a href="https://twitter.com/lookatthisstory"><i class="fa fa-twitter share-icon"></i> <b> Twitter </b></a>
+                </p>
+            </div>
+            <div class="support">
+                <h3>Help Us Tell More Stories</h3>
+                <p class="share-story">
+                    <a href="http://npr.org/stations/donate"><i class="fa fa-heart"></i> <b> Support This Work </b></a>
+                </p>
+            </div>
 
-        <div class="email-friend">
+            <div class="like-story">
+                <h3>Did you like this story?</h3>
 
-            </div><!-- / email-friend -->
+                <button class="btn btn-go btn-lg btn-like-story yes">Yes</button>
+                <button class="btn btn-go btn-lg btn-like-story no">No</button>
+            </div>
+
+            <div class="did-not-like">
+                <h3>Let us know why!</h3>
+
+                <p class="share-story">
+                    <a href="mailto:nprlook@gmail.com?subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> Send an email </b></a>
+                </p>
+            </div>
+
         </div><!-- / share-panel-section -->
 
         <div class="project-credits">
