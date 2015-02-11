@@ -60,16 +60,23 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 }
 
 p {
-    font-size: 28px;
+    font-size: 24px;
     text-align: center;
-    line-height: 35px;
+    line-height: 1.35em;
+
+    @media @screen-small-above {
+        font-size: 28px;
+    }
 }
 
 h2 {
-    font-size: 60px;
+    font-size: 32px;
     text-align: center;
 
+    @media @screen-small-above {
+        font-size: 60px;
     }
+}
 
 .primary-navigation {
     .controlArrow {
