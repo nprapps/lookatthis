@@ -26,6 +26,12 @@ var AUDIO = (function() {
             }
         }
 
+        if (currentIndex === $slides.length - 1) {
+            $play.hide();
+            $pause.hide();
+            $replay.show();
+        }
+
         if ($animatedElements) {
             for (var i = 0; i < $animatedElements.length; i++) {
                 var entranceTime = $animatedElements.eq(i).data('entrance') || null;
@@ -72,6 +78,10 @@ var AUDIO = (function() {
         $player.jPlayer('pause');
         $player.jPlayer('playHead', 0);
         $player.jPlayer('play');
+
+        $play.hide();
+        $replay.hide();
+        $pause.show();
     }
 
     return {

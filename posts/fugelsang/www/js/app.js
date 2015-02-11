@@ -23,7 +23,7 @@ var $player;
 var $playerButton;
 var $play;
 var $pause;
-var $playAgain;
+var $replay;
 var slideEndTime = null;
 var $animatedElements = null;
 var likeStoryTest;
@@ -80,6 +80,17 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
     slideStartTime = moment();
     currentIndex = slideIndex;
+
+    if (currentIndex !== $slides.length - 1) {
+        $replay.hide();
+        if ($player.data().jPlayer.status.paused) {
+            $play.show();
+            $pause.hide();
+        } else {
+            $pause.show();
+            $play.hide();
+        }
+    }
 
     var $thisSlide = $('#slide-' + slideAnchor);
     $animatedElements = $thisSlide.find('.animated');
@@ -265,7 +276,7 @@ $(document).ready(function() {
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
-    $playAgain = $('.play-again');
+    $replay = $('.replay');
     $play = $('.play');
     $pause = $('.pause');
     $likeStory = $('.like-story');
@@ -279,7 +290,7 @@ $(document).ready(function() {
     $startCardButton.on('click', onStartCardButtonClick);
     $upNext.on('click', onNextPostClick);
     $playerButton.on('click', AUDIO.toggleAudio);
-    $playAgain.on('click', AUDIO.reset);
+    $replay.on('click', AUDIO.reset);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $followBtns.on('click', onFollowBtnsClick);
     $supportBtn.on('click', onSupportBtnClick);
