@@ -5,7 +5,7 @@
     <div class="primary-column">
         <div class="share-panel share-panel-section clearfix">
             <div class="follow">
-                <h3>Follow Look At This for more stories</h3>
+                <h3>{{ COPY.sharing.follow_prompt }}</h3>
 
                 <p class="button-wrapper">
                     <a class="btn-follow tu" href="http://lookatthis.tumblr.com"><i class="fa fa-tumblr"></i> <b> Tumblr </b></a>
@@ -21,21 +21,21 @@
                 </p>
             </div>
             <div class="support">
-                <h3>Help Us Tell More Stories</h3>
+                <h3>{{ COPY.sharing.support_prompt }}</h3>
                 <p class="button-wrapper">
-                    <a class="btn-support" href="http://npr.org/stations/donate"><i class="fa fa-heart"></i> <b> Support This Work </b></a>
+                    <a class="btn-support" href="http://npr.org/stations/donate"><i class="fa fa-heart"></i> <b> {{ COPY.sharing.support_call }} </b></a>
                 </p>
             </div>
 
             <div class="like-story">
-                <h3>Did you like this story?</h3>
+                <h3>{{ COPY.sharing.like_prompt }}</h3>
 
                 <button class="btn btn-go btn-lg btn-like-story yes">Yes</button>
                 <button class="btn btn-go btn-lg btn-like-story no">No</button>
             </div>
 
             <div class="did-not-like">
-                <h3>Let us know why!</h3>
+                <h3>{{ COPY.sharing.did_not_like_prompt }}</h3>
 
                 <p class="button-wrapper">
                     <a href="mailto:nprlook@gmail.com?subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> Send an email </b></a>
