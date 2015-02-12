@@ -116,6 +116,11 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
             ANALYTICS.completeOneHundredPercent();
         }
     }
+
+    // fire event on last slide
+    if (slideIndex === $slides.length - 1) {
+        ANALYTICS.trackEvent('tests-run', likeStoryTest, null, callToActionTest);
+    }
 };
 
 var setSlidesForLazyLoading = function(slideIndex) {
@@ -224,7 +229,7 @@ var onLikeStoryButtonsClick = function(e) {
     $likeStory.hide();
 
     if ($(this).hasClass('yes')) {
-        ANALYTICS.trackEvent('like-story', 'yes');
+        ANALYTICS.trackEvent('like-story', 'yes', null, callToActionTest);
 
         if (callToActionTest === 'follow-us') {
             $follow.show();
@@ -232,7 +237,7 @@ var onLikeStoryButtonsClick = function(e) {
             $support.show();
         }
     } else {
-        ANALYTICS.trackEvent('like-story', 'no');
+        ANALYTICS.trackEvent('like-story', 'no', null, callToActionTest);
         $didNotLike.show();
     }
 }
