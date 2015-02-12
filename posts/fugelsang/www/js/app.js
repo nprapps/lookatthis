@@ -323,7 +323,7 @@ $(document).ready(function() {
         smoothPlayBar: true
     });
 
-    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/fugelsang/assets/fugel-final.mp3' : 'http://assets.apps.npr.org/lookatthis/fugelsang/fugel-final.mp3';
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/lovestory/assets/fugel-final.mp3' : 'http://assets.apps.npr.org/lookatthis/fugelsang/fugel-final.mp3';
 
     $player.jPlayer('setMedia', {
         mp3: mp3FilePath
