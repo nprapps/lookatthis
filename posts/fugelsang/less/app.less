@@ -41,8 +41,6 @@ body {
     font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #111;
-    opacity: 0;
-    .transition(opacity 3s ease);
 }
 
 .vertical-center {
@@ -179,6 +177,10 @@ h2 {
     -ms-touch-action: none;
 }
 .section {
+    visibility: hidden;
+    opacity: 0;
+    .transition(opacity 3s ease);
+
     position: relative;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

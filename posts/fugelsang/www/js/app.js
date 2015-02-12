@@ -72,7 +72,10 @@ var setUpFullPage = function() {
 
 var onPageLoad = function() {
     setSlidesForLazyLoading(0)
-    $('body').css('opacity', 1);
+    $('.section').css({
+      'opacity': 1,
+      'visibility': 'visible',
+    });
 };
 
 // after a new slide loads
