@@ -21,7 +21,6 @@
 
         h3 {
             font-size: 16px;
-            margin: 0 auto 10px;
             text-transform: uppercase;
             font-weight: bold;
             @media @screen-small-above {
@@ -43,33 +42,58 @@
         }
 
         .share-panel {
-            b { padding: 0 5px; }
+            b {
+                padding: 0 5px;
+                &:hover,
+                &:focus {
+                    text-decoration: underline;
+                }
+            }
 
             .button-wrapper {
-                margin: 10px 10px 10px 0;
                 a {
-                    font-size: 9px;
+                    font-size: 12px;
                     display: inline-block;
-                    text-transform: uppercase;
                     font-weight: bold;
                     text-decoration: none;
                     padding: 5px;
-                    background-color: #000;
-                    color: #fff;
+                    background-color: white;
+                    color: black;
 
                     &:hover,
                     &:focus {
                         background-color: @pink;
                         color: #fff;
+                        text-decoration: none;
                     }
 
                     @media @screen-small-above {
-                        font-size: 12px;
+                        font-size: 16px;
                         padding: 5px 10px;
                     }
                 }
 
                 float: left;
+            }
+
+            .share-link {
+                font-size: 14px;
+                text-align: left;
+                i {
+                    font-size: 20px;
+                    min-width: 18px;
+
+                    &:hover,
+                    &:focus {
+                        text-decoration: none;
+                    }
+                }
+                a {
+                    &:hover,
+                    &:focus {
+                        text-decoration: none;
+                    }
+                }
             }
         }
     }
@@ -226,8 +250,9 @@
 
     .btn.btn-go {
         margin-bottom: 20px;
-        background-color: #000;
-        color: #fff;
+        background-color: white;
+        color: black;
+        text-transform: none;
 
         &:hover,
         &:focus {
@@ -241,8 +266,6 @@
 
     .project-credits {
         margin: 0 auto 20px auto;
-
-        border-top: 1px solid #fff;
         font-family: gotham, helvetica, sans-serif;
 
         h6 {
@@ -259,7 +282,7 @@
             color: #ccc;
             text-shadow: none;
             text-align: left;
-            line-height: 1.4;
+            line-height: 1.2;
             @media @screen-small-above {
                 font-size: 13px;
             }
