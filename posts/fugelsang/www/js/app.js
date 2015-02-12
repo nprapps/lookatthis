@@ -271,7 +271,7 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    $startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-startcard');
     $upNext = $('.up-next');
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
