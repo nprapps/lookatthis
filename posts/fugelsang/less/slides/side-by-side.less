@@ -83,6 +83,7 @@
                     p {
                         text-shadow: none;
                         font-size: @small-type;
+                        text-align: left;
                         line-height: 1.5;
                         padding-bottom: 5px;
 
@@ -104,6 +105,28 @@
 
 
                     }
+
+                        .tweet {
+                            text-indent: -10px;
+                        }
+
+                        .lil {
+                            font-size: 13px;
+
+                            @media @screen-small-above {
+                              font-size: 17px;
+                            }
+
+                            @media @screen-medium-above {
+                                //margin-right: 34px;
+                            }
+
+                            @media @screen-mega-above {
+                                font-size: 17px;    
+                            }
+                        }
+
+
 
                     img {
                         display: block;
