@@ -86,7 +86,6 @@ var AUDIO = (function() {
     var reset = function(e) {
         e.preventDefault();
         $.fn.fullpage.moveTo(0, 1);
-        $player.jPlayer('pause');
         $player.jPlayer('playHead', 0);
         $player.jPlayer('play');
 
