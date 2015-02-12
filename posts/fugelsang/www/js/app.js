@@ -33,6 +33,7 @@ var $likeStoryButtons;
 var $follow;
 var $support;
 var $didNotLike;
+var $email;
 
 var resize = function() {
 
@@ -266,6 +267,10 @@ var onSupportBtnClick = function(e) {
     return true;
 }
 
+var onEmailClick = function() {
+    ANALYTICS.trackEvent('email-btn-click');
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
@@ -286,6 +291,7 @@ $(document).ready(function() {
     $support = $('.support');
     $supportBtn = $('.btn-support');
     $didNotLike = $('.did-not-like');
+    $email = $('.email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $upNext.on('click', onNextPostClick);
@@ -294,6 +300,7 @@ $(document).ready(function() {
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $followBtns.on('click', onFollowBtnsClick);
     $supportBtn.on('click', onSupportBtnClick);
+    $email.on('click', onEmailClick);
 
     setUpFullPage();
     resize();
