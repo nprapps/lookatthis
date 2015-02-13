@@ -180,7 +180,6 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-    // ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
 }
 
 var onStartCardButtonClick = function() {
