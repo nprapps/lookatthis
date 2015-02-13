@@ -208,7 +208,6 @@ var determineTests = function() {
     likeStoryTest = possibleLikeStoryTests[getRandomInt(0, possibleLikeStoryTests.length)];
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
 
-    console.log(likeStoryTest, callToActionTest);
 
     if (likeStoryTest === 'like-story') {
         $likeStory.show();
