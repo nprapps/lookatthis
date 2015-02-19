@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+       _       ___     ___    _  __             ___    _____            _____   _  _     ___     ___
+      | |     / _ \   / _ \  | |/ /     o O O  /   \  |_   _|    o O O |_   _| | || |   |_ _|   / __|
+      | |__  | (_) | | (_) | | ' <     o       | - |    | |     o        | |   | __ |    | |    \__ \
+      |____|  \___/   \___/  |_|\_\   TS__[O]  |_|_|   _|_|_   TS__[O]  _|_|_  |_||_|   |___|   |___/
+    _|"""""|_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""|
+    "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'
+ -->
+<head>
+    <title>{{ COPY.post_metadata.title }}</title>
+
+    <!-- META TAGS -->
+    {% include '%s/templates/_meta.html' % slug %}
+
+    <!-- FONTS -->
+    {% include '%s/templates/_fonts.html' % slug %}
+
+    <!-- CSS -->
+    {{ CSS.push('less/app.less') }}
+    {% block extra_css %}{% endblock extra_css %}
+    {{ CSS.render('css/app.min.css') }}
+
+    {% include '%s/templates/_social_tags.html' % slug %}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+<body>
+    <a class="sr-only" href="#content">Skip To Content</a>
+
+    {% block outer_content %}
+
+    {% block header_content %}
+    {% endblock header_content %}
+
+    {% block content %}
+    {% endblock content %}
+    {% block wide_content %}
+    {% endblock wide_content %}
+
+    {% endblock outer_content %}
+
+    {{ JS.push('js/lib/modernizr.js') }}
+    {{ JS.push('js/lib/jquery.js') }}
+    {{ JS.push('js/lib/jquery.fullpage.js') }}
+    {{ JS.push('js/lib/jquery.jplayer.min.js') }}
+    {{ JS.push('js/lib/underscore.js') }}
+    {{ JS.push('js/lib/ZeroClipboard.js') }}
+    {{ JS.push('js/lib/bootstrap.js') }}
+    {{ JS.push('js/lib/moment.js') }}
+    {{ JS.push('js/lib/humanize.js') }}
+    {{ JS.push('js/app_config.js') }}
+    {{ JS.push('js/copy.js') }}
+    {{ JS.push('js/console.js') }}
+    {{ JS.push('js/audio.js') }}
+    {{ JS.push('js/app.js') }}
+    {% block extra_foot_js %}{% endblock extra_foot_js %}
+    {{ JS.push('js/analytics.js') }}
+    {{ JS.render('js/app-footer.min.js') }}
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    {% block extra_foot %}
+    {% endblock extra_foot %}
+</body>
+</html>

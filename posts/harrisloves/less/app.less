@@ -1,0 +1,407 @@
+@import "./lib/bootstrap/bootstrap";
+@import "./lib/font-awesome/font-awesome";
+@import "./lib/prefixer";
+@import "./share-modal.less";
+@import "./slides/start.less";
+@import "./slides/titlecard.less";
+@import "./slides/next-post.less";
+@import "./slides/foreground-image.less";
+@import "./slides/full-bleed.less";
+@import "./slides/side-by-side.less";
+@import "./slides/framed-text.less";
+@import "./nudges.less";
+
+
+@darker-overlay: rgba(0,0,0,0.7);
+@black-screen: rgba(0,0,0,0.8);
+@look-pink: #F60062;
+@side-by-side-screen: rgba(0, 0, 0, 0.6);
+@caption-screen-dark: rgba(55, 55, 55, 0.7);
+@pink: rgba(200, 66, 119, 1);
+@caption-screen-light: rgba(153, 9, 71, 0.7);
+@small-type: 16px;
+
+// Global variables
+@img-root: "../assets";
+
+// Breakpoints
+@screen-mega-above: ~"screen and (min-width: 1440px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
+body {
+    color: #fff;
+    font-family: "Gotham SSm", helvetica, arial, sans-serif;
+    font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #111;
+}
+
+.vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+
+
+//typography
+
+h1,h2,h3,h4,h5,h6,p,ul,ol,li {
+    font-family: "Gotham", helvetica, arial, sans-serif;
+}
+
+p {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.35em;
+
+    @media @screen-small-above {
+        font-size: 28px;
+    }
+}
+
+h2 {
+    font-size: 32px;
+    text-align: center;
+
+    @media @screen-small-above {
+        font-size: 60px;
+    }
+}
+
+.primary-navigation {
+    .controlArrow {
+        position: fixed;
+        top: 40%;
+        width: 50px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 47px;
+        background: rgba(0, 0, 0, 0.2);
+        color: #fff;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: none;
+        cursor: pointer;
+        opacity: .3;
+
+        .titlecard-nav & {
+            visibility: hidden;
+        }
+
+        @media @screen-small-above {
+            top: 40%;
+
+            height: 100px;
+            font-size: 30px;
+            border: 3px solid #fff;
+
+            &:hover {
+                background-color: #fff;
+                color: #000;
+                opacity: .9;
+            }
+        }
+
+        @media @screen-small {
+            &:active {
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    .controlArrow.prev {
+        left: 0;
+
+        &:before {
+            font-family: "FontAwesome";
+            content: '\f104';
+            display: block;
+        }
+
+        @media @screen-small-above {
+            left: 10px;
+            padding-top: 25px;
+        }
+    }
+    .controlArrow.next {
+        right: 0;
+        padding: 0 0 0 5px;
+        z-index: -1;
+
+        &.please-proceed {
+            z-index: 1;
+        }
+
+        &:before {
+            font-family: "FontAwesome";
+            content: "\f105";
+            display: block;
+
+        }
+
+        @media @screen-small-above {
+            right: 10px;
+            padding-top: 25px;
+        }
+
+    }
+
+}
+
+.titlecard-nav .primary-navigation .controlArrow {
+    opacity: .7;
+    @media @screen-small-above {
+        opacity: 1;
+    }
+}
+
+// default slide styles
+#superContainer {
+    height: 100%;
+    position: relative;
+    /* Touch detection for Windows 8 */
+    -ms-touch-action: none;
+}
+.section {
+    visibility: hidden;
+    opacity: 0;
+    .transition(opacity 3s ease);
+
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+
+    .slides {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+
+        //transition between slides
+        .instant {
+            .transition(all 0 ease-in);
+        }
+
+        .slidesContainer {
+            float: left;
+            position: relative;
+            height: 100%;
+            display: block;
+
+            .slide {
+                float: left;
+                height: 100%;
+                display: block;
+                overflow: auto;
+                z-index: 0;
+            }
+
+        }
+    }
+}
+
+//full-bleed background images on sections and slides
+.section, .slide {
+    .background-size(cover);
+    background-position: top left;
+    position: relative;
+}
+
+// full width container within a section or slide
+.full-block {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+
+
+    .full-block-cell {
+        display: table-cell;
+        vertical-align: middle;
+        //padding-top: 20px;
+        @media @screen-small-above {
+            padding-top: 0;
+            vertical-align: middle;
+        }
+        width: 100%;
+    }
+
+
+    .full-block-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 40px 100px 40px;
+        @media @screen-small-above {
+             padding: 20px 100px 100px 100px;
+        }
+        z-index: 2;
+    }
+}
+
+
+.btn.btn-go {
+    border-radius: 0;
+    background-color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+     font-size: 14px;
+    padding: 0 15px;
+    line-height: 32px;
+
+    @media @screen-small-above {
+        padding: 0 22px;
+        font-size: 18px;
+        line-height: 44px;
+    }
+
+
+    &:hover {
+        .no-touch & {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+}
+
+//audio
+.player-wrapper {
+    position: fixed;
+    bottom: 0;
+    height: 5rem;
+    background: rgba(0,0,0,0.5);
+    line-height: 5rem;
+    width: 100%;
+    opacity: 0;
+    .transition(opacity 1s ease-in);
+
+    .controls {
+        vertical-align: middle;
+        margin-right: @grid-gutter-width / 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .player-progress {
+        cursor: pointer;
+        position: absolute;
+        left: 5rem;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        .jp-seek-bar {
+            height: 100%;
+        }
+
+        .bar {
+            position: absolute;
+            height: 5rem;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #444;
+        }
+    }
+    .playback-info {
+        right: 1rem;
+        text-align: right;
+        line-height: 1;
+        .vertical-center;
+        position: absolute;
+    }
+}
+
+.player-button,
+.player-button:focus,
+.player-button:visited,
+.player-button:hover {
+    display: block;
+    .square(5rem);
+    background: @look-pink;
+    color: #fff;
+    line-height: 5rem;
+    text-align: center;
+    font-size: @font-size-base * 2;
+
+
+    .no-touch & {
+        &:hover {
+            color: #fff;
+            background: lighten(@look-pink, 10%);
+            text-decoration: none;
+        }
+    }
+
+    .touch & {
+        &:active {
+            color: #fff;
+            background: lighten(@look-pink, 10%);
+            text-decoration: none;
+        }
+    }
+}
+
+.animated {
+    opacity: 0;
+    .transition(opacity 0.5s ease-in);
+}
+
+.foreground-image-container {
+    max-width: 570px;
+    margin: 0 auto;
+
+    .foreground-image {
+        width: 100%;
+    }
+}
+
+.bordered {
+    img {
+        border: 10px solid #ffeee2;
+    }
+}
+
+#slide-intro {
+    opacity: 0;
+    .transition(opacity 2s linear);
+}
+
+.dark-overlay .full-block {
+    &:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        height: 100%;
+        z-index: -2;
+    }
+}
