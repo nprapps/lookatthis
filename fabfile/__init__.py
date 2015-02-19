@@ -145,10 +145,7 @@ def post(slug):
         utils.replace_in_file('%s/post_config.py' % env.static_path, find, replace)
 
         env.post_config = imp.load_source('post_config', '%s/post_config.py' % env.static_path)
-        url = env.post_config.COPY_GOOGLE_DOC_URL
-        bits = url.split('key=')
-        bits = bits[1].split('&')
-        env.copytext_key = bits[0]
+        env.copytext_key = env.post_config.COPY_GOOGLE_DOC_KEY
     else:
         env.post_config = None
         env.copytext_key = None
