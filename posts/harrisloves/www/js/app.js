@@ -59,7 +59,7 @@ var setUpFullPage = function() {
         autoScrolling: false,
         verticalCentered: false,
         keyboardScrolling: false,
-        fixedElements: '.player',
+        fixedElements: '.player-wrapper',
         resize: false,
         css3: true,
         loopHorizontal: false,
