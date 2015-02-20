@@ -13,6 +13,12 @@ def update():
     """
     Downloads a Google Doc as an Excel file.
     """
-    g = GoogleDoc(key=env.copytext_key)
+
+    doc = {
+        'key': env.copytext_key,
+        'file_name': env.copytext_slug
+    }
+
+    g = GoogleDoc(**doc)
     g.get_auth()
     g.get_document()
