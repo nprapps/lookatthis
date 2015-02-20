@@ -132,31 +132,19 @@ var ANALYTICS = (function () {
     /*
      * Event tracking.
      */
-    var trackEvent = function(eventName, label, value, custom1, custom2) {
-        var args = ['_trackEvent', APP_CONFIG.DEPLOY_SLUG];
+    var trackEvent = function(eventName, label, value) {
+        var args = ['_trackEvent', APP_CONFIG.PROJECT_SLUG];
 
         args.push(eventName);
 
         if (label) {
             args.push(label);
-        } else if (value || custom1 || custom2) {
+        } else if (value) {
             args.push('');
         }
 
         if (value) {
             args.push(value);
-        } else if (custom1 || custom2) {
-            args.push(0);
-        }
-
-        if (custom1) {
-            args.push(custom1)
-        } else if (custom2) {
-            args.push('');
-        }
-
-        if (custom2) {
-            args.push(custom2);
         }
 
         _gaq.push(args);
