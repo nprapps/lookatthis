@@ -321,7 +321,7 @@ $(document).ready(function() {
         smoothPlayBar: true
     });
 
-    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/harrisloves/assets/pil-harris.mp3' : 'http://assets.apps.npr.org/lookatthis/harrisloves/pil-harris.mp3';
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/harrisloves/assets/pil-harris2.mp3' : 'http://assets.apps.npr.org/lookatthis/harrisloves/pil-harris2.mp3';
 
     $player.jPlayer('setMedia', {
         mp3: mp3FilePath
