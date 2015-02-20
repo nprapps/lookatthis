@@ -122,7 +122,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     // fire event on last slide
     if (slideIndex === $slides.length - 1) {
-        ANALYTICS.trackEvent('tests-run', likeStoryTest, null, callToActionTest);
+        ANALYTICS.trackEvent('tests-run', likeStoryTest + '/' + callToActionTest);
     }
 };
 
@@ -183,6 +183,8 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
 }
 
 var onStartCardButtonClick = function() {
+    ANALYTICS.trackEvent('begin');
+
     lastSlideExitEvent = 'go';
     $('.start').css('opacity', 0);
     AUDIO.setUpPlayer();
@@ -230,7 +232,7 @@ var onLikeStoryButtonsClick = function(e) {
     $likeStory.hide();
 
     if ($(this).hasClass('yes')) {
-        ANALYTICS.trackEvent('like-story', 'yes', null, callToActionTest);
+        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
 
         if (callToActionTest === 'follow-us') {
             $follow.show();
@@ -238,7 +240,7 @@ var onLikeStoryButtonsClick = function(e) {
             $support.show();
         }
     } else {
-        ANALYTICS.trackEvent('like-story', 'no', null, callToActionTest);
+        ANALYTICS.trackEvent('like-story-no', callToActionTest);
         $didNotLike.show();
     }
 }
@@ -250,11 +252,11 @@ var onFollowBtnsClick = function(e) {
     var link = $this.attr('href');
 
     if ($this.hasClass('tu')) {
-        ANALYTICS.trackEvent('follow-btn-click', 'tumblr', null, likeStoryTest);
+        ANALYTICS.trackEvent('tumblr-btn-click', likeStoryTest);
     } else if ($this.hasClass('fb')) {
-        ANALYTICS.trackEvent('follow-btn-click', 'facebook', null, likeStoryTest);
+        ANALYTICS.trackEvent('facebook-btn-click', likeStoryTest);
     } else {
-        ANALYTICS.trackEvent('follow-btn-click', 'twitter', null, likeStoryTest);
+        ANALYTICS.trackEvent('twitter-btn-click', likeStoryTest);
     }
 
     window.top.location = link
