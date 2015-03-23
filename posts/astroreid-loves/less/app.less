@@ -1,35 +1,28 @@
 @import "./lib/bootstrap/bootstrap";
-
-/*
-* Fonts: To use FontAwesome, uncomment font-awesome, comment out the custom font,
-* and tweak the controlArrow CSS rules later in this file.
-*/
-@import "./lib/lookatthis-font.less";
-//@import "./lib/font-awesome/font-awesome";
-
+@import "./lib/font-awesome/font-awesome";
 @import "./lib/prefixer";
 @import "./share-modal.less";
-@import "./slides/conclusion.less";
-@import "./slides/framed-text.less";
-@import "./slides/full-bleed.less";
-@import "./slides/next-post.less";
-@import "./slides/side-by-side.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
+@import "./slides/next-post.less";
+@import "./slides/foreground-image.less";
+@import "./slides/full-bleed.less";
+@import "./slides/side-by-side.less";
+@import "./slides/framed-text.less";
 @import "./nudges.less";
 
-// Global variables
-@img-root: "../assets";
 
 @darker-overlay: rgba(0,0,0,0.7);
 @black-screen: rgba(0,0,0,0.8);
 @look-pink: #F60062;
-@side-by-side-screen: rgba(295, 37, 115, 0.6);
-@caption-screen-dark: rgba(175, 0, 71, 0.7);
+@side-by-side-screen: rgba(0, 0, 0, 0.6);
+@caption-screen-dark: rgba(55, 55, 55, 0.7);
 @pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
+@small-type: 16px;
 
-@small-type: 13px;
+// Global variables ok
+@img-root: "../assets";
 
 // Breakpoints
 @screen-mega-above: ~"screen and (min-width: 1440px)";
@@ -50,54 +43,37 @@ body {
     background-color: #111;
 }
 
+.vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+
+
+//typography
+
 h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
 
-.animated {
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
+p {
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.35em;
+
+    @media @screen-small-above {
+        font-size: 28px;
+    }
 }
 
-@-webkit-keyframes shake {
-  0%, 100% {
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-  }
+h2 {
+    font-size: 32px;
+    text-align: center;
 
-  10%, 30%, 50%, 70%, 90% {
-    -webkit-transform: translate3d(-10px, 0, 0);
-            transform: translate3d(-10px, 0, 0);
-  }
-
-  20%, 40%, 60%, 80% {
-    -webkit-transform: translate3d(10px, 0, 0);
-            transform: translate3d(10px, 0, 0);
-  }
-}
-
-@keyframes shake {
-  0%, 100% {
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-  }
-
-  10%, 30%, 50%, 70%, 90% {
-    -webkit-transform: translate3d(-10px, 0, 0);
-            transform: translate3d(-10px, 0, 0);
-  }
-
-  20%, 40%, 60%, 80% {
-    -webkit-transform: translate3d(10px, 0, 0);
-            transform: translate3d(10px, 0, 0);
-  }
-}
-
-.shake {
-  -webkit-animation-name: shake;
-          animation-name: shake;
+    @media @screen-small-above {
+        font-size: 60px;
+    }
 }
 
 .primary-navigation {
@@ -109,7 +85,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.2);
         color: #fff;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -120,6 +96,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         display: none;
         cursor: pointer;
         opacity: .3;
+
+        .titlecard-nav & {
+            visibility: hidden;
+        }
 
         @media @screen-small-above {
             top: 40%;
@@ -147,19 +127,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         left: 0;
 
         &:before {
-            font-family: "lookatthis";
-            content: '\e801';
-            display: block;
-        }
-
-        /* Uncomment to use FontAwesome */
-        /*
-        &:before {
             font-family: "FontAwesome";
             content: '\f104';
             display: block;
         }
-        */
 
         @media @screen-small-above {
             left: 10px;
@@ -169,30 +140,29 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .controlArrow.next {
         right: 0;
         padding: 0 0 0 5px;
+        z-index: -1;
 
-        &:before {
-            font-family: "lookatthis";
-            content: "\e800";
-            display: block;
+        &.please-proceed {
+            z-index: 1;
         }
 
-        /* Uncomment to use FontAwesome */
-        /*
         &:before {
             font-family: "FontAwesome";
             content: "\f105";
             display: block;
+
         }
-        */
 
         @media @screen-small-above {
-            right: 25px;
+            right: 10px;
             padding-top: 25px;
         }
+
     }
+
 }
 
-.primary-navigation .controlArrow.titlecard-nav {
+.titlecard-nav .primary-navigation .controlArrow {
     opacity: .7;
     @media @screen-small-above {
         opacity: 1;
@@ -242,7 +212,9 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
                 height: 100%;
                 display: block;
                 overflow: auto;
+                z-index: 0;
             }
+
         }
     }
 }
@@ -250,7 +222,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 //full-bleed background images on sections and slides
 .section, .slide {
     .background-size(cover);
-    background-position: center center;
+    background-position: top left;
     position: relative;
 }
 
@@ -263,11 +235,11 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     position: relative;
     z-index: 1;
 
+
     .full-block-cell {
         display: table-cell;
-        position: relative;
-        vertical-align: top;
-        padding-top: 20px;
+        vertical-align: middle;
+        //padding-top: 20px;
         @media @screen-small-above {
             padding-top: 0;
             vertical-align: middle;
@@ -279,15 +251,144 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .full-block-content {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px 40px 100px 40px;
         @media @screen-small-above {
-             padding: 20px 100px;
+             padding: 20px 100px 100px 100px;
+        }
+        z-index: 2;
+    }
+}
+
+
+.btn.btn-go {
+    border-radius: 0;
+    background-color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+     font-size: 14px;
+    padding: 0 15px;
+    line-height: 32px;
+
+    @media @screen-small-above {
+        padding: 0 22px;
+        font-size: 18px;
+        line-height: 44px;
+    }
+
+
+    &:hover {
+        .no-touch & {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+}
+
+//audio
+.player-wrapper {
+    position: fixed;
+    bottom: 0;
+    height: 5rem;
+    background: rgba(0,0,0,0.5);
+    line-height: 5rem;
+    width: 100%;
+    opacity: 0;
+    .transition(opacity 1s ease-in);
+
+    .controls {
+        vertical-align: middle;
+        margin-right: @grid-gutter-width / 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .player-progress {
+        cursor: pointer;
+        position: absolute;
+        left: 5rem;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        .jp-seek-bar {
+            height: 100%;
+        }
+
+        .bar {
+            position: absolute;
+            height: 5rem;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #444;
+        }
+    }
+    .playback-info {
+        right: 1rem;
+        text-align: right;
+        line-height: 1;
+        .vertical-center;
+        position: absolute;
+    }
+}
+
+.player-button,
+.player-button:focus,
+.player-button:visited,
+.player-button:hover {
+    display: block;
+    .square(5rem);
+    background: @look-pink;
+    color: #fff;
+    line-height: 5rem;
+    text-align: center;
+    font-size: @font-size-base * 2;
+
+
+    .no-touch & {
+        &:hover {
+            color: #fff;
+            background: lighten(@look-pink, 10%);
+            text-decoration: none;
+        }
+    }
+
+    .touch & {
+        &:active {
+            color: #fff;
+            background: lighten(@look-pink, 10%);
+            text-decoration: none;
         }
     }
 }
 
-img {
-    max-width: 100%;
+.animated {
+    opacity: 0;
+    .transition(opacity 2s ease-in);
+}
+
+.foreground-image-container {
+    max-width: 480px;
+    margin: 0 auto;
+
+    .foreground-image {
+        width: 100%;
+    }
+}
+
+.bordered {
+    img {
+        border: 10px solid #ffeee2;
+    }
+}
+
+#slide-intro {
+    opacity: 0;
+    .transition(opacity 4s linear);
 }
 
 .dark-overlay .full-block {
@@ -301,22 +402,6 @@ img {
         bottom: 0;
         background: rgba(0,0,0,0.5);
         height: 100%;
-        z-index: -1;
-    }
-}
-
-.credit {
-    font-family: helvetica, arial, sans-serif;
-    padding-right: 20px;
-    text-align: right;
-    font-size: 10px;
-    color: #fff;
-    line-height: 14px;
-    @media @screen-small-above {
-         position: absolute;
-         bottom: 10px;    
-         right: 25px;
-         font-size: 12px;
-         max-width: 1000px;
+        z-index: -2;
     }
 }

@@ -14,13 +14,29 @@ var optimalWidth;
 var optimalHeight;
 var w;
 var h;
+var currentIndex;
 var completion = 0;
-var arrowTest;
 var lastSlideExitEvent;
 var hammer;
-
+var $playerWrapper;
+var $player;
+var $playerButton;
+var $play;
+var $pause;
+var $replay;
+var slideEndTime = null;
+var $animatedElements = null;
+var likeStoryTest;
+var callToActionTest;
+var $likeStory;
+var $likeStoryButtons;
+var $follow;
+var $support;
+var $didNotLike;
+var $email;
 
 var resize = function() {
+
     $w = $(window).width();
     $h = $(window).height();
 
@@ -39,16 +55,11 @@ var resize = function() {
 };
 
 var setUpFullPage = function() {
-    var anchors = ['_'];
-    for (var i = 0; i < copy.content.length; i++) {
-        anchors.push(copy.content[i][0]);
-    }
     $.fn.fullpage({
-        anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
         autoScrolling: false,
-        keyboardScrolling: false,
         verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
+        keyboardScrolling: false,
+        fixedElements: '.player-wrapper',
         resize: false,
         css3: true,
         loopHorizontal: false,
@@ -58,19 +69,36 @@ var setUpFullPage = function() {
     });
 };
 
+
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0);
+    setSlidesForLazyLoading(0)
     $('.section').css({
       'opacity': 1,
       'visibility': 'visible',
     });
-    showNavigation();
 };
 
 // after a new slide loads
+
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
-    showNavigation();
+    slideStartTime = moment();
+    currentIndex = slideIndex;
+
+    if (currentIndex !== $slides.length - 1) {
+        $replay.hide();
+        if ($player.data().jPlayer.status.paused) {
+            $play.show();
+            $pause.hide();
+        } else {
+            $pause.show();
+            $play.hide();
+        }
+    }
+
+    var $thisSlide = $('#slide-' + slideAnchor);
+    $animatedElements = $thisSlide.find('.animated');
+    slideEndTime = $thisSlide.data('slide-end-time');
 
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
@@ -91,6 +119,11 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
             ANALYTICS.completeOneHundredPercent();
         }
     }
+
+    // fire event on last slide
+    if (slideIndex === $slides.length - 1) {
+        ANALYTICS.trackEvent('tests-run', likeStoryTest + '/' + callToActionTest);
+    }
 };
 
 var setSlidesForLazyLoading = function(slideIndex) {
@@ -98,6 +131,7 @@ var setSlidesForLazyLoading = function(slideIndex) {
     * Sets up a list of slides based on your position in the deck.
     * Lazy-loads images in future slides because of reasons.
     */
+
     var slides = [
         $slides.eq(slideIndex - 2),
         $slides.eq(slideIndex - 1),
@@ -110,7 +144,7 @@ var setSlidesForLazyLoading = function(slideIndex) {
     mobileSuffix = '';
 
     if ($w < 769) {
-        mobileSuffix = '-sq';
+        // mobileSuffix = '-sq';
     }
 
     for (var i = 0; i < slides.length; i++) {
@@ -137,120 +171,28 @@ var loadImages = function($slide) {
     if ($images.length > 0) {
         for (var i = 0; i < $images.length; i++) {
             var image = $images.eq(i).data('src');
-            $images.eq(i).attr('src', 'assets/' + image);
+            $images.eq(i).attr('src', image);
         }
     }
 };
-
-var showNavigation = function() {
-    /*
-    * Nav doesn't exist by default.
-    * This function loads it up.
-    */
-
-    if ($slides.first().hasClass('active')) {
-        /*
-        * Don't show arrows on titlecard
-        */
-        $arrows.hide();
-    }
-
-    else if ($slides.last().hasClass('active')) {
-        /*
-        * Last card gets no next arrow but does have the nav.
-        */
-        if (!$arrows.hasClass('active')) {
-            showArrows();
-        }
-
-        $nextArrow.removeClass('active');
-        $nextArrow.hide();
-    } else if ($slides.eq(1).hasClass('active')) {
-        showArrows();
-
-        switch (arrowTest) {
-            case 'bright-arrow':
-                $nextArrow.addClass('titlecard-nav');
-                break;
-            case 'bouncy-arrow':
-                $nextArrow.addClass('shake animated titlecard-nav');
-                break;
-            default:
-                break;
-        }
-
-        $nextArrow.on('click', onFirstRightArrowClick);
-    } else {
-        /*
-        * All of the other cards? Arrows and navs.
-        */
-        if ($arrows.filter('active').length != $arrows.length) {
-            showArrows();
-        }
-        $nextArrow.removeClass('shake animated titlecard-nav');
-
-        $nextArrow.off('click', onFirstRightArrowClick);
-    }
-}
-
-var showArrows = function() {
-    /*
-    * Show the arrows.
-    */
-    $arrows.addClass('active');
-    $arrows.show();
-};
-
-var determineArrowTest = function() {
-    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
-    var test = possibleTests[getRandomInt(0, possibleTests.length)]
-    return test;
-}
-
-var getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
-}
-
-var onFirstRightArrowClick = function() {
-    ANALYTICS.firstRightArrowClick(arrowTest);
 }
 
 var onStartCardButtonClick = function() {
+    ANALYTICS.trackEvent('begin');
+
     lastSlideExitEvent = 'go';
-    $.fn.fullpage.moveSlideRight();
-}
-
-var onArrowsClick = function() {
-    lastSlideExitEvent = 'arrow';
-}
-
-var onDocumentKeyDown = function(e) {
-    if (e.which === 37 || e.which === 39) {
-        lastSlideExitEvent = 'keyboard';
-        ANALYTICS.useKeyboardNavigation();
-        if (e.which === 37) {
-            $.fn.fullpage.moveSlideLeft();
-        } else if (e.which === 39) {
-            $.fn.fullpage.moveSlideRight();
-        }
-    }
-    // jquery.fullpage handles actual scrolling
-    return true;
-}
-
-var onSlideClick = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'tap';
+    $('.start').css('opacity', 0);
+    AUDIO.setUpPlayer();
+    $('.start').one("webkitTransitionEnd transitionend", function(event) {
         $.fn.fullpage.moveSlideRight();
-    }
-    return true;
+        $('#slide-intro').css('opacity', 1);
+        $playerWrapper.css('opacity', 1);
+    });
 }
 
 var onNextPostClick = function(e) {
@@ -261,43 +203,80 @@ var onNextPostClick = function(e) {
     return true;
 }
 
-var fakeMobileHover = function() {
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
-}
+var determineTests = function() {
+    var possibleLikeStoryTests = ['like-story', 'no-like-story'];
+    var possibleCallToActionTests = ['follow-us', 'support-npr'];
 
-var rmFakeMobileHover = function() {
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
-}
+    likeStoryTest = possibleLikeStoryTests[getRandomInt(0, possibleLikeStoryTests.length)];
+    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
 
-/*
- * Text copied to clipboard.
- */
-var onClippyCopy = function(e) {
-    alert('Copied to your clipboard!');
 
-    ANALYTICS.copySummary();
-}
-
-var onSwipeLeft = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swipeleft';    
-        $.fn.fullpage.moveSlideRight();
+    if (likeStoryTest === 'like-story') {
+        $likeStory.show();
+    } else {
+        if (callToActionTest === 'follow-us') {
+            $follow.show();
+        } else {
+            $support.show();
+        }
     }
 }
 
-var onSwipeRight = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swiperight';
-        $.fn.fullpage.moveSlideLeft();      
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var onLikeStoryButtonsClick = function(e) {
+    e.preventDefault();
+
+    $likeStory.hide();
+
+    if ($(this).hasClass('yes')) {
+        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
+
+        if (callToActionTest === 'follow-us') {
+            $follow.show();
+        } else {
+            $support.show();
+        }
+    } else {
+        ANALYTICS.trackEvent('like-story-no', callToActionTest);
+        $didNotLike.show();
     }
+}
+
+var onFollowBtnsClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    if ($this.hasClass('tu')) {
+        ANALYTICS.trackEvent('tumblr-btn-click', likeStoryTest);
+    } else if ($this.hasClass('fb')) {
+        ANALYTICS.trackEvent('facebook-btn-click', likeStoryTest);
+    } else {
+        ANALYTICS.trackEvent('twitter-btn-click', likeStoryTest);
+    }
+
+    window.top.location = link
+    return true;
+}
+
+var onSupportBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('support-btn-click', likeStoryTest);
+
+    window.top.location = link
+    return true;
+}
+
+var onEmailClick = function() {
+    ANALYTICS.trackEvent('email-btn-click');
 }
 
 $(document).ready(function() {
@@ -305,34 +284,52 @@ $(document).ready(function() {
     $h = $(window).height();
 
     $slides = $('.slide');
-    $navButton = $('.primary-navigation-btn');
-    $startCardButton = $('.btn-go');
-    $arrows = $('.controlArrow');
-    $nextArrow = $arrows.filter('.next');
+    $startCardButton = $('.btn-startcard');
     $upNext = $('.up-next');
+    $playerWrapper = $('.player-wrapper');
+    $player = $('#player');
+    $playerButton = $('.player-button');
+    $replay = $('.replay');
+    $play = $('.play');
+    $pause = $('.pause');
+    $likeStory = $('.like-story');
+    $likeStoryButtons = $('.btn-like-story');
+    $follow = $('.follow');
+    $followBtns = $('.btn-follow');
+    $support = $('.support');
+    $supportBtn = $('.btn-support');
+    $didNotLike = $('.did-not-like');
+    $email = $('.email');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
-    $arrows.on('click', onArrowsClick);
-    $arrows.on('touchstart', fakeMobileHover);
-    $arrows.on('touchend', rmFakeMobileHover);
-    hammer = new Hammer(document.body);
-    hammer.on('swipeleft', onSwipeLeft);
-    hammer.on('swiperight', onSwipeRight);
-
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
+    $playerButton.on('click', AUDIO.toggleAudio);
+    $replay.on('click', AUDIO.reset);
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $followBtns.on('click', onFollowBtnsClick);
+    $supportBtn.on('click', onSupportBtnClick);
+    $email.on('click', onEmailClick);
 
     setUpFullPage();
     resize();
+    determineTests();
 
-    arrowTest = determineArrowTest();
+    $player.jPlayer({
+        swfPath: 'js/lib',
+        loop: false,
+        supplied: 'mp3',
+        timeupdate: AUDIO.onTimeupdate,
+        cssSelectorAncestor: "#jp_container_1",
+        smoothPlayBar: true
+    });
+
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/harrisloves/assets/pil-harris-vo.mp3' : 'http://assets.apps.npr.org/lookatthis/harrisloves/pil-harris-vo.mp3';
+
+    $player.jPlayer('setMedia', {
+        mp3: mp3FilePath
+    });
+
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(document).keydown(onDocumentKeyDown);
 });
