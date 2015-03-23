@@ -165,6 +165,10 @@ var loadImages = function($slide) {
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
         }
+
+        if ($slide.hasClass('fade-in-bg') && $slide.hasClass('active')) {
+            $slide.css('opacity', 1);
+        }
     }
 
     var $images = $slide.find('img.lazy-load');
