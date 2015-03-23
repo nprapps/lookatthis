@@ -1,7 +1,5 @@
 .slide.side-by-side {
     .full-block {
-        // background: @darker-overlay;
-
         .full-block-cell {
             vertical-align: middle;
         }
@@ -15,12 +13,12 @@
             }
 
             @media @screen-medium-above {
-                max-width: 900px;
+                max-width: 1200px;
                 margin: 0 auto;
             }
 
             @media @screen-large-above {
-                max-width: 1100px;
+                max-width: 1400px;
             }
 
             .side-by-side-wrapper {
@@ -29,7 +27,6 @@
 
                 .first-side {
                     vertical-align: middle;
-                    margin-bottom: 10px;
 
                     @media @screen-medium-above {
                         margin-bottom: 20px;
@@ -57,18 +54,18 @@
                         line-height: 1.5;
                         font-size: @small-type;
                         @media @screen-small-above {
-                            font-size: 16px;
+                            font-size: 22px;
                         }
                         @media @screen-mega-above {
-                            font-size: 20px;
+                            font-size: 22px;
                         }
 
                     }
                 }
 
                 .second-side {
-                    padding: 20px;
-                    background: @side-by-side-screen;
+                    padding: 15px 20px;
+                    //background: @side-by-side-screen;
                     max-width: 450px;
 
                     @media @screen-small-above {
@@ -85,11 +82,12 @@
                     p {
                         text-shadow: none;
                         font-size: @small-type;
+                        text-align: left;
                         line-height: 1.5;
                         padding-bottom: 5px;
 
                         @media @screen-small-above {
-                            font-size: 16px;
+                            font-size: 22px;
                         }
 
                         @media @screen-medium-above {
@@ -97,7 +95,7 @@
                         }
 
                         @media @screen-mega-above {
-                            font-size: 20px;
+                            font-size: 22px;
                         }
 
                         &.number {
@@ -106,6 +104,28 @@
 
 
                     }
+
+                        .tweet {
+                            text-indent: -10px;
+                        }
+
+                        .lil {
+                            font-size: 13px;
+
+                            @media @screen-small-above {
+                              font-size: 17px;
+                            }
+
+                            @media @screen-medium-above {
+                                //margin-right: 34px;
+                            }
+
+                            @media @screen-mega-above {
+                                font-size: 17px;
+                            }
+                        }
+
+
 
                     img {
                         display: block;

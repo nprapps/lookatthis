@@ -1,17 +1,21 @@
 .start {
+    .transition(opacity 3s ease-in);
     .full-block-cell {
         text-align: center;
         color: #fff;
         text-shadow: 2px 2px 2px #000;
 
         .look-branding {
+            a {color: #fff;}
             img {
-                max-width: 50px;
+                width: 50px;
+                height: 17px;
                 display: block;
                 margin: 0 auto;
 
                 @media @screen-small-above {
-                    max-width: 80px;
+                    width: 80px;
+                    height: 27px;
                 }
             }
 
@@ -30,15 +34,13 @@
         }
 
          h1 {
-             font-size: 30px;
-             text-transform: uppercase;
+             font-size: 33px;
              font-weight: bold;
+             padding-top: 20px;
              margin: 0;
              @media @screen-small-above {
-                 font-size: 55px;
-            }
-            @media @screen-large-above {
-                font-size: 85px;
+                 font-size: 76px;
+                 padding-top: 40px;
             }
          }
 
@@ -48,13 +50,9 @@
             font-weight: normal;
             margin: 5px 0;
 
-            p:first-child {
-                margin: 20px 0;
-            }
-
             @media @screen-small-above {
-                margin: 5px 0 30px 0;
-                font-size: 24px;
+                    margin: 5px 0 30px 0;
+                    font-size: 30px;
             }
         }
 
@@ -70,34 +68,28 @@
         h4 {
             font-size: 11px;
             font-family: georgia, serif;
-            margin: 5px 0 0 0;
+            margin: 1px 0 0 0;
             font-style: italic;
             @media @screen-small-above {
                 font-size: 14px;
-                margin: 10px 0 0 0;
+                margin: 5px 0 0 0;
             }
         }
 
         .btn.btn-go {
-            border-radius: 0;
-            background-color: #fff;
+            margin: 23px auto 0 auto;
+        }
+
+
+        .sound-prompt {
             text-transform: uppercase;
-            font-weight: bold;
-            margin: 35px auto 0 auto;
-            text-align: center;
-             font-size: 18px;
-            padding: 0 22px;
-            line-height: 44px;
-
-
-            &:hover {
-                .no-touch & {
-                    background-color: #000;
-                    color: #fff;
-                    cursor: pointer;
-                }
+            font-size: 10px;
+            margin: 25px 0 0 0;
+            @media @screen-small-above {
+                font-size: 11px;
+                letter-spacing: 1px;
+                padding-top: 30px;
             }
-
         }
     }
 }
