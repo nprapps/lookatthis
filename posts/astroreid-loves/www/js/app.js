@@ -100,6 +100,10 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     $animatedElements = $thisSlide.find('.animated');
     slideEndTime = $thisSlide.data('slide-end-time');
 
+    if ($thisSlide.hasClass('fade-in-bg')) {
+        $thisSlide.css('opacity', 1);
+    }
+
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
@@ -164,10 +168,6 @@ var loadImages = function($slide) {
 
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
-        }
-
-        if ($slide.hasClass('fade-in-bg') && $slide.hasClass('active')) {
-            $slide.css('opacity', 1);
         }
     }
 
