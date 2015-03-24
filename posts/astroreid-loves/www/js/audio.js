@@ -49,6 +49,10 @@ var AUDIO = (function() {
             }
         }
 
+        if (position > endTime - 2 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
+            $slides.eq(currentIndex).css('opacity', 0);
+        }
+
     }
 
     var onEnded = function() {
