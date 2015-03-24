@@ -41,10 +41,16 @@ var AUDIO = (function() {
                 var exitTime = $animatedElements.eq(i).data('exit') || slideEndTime - 1;
 
                 if (position > entranceTime) {
-                    $animatedElements.eq(i).css('opacity', 1);
+                    $animatedElements.eq(i).css({
+                        'opacity': 1,
+                        'visibility': 'visible'
+                    });
                 }
                 if (position > exitTime) {
-                    $animatedElements.eq(i).css('opacity', 0);
+                    $animatedElements.eq(i).css({
+                        'opacity': 1,
+                        'visibility': 'visible'
+                    });
                 }
             }
         }
