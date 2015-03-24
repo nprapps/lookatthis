@@ -30,7 +30,7 @@ var likeStoryTest;
 var callToActionTest;
 var $likeStory;
 var $likeStoryButtons;
-var $follow;
+var $facebook;
 var $support;
 var $didNotLike;
 var $email;
@@ -209,7 +209,7 @@ var onNextPostClick = function(e) {
 
 var determineTests = function() {
     var possibleLikeStoryTests = ['like-story', 'no-like-story'];
-    var possibleCallToActionTests = ['follow-us', 'support-npr'];
+    var possibleCallToActionTests = ['facebook', 'support-npr'];
 
     likeStoryTest = possibleLikeStoryTests[getRandomInt(0, possibleLikeStoryTests.length)];
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
@@ -218,8 +218,8 @@ var determineTests = function() {
     if (likeStoryTest === 'like-story') {
         $likeStory.show();
     } else {
-        if (callToActionTest === 'follow-us') {
-            $follow.show();
+        if (callToActionTest === 'facebook') {
+            $facebook.show();
         } else {
             $support.show();
         }
@@ -238,8 +238,8 @@ var onLikeStoryButtonsClick = function(e) {
     if ($(this).hasClass('yes')) {
         ANALYTICS.trackEvent('like-story-yes', callToActionTest);
 
-        if (callToActionTest === 'follow-us') {
-            $follow.show();
+        if (callToActionTest === 'facebook') {
+            $facebook.show();
         } else {
             $support.show();
         }
@@ -249,19 +249,13 @@ var onLikeStoryButtonsClick = function(e) {
     }
 }
 
-var onFollowBtnsClick = function(e) {
+var onFacebookBtnClick = function(e) {
     e.preventDefault();
 
     var $this = $(this);
     var link = $this.attr('href');
 
-    if ($this.hasClass('tu')) {
-        ANALYTICS.trackEvent('tumblr-btn-click', likeStoryTest);
-    } else if ($this.hasClass('fb')) {
         ANALYTICS.trackEvent('facebook-btn-click', likeStoryTest);
-    } else {
-        ANALYTICS.trackEvent('twitter-btn-click', likeStoryTest);
-    }
 
     window.top.location = link
     return true;
@@ -298,8 +292,8 @@ $(document).ready(function() {
     $pause = $('.pause');
     $likeStory = $('.like-story');
     $likeStoryButtons = $('.btn-like-story');
-    $follow = $('.follow');
-    $followBtns = $('.btn-follow');
+    $facebook = $('.facebook');
+    $facebookBtn = $('.btn-facebook');
     $support = $('.support');
     $supportBtn = $('.btn-support');
     $didNotLike = $('.did-not-like');
@@ -310,7 +304,7 @@ $(document).ready(function() {
     $playerButton.on('click', AUDIO.toggleAudio);
     $replay.on('click', AUDIO.reset);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
-    $followBtns.on('click', onFollowBtnsClick);
+    $facebookBtn.on('click', onFacebookBtnClick);
     $supportBtn.on('click', onSupportBtnClick);
     $email.on('click', onEmailClick);
 
