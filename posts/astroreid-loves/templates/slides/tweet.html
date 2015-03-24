@@ -1,7 +1,10 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
-    <div class="tweet">
-        {{ row.text1|smarty }}
-        {{ row.text2|smarty }}
+    <div class="tweet animated" data-entrance="{{ row.tweet_entrance }}" data-exit="{{ row.tweet_exit }}">
+        <p class="tweet-body">{{ row.text1|smarty }}</p>
+        <p class="tweet-attribution">
+            @astro_reid<br>
+            {{ row.text2|smarty }}
+        </p>
     </div>
 {% endblock %}
