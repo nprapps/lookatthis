@@ -48,8 +48,7 @@ var AUDIO = (function() {
                 }
                 if (position > exitTime) {
                     $animatedElements.eq(i).css({
-                        'opacity': 1,
-                        'visibility': 'visible'
+                        'opacity': 0,
                     });
                 }
             }
