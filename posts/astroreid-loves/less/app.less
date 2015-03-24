@@ -417,9 +417,15 @@ h2 {
     opacity: 0;
 }
 
-.tweet {
+.tweet-container {
     background-color: rgba(0,0,0,0.3);
-    padding: 10px;
+    width: 100%;
+    padding: 10px 20px 30px 20px;
+}
+
+.tweet-body, .tweet-attribution {
+    margin: 15px auto;
+    max-width: 700px;
 }
 
 .tweet-body {
@@ -429,10 +435,6 @@ h2 {
 .tweet-attribution {
     text-align: right;
     font-size: 18px;
-    &:before {
-        content: "\2014 ";
-    }
-
     a {
         color: #ccc;
     }
