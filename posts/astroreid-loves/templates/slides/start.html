@@ -2,16 +2,16 @@
 {% block slide_content %}
     <div class="look-branding">
         <img src="assets/npr-logo.png">
-        <h5>Look At This</h5>
+        <a href="http://lookatthisstory.tumblr.com"><h5>Look At This</h5></a>
     </div>
      <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
     <h1>{{ row.text1|smarty }}</h1>
     <h2>{{ row.text2|smarty }}</h2>
     <h3>{{ COPY.post_metadata.author|smarty }}</h3>
-   
-  <p class="sound-prompt"><i class="fa fa-headphones"></i> put on your headphones</p>
-    <button class="btn btn-go btn-startcard">{{ row.text3 }}</button>
 
-  
+    <button class="btn btn-go btn-startcard">{{ row.text3 }}</button>
+    <p class="sound-prompt"><i class="fa fa-headphones"></i> put on your headphones</p>
+
+
 
 {% endblock %}
