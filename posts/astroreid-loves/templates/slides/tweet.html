@@ -1,6 +1,6 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
-    <div class="tweet-container animated" data-entrance="{{ row.tweet_entrance }}" data-exit="{{ row.tweet_exit }}">
+    <div class="tweet-container animated slow" data-entrance="{{ row.tweet_entrance }}" data-exit="{{ row.tweet_exit }}">
         <p class="tweet-body">
             {{ row.text1|smarty }}
         </p>

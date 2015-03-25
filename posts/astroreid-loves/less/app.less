@@ -372,7 +372,14 @@ h2 {
 .animated {
     opacity: 0;
     visibility: hidden;
+}
+
+.slow {
     .transition(opacity 2s ease-in);
+
+}
+.fast {
+    .transition(opacity 1s ease-in);
 }
 
 .foreground-image-container {
@@ -418,24 +425,44 @@ h2 {
     opacity: 0;
 }
 
+.slide.tweet {
+    .full-block-cell {
+        vertical-align: bottom;
+    }
+}
+
 .tweet-container {
     background-color: rgba(0,0,0,0.3);
-    width: 100%;
+    width: 65%;
+    min-width: 320px;
     padding: 10px 20px 30px 20px;
+    margin: 0 auto 80px;
+    border-radius: 10px;
 }
 
 .tweet-body, .tweet-attribution {
+    font-family: menlo, monospace;
     margin: 15px auto;
     max-width: 700px;
+    color: #eee;
 }
 
 .tweet-body {
     text-align: left;
+    font-size: 16px;
+
+    @media @screen-small-above {
+        font-size: 20px;
+    }
 }
 
 .tweet-attribution {
     text-align: right;
-    font-size: 18px;
+    font-size: 12px;
+    @media @screen-small-above {
+        font-size: 16px;
+    }
+    color: #ccc;
     a {
         color: #ccc;
     }
