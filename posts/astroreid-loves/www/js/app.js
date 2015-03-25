@@ -186,6 +186,14 @@ var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     */
 }
 
+var animateTweets = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var $tweet = $thisSlide.find('.tweet-container').eq(0);
+    var animation = $tweet.data('animation');
+
+    $tweet.addClass(animation);
+}
+
 var onStartCardButtonClick = function() {
     ANALYTICS.trackEvent('begin');
 
@@ -194,6 +202,7 @@ var onStartCardButtonClick = function() {
     AUDIO.setUpPlayer();
     $('.start').one("webkitTransitionEnd transitionend", function(event) {
         $.fn.fullpage.moveSlideRight();
+        animateTweets(1);
         $('#slide-intro').css('opacity', 1);
         $playerWrapper.css({
             'opacity': 1,
