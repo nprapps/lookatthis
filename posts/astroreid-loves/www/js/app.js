@@ -195,7 +195,10 @@ var onStartCardButtonClick = function() {
     $('.start').one("webkitTransitionEnd transitionend", function(event) {
         $.fn.fullpage.moveSlideRight();
         $('#slide-intro').css('opacity', 1);
-        $playerWrapper.css('opacity', 1);
+        $playerWrapper.css({
+            'opacity': 1,
+            'visibility': 'visible'
+        });
     });
 }
 
