@@ -26,7 +26,6 @@ var $pause;
 var $replay;
 var slideEndTime = null;
 var $animatedElements = null;
-var likeStoryTest;
 var callToActionTest;
 var $likeStory;
 var $likeStoryButtons;
@@ -128,7 +127,7 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     // fire event on last slide
     if (slideIndex === $slides.length - 1) {
-        ANALYTICS.trackEvent('tests-run', likeStoryTest + '/' + callToActionTest);
+        ANALYTICS.trackEvent('tests-run', callToActionTest);
     }
 };
 
@@ -222,22 +221,11 @@ var onNextPostClick = function(e) {
 }
 
 var determineTests = function() {
-    var possibleLikeStoryTests = ['like-story', 'no-like-story'];
     var possibleCallToActionTests = ['facebook', 'support-npr'];
 
-    likeStoryTest = possibleLikeStoryTests[getRandomInt(0, possibleLikeStoryTests.length)];
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
 
-
-    if (likeStoryTest === 'like-story') {
-        $likeStory.show();
-    } else {
-        if (callToActionTest === 'facebook') {
-            $facebook.show();
-        } else {
-            $support.show();
-        }
-    }
+    console.log(callToActionTest);
 }
 
 var getRandomInt = function(min, max) {
@@ -269,7 +257,7 @@ var onFacebookBtnClick = function(e) {
     var $this = $(this);
     var link = $this.attr('href');
 
-        ANALYTICS.trackEvent('facebook-btn-click', likeStoryTest);
+    ANALYTICS.trackEvent('facebook-post-click');
 
     window.top.location = link
     return true;
@@ -281,7 +269,7 @@ var onSupportBtnClick = function(e) {
     var $this = $(this);
     var link = $this.attr('href');
 
-    ANALYTICS.trackEvent('support-btn-click', likeStoryTest);
+    ANALYTICS.trackEvent('support-btn-click');
 
     window.top.location = link
     return true;
