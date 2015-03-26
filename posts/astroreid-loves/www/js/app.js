@@ -231,8 +231,6 @@ var determineTests = function() {
     var possibleCallToActionTests = ['facebook', 'support-npr'];
 
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
-
-    console.log(callToActionTest);
 }
 
 var getRandomInt = function(min, max) {
@@ -245,7 +243,11 @@ var onLikeStoryButtonsClick = function(e) {
     $likeStory.hide();
 
     if ($(this).hasClass('yes')) {
-        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
+        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('like-story-yes', 'facebook-post');
+        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('like-story-yes', 'facebook-page');
+        }
 
         if (callToActionTest === 'facebook') {
             $facebook.show();
@@ -253,7 +255,7 @@ var onLikeStoryButtonsClick = function(e) {
             $support.show();
         }
     } else {
-        ANALYTICS.trackEvent('like-story-no', callToActionTest);
+        ANALYTICS.trackEvent('like-story-no');
         $didNotLike.show();
     }
 }
@@ -264,7 +266,11 @@ var onFacebookBtnClick = function(e) {
     var $this = $(this);
     var link = $this.attr('href');
 
-    ANALYTICS.trackEvent('facebook-post-click');
+    if (APP_CONFIG.POSTED_ON_FB) {
+        ANALYTICS.trackEvent('facebook-post-click');
+    } else {
+        ANALYTICS.trackEvent('facebook-page-click');
+    }
 
     window.top.location = link
     return true;
