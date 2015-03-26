@@ -35,6 +35,8 @@ var $support;
 var $didNotLike;
 var $email;
 
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+
 var resize = function() {
 
     $w = $(window).width();
@@ -191,7 +193,7 @@ var animateTweets = function(index) {
     var $tweet = $thisSlide.find('.tweet-container').eq(0);
     var animation = $tweet.data('animation');
 
-    $tweet.addClass(animation);
+    $tweet.addClass(animation + ' animation');
 }
 
 var onStartCardButtonClick = function() {
@@ -330,7 +332,8 @@ $(document).ready(function() {
         supplied: 'mp3',
         timeupdate: AUDIO.onTimeupdate,
         cssSelectorAncestor: "#jp_container_1",
-        smoothPlayBar: true
+        smoothPlayBar: true,
+        volume: NO_AUDIO ? 0 : 1
     });
 
     var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/astroreid-loves/assets/wiseman2.mp3' : 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
