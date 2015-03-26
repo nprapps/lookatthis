@@ -105,6 +105,13 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
         $thisSlide.css('opacity', 1);
     }
 
+    if ($thisSlide.hasClass('fade-overlay')) {
+        $thisSlide.removeClass('fade-overlay');
+    }
+    if ($thisSlide.hasClass('fade-out-overlay')) {
+        $thisSlide.addClass('fade-overlay');
+    }
+
     // Completion tracking
     how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 

@@ -414,6 +414,7 @@ h2 {
         background: rgba(0,0,0,0.5);
         height: 100%;
         z-index: -2;
+        .transition(opacity 1s linear);
     }
 }
 
@@ -423,6 +424,12 @@ h2 {
 
 .fade-in-bg {
     opacity: 0;
+}
+
+.fade-overlay .full-block {
+    &:after {
+        opacity: 0;
+    }
 }
 
 .slide.tweet {
