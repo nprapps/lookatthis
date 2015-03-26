@@ -134,7 +134,14 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
 
     // fire event on last slide
     if (slideIndex === $slides.length - 1) {
-        ANALYTICS.trackEvent('tests-run', callToActionTest);
+        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('tests-run', 'facebook-post');
+        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('tests-run', 'facebook-page');
+        } else {
+            ANALYTICS.trackEvent('tests-run', callToActionTest);
+        }
+
     }
 };
 
@@ -247,6 +254,8 @@ var onLikeStoryButtonsClick = function(e) {
             ANALYTICS.trackEvent('like-story-yes', 'facebook-post');
         } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
             ANALYTICS.trackEvent('like-story-yes', 'facebook-page');
+        } else {
+            ANALYTICS.trackEvent('like-story-yes', callToActionTest);
         }
 
         if (callToActionTest === 'facebook') {
