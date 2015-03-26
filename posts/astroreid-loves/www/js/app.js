@@ -346,7 +346,7 @@ $(document).ready(function() {
         volume: NO_AUDIO ? 0 : 1
     });
 
-    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/astroreid-loves/assets/wiseman2.mp3' : 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/spacepix/assets/wiseman2.mp3' : 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
 
     $player.jPlayer('setMedia', {
         mp3: mp3FilePath
