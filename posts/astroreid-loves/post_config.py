@@ -1,5 +1,5 @@
 COPY_GOOGLE_DOC_KEY = '1Z67kNlLYqh8vdC5hpum3wzN8GIN1T8N1TkEl9M9r_xk'
 DEPLOY_SLUG = 'spacepix'
 NUM_SLIDES_AFTER_CONTENT = 1
-POSTED_ON_FB = False
-FB_POST = ''
+POSTED_ON_FB = True
+FB_POST = 'https://www.facebook.com/NPR/posts/10153349372601756'
