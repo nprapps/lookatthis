@@ -3,6 +3,9 @@
  */
 
 var _gaq = _gaq || [];
+var _comscore = _comscore || [];
+var _sf_async_config={};
+
 
 var ANALYTICS = (function () {
 
@@ -73,7 +76,6 @@ var ANALYTICS = (function () {
      * Comscore
      */
     var setupComscore = function() {
-        var _comscore = _comscore || [];
         _comscore.push({ c1: "2", c2: "17691522" });
 
         (function() {
@@ -98,7 +100,6 @@ var ANALYTICS = (function () {
      * Chartbeat
      */
     var setupChartbeat = function() {
-        var _sf_async_config={};
         /** CONFIGURATION START **/
         _sf_async_config.uid = 18888;
         _sf_async_config.domain = "npr.org";
