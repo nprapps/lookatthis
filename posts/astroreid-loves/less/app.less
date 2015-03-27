@@ -371,15 +371,11 @@ h2 {
 
 .animated {
     opacity: 0;
-    visibility: hidden;
-}
-
-.slow {
-    .transition(opacity 2s ease-in);
-
-}
-.fast {
-    .transition(opacity 1s ease-in);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-font-smoothing: antialiased;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: translateZ(0);
 }
 
 .foreground-image-container {
@@ -416,10 +412,6 @@ h2 {
         z-index: -2;
         .transition(opacity 1s linear);
     }
-}
-
-.fade-in-bg, .fade-out-bg {
-    .transition(opacity 2s linear);
 }
 
 .fade-in-bg {

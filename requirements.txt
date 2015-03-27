@@ -2,7 +2,6 @@ Fabric==1.4.3
 Flask==0.9
 Jinja2==2.7.3
 MarkupSafe==0.23
--e git://github.com/tumblr/pytumblr.git@bf84af0c47847204c1f69d1ae64f8e82c7ef25c7#egg=PyTumblr-master
 PyYAML==3.11
 Werkzeug==0.8.3
 bcdoc==0.12.0

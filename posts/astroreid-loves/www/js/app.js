@@ -102,7 +102,13 @@ var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     slideEndTime = $thisSlide.data('slide-end-time');
 
     if ($thisSlide.hasClass('fade-in-bg')) {
-        $thisSlide.css('opacity', 1);
+        $thisSlide.velocity({
+            'opacity': 1
+        },
+        {
+            duration: 2000,
+            easing: 'ease-in'
+        });
     }
 
     if ($thisSlide.hasClass('fade-overlay')) {

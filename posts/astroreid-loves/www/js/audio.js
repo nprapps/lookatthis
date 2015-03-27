@@ -1,4 +1,6 @@
 var AUDIO = (function() {
+    var isAnimating = false;
+
     var setUpPlayer = function() {
         $player.jPlayer('play');
 
@@ -38,25 +40,59 @@ var AUDIO = (function() {
 
         if ($animatedElements) {
             for (var i = 0; i < $animatedElements.length; i++) {
-                var entranceTime = $animatedElements.eq(i).data('entrance') || null;
-                var exitTime = $animatedElements.eq(i).data('exit') || slideEndTime - 1;
+                var $el = $animatedElements.eq(i);
 
-                if (position > entranceTime) {
-                    $animatedElements.eq(i).css({
-                        'opacity': 1,
-                        'visibility': 'visible'
+                var entranceTime = $el.data('entrance') || null;
+                var exitTime = $el.data('exit') || slideEndTime - 2;
+                if ($el.hasClass('fast')) {
+                    var speed = 1000;
+                } else {
+                    var speed = 2000;
+                }
+                if (
+                    (position > entranceTime) && 
+                    (position < exitTime) &&
+                    ($el.css('opacity') < 1) && 
+                    (!isAnimating)
+                ) {
+                    $el.velocity({
+                        opacity: 1
+                    }, {
+                        duration: speed,
+                        easing: "ease-in",
+                        begin: function() {
+                            isAnimating = true;
+                        },
+                        complete: function() {
+                            isAnimating = false;
+                        }
                     });
                 }
-                if (position > exitTime) {
-                    $animatedElements.eq(i).css({
-                        'opacity': 0,
+                if (position > exitTime && $el.css('opacity') !== 0 && !isAnimating) {
+                    $el.velocity({
+                        opacity: 0
+                    }, {
+                        duration: speed,
+                        easing: "ease-in",
+                        begin: function() {
+                            isAnimating = true;
+                        },
+                        complete: function(){
+                            isAnimating = false;
+                        }
                     });
                 }
             }
         }
 
         if (position > endTime - 2 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
-            $slides.eq(currentIndex).css('opacity', 0);
+            $slides.eq(currentIndex).velocity({
+                'opacity': 0
+            },
+            {
+                duration: 2000,
+                easing: "ease-in"
+            });
         }
 
     }
