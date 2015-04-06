@@ -1,0 +1,13 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+    <h5>Here's another good story from Look At This</h5>
+    <a href="{{ row.text3 }}" target="_blank" class="previously-on">
+        <h2>{{ row.text1|smarty }}</h2>
+        <h3>{{ row.text2|smarty }}</h3>
+        <h4>View</h4>
+    </a>
+
+    <script type="text/javascript">
+        window.NEXT_POST_URL = "{{ row.text3 }}";
+    </script>
+{% endblock %}
