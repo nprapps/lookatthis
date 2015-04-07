@@ -27,6 +27,7 @@ posts = Blueprint('posts', __name__, template_folder='posts/')
 
 # Example application views
 @app.route('/')
+@oauth.oauth_required
 def _posts_list():
     """
     Renders a list of all posts for local testing.
@@ -58,6 +59,7 @@ def _sitemap():
     return make_response(render_template('sitemap.xml', **context))
 
 @posts.route('/posts/<slug>/')
+@oauth.oauth_required
 def _post(slug):
     """
     Renders a post without the tumblr wrapper.
@@ -86,6 +88,7 @@ def _post(slug):
 
 app.register_blueprint(static.static)
 app.register_blueprint(posts)
+app.register_blueprint(oauth.oauth)
 app.register_blueprint(static_post.post)
 app.register_blueprint(static_theme.theme)
 

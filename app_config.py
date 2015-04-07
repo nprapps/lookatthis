@@ -10,6 +10,9 @@ See get_secrets() below for a fast way to access them.
 
 import os
 
+from authomatic.providers import oauth2
+from authomatic import Authomatic
+
 """
 NAMES
 """
@@ -93,6 +96,25 @@ PROJECT_GOOGLE_ANALYTICS = {
 }
 
 DISQUS_UUID = 'e90a2863-0148-11e4-93ac-14109fed4b76'
+
+"""
+OAUTH
+"""
+
+GOOGLE_OAUTH_CREDENTIALS_PATH = '~/.google_oauth_credentials'
+
+authomatic_config = {
+    'google': {
+        'id': 1,
+        'class_': oauth2.Google,
+        'consumer_key': os.environ.get('GOOGLE_OAUTH_CLIENT_ID'),
+        'consumer_secret': os.environ.get('GOOGLE_OAUTH_CONSUMER_SECRET'),
+        'scope': ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/userinfo.email'],
+        'offline': True,
+    },
+}
+
+authomatic = Authomatic(authomatic_config, os.environ.get('AUTHOMATIC_SALT'))
 
 """
 Utilities
