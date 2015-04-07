@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 
+import app_config
 import argparse
 import copytext
 import csv
-from glob import glob
 import imp
 import json
-
-from flask import Blueprint, Flask, make_response, render_template, render_template_string
-from werkzeug.debug import DebuggedApplication
-
-import app_config
-from render_utils import make_context, smarty_filter, urlencode_filter, number_filter, CSSIncluder, JavascriptIncluder
+import oauth
 import static
 import static_post
 import static_theme
 
+from flask import Blueprint, Flask, make_response, render_template, render_template_string
+from glob import glob
+from render_utils import make_context, smarty_filter, urlencode_filter, number_filter, CSSIncluder, JavascriptIncluder
+from werkzeug.debug import DebuggedApplication
+
 app = Flask(__name__)
+app.debug = app_config.DEBUG
 
 app.jinja_env.filters['smarty'] = smarty_filter
 app.jinja_env.filters['urlencode'] = urlencode_filter
