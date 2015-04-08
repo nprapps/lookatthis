@@ -38,28 +38,30 @@ var resize = function() {
     }
 };
 
-var setUpFullPage = function() {
-    var anchors = ['_'];
-    for (var i = 0; i < copy.content.length; i++) {
-        anchors.push(copy.content[i][0]);
-    }
-    $.fn.fullpage({
-        anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
-        autoScrolling: false,
-        keyboardScrolling: false,
-        verticalCentered: false,
-        fixedElements: '.primary-navigation, #share-modal',
-        resize: false,
-        css3: true,
-        loopHorizontal: false,
-        afterRender: onPageLoad,
-        afterSlideLoad: lazyLoad,
-        onSlideLeave: onSlideLeave
-    });
+var setUpDeck = function() {
+    //var anchors = ['_'];
+    //for (var i = 0; i < copy.content.length; i++) {
+        //anchors.push(copy.content[i][0]);
+    //}
+    //$.deck($slides);
+
+    //$.fn.fullpage({
+        //anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
+        //autoScrolling: false,
+        //keyboardScrolling: false,
+        //verticalCentered: false,
+        //fixedElements: '.primary-navigation, #share-modal',
+        //resize: false,
+        //css3: true,
+        //loopHorizontal: false,
+        //afterRender: onPageLoad,
+        //afterSlideLoad: lazyLoad,
+        //onSlideLeave: onSlideLeave
+    //});
 };
 
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0);
+    //setSlidesForLazyLoading(0);
     $('.section').css({
       'opacity': 1,
       'visibility': 'visible',
@@ -238,13 +240,7 @@ var onDocumentKeyDown = function(e) {
     if (e.which === 37 || e.which === 39) {
         lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
-        if (e.which === 37) {
-            $.fn.fullpage.moveSlideLeft();
-        } else if (e.which === 39) {
-            $.fn.fullpage.moveSlideRight();
-        }
     }
-    // jquery.fullpage handles actual scrolling
     return true;
 }
 
@@ -315,22 +311,21 @@ $(document).ready(function() {
     $upNext = $('.up-next');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
+    //$slides.on('click', onSlideClick);
     $upNext.on('click', onNextPostClick);
     $arrows.on('click', onArrowsClick);
-    $arrows.on('touchstart', fakeMobileHover);
-    $arrows.on('touchend', rmFakeMobileHover);
-    hammer = new Hammer(document.body);
-    hammer.on('swipeleft', onSwipeLeft);
-    hammer.on('swiperight', onSwipeRight);
+    //$arrows.on('touchstart', fakeMobileHover);
+    //$arrows.on('touchend', rmFakeMobileHover);
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
+    //ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    //var clippy = new ZeroClipboard($(".clippy"));
+    //clippy.on('ready', function(readyEvent) {
+        //clippy.on('aftercopy', onClippyCopy);
+    //});
 
-    setUpFullPage();
+    //setUpFullPage();
+    $.deck($slides);
+    onPageLoad();
     resize();
 
     arrowTest = determineArrowTest();
