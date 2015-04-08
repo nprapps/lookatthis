@@ -2,6 +2,7 @@
 var $upNext = null;
 var $w;
 var $h;
+var $section;
 var $slides;
 var $arrows;
 var $nextArrow;
@@ -24,6 +25,7 @@ var resize = function() {
     $w = $(window).width();
     $h = $(window).height();
 
+    $section.height($h);
     $slides.width($w);
 
     optimalWidth = ($h * aspectWidth) / aspectHeight;
@@ -303,6 +305,7 @@ $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
 
+    $section = $('.section');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
