@@ -2,6 +2,7 @@
 var $upNext = null;
 var $w;
 var $h;
+var $document;
 var $slides;
 var $arrows;
 var $nextArrow;
@@ -38,44 +39,21 @@ var resize = function() {
     }
 };
 
-var setUpDeck = function() {
-    //var anchors = ['_'];
-    //for (var i = 0; i < copy.content.length; i++) {
-        //anchors.push(copy.content[i][0]);
-    //}
-    //$.deck($slides);
-
-    //$.fn.fullpage({
-        //anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
-        //autoScrolling: false,
-        //keyboardScrolling: false,
-        //verticalCentered: false,
-        //fixedElements: '.primary-navigation, #share-modal',
-        //resize: false,
-        //css3: true,
-        //loopHorizontal: false,
-        //afterRender: onPageLoad,
-        //afterSlideLoad: lazyLoad,
-        //onSlideLeave: onSlideLeave
-    //});
-};
-
 var onPageLoad = function() {
-    //setSlidesForLazyLoading(0);
+    setSlidesForLazyLoading(0);
     $('.section').css({
       'opacity': 1,
       'visibility': 'visible',
     });
-    showNavigation();
+    showNavigation(0);
 };
 
 // after a new slide loads
-var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
-    setSlidesForLazyLoading(slideIndex);
-    showNavigation();
+var lazyLoad = function(index) {
+    setSlidesForLazyLoading(index);
 
     // Completion tracking
-    how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
+    how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
@@ -144,20 +122,20 @@ var loadImages = function($slide) {
     }
 };
 
-var showNavigation = function() {
+var showNavigation = function(index) {
     /*
     * Nav doesn't exist by default.
     * This function loads it up.
     */
 
-    if ($slides.first().hasClass('deck-current')) {
+    if (index === 0) {
         /*
         * Don't show arrows on titlecard
         */
         $arrows.hide();
     }
 
-    else if ($slides.last().hasClass('deck-current')) {
+    else if ($slides.last().index === index) {
         /*
         * Last card gets no next arrow but does have the nav.
         */
@@ -167,9 +145,8 @@ var showNavigation = function() {
 
         $nextArrow.removeClass('deck-current');
         $nextArrow.hide();
-    } else if ($slides.eq(1).hasClass('deck-current')) {
+    } else if (index === 1) {
         showArrows();
-
         switch (arrowTest) {
             case 'bright-arrow':
                 $nextArrow.addClass('titlecard-nav');
@@ -213,11 +190,13 @@ var getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
+var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called when leaving a slide.
     */
-    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
+    lazyLoad(toIndex);
+    showNavigation(toIndex);
+    ANALYTICS.exitSlide(toIndex.toString(), lastSlideExitEvent);
 }
 
 var onFirstRightArrowClick = function() {
@@ -276,6 +255,17 @@ var rmFakeMobileHover = function() {
     });
 }
 
+var onNextArrowClick = function() {
+    // @TODO track the click?
+    $.deck('next');
+}
+
+var onPreviousArrowClick = function() {
+    // @TODO track the click?
+    $.deck('previous');
+}
+
+
 /*
  * Text copied to clipboard.
  */
@@ -285,35 +275,29 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
-var onSwipeLeft = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swipeleft';    
-        $.fn.fullpage.moveSlideRight();
-    }
-}
-
-var onSwipeRight = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swiperight';
-        $.fn.fullpage.moveSlideLeft();      
-    }
-}
-
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
 
+    $document = $(document);
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
+    $previousArrow = $arrows.filter('.previous');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
     $startCardButton.on('click', onStartCardButtonClick);
     //$slides.on('click', onSlideClick);
+    
     $upNext.on('click', onNextPostClick);
     $arrows.on('click', onArrowsClick);
+    $document.on('deck.change', onSlideChange);
+
+    $previousArrow.on('click', onPreviousArrowClick);
+    $nextArrow.on('click', onNextArrowClick);
+
     //$arrows.on('touchstart', fakeMobileHover);
     //$arrows.on('touchend', rmFakeMobileHover);
 
