@@ -1,28 +1,34 @@
 #!/usr/bin/env python
 
-import imp
-import os
-
-import boto
-from fabric.api import local, require, settings, task
-from fabric.state import env
-
 import app as flat_app
 import app_config
-
-# Other fabfiles
 import assets
+import boto
 import data
 import flat
+import imp
 import issues
+import json
+import os
 import render
+import subprocess
 import text
 import theme
 import utils
+import webbrowser
+
+from distutils.spawn import find_executable
+from fabric.api import local, prompt, require, settings, task
+from fabric.state import env
+from oauth import get_credentials
+from time import sleep
 
 # Bootstrap can only be run once, then it's disabled
 if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
     import bootstrap
+
+SPREADSHEET_COPY_URL_TEMPLATE = 'https://www.googleapis.com/drive/v2/files/%s/copy'
+SPREADSHEET_VIEW_TEMPLATE = 'https://docs.google.com/spreadsheet/ccc?key=%s#gid=1'
 
 """
 Environments
@@ -156,7 +162,63 @@ def _new(slug):
 
     local('cp -r new_post %s/%s' % (app_config.POST_PATH, slug))
     post(slug)
+    _check_credentials()
+    old_key = env.post_config.COPY_GOOGLE_DOC_KEY
+    new_key = _create_spreadsheet('%s Look At This COPY' % slug)
+    if new_key:
+        utils.replace_in_file('%s/post_config.py' % env.static_path, old_key, new_key)
+        env.copytext_key = new_key
     update()
+
+def _check_credentials():
+    """
+    Check credentials and spawn server and browser if not
+    """
+    credentials = get_credentials()
+    if not credentials or 'https://www.googleapis.com/auth/drive' not in credentials.config['google']['scope']:
+        try:
+            with open(os.devnull, 'w') as fnull:
+                print 'Credentials were not found or permissions were not correct. Automatically opening a browser to authenticate with Google.'
+                gunicorn = find_executable('gunicorn')
+                process = subprocess.Popen([gunicorn, '-b', '127.0.0.1:8888', 'app:wsgi_app'], stdout=fnull, stderr=fnull)
+                webbrowser.open_new('http://127.0.0.1:8888/oauth')
+                print 'Waiting...'
+                while not credentials:
+                    try:
+                        credentials = get_credentials()
+                        sleep(1)
+                    except ValueError:
+                        continue
+                print 'Successfully authenticated!'
+                process.terminate()
+        except KeyboardInterrupt:
+            print '\nCtrl-c pressed. Later, skater!'
+            exit()
+
+def _create_spreadsheet(title):
+    """
+    Copy the COPY spreadsheet
+    """
+    kwargs = {
+        'credentials': get_credentials(),
+        'url': SPREADSHEET_COPY_URL_TEMPLATE % env.post_config.COPY_GOOGLE_DOC_KEY,
+        'method': 'POST',
+        'headers': {'Content-Type': 'application/json'},
+        'body': json.dumps({
+            'title': title,
+        }),
+    }
+
+    resp = app_config.authomatic.access(**kwargs)
+    if resp.status == 200:
+        spreadsheet_key = resp.data['id']
+        spreadsheet_url = SPREADSHEET_VIEW_TEMPLATE % spreadsheet_key
+        print 'New spreadsheet created successfully!'
+        print 'View it online at %s' % spreadsheet_url
+        return spreadsheet_key
+    else:
+        print 'Error creating spreadsheet (status code %s) with message %s' % (resp.status, resp.reason)
+        return None
 
 @task
 def rename(new_slug, check_exists=True):

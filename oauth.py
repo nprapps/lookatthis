@@ -44,7 +44,6 @@ def authenticate():
 
         if not result.error:
             save_credentials(result.user.credentials)
-            get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
 
         return render_template('oauth/authenticate.html', **context)
 
