@@ -273,7 +273,6 @@ var onPreviousArrowClick = function() {
  */
 var onClippyCopy = function(e) {
     alert('Copied to your clipboard!');
-
     ANALYTICS.copySummary();
 }
 
@@ -287,13 +286,13 @@ $(document).ready(function() {
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
-    $previousArrow = $arrows.filter('.previous');
+    $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    //$slides.on('click', onSlideClick);
-    
+    $slides.on('click', onSlideClick);
+
     $upNext.on('click', onNextPostClick);
     $arrows.on('click', onArrowsClick);
     $document.on('deck.change', onSlideChange);
@@ -301,14 +300,14 @@ $(document).ready(function() {
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
 
-    //$arrows.on('touchstart', fakeMobileHover);
-    //$arrows.on('touchend', rmFakeMobileHover);
+    $arrows.on('touchstart', fakeMobileHover);
+    $arrows.on('touchend', rmFakeMobileHover);
 
-    //ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    //var clippy = new ZeroClipboard($(".clippy"));
-    //clippy.on('ready', function(readyEvent) {
-        //clippy.on('aftercopy', onClippyCopy);
-    //});
+    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
+    var clippy = new ZeroClipboard($(".clippy"));
+    clippy.on('ready', function(readyEvent) {
+        clippy.on('aftercopy', onClippyCopy);
+    });
 
     $.deck($slides);
     onPageLoad();
