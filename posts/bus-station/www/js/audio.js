@@ -11,11 +11,10 @@ var AUDIO = (function() {
 
     var checkForAudio = function(slideAnchor) {
         for (var i = 0; i < copy.content.length; i++) {
-            var rowAnchor = copy.content[i][0];
-            var narrativeFilename = copy.content[i][9];
-            var narrativeSubtitles = copy.content[i][10];
-            var ambientFilename = copy.content[i][11];
-            var ambientVolume = copy.content[i][12];
+            var rowAnchor = copy.content[i]['id'];
+            var narrativeFilename = copy.content[i]['narrative_audio'];
+            var narrativeSubtitles = copy.content[i]['narrative_audio_subtitles'];
+            var ambientFilename = copy.content[i]['ambient_audio'];            
 
             if (rowAnchor === slideAnchor && narrativeFilename !== null && !NO_AUDIO) {
                 $thisPlayerProgress = $('#slide-' + rowAnchor).find('.player-progress');
@@ -24,8 +23,8 @@ var AUDIO = (function() {
                 $subtitleWrapper = $('#slide-' + rowAnchor).find('.subtitle-wrapper');
                 $subtitles = $('#slide-' + rowAnchor).find('.subtitles');
 
-                narrativeURL = APP_CONFIG.S3_BASE_URL + '/assets/audio/' + narrativeFilename;
-                subtitlesURL = APP_CONFIG.S3_BASE_URL + '/data/' + narrativeSubtitles;
+                narrativeURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + narrativeFilename;
+                subtitlesURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/data/' + narrativeSubtitles;
                 setNarrativeMedia();
             } else {
                 _pauseNarrativePlayer();
@@ -34,7 +33,7 @@ var AUDIO = (function() {
 
             if (rowAnchor === slideAnchor && ambientFilename !== null && !NO_AUDIO) {
 
-                ambientURL = APP_CONFIG.S3_BASE_URL + '/assets/audio/' + ambientFilename;
+                ambientURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + ambientFilename;
 
                 if (ambientFilename === 'STOP') {
                     $ambientPlayer.jPlayer('pause');
@@ -101,7 +100,7 @@ var AUDIO = (function() {
 
     var fakeNarrativePlayer = function() {
         $narrativePlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/assets/audio/' + 'doctor_01.mp3'
+            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + 'doctor_01.mp3'
         }).jPlayer('pause');
     }
 
@@ -169,7 +168,7 @@ var AUDIO = (function() {
 
     var fakeAmbientPlayer = function() {
         $ambientPlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/assets/audio/' + 'sample-ambi.mp3'
+            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + 'sample-ambi.mp3'
         }).jPlayer('pause');
     }
 
