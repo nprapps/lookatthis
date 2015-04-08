@@ -18,7 +18,6 @@ def oauth_alert():
     """
     Show an OAuth alert to start authentication process.
     """
-    #import ipdb; ipdb.set_trace();
     context = make_context()
     credentials = get_credentials()
 
