@@ -6,19 +6,12 @@ Commands related to syncing copytext from Google Docs.
 from fabric.api import task
 from fabric.state import env
 
-from etc.gdocs import GoogleDoc
+from oauth import get_document
 
 @task(default=True)
 def update():
     """
     Downloads a Google Doc as an Excel file.
     """
+    get_document(env.copytext_key, 'data/%s.xlsx' % env.copytext_slug)
 
-    doc = {
-        'key': env.copytext_key,
-        'file_name': env.copytext_slug
-    }
-
-    g = GoogleDoc(**doc)
-    g.get_auth()
-    g.get_document()
