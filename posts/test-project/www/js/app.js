@@ -264,7 +264,7 @@ var onNextArrowClick = function() {
 
 var onPreviousArrowClick = function() {
     // @TODO track the click?
-    $.deck('previous');
+    $.deck('prev');
 }
 
 
