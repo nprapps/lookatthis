@@ -228,7 +228,7 @@ var onDocumentKeyDown = function(e) {
 var onSlideClick = function(e) {
     if (isTouch) {
         lastSlideExitEvent = 'tap';
-        $.fn.fullpage.moveSlideRight();
+        $.deck('next');
     }
     return true;
 }
