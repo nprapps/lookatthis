@@ -292,20 +292,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         .instant {
             .transition(all 0 ease-in);
         }
+    }
 
-        .slidesContainer {
-            float: left;
-            position: relative;
-            height: 100%;
-            display: block;
-
-            .slide {
-                float: left;
-                height: 100%;
-                display: block;
-                overflow: auto;
-            }
-        }
+    .slide {
+        float: left;
+        height: 100%;
+        display: block;
+        overflow: auto;
     }
 }
 
@@ -313,7 +306,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .section, .slide {
     .background-size(cover);
     background-position: center center;
-    position: relative;
 }
 
 // full width container within a section or slide
