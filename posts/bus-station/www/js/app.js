@@ -6,6 +6,25 @@ var $slides;
 var $arrows;
 var $nextArrow;
 var $startCardButton;
+var $controlBtn;
+var $thisPlayerProgress;
+var $playedBar;
+var $subtitleWrapper;
+var $subtitles;
+var $slideTitle;
+var $ambientPlayer;
+var $narrativePlayer;
+var $share;
+var $shareModal;
+var $progressIndicator
+var $currentProgress;
+var $support;
+var $supportBtn;
+var $question;
+var $careStory;
+var $careStoryBtns;
+var $email;
+var $emailBtn;
 var isTouch = Modernizr.touch;
 var mobileSuffix;
 var aspectWidth = 16;
@@ -16,9 +35,13 @@ var w;
 var h;
 var completion = 0;
 var arrowTest;
-var lastSlideExitEvent;
-var hammer;
-
+var progressTest;
+var conclusionTest;
+var firstRightArrowClicked = false;
+var presentedConclusion = false;
+// var hammer;
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+var visibilityProperty = null;
 
 var resize = function() {
     $w = $(window).width();
@@ -36,6 +59,7 @@ var resize = function() {
         w = optimalWidth;
         h = $h;
     }
+
 };
 
 var setUpFullPage = function() {
@@ -71,24 +95,36 @@ var onPageLoad = function() {
 var lazyLoad = function(anchorLink, index, slideAnchor, slideIndex) {
     setSlidesForLazyLoading(slideIndex);
     showNavigation();
+    AUDIO.checkForAudio(slideAnchor);
+    animateProgress(slideIndex);
+
+    if (slideIndex === 0) {
+        $share.hide();
+    } else {
+        $share.show();
+    }
+
+    if (slideIndex === $slides.length - 1) {
+        buildConclusionSlide();
+    }
 
     // Completion tracking
-    how_far = (slideIndex + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
+    how_far = (slideIndex + 1) / ($slides.length - 1);
 
     if (how_far >= completion + 0.25) {
         completion = how_far - (how_far % 0.25);
 
         if (completion === 0.25) {
-            ANALYTICS.completeTwentyFivePercent();
+            ANALYTICS.completeTwentyFivePercent(progressTest);
         }
         else if (completion === 0.5) {
-            ANALYTICS.completeFiftyPercent();
+            ANALYTICS.completeFiftyPercent(progressTest);
         }
         else if (completion === 0.75) {
-            ANALYTICS.completeSeventyFivePercent();
+            ANALYTICS.completeSeventyFivePercent(progressTest);
         }
         else if (completion === 1) {
-            ANALYTICS.completeOneHundredPercent();
+            ANALYTICS.completeOneHundredPercent(progressTest);
         }
     }
 };
@@ -99,19 +135,19 @@ var setSlidesForLazyLoading = function(slideIndex) {
     * Lazy-loads images in future slides because of reasons.
     */
     var slides = [
-        $slides.eq(slideIndex - 2),
-        $slides.eq(slideIndex - 1),
         $slides.eq(slideIndex),
         $slides.eq(slideIndex + 1),
-        $slides.eq(slideIndex + 2)
+        $slides.eq(slideIndex + 2),
+        $slides.eq(slideIndex + 3),
+        $slides.eq(slideIndex + 4)
     ];
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
-
+    /*
     if ($w < 769) {
         mobileSuffix = '-sq';
-    }
+    }*/
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
@@ -191,6 +227,10 @@ var showNavigation = function() {
 
         $nextArrow.off('click', onFirstRightArrowClick);
     }
+
+    if (progressTest === 'progress-bar') {
+        $progressIndicator.show();
+    }
 }
 
 var showArrows = function() {
@@ -201,39 +241,104 @@ var showArrows = function() {
     $arrows.show();
 };
 
-var determineArrowTest = function() {
-    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
+var determineTest = function(possibleTests) {
     var test = possibleTests[getRandomInt(0, possibleTests.length)]
-    return test;
+    return test
 }
 
 var getRandomInt = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/*var setCustomVars = function() {
+    ANALYTICS.setCustomVar(40, 'progress-test', progressTest);
+}*/
+
+var buildConclusionSlide = function() {
+    ANALYTICS.trackEvent('tests-run', conclusionTest);
+
+    if (!presentedConclusion) {
+        presentedConclusion = true;
+        if (conclusionTest === 'no-question') {
+            $support.show();
+        } else {
+            $question.text(COPY['post_metadata'][conclusionTest]);
+            $careStory.show();
+        }
+    }
+
+}
+
+var onCareStoryBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+
+    $careStory.hide();
+
+    if ($this.hasClass('yes')) {
+        ANALYTICS.trackEvent('like-story-yes', conclusionTest);
+        $support.show();
+    } else {
+        ANALYTICS.trackEvent('like-story-no', conclusionTest);
+        $email.show();
+    }
+}
+
+var onSupportBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('support-btn-click', conclusionTest);
+
+    window.top.location = link
+    return true;
+}
+
+var onEmailBtnClick = function() {
+    ANALYTICS.trackEvent('email-btn-click', conclusionTest);
+}
+
+var animateProgress = function(index) {
+    var totalSlides = $slides.length;
+    var percentage = (index + 1) / totalSlides;
+    $currentProgress.css('width', percentage * 100 + '%');
+
+    if (index === 0) {
+        $progressIndicator.width(0);
+    } else {
+        $progressIndicator.width('100%');
+    }
+}
+
 var onSlideLeave = function(anchorLink, index, slideIndex, direction) {
     /*
     * Called when leaving a slide.
     */
-    ANALYTICS.exitSlide(slideIndex.toString(), lastSlideExitEvent);
+    ANALYTICS.exitSlide(slideIndex.toString());
 }
 
 var onFirstRightArrowClick = function() {
-    ANALYTICS.firstRightArrowClick(arrowTest);
+    if (firstRightArrowClicked === false) {
+        ANALYTICS.firstRightArrowClick(arrowTest);
+        firstRightArrowClicked = true;
+    }
 }
 
 var onStartCardButtonClick = function() {
-    lastSlideExitEvent = 'go';
-    $.fn.fullpage.moveSlideRight();
-}
+    ANALYTICS.trackEvent('begin');
 
-var onArrowsClick = function() {
-    lastSlideExitEvent = 'arrow';
+    $.fn.fullpage.moveSlideRight();
+    if (isTouch) {
+        AUDIO.fakeAmbientPlayer();
+        AUDIO.fakeNarrativePlayer();
+    }
 }
 
 var onDocumentKeyDown = function(e) {
     if (e.which === 37 || e.which === 39) {
-        lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
         if (e.which === 37) {
             $.fn.fullpage.moveSlideLeft();
@@ -247,17 +352,12 @@ var onDocumentKeyDown = function(e) {
 
 var onSlideClick = function(e) {
     if (isTouch) {
-        lastSlideExitEvent = 'tap';
+        if ($slides.first().hasClass('active')) {
+            AUDIO.fakeAmbientPlayer();
+            AUDIO.fakeNarrativePlayer();
+        }
         $.fn.fullpage.moveSlideRight();
     }
-    return true;
-}
-
-var onNextPostClick = function(e) {
-    e.preventDefault();
-
-    ANALYTICS.trackEvent('next-post');
-    window.top.location = NEXT_POST_URL;
     return true;
 }
 
@@ -271,9 +371,9 @@ var fakeMobileHover = function() {
 
 var rmFakeMobileHover = function() {
     $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
+        'background-color': 'rgba(0, 0, 0, 0.5)',
         'color': '#fff',
-        'opacity': .3
+        'opacity': .5
     });
 }
 
@@ -286,19 +386,56 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
-var onSwipeLeft = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swipeleft';    
-        $.fn.fullpage.moveSlideRight();
-    }
+var onControlBtnClick = function(e) {
+    e.preventDefault();
+    AUDIO.toggleNarrativeAudio();
+    ANALYTICS.trackEvent('pause-button');
+
+    e.stopPropagation();
 }
 
-var onSwipeRight = function(e) {
-    if (isTouch) {
-        lastSlideExitEvent = 'swiperight';
-        $.fn.fullpage.moveSlideLeft();      
-    }
+var onVisibilityChange = function() {
+    AUDIO.toggleAllAudio();
 }
+
+var getHiddenProperty = function() {
+    var prefixes = ['webkit','moz','ms','o'];
+
+    // if 'hidden' is natively supported just return it
+    if ('hidden' in document) return 'hidden';
+
+    // otherwise loop over all the known prefixes until we find one
+    for (var i = 0; i < prefixes.length; i++){
+        if ((prefixes[i] + 'Hidden') in document)
+            return prefixes[i] + 'Hidden';
+    }
+
+    // otherwise it's not supported
+    return null;
+}
+
+var isHidden = function() {
+    var prop = getHiddenProperty();
+    if (!prop) return false;
+
+    return document[prop];
+}
+
+
+/*
+ * Share modal opened.
+ */
+var onShareModalShown = function(e) {
+    ANALYTICS.openShareDiscuss();
+}
+
+/*
+ * Share modal closed.
+ */
+var onShareModalHidden = function(e) {
+    ANALYTICS.closeShareDiscuss();
+}
+
 
 $(document).ready(function() {
     $w = $(window).width();
@@ -310,29 +447,51 @@ $(document).ready(function() {
     $arrows = $('.controlArrow');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $controlBtn = $('.control-btn');
+    $narrativePlayer = $('#narrative-player');
+    $ambientPlayer = $('#ambient-player');
+    $share = $('.share');
+    $shareModal = $('#share-modal')
+    $progressIndicator = $('.progress-indicator');
+    $currentProgress = $('.current-progress');
+    $support = $('.support')
+    $supportBtn = $('.support-btn');
+    $careStory = $('.care-story');
+    $question = $('.question');
+    $careStoryBtns = $('.care-story-btn');
+    $email = $('.email');
+    $emailBtn = $('.email-btn');
 
+    arrowTest = determineTest(['faded-arrow', 'bright-arrow', 'bouncy-arrow']);
+    progressTest = determineTest(['progress-bar', 'no-progress-bar']);
+    conclusionTest = determineTest(['no-question', 'question_a', 'question_b', 'question_c', 'question_d']);
+
+    $shareModal.on('shown.bs.modal', onShareModalShown);
+    $shareModal.on('hidden.bs.modal', onShareModalHidden);
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $upNext.on('click', onNextPostClick);
-    $arrows.on('click', onArrowsClick);
+    $controlBtn.on('click', onControlBtnClick);
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
-    hammer = new Hammer(document.body);
-    hammer.on('swipeleft', onSwipeLeft);
-    hammer.on('swiperight', onSwipeRight);
+    $careStoryBtns.on('click', onCareStoryBtnClick);
+    $supportBtn.on('click', onSupportBtnClick);
+    $emailBtn.on('click', onEmailBtnClick);
+    $(document).keydown(onDocumentKeyDown);
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
-
+    AUDIO.setUpNarrativePlayer();
+    AUDIO.setUpAmbientPlayer();
     setUpFullPage();
     resize();
+   // setCustomVars();
 
-    arrowTest = determineArrowTest();
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(document).keydown(onDocumentKeyDown);
+
+    // listen for page visibility changes
+    visibilityProperty = getHiddenProperty();
+    if (visibilityProperty) {
+        var evtname = visibilityProperty.replace(/[H|h]idden/,'') + 'visibilitychange';
+        document.addEventListener(evtname, onVisibilityChange);
+    }
 });
