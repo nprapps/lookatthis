@@ -150,24 +150,24 @@ var showNavigation = function() {
     * This function loads it up.
     */
 
-    if ($slides.first().hasClass('active')) {
+    if ($slides.first().hasClass('deck-current')) {
         /*
         * Don't show arrows on titlecard
         */
         $arrows.hide();
     }
 
-    else if ($slides.last().hasClass('active')) {
+    else if ($slides.last().hasClass('deck-current')) {
         /*
         * Last card gets no next arrow but does have the nav.
         */
-        if (!$arrows.hasClass('active')) {
+        if (!$arrows.hasClass('deck-current')) {
             showArrows();
         }
 
-        $nextArrow.removeClass('active');
+        $nextArrow.removeClass('deck-current');
         $nextArrow.hide();
-    } else if ($slides.eq(1).hasClass('active')) {
+    } else if ($slides.eq(1).hasClass('deck-current')) {
         showArrows();
 
         switch (arrowTest) {
@@ -229,7 +229,7 @@ var onFirstRightArrowClick = function() {
 
 var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'go';
-    $.fn.fullpage.moveSlideRight();
+    $.deck('next');
 }
 
 var onArrowsClick = function() {
@@ -323,7 +323,6 @@ $(document).ready(function() {
         //clippy.on('aftercopy', onClippyCopy);
     //});
 
-    //setUpFullPage();
     $.deck($slides);
     onPageLoad();
     resize();
