@@ -20,8 +20,8 @@ var w;
 var h;
 var completion = 0;
 var startTouch;
-var tolerance;
-var currentSlide;
+var tolerance = 60;
+var lastSlideExitEvent;
 var firstRightArrowClicked = false;
 var TOUCH_FACTOR = 0.5;
 
@@ -144,28 +144,28 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
-    currentSlide = toIndex;
-    ANALYTICS.exitSlide(toIndex.toString());
+    ANALYTICS.exitSlide(fromIndex.toString());
+    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
 }
 
 var onStartCardButtonClick = function() {
+    lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
-    ANALYTICS.trackEvent('start-card-button-click')
 }
 
 var onDocumentKeyDown = function(e) {
     if (e.which === 37 || e.which === 39) {
+        lastSlideExitEvent = 'exit-keyboard';
         ANALYTICS.useKeyboardNavigation();
     }
     return true;
 }
 
 var onSlideClick = function(e) {
-    if (isTouch) {
-        ANALYTICS.trackEvent('slide-tap', currentSlide)
+    if (!$(e.target).is('button') && isTouch) {
+        lastSlideExitEvent = 'exit-tap';
         $.deck('next');
     }
-    return true;
 }
 
 var onNextPostClick = function(e) {
@@ -193,13 +193,13 @@ var rmFakeMobileHover = function() {
 }
 
 var onNextArrowClick = function() {
+    lastSlideExitEvent = 'exit-next-button-click';
     $.deck('next');
-    ANALYTICS.trackEvent('next-click', currentSlide)
 }
 
 var onPreviousArrowClick = function() {
+    lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
-    ANALYTICS.trackEvent('previous-click', currentSlide)
 }
 
 
@@ -226,7 +226,7 @@ var onTouchMove = function(e) {
         var direction = (xDistance > 0) ? 'right' : 'left';
 
         if (direction == 'right' && xDistance > tolerance) {
-            ANALYTICS.trackEvent('swipe-right', currentSlide);
+            lastSlideExitEvent = 'exit-swipe-right';
         }
         //else if (direction == 'right' && xDistance < tolerance) {
             //$previousArrow.css({
@@ -235,7 +235,7 @@ var onTouchMove = function(e) {
         //}
 
         if (direction == 'left' && Math.abs(xDistance) > tolerance) {
-            ANALYTICS.trackEvent('swipe-left', currentSlide);
+            lastSlideExitEvent = 'exit-swipe-left';
         }
         //else if (direction == 'left' && Math.abs(xDistance) < tolerance) {
             //$nextArrow.css({
