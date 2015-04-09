@@ -281,21 +281,24 @@ var onTouchMove = function(e) {
         }
         var xDistance = touch.screenX - startTouch.screenX;
         var direction = (xDistance > 0) ? 'right' : 'left';
-        if (direction == 'right' && xDistance < tolerance) {
+
+        if (direction == 'right' && xDistance > tolerance) {
+            ANALYTICS.trackEvent('swipe-right');
+        }
+        /*else if (direction == 'right' && xDistance < tolerance) {
             $previousArrow.css({
                 'left': (xDistance * TOUCH_FACTOR) + 'px'
             });
-        } else if (direction == 'right' && xDistance > tolerance) {
-            ANALYTICS.trackEvent('swipe-right');
-        }
+        }*/
 
-        if (direction == 'left' && Math.abs(xDistance) < tolerance) {
+        if (direction == 'left' && Math.abs(xDistance) > tolerance) {
+            ANALYTICS.trackEvent('swipe-left');
+        }
+        /*else if (direction == 'left' && Math.abs(xDistance) < tolerance) {
             $nextArrow.css({
                 'right': (Math.abs(xDistance) * TOUCH_FACTOR) + 'px'
             });
-        } else if (direction == 'left' && Math.abs(xDistance) > tolerance) {
-            ANALYTICS.trackEvent('swipe-left');
-        }
+        }*/
     });
 }
 
@@ -338,12 +341,13 @@ $(document).ready(function() {
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
 
-    $arrows.on('touchstart', fakeMobileHover);
-    $arrows.on('touchend', rmFakeMobileHover);
-  
-    $body.on('touchstart', onTouchStart);
-    $body.on('touchmove', onTouchMove);
-    $body.on('touchend', onTouchEnd);
+    if (isTouch) {
+        $arrows.on('touchstart', fakeMobileHover);
+        $arrows.on('touchend', rmFakeMobileHover);
+        $body.on('touchstart', onTouchStart);
+        $body.on('touchmove', onTouchMove);
+        $body.on('touchend', onTouchEnd);
+    }
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
