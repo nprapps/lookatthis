@@ -20,7 +20,6 @@ var w;
 var h;
 var completion = 0;
 var startTouch;
-var tolerance = 60;
 var lastSlideExitEvent;
 var TOUCH_FACTOR = 0.5;
 
@@ -216,6 +215,7 @@ var onTouchStart = function(e) {
 }
 
 var onTouchMove = function(e) {
+    var tolerance = $.deck('getOptions').touch.swipeTolerance;
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (!startTouch || touch.identifier !== startTouch.identifier) {
             return true;
@@ -299,9 +299,7 @@ $(document).ready(function() {
         clippy.on('aftercopy', onClippyCopy);
     });
 
-    $.deck($slides, {
-        touch: { swipeTolerance: tolerance }
-    });
+    $.deck($slides);
     onPageLoad();
     resize();
 
