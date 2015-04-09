@@ -45,7 +45,7 @@ var resize = function() {
 };
 
 var onPageLoad = function() {
-    setSlidesForLazyLoading(0);
+    lazyLoad(0);
     $('.section').css({
       'opacity': 1,
       'visibility': 'visible',
@@ -53,11 +53,7 @@ var onPageLoad = function() {
     showNavigation(0);
 };
 
-// after a new slide loads
-var lazyLoad = function(index) {
-    setSlidesForLazyLoading(index);
-
-    // Completion tracking
+var trackCompletion = function(index) {
     how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
     if (how_far >= completion + 0.25) {
@@ -76,9 +72,9 @@ var lazyLoad = function(index) {
             ANALYTICS.completeOneHundredPercent();
         }
     }
-};
+}
 
-var setSlidesForLazyLoading = function(slideIndex) {
+var lazyLoad = function(slideIndex) {
     /*
     * Sets up a list of slides based on your position in the deck.
     * Lazy-loads images in future slides because of reasons.
