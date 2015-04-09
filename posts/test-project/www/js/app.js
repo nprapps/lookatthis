@@ -301,6 +301,10 @@ $(document).ready(function() {
         clippy.on('aftercopy', onClippyCopy);
     });
 
+    if (APP_CONFIG.DEPLOYMENT_TARGET) {
+        Modernizr.history = null;
+    }
+
     $.deck($slides);
     onPageLoad();
     resize();

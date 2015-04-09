@@ -38,9 +38,6 @@
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/deck.core.js') }}
-    {% if not DEPLOYMENT_TARGET %}
-    {{ JS.push('js/lib/deck.hash.js') }}
-    {% endif %}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
