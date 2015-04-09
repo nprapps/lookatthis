@@ -131,7 +131,9 @@ var showNavigation = function(index) {
     } else {
         $arrows.show();
     }
-    resetArrows()
+    if (isTouch) {
+        resetArrows();
+    }
 }
 
 var onSlideChange = function(e, fromIndex, toIndex) {
