@@ -19,7 +19,6 @@ var w;
 var h;
 var completion = 0;
 var arrowTest;
-var lastSlideExitEvent;
 var startTouch;
 var tolerance;
 var firstRightArrowClicked = false;
@@ -197,7 +196,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     */
     lazyLoad(toIndex);
     showNavigation(toIndex);
-    ANALYTICS.exitSlide(toIndex.toString(), lastSlideExitEvent);
+    trackCompletion(toIndex);
+    ANALYTICS.exitSlide(toIndex.toString());
 }
 
 var onFirstRightArrowClick = function() {
@@ -208,17 +208,11 @@ var onFirstRightArrowClick = function() {
 }
 
 var onStartCardButtonClick = function() {
-    lastSlideExitEvent = 'go';
     $.deck('next');
-}
-
-var onArrowsClick = function() {
-    lastSlideExitEvent = 'arrow';
 }
 
 var onDocumentKeyDown = function(e) {
     if (e.which === 37 || e.which === 39) {
-        lastSlideExitEvent = 'keyboard';
         ANALYTICS.useKeyboardNavigation();
     }
     return true;
@@ -226,7 +220,6 @@ var onDocumentKeyDown = function(e) {
 
 var onSlideClick = function(e) {
     if (isTouch) {
-        lastSlideExitEvent = 'tap';
         $.deck('next');
     }
     return true;
