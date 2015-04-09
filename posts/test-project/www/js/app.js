@@ -8,6 +8,7 @@ var $section;
 var $slides;
 var $arrows;
 var $nextArrow;
+var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
 var mobileSuffix;
@@ -18,9 +19,9 @@ var optimalHeight;
 var w;
 var h;
 var completion = 0;
-var arrowTest;
 var startTouch;
 var tolerance;
+var currentSlide;
 var firstRightArrowClicked = false;
 var TOUCH_FACTOR = 0.5;
 
@@ -44,6 +45,7 @@ var resize = function() {
 };
 
 var onPageLoad = function() {
+    currentSlide = 0;
     lazyLoad(0);
     $('.section').css({
       'opacity': 1,
@@ -123,71 +125,16 @@ var loadImages = function($slide) {
 };
 
 var showNavigation = function(index) {
-    /*
-    * Nav doesn't exist by default.
-    * This function loads it up.
-    */
-
     if (index === 0) {
-        /*
-        * Don't show arrows on titlecard
-        */
         $arrows.hide();
     }
-
     else if ($slides.last().index === index) {
-        /*
-        * Last card gets no next arrow but does have the nav.
-        */
-        if (!$arrows.hasClass('deck-current')) {
-            showArrows();
-        }
-
-        $nextArrow.removeClass('deck-current');
+        $arrows.show();
         $nextArrow.hide();
-    } else if (index === 1) {
-        showArrows();
-        switch (arrowTest) {
-            case 'bright-arrow':
-                $nextArrow.addClass('titlecard-nav');
-                break;
-            case 'bouncy-arrow':
-                $nextArrow.addClass('shake animated titlecard-nav');
-                break;
-            default:
-                break;
-        }
-
-        $nextArrow.on('click', onFirstRightArrowClick);
     } else {
-        /*
-        * All of the other cards? Arrows and navs.
-        */
-        if ($arrows.filter('active').length != $arrows.length) {
-            showArrows();
-        }
-        $nextArrow.removeClass('shake animated titlecard-nav');
-
-        $nextArrow.off('click', onFirstRightArrowClick);
+        $arrows.show();
     }
-}
-
-var showArrows = function() {
-    /*
-    * Show the arrows.
-    */
-    $arrows.addClass('active');
-    $arrows.show();
-};
-
-var determineArrowTest = function() {
-    var possibleTests = ['faded-arrow', 'bright-arrow', 'bouncy-arrow'];
-    var test = possibleTests[getRandomInt(0, possibleTests.length)]
-    return test;
-}
-
-var getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
+    resetArrows()
 }
 
 var onSlideChange = function(e, fromIndex, toIndex) {
@@ -197,18 +144,13 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    currentSlide = toIndex;
     ANALYTICS.exitSlide(toIndex.toString());
-}
-
-var onFirstRightArrowClick = function() {
-    if (firstRightArrowClicked === false) {
-        ANALYTICS.firstRightArrowClick(arrowTest);
-        firstRightArrowClicked = true;
-    }
 }
 
 var onStartCardButtonClick = function() {
     $.deck('next');
+    ANALYTICS.trackEvent('start-card-button-click')
 }
 
 var onDocumentKeyDown = function(e) {
@@ -220,6 +162,7 @@ var onDocumentKeyDown = function(e) {
 
 var onSlideClick = function(e) {
     if (isTouch) {
+        ANALYTICS.trackEvent('slide-tap', currentSlide)
         $.deck('next');
     }
     return true;
@@ -250,13 +193,13 @@ var rmFakeMobileHover = function() {
 }
 
 var onNextArrowClick = function() {
-    // @TODO track the click?
     $.deck('next');
+    ANALYTICS.trackEvent('next-click', currentSlide)
 }
 
 var onPreviousArrowClick = function() {
-    // @TODO track the click?
     $.deck('prev');
+    ANALYTICS.trackEvent('previous-click', currentSlide)
 }
 
 
@@ -283,38 +226,42 @@ var onTouchMove = function(e) {
         var direction = (xDistance > 0) ? 'right' : 'left';
 
         if (direction == 'right' && xDistance > tolerance) {
-            ANALYTICS.trackEvent('swipe-right');
+            ANALYTICS.trackEvent('swipe-right', currentSlide);
         }
-        /*else if (direction == 'right' && xDistance < tolerance) {
-            $previousArrow.css({
-                'left': (xDistance * TOUCH_FACTOR) + 'px'
-            });
-        }*/
+        //else if (direction == 'right' && xDistance < tolerance) {
+            //$previousArrow.css({
+                //'left': (xDistance * TOUCH_FACTOR) + 'px'
+            //});
+        //}
 
         if (direction == 'left' && Math.abs(xDistance) > tolerance) {
-            ANALYTICS.trackEvent('swipe-left');
+            ANALYTICS.trackEvent('swipe-left', currentSlide);
         }
-        /*else if (direction == 'left' && Math.abs(xDistance) < tolerance) {
-            $nextArrow.css({
-                'right': (Math.abs(xDistance) * TOUCH_FACTOR) + 'px'
-            });
-        }*/
+        //else if (direction == 'left' && Math.abs(xDistance) < tolerance) {
+            //$nextArrow.css({
+                //'right': (Math.abs(xDistance) * TOUCH_FACTOR) + 'px'
+            //});
+        //}
     });
 }
 
 var onTouchEnd = function(e) {
-    $nextArrow.animate({
-        'right': 0
-    });
-    $previousArrow.animate({
-        'left': 0
-    });
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (startTouch && touch.identifier === startTouch.identifier) {
             startTouch = undefined;
         }
     });
 }
+
+var resetArrows = function() {
+    $nextArrow.animate({
+        'right': 0
+    });
+    $previousArrow.animate({
+        'left': 0
+    });
+}
+
 
 $(document).ready(function() {
     $w = $(window).width();
@@ -335,7 +282,6 @@ $(document).ready(function() {
     $slides.on('click', onSlideClick);
 
     $upNext.on('click', onNextPostClick);
-    $arrows.on('click', onArrowsClick);
     $document.on('deck.change', onSlideChange);
 
     $previousArrow.on('click', onPreviousArrowClick);
@@ -362,7 +308,6 @@ $(document).ready(function() {
     onPageLoad();
     resize();
 
-    arrowTest = determineArrowTest();
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
