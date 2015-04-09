@@ -45,11 +45,10 @@ var resize = function() {
 };
 
 var onPageLoad = function() {
-    currentSlide = 0;
     lazyLoad(0);
     $('.section').css({
-      'opacity': 1,
-      'visibility': 'visible',
+        'opacity': 1,
+        'visibility': 'visible',
     });
     showNavigation(0);
 };
@@ -301,7 +300,6 @@ $(document).ready(function() {
         clippy.on('aftercopy', onClippyCopy);
     });
 
-    tolerance = 60;
     $.deck($slides, {
         touch: { swipeTolerance: tolerance }
     });
