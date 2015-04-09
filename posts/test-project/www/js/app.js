@@ -22,7 +22,6 @@ var completion = 0;
 var startTouch;
 var tolerance = 60;
 var lastSlideExitEvent;
-var firstRightArrowClicked = false;
 var TOUCH_FACTOR = 0.5;
 
 var resize = function() {
