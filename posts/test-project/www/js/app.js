@@ -3,6 +3,7 @@ var $upNext = null;
 var $w;
 var $h;
 var $document;
+var $body;
 var $section;
 var $slides;
 var $arrows;
@@ -19,7 +20,7 @@ var h;
 var completion = 0;
 var arrowTest;
 var lastSlideExitEvent;
-var hammer;
+var startTouch;
 var firstRightArrowClicked = false;
 
 var resize = function() {
@@ -276,11 +277,21 @@ var onClippyCopy = function(e) {
     ANALYTICS.copySummary();
 }
 
+var onTouchStart = function(e) {
+}
+
+var onTouchMove = function(e) {
+}
+
+var onTouchEnd = function(e) {
+}
+
 $(document).ready(function() {
     $w = $(window).width();
     $h = $(window).height();
 
     $document = $(document);
+    $body = $('body');
     $section = $('.section');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
@@ -302,6 +313,10 @@ $(document).ready(function() {
 
     $arrows.on('touchstart', fakeMobileHover);
     $arrows.on('touchend', rmFakeMobileHover);
+  
+    $body.on('touchstart', onTouchStart);
+    $body.on('touchmove', onTouchMove);
+    $body.on('touchend', onTouchEnd);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
@@ -317,5 +332,5 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $(document).keydown(onDocumentKeyDown);
+    $document.keydown(onDocumentKeyDown);
 });
