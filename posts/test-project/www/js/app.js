@@ -1,7 +1,5 @@
 // Global state
 var $upNext = null;
-var $w;
-var $h;
 var $document;
 var $body;
 var $section;
@@ -11,38 +9,31 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
+
 var mobileSuffix;
-var aspectWidth = 16;
-var aspectHeight = 9;
-var optimalWidth;
-var optimalHeight;
 var w;
 var h;
-var completion = 0;
 var startTouch;
 var lastSlideExitEvent;
-var TOUCH_FACTOR = 0.5;
+
+var completion = 0;
+var swipeTolerance = 60;
+var touchFactor = 0.5;
 
 var resize = function() {
-    $w = $(window).width();
-    $h = $(window).height();
-
-    $section.height($h);
-    $slides.width($w);
-
-    optimalWidth = ($h * aspectWidth) / aspectHeight;
-    optimalHeight = ($w * aspectHeight) / aspectWidth;
-
-    w = $w;
-    h = optimalHeight;
-
-    if (optimalWidth > $w) {
-        w = optimalWidth;
-        h = $h;
-    }
+    /*
+     * Resize the content
+     */
+    w = $(window).width();
+    h = $(window).height();
+    $section.height(h);
+    $slides.width(w);
 };
 
 var onPageLoad = function() {
+    /*
+    * Set up page on load.
+    */
     lazyLoad(0);
     $('.section').css({
         'opacity': 1,
@@ -52,6 +43,9 @@ var onPageLoad = function() {
 };
 
 var trackCompletion = function(index) {
+    /*
+    * Track completion based on slide index.
+    */
     how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
     if (how_far >= completion + 0.25) {
@@ -74,12 +68,9 @@ var trackCompletion = function(index) {
 
 var lazyLoad = function(slideIndex) {
     /*
-    * Sets up a list of slides based on your position in the deck.
-    * Lazy-loads images in future slides because of reasons.
+    * Lazy-load images in current and future slides.
     */
     var slides = [
-        $slides.eq(slideIndex - 2),
-        $slides.eq(slideIndex - 1),
         $slides.eq(slideIndex),
         $slides.eq(slideIndex + 1),
         $slides.eq(slideIndex + 2)
@@ -88,7 +79,7 @@ var lazyLoad = function(slideIndex) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    if ($w < 769) {
+    if (w < 769) {
         mobileSuffix = '-sq';
     }
 
@@ -122,6 +113,9 @@ var loadImages = function($slide) {
 };
 
 var showNavigation = function(index) {
+    /*
+    * Hide and show arrows based on slide index
+    */
     if (index === 0) {
         $arrows.hide();
     }
@@ -138,7 +132,7 @@ var showNavigation = function(index) {
 
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
-    * Called when leaving a slide.
+    * Called transitioning between slides.
     */
     lazyLoad(toIndex);
     showNavigation(toIndex);
@@ -148,12 +142,20 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 }
 
 var onStartCardButtonClick = function() {
+    /*
+    * Called when clicking the "go" button.
+    */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
 }
 
 var onDocumentKeyDown = function(e) {
-    if (e.which === 37 || e.which === 39) {
+    /*
+    * Called when key is pressed
+    */
+    var keyOptions = $.deck('getOptions').keys;
+    var keys = keyOptions.next.concat(keyOptions.previous);
+    if (keys.indexOf(e.which) > -1) {
         lastSlideExitEvent = 'exit-keyboard';
         ANALYTICS.useKeyboardNavigation();
     }
@@ -161,21 +163,29 @@ var onDocumentKeyDown = function(e) {
 }
 
 var onSlideClick = function(e) {
-    if (!$(e.target).is('button') && isTouch) {
+    /*
+    * Advance on slide tap on touch devices
+    */
+    if (isTouch && !$(e.target).is('button')) {
         lastSlideExitEvent = 'exit-tap';
         $.deck('next');
     }
 }
 
 var onNextPostClick = function(e) {
+    /*
+     * Click next post
+     */
     e.preventDefault();
-
     ANALYTICS.trackEvent('next-post');
     window.top.location = NEXT_POST_URL;
     return true;
 }
 
 var fakeMobileHover = function() {
+    /*
+     * Fake hover when tapping buttons
+     */
     $(this).css({
         'background-color': '#fff',
         'color': '#000',
@@ -184,6 +194,9 @@ var fakeMobileHover = function() {
 }
 
 var rmFakeMobileHover = function() {
+    /*
+     * Remove fake hover when tapping buttons
+     */
     $(this).css({
         'background-color': 'rgba(0, 0, 0, 0.2)',
         'color': '#fff',
@@ -192,32 +205,43 @@ var rmFakeMobileHover = function() {
 }
 
 var onNextArrowClick = function() {
+    /*
+     * Next arrow click
+     */
     lastSlideExitEvent = 'exit-next-button-click';
     $.deck('next');
 }
 
 var onPreviousArrowClick = function() {
+    /*
+     * Previous arrow click
+     */
     lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
 }
 
 
-/*
- * Text copied to clipboard.
- */
 var onClippyCopy = function(e) {
+    /*
+     * Text copied to clipboard.
+     */
     alert('Copied to your clipboard!');
     ANALYTICS.copySummary();
 }
 
 var onTouchStart = function(e) {
+    /*
+     * Capture start position when swipe initiated
+     */
     if (!startTouch) {
         startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
     }
 }
 
 var onTouchMove = function(e) {
-    var tolerance = $.deck('getOptions').touch.swipeTolerance;
+    /*
+     * Track finger swipe
+     */
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (!startTouch || touch.identifier !== startTouch.identifier) {
             return true;
@@ -225,27 +249,30 @@ var onTouchMove = function(e) {
         var xDistance = touch.screenX - startTouch.screenX;
         var direction = (xDistance > 0) ? 'right' : 'left';
 
-        if (direction == 'right' && xDistance > tolerance) {
+        if (direction == 'right' && xDistance > swipeTolerance) {
             lastSlideExitEvent = 'exit-swipe-right';
         }
-        //else if (direction == 'right' && xDistance < tolerance) {
+        //else if (direction == 'right' && xDistance < swipeTolerance) {
             //$previousArrow.css({
-                //'left': (xDistance * TOUCH_FACTOR) + 'px'
+                //'left': (xDistance * touchFactor) + 'px'
             //});
         //}
 
-        if (direction == 'left' && Math.abs(xDistance) > tolerance) {
+        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
             lastSlideExitEvent = 'exit-swipe-left';
         }
-        //else if (direction == 'left' && Math.abs(xDistance) < tolerance) {
+        //else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
             //$nextArrow.css({
-                //'right': (Math.abs(xDistance) * TOUCH_FACTOR) + 'px'
+                //'right': (Math.abs(xDistance) * touchFactor) + 'px'
             //});
         //}
     });
 }
 
 var onTouchEnd = function(e) {
+    /*
+     * Clear swipe start position when swipe ends
+     */
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (startTouch && touch.identifier === startTouch.identifier) {
             startTouch = undefined;
@@ -254,6 +281,9 @@ var onTouchEnd = function(e) {
 }
 
 var resetArrows = function() {
+    /*
+     * Reset arrows when advancing slides
+     */
     $nextArrow.animate({
         'right': 0
     });
@@ -264,9 +294,6 @@ var resetArrows = function() {
 
 
 $(document).ready(function() {
-    $w = $(window).width();
-    $h = $(window).height();
-
     $document = $(document);
     $body = $('body');
     $section = $('.section');
@@ -301,11 +328,15 @@ $(document).ready(function() {
         clippy.on('aftercopy', onClippyCopy);
     });
 
+    // Turn off Modernizr history when deploying
     if (APP_CONFIG.DEPLOYMENT_TARGET) {
         Modernizr.history = null;
     }
 
-    $.deck($slides);
+    $.deck($slides, {
+        touch: { swipeTolerance: swipeTolerance }
+    });
+
     onPageLoad();
     resize();
 
