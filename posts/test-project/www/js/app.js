@@ -17,8 +17,8 @@ var startTouch;
 var lastSlideExitEvent;
 
 var completion = 0;
-var swipeTolerance = 60;
-var touchFactor = 0.5;
+var swipeTolerance = 40;
+var touchFactor = 1;
 
 var resize = function() {
     /*
@@ -118,9 +118,11 @@ var showNavigation = function(index) {
     */
     if (index === 0) {
         $arrows.hide();
+        $previousArrow.css('left', 0);
+        $nextArrow.css('right', 0);
     } else if ($slides.last().index() === index) {
         $arrows.show();
-        $nextArrow.hide();
+        $nextArrow.hide().css('right', 0);
     } else {
         $arrows.show();
     }
@@ -243,30 +245,37 @@ var onTouchMove = function(e) {
     /*
      * Track finger swipe
      */
+
+
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (!startTouch || touch.identifier !== startTouch.identifier) {
             return true;
         }
+
+
+        var yDistance = touch.screenY - startTouch.screenY;
         var xDistance = touch.screenX - startTouch.screenX;
         var direction = (xDistance > 0) ? 'right' : 'left';
 
+        if (Math.abs(yDistance) < Math.abs(xDistance)) {
+            e.preventDefault();
+        }
+
         if (direction == 'right' && xDistance > swipeTolerance) {
             lastSlideExitEvent = 'exit-swipe-right';
+        } else if (direction == 'right' && xDistance < swipeTolerance) {
+            $previousArrow.filter(':visible').css({
+                'left': (xDistance * touchFactor) + 'px'
+            });
         }
-        //else if (direction == 'right' && xDistance < swipeTolerance) {
-            //$previousArrow.css({
-                //'left': (xDistance * touchFactor) + 'px'
-            //});
-        //}
 
         if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
             lastSlideExitEvent = 'exit-swipe-left';
+        } else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
+            $nextArrow.filter(':visible').css({
+                'right': (Math.abs(xDistance) * touchFactor) + 'px'
+            });
         }
-        //else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
-            //$nextArrow.css({
-                //'right': (Math.abs(xDistance) * touchFactor) + 'px'
-            //});
-        //}
     });
 }
 
