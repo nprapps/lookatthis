@@ -118,13 +118,13 @@ var showNavigation = function(index) {
     */
     if (index === 0) {
         $arrows.hide();
-    }
-    else if ($slides.last().index === index) {
+    } else if ($slides.last().index() === index) {
         $arrows.show();
         $nextArrow.hide();
     } else {
         $arrows.show();
     }
+
     if (isTouch) {
         resetArrows();
     }
