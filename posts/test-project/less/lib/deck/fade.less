@@ -1,0 +1,35 @@
+.deck-container .slide {
+  -webkit-transition: opacity 500ms ease-in-out 0ms;
+  transition: opacity 500ms ease-in-out 0ms;
+}
+.deck-container:not(.deck-menu) > .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.deck-container:not(.deck-menu) > .slide .slide {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+.deck-container:not(.deck-menu) > .slide .deck-next, .deck-container:not(.deck-menu) > .slide .deck-after {
+  opacity: 0;
+}
+.deck-container:not(.deck-menu) > .slide .deck-current {
+  opacity: 1;
+}
+.deck-container:not(.deck-menu) > .deck-previous, .deck-container:not(.deck-menu) > .deck-before, .deck-container:not(.deck-menu) > .deck-next, .deck-container:not(.deck-menu) > .deck-after {
+  opacity: 0;
+  pointer-events: none;
+}
+.deck-container:not(.deck-menu) > .deck-before .slide, .deck-container:not(.deck-menu) > .deck-previous .slide {
+  visibility: visible;
+}
+.deck-container:not(.deck-menu) > .deck-child-current {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.deck-container:not(.deck-menu) > .deck-child-current .deck-next, .deck-container:not(.deck-menu) > .deck-child-current .deck-after {
+  visibility: hidden;
+}
