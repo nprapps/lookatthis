@@ -72,32 +72,30 @@ html, body {
 
 .slide {
     background-color: #000;
-    visibility: hidden;
     position: absolute;
+    visibility: hidden;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     z-index: 0;
     opacity: 0;
-    /*min-height: 0;*/
+
+    &.deck-previous {
+        z-index: 5;
+    }
     &.deck-current {
+        visibility: visible;
         opacity: 1;
+        z-index: 10;
     }
+    &.deck-next {
+        z-index: 15;
+    }
+
     &.fade {
-        .transition(opacity 1s ease-in);
+        .transition(all 1s ease-in);
     }
-}
-
-.deck-current {
-    z-index: 99;
-}
-
-.deck-child-current .slide {
-    visibility: hidden;
-}
-.deck-child-current .deck-previous, .deck-child-current .deck-before, .deck-child-current .deck-current {
-    visibility: visible;
 }
 
 body {
