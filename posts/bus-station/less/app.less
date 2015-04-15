@@ -71,36 +71,31 @@ html, body {
 }
 
 .slide {
-    width: auto;
-    min-height: 100%;
-    position: relative;
-}
-
-.deck-before, .deck-previous, .deck-next, .deck-after {
+    background-color: #000;
     position: absolute;
-    left: -999em;
-    top: -999em;
-}
-
-.deck-current {
-    z-index: 2;
-}
-
-.slide .slide {
     visibility: hidden;
-    position: static;
-    min-height: 0;
-}
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    opacity: 0;
 
-.deck-child-current {
-    position: static;
-    z-index: 2;
-}
-.deck-child-current .slide {
-    visibility: hidden;
-}
-.deck-child-current .deck-previous, .deck-child-current .deck-before, .deck-child-current .deck-current {
-    visibility: visible;
+    &.deck-previous {
+        z-index: 5;
+    }
+    &.deck-current {
+        visibility: visible;
+        opacity: 1;
+        z-index: 10;
+    }
+    &.deck-next {
+        z-index: 15;
+    }
+
+    &.fade {
+        .transition(all 1s ease-in);
+    }
 }
 
 body {
@@ -291,20 +286,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         //transition between slides
         .instant {
             .transition(all 0 ease-in);
-        }
-    }
-
-    .slide {
-        float: left;
-        height: 100%;
-        display: block;
-        overflow: auto;
-        opacity: 0;
-        &.deck-current {
-            opacity: 1;
-        }
-        &.fade {
-            .transition(opacity 1s ease-in);
         }
     }
 }
