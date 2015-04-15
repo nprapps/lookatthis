@@ -16,7 +16,6 @@
 @import "./slides/side-by-side.less";
 @import "./slides/start.less";
 @import "./slides/titlecard.less";
-@import "./slides/narrative-audio.less";
 @import "./nudges.less";
 
 // Global variables
@@ -42,6 +41,67 @@
 @screen-small: ~"screen and (max-width: 767px)";
 @screen-tiny-above: ~"screen and (min-width: 481px)";
 @screen-tiny: ~"screen and (max-width: 480px)";
+
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.deck-container {
+    position: relative;
+    min-height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.js .deck-container {
+    visibility: hidden;
+}
+.ready .deck-container {
+    visibility: visible;
+}
+.touch .deck-container {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+}
+
+.deck-loading {
+    display: none;
+}
+
+.slide {
+    width: auto;
+    min-height: 100%;
+    position: relative;
+}
+
+.deck-before, .deck-previous, .deck-next, .deck-after {
+    position: absolute;
+    left: -999em;
+    top: -999em;
+}
+
+.deck-current {
+    z-index: 2;
+}
+
+.slide .slide {
+    visibility: hidden;
+    position: static;
+    min-height: 0;
+}
+
+.deck-child-current {
+    position: static;
+    z-index: 2;
+}
+.deck-child-current .slide {
+    visibility: hidden;
+}
+.deck-child-current .deck-previous, .deck-child-current .deck-before, .deck-child-current .deck-current {
+    visibility: visible;
+}
 
 body {
     color: #fff;
@@ -103,6 +163,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .primary-navigation {
     .controlArrow {
+        z-index: 100;
         position: fixed;
         top: 40%;
         width: 50px;
@@ -231,19 +292,19 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         .instant {
             .transition(all 0 ease-in);
         }
+    }
 
-        .slidesContainer {
-            float: left;
-            position: relative;
-            height: 100%;
-            display: block;
-
-            .slide {
-                float: left;
-                height: 100%;
-                display: block;
-                overflow: auto;
-            }
+    .slide {
+        float: left;
+        height: 100%;
+        display: block;
+        overflow: auto;
+        opacity: 0;
+        &.deck-current {
+            opacity: 1;
+        }
+        &.fade {
+            .transition(opacity 1s ease-in);
         }
     }
 }
@@ -252,7 +313,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .section, .slide {
     .background-size(cover);
     background-position: center center;
-    position: relative;
 }
 
 // full width container within a section or slide
@@ -278,18 +338,11 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 
     .full-block-content {
-        max-width: 900px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
         @media @screen-small-above {
              padding: 20px 100px;
-        }
-        
-        p {
-            font-family: georgia;
-            @media @screen-small-above {
-                font-size: 20px;
-            }
         }
     }
 }

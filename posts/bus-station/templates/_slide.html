@@ -1,5 +1,5 @@
 {% block slide_wrapper %}
-<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}">
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}">
     {% block slide_body %}
     <div class="text full-block">
         <div class="full-block-cell">
