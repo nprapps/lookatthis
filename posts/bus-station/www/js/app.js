@@ -79,11 +79,11 @@ var lazyLoad = function(slideIndex) {
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
-
+/*
     if (w < 769) {
         mobileSuffix = '-sq';
     }
-
+*/
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
     };
