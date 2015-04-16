@@ -35,10 +35,11 @@ var onPageLoad = function() {
     * Set up page on load.
     */
     lazyLoad(0);
-    $('.section').css({
+    $section.css({
         'opacity': 1,
         'visibility': 'visible',
     });
+    $slides.show();
     showNavigation(0);
 };
 

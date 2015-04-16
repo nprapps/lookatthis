@@ -70,34 +70,6 @@ html, body {
     display: none;
 }
 
-.slide {
-    background-color: #000;
-    position: absolute;
-    visibility: hidden;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 0;
-    opacity: 0;
-
-    &.deck-previous {
-        z-index: 5;
-    }
-    &.deck-current {
-        visibility: visible;
-        opacity: 1;
-        z-index: 10;
-    }
-    &.deck-next {
-        z-index: 15;
-    }
-
-    &.fade {
-        .transition(all 1s ease-in);
-    }
-}
-
 body {
     color: #fff;
     font-family: "Gotham SSm", helvetica, arial, sans-serif;
@@ -274,18 +246,32 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     box-sizing: border-box;
     width: 100%;
 
-    .slides {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
+    .slide {
+        display: none;
+        background-color: #000;
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        opacity: 0;
 
-        //transition between slides
-        .instant {
-            .transition(all 0 ease-in);
+        &.deck-previous {
+            z-index: 5;
+        }
+        &.deck-current {
+            visibility: visible;
+            opacity: 1;
+            z-index: 10;
+        }
+        &.deck-next {
+            z-index: 15;
+        }
+
+        &.fade {
+            .transition(all 0.5s ease-in);
         }
     }
 }
