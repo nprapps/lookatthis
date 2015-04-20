@@ -1,48 +1,70 @@
 .quote {
 
     .full-block-cell {
+        display: block;
+        height: 100%;
         vertical-align: top;
+        position: relative;
         /*padding-bottom: 400px;*/
         .full-block-content {
-            /*margin: 0;*/
+            padding: 0;
+            position: absolute;
+            max-width: none;
+            width: 50%;
+            top: 50%;
+            left: 50%;
+            .translate(-50%,-50%);   
 
-          
+            @media @screen-small {
+                width: 100%;
+                // margin-top: 130px;
+                // max-width: 280px;
+                // margin-left: 11%;
+            }
+
+
+            @media @screen-small-above {
+                // margin-top: -20%;
+                // padding: 20px;
+            }
+
+           @media @screen-medium-above  {
+                width: 33%;
+                // margin-top: -20%;
+                // padding: 20px;
+            }
+
+           @media @screen-large-above  {
+                width: 25%;
+                // margin-top:-48%;
+                // max-width:300px;
+                // padding: 20px;
+                // margin-left: -15%;
+            }
+
+
+            #slide-q& {
+                top: 75%;
+                left: 50%;
+
+                @media @screen-medium-above  {
+                    left: 20%;
+                }
+            }    
         }
     }
 
     .quote-text {
         text-align: left;
-        left:100%;
         color: #ddd;
         background-color: rgba(255,255,255,.1); 
         border: solid;
         border-radius: 5px;
-        border-weight: 3px;
-
-        @media @screen-small {
-            margin-top: 130px;
-            max-width: 280px;
-            padding: 20px;
-            margin-left: 11%;
-                    }
+        border-width: 0;//3px;
+        padding: 20px;
+        margin: 0 20px;
 
 
-       @media @screen-small-above {
-            margin-top: -20%;
-            padding: 20px;
-                    }
-
-       @media @screen-medium-above  {
-            margin-top: -20%;
-            padding: 20px;
-                    }
-
-       @media @screen-large-above  {
-            margin-top:-48%;
-            max-width:300px;
-            padding: 20px;
-            margin-left: -15%;
-                    }
 
 
 
