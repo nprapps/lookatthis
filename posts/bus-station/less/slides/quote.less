@@ -1,50 +1,76 @@
 .quote {
 
     .full-block-cell {
-        vertical-align: bottom;
-        padding-bottom: 100px;
+        vertical-align: top;
+        /*padding-bottom: 400px;*/
+        .full-block-content {
+            /*margin: 0;*/
 
-        .full-block-content {margin: 0;}
-    }
-
-    .quote-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 225px;
-        .background-size(cover);
-        background-position: top left;
-        @media @screen-small-above {
-            height: 100%;
-            background-position: center center;
+          
         }
     }
 
     .quote-text {
-        position: absolute;
-        top: 225px;
-        right: 0;
-        padding: 20px 20px 70px 20px;
+        text-align: left;
+        left:100%;
         color: #ddd;
+        background-color: rgba(255,255,255,.1); 
+        border: solid;
+        border-radius: 5px;
+        border-weight: 3px;
 
-        @media @screen-small-above {
-            top: auto;
-            bottom: 90px;
-            right: 25px;
-            max-width: 300px;
+        @media @screen-small {
+            margin-top: 130px;
+            max-width: 280px;
             padding: 20px;
-            background-color: rgba(0,0,0,.8);
-        }
+            margin-left: 11%;
+                    }
+
+
+       @media @screen-small-above {
+            margin-top: -20%;
+            padding: 20px;
+                    }
+
+       @media @screen-medium-above  {
+            margin-top: -20%;
+            padding: 20px;
+                    }
+
+       @media @screen-large-above  {
+            margin-top:-48%;
+            max-width:300px;
+            padding: 20px;
+            margin-left: -15%;
+                    }
+
+
+
+       /* @media only screen and (min-width: 641px) and (max-width: 1024px) { 
+            
+            right: 10%;
+            max-width: 400px;
+            padding: 20px;
+
+        }*/
+
+
 
         blockquote {
             border: 0;
             margin: 0;
             padding: 0;
 
+            p {
+                font-size:16px;
+                            }
+
             font-size: 13px;
+                    font-family: gotham;
+
             @media @screen-small-above {
                 font-size: 18px;
+
             }
         }
     }
