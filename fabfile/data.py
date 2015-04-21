@@ -11,6 +11,7 @@ from io import BytesIO
 import json
 
 from fabric.api import task
+from fabric.state import env
 from facebook import GraphAPI
 from smartypants import smartypants
 from twitter import Twitter, OAuth
@@ -23,7 +24,8 @@ def build_subtitles():
     """
     Parse transcripts for everything in data/subtitles folder
     """
-    for path in glob('data/subtitles/*.csv'):
+    print env.static_path
+    for path in glob('%s/data/subtitles/*.csv' % env.static_path):
         parse_transcript(path)
 
 @task
@@ -60,7 +62,7 @@ def parse_transcript(path):
             }
             data['subtitles'].append(segment)
 
-    with open('www/data/%s.json' % filename, 'w') as wf:
+    with open('%s/www/data/%s.json' % (env.static_path, filename), 'w') as wf:
         wf.write(json.dumps(data))
 
 
