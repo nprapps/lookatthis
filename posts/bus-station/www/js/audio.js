@@ -9,14 +9,18 @@ var AUDIO = (function() {
     var ambientURL = null;
     var narrativeVisible = false;
 
-    var checkForAudio = function(slideAnchor) {
+    var checkForAudio = function(slideIndex) {
+        var slideId = $slides.eq(slideIndex).attr('id');
+        slideId = slideId.split("slide-");
+        slideId = slideId[1];
+
         for (var i = 0; i < copy.content.length; i++) {
             var rowAnchor = copy.content[i]['id'];
             var narrativeFilename = copy.content[i]['narrative_audio'];
             var narrativeSubtitles = copy.content[i]['narrative_audio_subtitles'];
-            var ambientFilename = copy.content[i]['ambient_audio'];            
+            var ambientFilename = copy.content[i]['ambient_audio'];
 
-            if (rowAnchor === slideAnchor && narrativeFilename !== null && !NO_AUDIO) {
+            if (rowAnchor === slideId && narrativeFilename !== null && !NO_AUDIO) {
                 $thisPlayerProgress = $('#slide-' + rowAnchor).find('.player-progress');
                 $playedBar = $('#slide-' + rowAnchor).find('.player-progress .played');
                 $controlBtn = $('#slide-' + rowAnchor).find('.control-btn');
@@ -31,7 +35,7 @@ var AUDIO = (function() {
                 narrativeVisible = false;
             }
 
-            if (rowAnchor === slideAnchor && ambientFilename !== null && !NO_AUDIO) {
+            if (rowAnchor === slideId && ambientFilename !== null && !NO_AUDIO) {
 
                 ambientURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + ambientFilename;
 
@@ -87,7 +91,7 @@ var AUDIO = (function() {
         if (end) {
             $playedBar.css('width', $thisPlayerProgress.width() + 'px');
         }
-        $controlBtn.removeClass('pause').addClass('play');
+        // $controlBtn.removeClass('pause').addClass('play');
     }
 
     var toggleNarrativeAudio = function() {

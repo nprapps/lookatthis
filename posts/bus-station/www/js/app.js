@@ -8,7 +8,10 @@ var $arrows;
 var $nextArrow;
 var $previousArrow;
 var $startCardButton;
+var $narrativePlayer;
+var $ambientPlayer;
 var isTouch = Modernizr.touch;
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var mobileSuffix;
 var w;
@@ -141,6 +144,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+    AUDIO.checkForAudio(toIndex);
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
 }
@@ -315,6 +319,8 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $narrativePlayer = $('#narrative-player');
+    $ambientPlayer = $('#ambient-player');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -348,6 +354,8 @@ $(document).ready(function() {
         touch: { swipeTolerance: swipeTolerance }
     });
 
+    AUDIO.setUpNarrativePlayer();
+    AUDIO.setUpAmbientPlayer();
     onPageLoad();
     resize();
 
