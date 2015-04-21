@@ -91,7 +91,7 @@ var AUDIO = (function() {
         if (end) {
             $playedBar.css('width', $thisPlayerProgress.width() + 'px');
         }
-        // $controlBtn.removeClass('pause').addClass('play');
+        $controlBtn.removeClass('pause').addClass('play');
     }
 
     var toggleNarrativeAudio = function() {

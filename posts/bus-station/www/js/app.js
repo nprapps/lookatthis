@@ -308,7 +308,7 @@ var resetArrows = function() {
     });
 }
 
-var onControlBtnClick = function() {
+var onControlBtnClick = function(e) {
     e.preventDefault();
     AUDIO.toggleNarrativeAudio();
     ANALYTICS.trackEvent('pause-button');
