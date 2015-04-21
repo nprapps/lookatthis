@@ -3,16 +3,66 @@
 """
 Commands that update or process the application data.
 """
+import codecs
+import csv
 from datetime import datetime
+from glob import glob
+from io import BytesIO
 import json
 
-from fabric.api import require, task
-from fabric.state import env
+from fabric.api import task
 from facebook import GraphAPI
+from smartypants import smartypants
 from twitter import Twitter, OAuth
 
 import app_config
 import copytext
+
+@task
+def build_subtitles():
+    """
+    Parse transcripts for everything in data/subtitles folder
+    """
+    for path in glob('data/subtitles/*.csv'):
+        parse_transcript(path)
+
+@task
+def parse_transcript(path):
+    """
+    Parse a Premiere .tsv file, calculate total seconds and write to JSON for use in the app.
+    """
+    data = {
+        'subtitles': []
+    }
+    filename, ext = path.split('/')[-1].split('.')
+
+    with codecs.open(path, 'rb', encoding='utf16') as f:
+        transcript = f.read().encode('utf-8')
+        tab_reader = csv.reader(BytesIO(transcript), delimiter='\t')
+        headers = tab_reader.next()
+        for row in tab_reader:
+            # Premiere exports kind of suck
+            if row[0] == '':
+                words = smartypants(row[1].strip())
+                time_str = row[2]
+            else:
+                words = smartypants(row[0].strip())
+                time_str = row[1]
+
+            hours, minutes, seconds, frame = [int(x) for x in time_str.split(':')]
+
+            decimal = (float(frame) / 24)
+            total_seconds = (hours * 3600) + (minutes * 60) + (seconds + decimal)
+
+            segment = {
+                'time': total_seconds,
+                'transcript': words,
+            }
+            data['subtitles'].append(segment)
+
+    with open('www/data/%s.json' % filename, 'w') as wf:
+        wf.write(json.dumps(data))
+
 
 @task(default=True)
 def update():
@@ -122,7 +172,7 @@ def update_featured_social():
             continue
 
         fb_id = unicode(fb_url).split('/')[-1]
-        
+
         post = fb_api.get_object(fb_id)
         user  = fb_api.get_object(post['from']['id'])
         user_picture = fb_api.get_object('%s/picture' % post['from']['id'])
