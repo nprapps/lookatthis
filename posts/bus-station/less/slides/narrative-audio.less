@@ -1,10 +1,10 @@
 .slide.narrative-audio {
-    
+
     .full-block {
         background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  50%,rgba(0, 0, 0, 0.8));
     }
-    
-    
+
+
 }
 
 .narrative-player {
@@ -15,15 +15,15 @@
     min-height: 100px;
     overflow: hidden;
     @media @screen-tiny-above {
-       bottom: 30px; 
+       bottom: 30px;
        min-height: 95px;
     }
     @media @screen-small-above {
         min-height: 150px;
-       bottom: 70px; 
+       bottom: 70px;
     }
-    
-    
+
+
 
     .slide-title {
         h2 {
@@ -35,17 +35,17 @@
         display: none;
         padding: 0 10px 40px 10px;
          @media @screen-tiny-above {
-            padding: 0; 
+            padding: 0;
         }
-        
+
         .subtitles {
             margin-bottom: 40px;
             @media @screen-tiny-above {
                 margin-bottom: 0;
             }
-            
+
         }
-        
+
         p {
             font-size: @small-type;
             line-height: 1.2;
@@ -70,7 +70,7 @@
         left: 0;
         bottom: 0;
         width: 100%;
-        
+
         .control-group {
             width: 100%;
             max-width: 470px;
@@ -86,6 +86,7 @@
             z-index: 2;
             width: 55px;
             height: 55px;
+            text-align: left;
             .transition(opacity 1s linear);
             @media @screen-tiny-above {
                 width: 35px;
@@ -93,27 +94,27 @@
             }
             color: #fff;
             display: block;
-            
+
             text-decoration: none;
-            
+
             @media @screen-tiny-above {
                 background-color: #fff;
                 color: #000;
             }
-            
+
             &.play{
                 opacity: 1;
                 padding: 15px 0 0 25px;
                 @media @screen-tiny-above {
-                    padding: 6px 0 0 13px;
+                    padding: 2px 0 0 13px;
                 }
             }
-            
+
             &.pause{
                 padding: 15px 0 0 24px;
                 opacity: .4;
                 @media @screen-tiny-above {
-                    padding: 6px 0 0 12px;
+                    padding: 2px 0 0 12px;
                 }
             }
 
@@ -160,7 +161,7 @@
                 height: 100%;
                 z-index: 0;
                 @media @screen-tiny-above {
-                    background-color: rgba(0, 0, 0, 0.3); 
+                    background-color: rgba(0, 0, 0, 0.3);
                 }
             }
             .played {
@@ -169,9 +170,9 @@
                 height: 100%;
                 z-index: 1;
                 .transition(width 0.5s linear);
-                
+
                 @media @screen-tiny-above {
-                   background-color: #e0e0e0; 
+                   background-color: #e0e0e0;
                    border: none;
                 }
 
