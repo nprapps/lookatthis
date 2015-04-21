@@ -5,7 +5,7 @@
 * and tweak the controlArrow CSS rules later in this file.
 */
 @import "./lib/lookatthis-font.less";
-//@import "./lib/font-awesome/font-awesome";
+@import "./lib/font-awesome/font-awesome";
 
 @import "./lib/prefixer";
 @import "./share-modal.less";
@@ -199,13 +199,13 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         }
 
         /* Uncomment to use FontAwesome */
-        /*
-        &:before {
-            font-family: "FontAwesome";
-            content: "\f105";
-            display: block;
-        }
-        */
+
+        // &:before {
+        //     font-family: "FontAwesome";
+        //     content: "\f105";
+        //     display: block;
+        // }
+
 
         @media @screen-small-above {
             margin-right: 10px;
@@ -336,7 +336,7 @@ img {
     line-height: 14px;
     @media @screen-small-above {
          position: absolute;
-         bottom: 10px;    
+         bottom: 10px;
          right: 25px;
          font-size: 12px;
          max-width: 1000px;
@@ -346,6 +346,7 @@ img {
 @import "./slides/conclusion.less";
 @import "./slides/framed-text.less";
 @import "./slides/full-bleed.less";
+@import "./slides/narrative-audio.less";
 @import "./slides/next-post.less";
 @import "./slides/quote.less";
 @import "./slides/side-by-side.less";

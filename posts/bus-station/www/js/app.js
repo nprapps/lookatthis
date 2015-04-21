@@ -10,6 +10,7 @@ var $previousArrow;
 var $startCardButton;
 var $narrativePlayer;
 var $ambientPlayer;
+var $controlBtn;
 var isTouch = Modernizr.touch;
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
@@ -307,6 +308,13 @@ var resetArrows = function() {
     });
 }
 
+var onControlBtnClick = function() {
+    e.preventDefault();
+    AUDIO.toggleNarrativeAudio();
+    ANALYTICS.trackEvent('pause-button');
+
+    e.stopPropagation();
+}
 
 $(document).ready(function() {
     $document = $(document);
@@ -321,6 +329,7 @@ $(document).ready(function() {
     $upNext = $('.up-next');
     $narrativePlayer = $('#narrative-player');
     $ambientPlayer = $('#ambient-player');
+    $controlBtn = $('.control-btn');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -330,6 +339,8 @@ $(document).ready(function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+
+    $controlBtn.on('click', onControlBtnClick);
 
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);
