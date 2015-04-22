@@ -286,6 +286,26 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     position: relative;
     z-index: 1;
     
+    &:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        height: 100%;
+        z-index: -1;
+    }
+    
+    @screen-tiny-above {
+        &:after {
+            display: none;
+        }
+        
+    }
+    
     //bottom dark gradient on all slides
     /*
     background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  80%,rgba(0, 0, 0, 0.8));
@@ -332,19 +352,17 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         
         p {
             font-family: "georgia";
-            font-size: 14px;
+            font-size: 16px;
             text-align: left;
-            text-shadow: 2px 2px 4px #111;
-            
+            text-shadow: 2px 2px 2px #111;
+            line-height: 1.6;
             
             @media @screen-small-above {
                 font-size: 20px;
-                line-height:1.6;
             }
             
             @media @screen-medium-above {
                 font-size: 26px;
-                line-height:1.6;
             }
     
         }

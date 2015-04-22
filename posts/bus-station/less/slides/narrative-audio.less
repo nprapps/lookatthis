@@ -51,10 +51,14 @@
     .quote-bio {
         position: absolute;
         top: 0;
-        right: 0;
+        right: 10px;
         width: 100%;
         text-shadow: 2px 2px 4px #111;
         opacity: 1;
+        
+        @media @screen-tiny-above {
+           right: 0;
+        }
 
         .transition(all 10s ease-in);
 
