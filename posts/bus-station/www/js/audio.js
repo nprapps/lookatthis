@@ -27,7 +27,7 @@ var AUDIO = (function() {
                 $subtitleWrapper = $('#slide-' + rowAnchor).find('.subtitle-wrapper');
                 $subtitles = $('#slide-' + rowAnchor).find('.subtitles');
 
-                narrativeURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + narrativeFilename;
+                narrativeURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/' + narrativeFilename;
                 subtitlesURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/data/' + narrativeSubtitles;
                 setNarrativeMedia();
             } else {
@@ -37,7 +37,7 @@ var AUDIO = (function() {
 
             if (rowAnchor === slideId && ambientFilename !== null && !NO_AUDIO) {
 
-                ambientURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + ambientFilename;
+                ambientURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/' + ambientFilename;
 
                 if (ambientFilename === 'STOP') {
                     $ambientPlayer.jPlayer('pause');
@@ -104,7 +104,7 @@ var AUDIO = (function() {
 
     var fakeNarrativePlayer = function() {
         $narrativePlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + 'doctor_01.mp3'
+            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/prototype/' + 'ambi-bed.mp3'
         }).jPlayer('pause');
     }
 
@@ -172,7 +172,7 @@ var AUDIO = (function() {
 
     var fakeAmbientPlayer = function() {
         $ambientPlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/audio/' + 'sample-ambi.mp3'
+            mp3: APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/prototype/' + 'ambi-bed.mp3'
         }).jPlayer('pause');
     }
 

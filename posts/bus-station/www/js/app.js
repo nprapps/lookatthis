@@ -146,6 +146,17 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     trackCompletion(toIndex);
     document.activeElement.blur();
     AUDIO.checkForAudio(toIndex);
+
+    /*
+    * Enable fades without totally screwing up the slides around them
+    */
+
+    setTimeout(function() {
+        if ($slides.eq(toIndex + 1).hasClass('fade')) {
+            $slides.eq(toIndex).addClass('fade');
+        }
+    }, 50);
+
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
 }
