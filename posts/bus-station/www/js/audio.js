@@ -2,10 +2,8 @@ var AUDIO = (function() {
     var narrativePlayer = null;
     var ambientPlayer = null;
     var ambientId = null;
-    var subtitles = null;
     var progressInterval = null;
     var narrativeURL = null;
-    var subtitlesURL = null;
     var ambientURL = null;
     var narrativeVisible = false;
 
@@ -17,7 +15,6 @@ var AUDIO = (function() {
         for (var i = 0; i < copy.content.length; i++) {
             var rowAnchor = copy.content[i]['id'];
             var narrativeFilename = copy.content[i]['narrative_audio'];
-            var narrativeSubtitles = copy.content[i]['narrative_audio_subtitles'];
             var ambientFilename = copy.content[i]['ambient_audio'];
 
             if (rowAnchor === slideId && narrativeFilename !== null && !NO_AUDIO) {
@@ -28,7 +25,6 @@ var AUDIO = (function() {
                 $subtitles = $('#slide-' + rowAnchor).find('.subtitles');
 
                 narrativeURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/assets/' + narrativeFilename;
-                subtitlesURL = APP_CONFIG.S3_BASE_URL + '/posts/bus-station/data/' + narrativeSubtitles;
                 setNarrativeMedia();
             } else {
                 _pauseNarrativePlayer();
@@ -61,18 +57,11 @@ var AUDIO = (function() {
     }
 
     var setNarrativeMedia = function() {
-        $.getJSON(subtitlesURL, function(data) {
-            subtitles = data.subtitles;
-            _startNarrativePlayer();
-        });
-    }
-
-    var _startNarrativePlayer = function() {
         $narrativePlayer.jPlayer('setMedia', {
             mp3: narrativeURL
         });
+
         narrativeVisible = true;
-        animateSubtitles(0.01);
         setTimeout(function() {
             if (narrativeVisible) {
                 $narrativePlayer.jPlayer('play');
@@ -126,32 +115,6 @@ var AUDIO = (function() {
 
                 if (percentage === 1) {
                     $controlBtn.removeClass('pause').addClass('play');
-                }
-            }
-        }
-        animateSubtitles(position);
-    }
-
-    var animateSubtitles = function(position) {
-        if (subtitles) {
-            // animate subtitles
-            var activeSubtitle = null;
-            for (var i = 0; i < subtitles.length; i++) {
-                if (position > 0) {
-                    if (position < subtitles[i]['time']) {
-                        if (i > 0) {
-                            activeSubtitle = subtitles[i - 1]['transcript'];
-                        } else {
-                            activeSubtitle = subtitles[i]['transcript'];
-                        }
-                        $subtitleWrapper.fadeIn();
-                        $subtitles.html(activeSubtitle);
-                        break;
-                    } else {
-                        // this is the last one
-                        activeSubtitle = subtitles[i]['transcript'];
-                        $subtitles.html(activeSubtitle);
-                    }
                 }
             }
         }
