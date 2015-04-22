@@ -21,7 +21,7 @@
 
     &.audio-quote-fade {
         &:after {
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.6);
         }
         .quote-bio {
             opacity: 0;
@@ -45,7 +45,7 @@
     }
     @media @screen-small-above {
         min-height: 130px;
-       bottom: 70px;
+        bottom: 70px;
     }
 
     .quote-bio {
@@ -57,12 +57,16 @@
         opacity: 1;
         
         @media @screen-tiny-above {
+           right: 95px;
+        }
+        
+        @media @screen-small-above {
            right: 0;
         }
 
         .transition(all 15s ease-in);
 
-        h5, ul {
+        h5, ul, p {
            max-width: 700px;
            margin: 0 auto;
            text-align: right;

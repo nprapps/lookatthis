@@ -1,17 +1,13 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
 <div class="audio-quote">
-       {{ row.text1|smarty }}
+       {{ row.text2|smarty }}
     </div>
 
 
 <div class="narrative-player">
     <div class="quote-bio">
-        <h5>John Doe</h5>
-        <ul>
-            <li>Crime</li>
-            <li>Sentence</li>
-        </ul>
+        {{ row.text1|smarty }}
     </div>
     
     
