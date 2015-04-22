@@ -6,8 +6,11 @@ var AUDIO = (function() {
     var narrativeURL = null;
     var ambientURL = null;
     var narrativeVisible = false;
+    var currentIndex = null;
 
     var checkForAudio = function(slideIndex) {
+        currentIndex = slideIndex;
+
         var slideId = $slides.eq(slideIndex).attr('id');
         slideId = slideId.split("slide-");
         slideId = slideId[1];
@@ -57,16 +60,15 @@ var AUDIO = (function() {
     }
 
     var setNarrativeMedia = function() {
+        console.log(narrativeURL);
         $narrativePlayer.jPlayer('setMedia', {
             mp3: narrativeURL
         });
 
         narrativeVisible = true;
         setTimeout(function() {
-            if (narrativeVisible) {
-                $narrativePlayer.jPlayer('play');
-                $controlBtn.removeClass('play').addClass('pause');
-            }
+            $narrativePlayer.jPlayer('play');
+            $controlBtn.removeClass('play').addClass('pause');
         }, 1000)
     }
 
@@ -116,6 +118,17 @@ var AUDIO = (function() {
                 if (percentage === 1) {
                     $controlBtn.removeClass('pause').addClass('play');
                 }
+            }
+        }
+
+        // trigger the animation
+
+        if (totalTime > 0) {
+            var animationTrigger = totalTime - 12;
+            console.log(position, animationTrigger);
+            if (position > animationTrigger &&!($slides.eq(currentIndex).hasClass('audio-quote-fade'))) {
+                console.log('fire');
+                $slides.eq(currentIndex).addClass('audio-quote-fade');
             }
         }
     }
