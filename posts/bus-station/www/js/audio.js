@@ -60,7 +60,6 @@ var AUDIO = (function() {
     }
 
     var setNarrativeMedia = function() {
-        console.log(narrativeURL);
         $narrativePlayer.jPlayer('setMedia', {
             mp3: narrativeURL
         });
@@ -73,6 +72,7 @@ var AUDIO = (function() {
     }
 
     var _resumeNarrativePlayer = function() {
+        console.log('resume');
         $narrativePlayer.jPlayer('play');
         $controlBtn.removeClass('play').addClass('pause');
     }
@@ -118,16 +118,6 @@ var AUDIO = (function() {
                 if (percentage === 1) {
                     $controlBtn.removeClass('pause').addClass('play');
                 }
-            }
-        }
-
-        // trigger the animation
-
-        if (totalTime > 0) {
-            var animationTrigger = 3;
-            console.log(position, animationTrigger);
-            if (position > animationTrigger &&!($slides.eq(currentIndex).hasClass('audio-quote-fade'))) {
-                $slides.eq(currentIndex).addClass('audio-quote-fade');
             }
         }
     }

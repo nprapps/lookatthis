@@ -1,35 +1,29 @@
 .slide.narrative-audio {
 //removed the bottom gradient
 
-    .audio-quote {
-        opacity: 0;
-        .transition(all 10s ease-in 5s);
-    }
+    // &:after {
+    //     display: block;
+    //     content: ' ';
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     height: 100%;
+    //     z-index: -1;
+    // }
 
-    &:after {
-        display: block;
-        content: ' ';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        z-index: -1;
-        .transition(all 15s ease-in);
-    }
-
-    &.audio-quote-fade {
-        &:after {
-            background: rgba(0,0,0,0.6);
-        }
-        .quote-bio {
-            opacity: 0;
-        }
-        .audio-quote {
-            opacity: 1;
-        }
-    }
+    // &.audio-quote-fade {
+    //     &:after {
+    //         background: rgba(0,0,0,0.6);
+    //     }
+    //     .quote-bio {
+    //         opacity: 0;
+    //     }
+    //     .audio-quote {
+    //         opacity: 1;
+    //     }
+    // }
 }
 
 .narrative-player {
@@ -54,17 +48,14 @@
         right: 10px;
         width: 100%;
         text-shadow: 2px 2px 4px #111;
-        opacity: 1;
-        
+
         @media @screen-tiny-above {
            right: 95px;
         }
-        
+
         @media @screen-small-above {
            right: 0;
         }
-
-        .transition(all 15s ease-in);
 
         h5, ul, p {
            max-width: 700px;
