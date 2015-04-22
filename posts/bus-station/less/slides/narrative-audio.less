@@ -1,5 +1,24 @@
 .slide.narrative-audio {
 //removed the bottom gradient
+
+    &.audio-quote-fade {
+        &:after {
+            display: block;
+            content: ' ';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .quote-bio {
+            opacity: 0;
+        }
+    }
 }
 
 .narrative-player {
@@ -26,7 +45,7 @@
         text-shadow: 2px 2px 4px #111;
         
         h5, ul {
-           max-width: 530px;
+           max-width: 700px;
            margin: 0 auto;
            text-align: right;
         }
@@ -101,7 +120,7 @@
             margin: 0 auto;
             position: relative;
             @media @screen-small-above {
-                max-width: 600px;
+                max-width: 700px;
             }
         }
 
@@ -170,7 +189,7 @@
                 max-width: 420px;
             }
             @media @screen-small-above {
-                max-width: 530px;
+                max-width: 650px;
             }
 
             .total, .played {
