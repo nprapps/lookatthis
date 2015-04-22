@@ -124,10 +124,9 @@ var AUDIO = (function() {
         // trigger the animation
 
         if (totalTime > 0) {
-            var animationTrigger = totalTime - 12;
+            var animationTrigger = totalTime - 15;
             console.log(position, animationTrigger);
             if (position > animationTrigger &&!($slides.eq(currentIndex).hasClass('audio-quote-fade'))) {
-                console.log('fire');
                 $slides.eq(currentIndex).addClass('audio-quote-fade');
             }
         }
