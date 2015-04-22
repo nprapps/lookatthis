@@ -1,10 +1,5 @@
 .slide.narrative-audio {
-
-    .full-block {
-        background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  50%,rgba(0, 0, 0, 0.8));
-    }
-
-
+//removed the bottom gradient
 }
 
 .narrative-player {
@@ -19,10 +14,39 @@
        min-height: 95px;
     }
     @media @screen-small-above {
-        min-height: 150px;
+        min-height: 130px;
        bottom: 70px;
     }
-
+    
+    .quote-bio {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        text-shadow: 2px 2px 4px #111;
+        
+        h5, ul {
+           max-width: 530px;
+           margin: 0 auto;
+           text-align: right;
+        }
+        
+        h5{
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 22px;
+        }
+        
+        ul {
+            padding: 0;
+           list-style-type: none;
+            li {
+                font-size: 14px;
+                line-height: 1.2;
+                text-transform: uppercase;
+            }
+        }
+    }
 
 
     .slide-title {
