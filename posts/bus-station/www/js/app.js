@@ -8,11 +8,7 @@ var $arrows;
 var $nextArrow;
 var $previousArrow;
 var $startCardButton;
-var $narrativePlayer;
-var $ambientPlayer;
-var $controlBtn;
 var isTouch = Modernizr.touch;
-var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var mobileSuffix;
 var w;
@@ -145,7 +141,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
-    AUDIO.checkForAudio(toIndex);
 
     /*
     * Enable fades without totally screwing up the slides around them
@@ -319,43 +314,6 @@ var resetArrows = function() {
     });
 }
 
-var onControlBtnClick = function(e) {
-    e.preventDefault();
-    AUDIO.toggleNarrativeAudio();
-    ANALYTICS.trackEvent('pause-button');
-
-    e.stopPropagation();
-}
-
-
-var onVisibilityChange = function() {
-    AUDIO.toggleAllAudio();
-}
-
-var getHiddenProperty = function() {
-    var prefixes = ['webkit','moz','ms','o'];
-
-    // if 'hidden' is natively supported just return it
-    if ('hidden' in document) return 'hidden';
-
-    // otherwise loop over all the known prefixes until we find one
-    for (var i = 0; i < prefixes.length; i++){
-        if ((prefixes[i] + 'Hidden') in document)
-            return prefixes[i] + 'Hidden';
-    }
-
-    // otherwise it's not supported
-    return null;
-}
-
-var isHidden = function() {
-    var prop = getHiddenProperty();
-    if (!prop) return false;
-
-    return document[prop];
-}
-
-
 $(document).ready(function() {
     $document = $(document);
     $body = $('body');
@@ -367,9 +325,6 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
-    $narrativePlayer = $('#narrative-player');
-    $ambientPlayer = $('#ambient-player');
-    $controlBtn = $('.control-btn');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -380,7 +335,6 @@ $(document).ready(function() {
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
 
-    $controlBtn.on('click', onControlBtnClick);
 
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);
@@ -405,8 +359,6 @@ $(document).ready(function() {
         touch: { swipeTolerance: swipeTolerance }
     });
 
-    AUDIO.setUpNarrativePlayer();
-    AUDIO.setUpAmbientPlayer();
     onPageLoad();
     resize();
 
@@ -414,9 +366,4 @@ $(document).ready(function() {
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
     $document.keydown(onDocumentKeyDown);
-    visibilityProperty = getHiddenProperty();
-    if (visibilityProperty) {
-        var evtname = visibilityProperty.replace(/[H|h]idden/,'') + 'visibilitychange';
-        document.addEventListener(evtname, onVisibilityChange);
-    }
 });
