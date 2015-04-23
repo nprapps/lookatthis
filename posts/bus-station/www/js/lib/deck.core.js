@@ -173,36 +173,36 @@ that use the API provided by core.
     }
   };
 
-  var bindKeyEvents = function() {
-    var editables = [
-      'input',
-      'textarea',
-      'select',
-      'button',
-      'meter',
-      'progress',
-      '[contentEditable]'
-    ].join(', ');
+  // var bindKeyEvents = function() {
+  //   var editables = [
+  //     'input',
+  //     'textarea',
+  //     'select',
+  //     'button',
+  //     'meter',
+  //     'progress',
+  //     '[contentEditable]'
+  //   ].join(', ');
 
-    $document.unbind('keydown.deck').bind('keydown.deck', function(event) {
-      var isNext = event.which === options.keys.next;
-      var isPrev = event.which === options.keys.previous;
-      isNext = isNext || $.inArray(event.which, options.keys.next) > -1;
-      isPrev = isPrev || $.inArray(event.which, options.keys.previous) > -1;
+  //   $document.unbind('keydown.deck').bind('keydown.deck', function(event) {
+  //     var isNext = event.which === options.keys.next;
+  //     var isPrev = event.which === options.keys.previous;
+  //     isNext = isNext || $.inArray(event.which, options.keys.next) > -1;
+  //     isPrev = isPrev || $.inArray(event.which, options.keys.previous) > -1;
 
-      if (isNext) {
-        methods.next();
-        event.preventDefault();
-      }
-      else if (isPrev) {
-        methods.prev();
-        event.preventDefault();
-      }
-    });
+  //     if (isNext) {
+  //       methods.next();
+  //       event.preventDefault();
+  //     }
+  //     else if (isPrev) {
+  //       methods.prev();
+  //       event.preventDefault();
+  //     }
+  //   });
 
-    $document.undelegate(editables, 'keydown.deck', stopPropagation);
-    $document.delegate(editables, 'keydown.deck', stopPropagation);
-  };
+  //   $document.undelegate(editables, 'keydown.deck', stopPropagation);
+  //   $document.delegate(editables, 'keydown.deck', stopPropagation);
+  // };
 
   var bindTouchEvents = function() {
     var startTouch;
@@ -398,7 +398,7 @@ that use the API provided by core.
         slides = [];
         initSlidesArray(options.selectors.slides);
         setupHashBehaviors();
-        bindKeyEvents();
+        // bindKeyEvents();
         bindTouchEvents();
         $container.scrollLeft(0).scrollTop(0);
 

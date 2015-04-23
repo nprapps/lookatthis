@@ -153,13 +153,16 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         }
     }, 50);
 
+
+    /*
+    * Suppress the first events that get fired on page load
+    */
     if (firstSlideExit) {
         ANALYTICS.exitSlide(fromIndex.toString());
     }
     if (lastSlideExitEvent) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     }
-
     firstSlideExit = true;
 }
 
@@ -176,10 +179,15 @@ var onDocumentKeyDown = function(e) {
     * Called when key is pressed
     */
     var keyOptions = $.deck('getOptions').keys;
-    var keys = keyOptions.next.concat(keyOptions.previous);
-    if (keys.indexOf(e.which) > -1) {
+    console.log(keyOptions);
+    if (keyOptions.next.indexOf(e.which) > -1) {
         lastSlideExitEvent = 'exit-keyboard';
         ANALYTICS.useKeyboardNavigation();
+        $.deck('next');
+    } else if (keyOptions.previous.indexOf(e.which) > -1) {
+        lastSlideExitEvent = 'exit-keyboard';
+        ANALYTICS.useKeyboardNavigation();
+        $.deck('prev');
     }
     return true;
 }
