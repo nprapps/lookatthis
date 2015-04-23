@@ -4,26 +4,17 @@
 <div class="next-post-wrapper">
     <div class="primary-column">
         <div class="share-panel share-panel-section clearfix">
-            {% if POSTED_ON_FB %}
                 <div class="facebook">
-                    <h3>{{ COPY.sharing.fb_like_prompt }}</h3>
-                    <p class="button-wrapper">
-                        <a class="btn-facebook" href="{{ FB_POST }}"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.fb_like_call }} </b></a>
-                    </p>
-                </div>
-            {% else %}
-                <div class="facebook">
-                    <h3>{{ COPY.sharing.follow_prompt }}</h3>
-                    <p class="button-wrapper">
-                        <a class="btn-facebook" href="https://www.facebook.com/nprradiopictures"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.follow_call }} </b></a>
-                    </p>
-                </div>
-            {% endif %}
-
-            <div class="support">
-                <h3>{{ COPY.sharing.support_prompt }}</h3>
+                <h3>{{ COPY.sharing.fb_share_prompt }}</h3>
                 <p class="button-wrapper">
-                    <a class="btn-support" href="http://npr.org/stations/donate"><i class="fa fa-heart"></i> <b> {{ COPY.sharing.support_call }} </b></a>
+                    <a class="btn-facebook" href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ FB_SHARE_URL|urlencode }}" target="_blank"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.fb_share_call }} </b></a>
+                </p>
+            </div>
+
+            <div class="email-story">
+                <h3>{{ COPY.sharing.email_prompt }}</h3>
+                <p class="button-wrapper">
+                    <a class="btn-email" href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> {{ COPY.sharing.email_call }} </b></a>
                 </p>
             </div>
 
@@ -38,7 +29,7 @@
                 <h3>{{ COPY.sharing.did_not_like_prompt }}</h3>
 
                 <p class="button-wrapper">
-                    <a class="email" href="mailto:nprlook@gmail.com?subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope em"></i> <b> Email us your thoughts </b></a>
+                    <a class="dislike-email" href="mailto:nprlook@gmail.com?subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope em"></i> <b> Email us your thoughts </b></a>
                 </p>
             </div>
 

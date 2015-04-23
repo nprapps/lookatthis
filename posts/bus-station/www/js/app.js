@@ -13,10 +13,10 @@ var $likeStory;
 var $likeStoryButtons;
 var $facebook;
 var $facebookBtn;
-var $support;
-var $supportBtn;
+var $emailStory;
+var $emailBtn;
 var $didNotLike;
-var $email;
+var $dislikeEmail;
 
 var mobileSuffix;
 var w;
@@ -348,7 +348,7 @@ var resetArrows = function() {
 }
 
 var determineTests = function() {
-    var possibleCallToActionTests = ['facebook', 'support-npr'];
+    var possibleCallToActionTests = ['facebook', 'email'];
 
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
 }
@@ -363,18 +363,12 @@ var onLikeStoryButtonsClick = function(e) {
     $likeStory.hide();
 
     if ($(this).hasClass('yes')) {
-        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
-            ANALYTICS.trackEvent('like-story-yes', 'facebook-post');
-        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
-            ANALYTICS.trackEvent('like-story-yes', 'facebook-page');
-        } else {
-            ANALYTICS.trackEvent('like-story-yes', callToActionTest);
-        }
+        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
 
         if (callToActionTest === 'facebook') {
             $facebook.show();
         } else {
-            $support.show();
+            $emailStory.show();
         }
     } else {
         ANALYTICS.trackEvent('like-story-no');
@@ -388,23 +382,19 @@ var onFacebookBtnClick = function(e) {
     var $this = $(this);
     var link = $this.attr('href');
 
-    if (APP_CONFIG.POSTED_ON_FB) {
-        ANALYTICS.trackEvent('facebook-post-click');
-    } else {
-        ANALYTICS.trackEvent('facebook-page-click');
-    }
+    ANALYTICS.trackEvent('facebook-share');
 
     window.top.location = link
     return true;
 }
 
-var onSupportBtnClick = function(e) {
+var onEmailBtnClick = function(e) {
     e.preventDefault();
 
     var $this = $(this);
     var link = $this.attr('href');
 
-    ANALYTICS.trackEvent('support-btn-click');
+    ANALYTICS.trackEvent('email-story-btn-click');
 
     window.top.location = link
     return true;
@@ -429,17 +419,17 @@ $(document).ready(function() {
     $likeStoryButtons = $('.btn-like-story');
     $facebook = $('.facebook');
     $facebookBtn = $('.btn-facebook');
-    $support = $('.support');
-    $supportBtn = $('.btn-support');
+    $emailStory = $('.email-story');
+    $emailBtn = $('.btn-email');
     $didNotLike = $('.did-not-like');
-    $email = $('.email');
+    $dislikeEmail = $('.dislike-email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
-    $supportBtn.on('click', onSupportBtnClick);
-    $email.on('click', onEmailClick);
+    $emailBtn.on('click', onEmailBtnClick);
+    $dislikeEmail.on('click', onEmailClick);
 
 
     $upNext.on('click', onNextPostClick);
