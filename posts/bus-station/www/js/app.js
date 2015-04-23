@@ -153,7 +153,9 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }, 50);
 
     ANALYTICS.exitSlide(fromIndex.toString());
-    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    if (lastSlideExitEvent) {
+        ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    }
 }
 
 var onStartCardButtonClick = function() {
