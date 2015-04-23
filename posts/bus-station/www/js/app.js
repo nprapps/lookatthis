@@ -400,7 +400,7 @@ var onEmailBtnClick = function(e) {
     return true;
 }
 
-var onEmailClick = function() {
+var onDislikeEmailClick = function() {
     ANALYTICS.trackEvent('email-btn-click');
 }
 
@@ -429,8 +429,7 @@ $(document).ready(function() {
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
     $emailBtn.on('click', onEmailBtnClick);
-    $dislikeEmail.on('click', onEmailClick);
-
+    $dislikeEmail.on('click', onDislikeEmailClick);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
