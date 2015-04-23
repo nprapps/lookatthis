@@ -15,6 +15,7 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var firstSlideExit;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -152,10 +153,14 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         }
     }, 50);
 
-    ANALYTICS.exitSlide(fromIndex.toString());
+    if (firstSlideExit) {
+        ANALYTICS.exitSlide(fromIndex.toString());
+    }
     if (lastSlideExitEvent) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     }
+
+    firstSlideExit = true;
 }
 
 var onStartCardButtonClick = function() {
