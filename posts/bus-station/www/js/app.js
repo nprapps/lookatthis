@@ -179,7 +179,6 @@ var onDocumentKeyDown = function(e) {
     * Called when key is pressed
     */
     var keyOptions = $.deck('getOptions').keys;
-    console.log(keyOptions);
     if (keyOptions.next.indexOf(e.which) > -1) {
         lastSlideExitEvent = 'exit-keyboard';
         ANALYTICS.useKeyboardNavigation();
