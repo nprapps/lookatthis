@@ -9,6 +9,14 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
+var $likeStory;
+var $likeStoryButtons;
+var $facebook;
+var $facebookBtn;
+var $support;
+var $supportBtn;
+var $didNotLike;
+var $email;
 
 var mobileSuffix;
 var w;
@@ -16,6 +24,7 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var firstSlideExit;
+var callToActionTest;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -164,6 +173,16 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     }
     firstSlideExit = true;
+
+    if (toIndex === $slides.length - 1) {
+        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('tests-run', 'facebook-post');
+        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('tests-run', 'facebook-page');
+        } else {
+            ANALYTICS.trackEvent('tests-run', callToActionTest);
+        }
+    }
 }
 
 var onStartCardButtonClick = function() {
@@ -328,6 +347,73 @@ var resetArrows = function() {
     });
 }
 
+var determineTests = function() {
+    var possibleCallToActionTests = ['facebook', 'support-npr'];
+
+    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var onLikeStoryButtonsClick = function(e) {
+    e.preventDefault();
+
+    $likeStory.hide();
+
+    if ($(this).hasClass('yes')) {
+        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('like-story-yes', 'facebook-post');
+        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
+            ANALYTICS.trackEvent('like-story-yes', 'facebook-page');
+        } else {
+            ANALYTICS.trackEvent('like-story-yes', callToActionTest);
+        }
+
+        if (callToActionTest === 'facebook') {
+            $facebook.show();
+        } else {
+            $support.show();
+        }
+    } else {
+        ANALYTICS.trackEvent('like-story-no');
+        $didNotLike.show();
+    }
+}
+
+var onFacebookBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    if (APP_CONFIG.POSTED_ON_FB) {
+        ANALYTICS.trackEvent('facebook-post-click');
+    } else {
+        ANALYTICS.trackEvent('facebook-page-click');
+    }
+
+    window.top.location = link
+    return true;
+}
+
+var onSupportBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('support-btn-click');
+
+    window.top.location = link
+    return true;
+}
+
+var onEmailClick = function() {
+    ANALYTICS.trackEvent('email-btn-click');
+}
+
 $(document).ready(function() {
     $document = $(document);
     $body = $('body');
@@ -339,9 +425,22 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $likeStory = $('.like-story');
+    $likeStoryButtons = $('.btn-like-story');
+    $facebook = $('.facebook');
+    $facebookBtn = $('.btn-facebook');
+    $support = $('.support');
+    $supportBtn = $('.btn-support');
+    $didNotLike = $('.did-not-like');
+    $email = $('.email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $facebookBtn.on('click', onFacebookBtnClick);
+    $supportBtn.on('click', onSupportBtnClick);
+    $email.on('click', onEmailClick);
+
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
@@ -375,6 +474,7 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
+    determineTests();
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
