@@ -37,7 +37,7 @@ var ANALYTICS = (function () {
 
         _gaq.push(['_setCustomVar', 6, 'Orientation', orientation, 3]);
 
-        var viewportSize = $(window).width();
+        var viewportSize = document.body.clientWidth;
         var viewportGrouping = '1760 and higher';
 
         if (viewportSize < 481) {
