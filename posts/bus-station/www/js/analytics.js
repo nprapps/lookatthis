@@ -244,8 +244,12 @@ var ANALYTICS = (function () {
         trackEvent('first-right-arrow-clicked', test, timeOnLastSlide);
     }
 
+    setupGoogle();
+    setupComscore();
+    setupNielson();
+
     return {
-        'setupAll': setupAll,
+        'setupChartbeat': setupChartbeat,
         'trackEvent': trackEvent,
         'openShareDiscuss': openShareDiscuss,
         'closeShareDiscuss': closeShareDiscuss,
@@ -265,5 +269,3 @@ var ANALYTICS = (function () {
         'firstRightArrowClick': firstRightArrowClick
     };
 }());
-
-ANALYTICS.setupAll();
