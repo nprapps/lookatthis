@@ -108,7 +108,7 @@ var loadImages = function($slide) {
 
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        console.log(image_path);
+        console.log(w, $slide.hasClass('mobile-crop'), image_path)
 
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
@@ -434,6 +434,9 @@ $(document).ready(function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+
+    w = $(window).width();
+    h = $(window).height();
 
 
     if (isTouch) {
