@@ -23,7 +23,6 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
-var firstSlideExit;
 var callToActionTest;
 
 var completion = 0;
@@ -166,13 +165,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Suppress the first events that get fired on page load
     */
-    if (firstSlideExit) {
-        ANALYTICS.exitSlide(fromIndex.toString());
-    }
+    ANALYTICS.exitSlide(fromIndex.toString());
     if (lastSlideExitEvent) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     }
-    firstSlideExit = true;
 
     if (toIndex === $slides.length - 1) {
         if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
