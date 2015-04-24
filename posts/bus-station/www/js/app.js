@@ -86,13 +86,6 @@ var lazyLoad = function(slideIndex) {
         $slides.eq(slideIndex + 2)
     ];
 
-    // Mobile suffix should be blank by default.
-    mobileSuffix = '';
-/*
-    if (w < 769) {
-        mobileSuffix = '-sq';
-    }
-*/
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
     };
@@ -106,7 +99,16 @@ var loadImages = function($slide) {
     if ($slide.data('bgimage')) {
         var image_filename = $slide.data('bgimage').split('.')[0];
         var image_extension = '.' + $slide.data('bgimage').split('.')[1];
+        // Mobile suffix should be blank by default.
+        mobileSuffix = '';
+
+        if (w < 769 && $slide.hasClass('mobile-crop')) {
+            mobileSuffix = '-sq';
+        }
+
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
+
+        console.log(image_path);
 
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
