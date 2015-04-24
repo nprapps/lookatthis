@@ -14,7 +14,7 @@
             <div class="email-story">
                 <h3>{{ COPY.sharing.email_prompt }}</h3>
                 <p class="button-wrapper">
-                    <a class="btn-email" href="mailto:?body={{ COPY.sharing.email_body|safe }}&subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> {{ COPY.sharing.email_call }} </b></a>
+                    <a class="btn-email" href="mailto:?body={{COPY.sharing.meta_description}}%0D%0A%0D%0A{{ EMAIL_SHARE_URL|urlencode }}&subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> {{ COPY.sharing.email_call }} </b></a>
                 </p>
             </div>
 
