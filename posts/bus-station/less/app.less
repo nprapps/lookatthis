@@ -286,19 +286,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     position: relative;
     z-index: 1;
 
-    &:after {
-        display: block;
-        content: ' ';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.3);
-        height: 100%;
-        z-index: -1;
-    }
-
     @screen-tiny-above {
         &:after {
             display: none;
@@ -307,7 +294,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 
     //bottom dark gradient on all slides
-
     background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  70%,rgba(0, 0, 0, 0.7));
 
 
