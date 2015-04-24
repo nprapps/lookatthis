@@ -56,5 +56,10 @@
 
     {% block extra_foot %}
     {% endblock extra_foot %}
+
+    {# Setup Chartbeat last! #}
+    <script type="text/javascript">
+        $(ANALYTICS.setupChartbeat);
+    </script>
 </body>
 </html>
