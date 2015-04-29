@@ -93,14 +93,20 @@ var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-    if ($slide.data('bgimage')) {
-        var image_filename = $slide.data('bgimage').split('.')[0];
-        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
+    var bgimg = $slide.children('img');
+
+    if (bgimg.data('bgimage')) {
+        var image_filename = bgimg.data('bgimage').split('.')[0];
+        var image_extension = '.' + bgimg.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($slide.css('background-image') === 'none') {
-            $slide.css('background-image', 'url(' + image_path + ')');
-        }
+        bgimg.attr('src', image_path);
+
+        $slide.imgLiquid({
+            fill: true,
+            horizontalAlign: "center",
+            verticalAlign: "top",
+        });
     }
 
     var $images = $slide.find('img.lazy-load');
