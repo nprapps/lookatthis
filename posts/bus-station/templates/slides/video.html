@@ -1,4 +1,4 @@
-{% extends '_slide.html' %}
+{% extends '%s/templates/_slide.html' %}
 {% block slide_wrapper %}
 <div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}" data-bgimage="{{ row.foreground_media }}">
     {% block slide_body %}
