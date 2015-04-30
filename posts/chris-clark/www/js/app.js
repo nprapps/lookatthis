@@ -32,6 +32,7 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var callToActionTest;
+var currentIndex;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -161,7 +162,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     trackCompletion(toIndex);
     document.activeElement.blur();
     checkForVideo(toIndex);
-
+    currentIndex = toIndex;
     /*
     * Enable fades without totally screwing up the slides around them
     */
@@ -460,6 +461,7 @@ $(document).ready(function() {
     $emailBtn.on('click', onEmailBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
 
+
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
 
@@ -476,6 +478,7 @@ $(document).ready(function() {
     w = $(window).width();
     h = $(window).height();
 
+    $playerButton.on('click', AUDIO.toggleAudio);
 
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);

@@ -22,7 +22,7 @@ var AUDIO = (function() {
 
         for (var i = 0; i < $slides.length; i++) {
             var endTime = $slides.eq(i).data('slide-end-time');
-
+            console.log(position, endTime);
             // if the position is less than the end time of the slide of this loop
             if (position < endTime && currentIndex > 0) {
                 // if we're reached this slide, don't do anything
@@ -31,8 +31,7 @@ var AUDIO = (function() {
                 }
                 // once we've managed to loop past the current slide, move to that slide
                 else {
-                    $.deck('go', i); 
-                    animateTweets(i);
+                    $.deck('go', i);
                     break;
                 }
             }
@@ -50,9 +49,9 @@ var AUDIO = (function() {
                     var speed = 2000;
                 }
                 if (
-                    (position > entranceTime) && 
+                    (position > entranceTime) &&
                     (position < exitTime) &&
-                    ($el.css('opacity') < 1) && 
+                    ($el.css('opacity') < 1) &&
                     (!isAnimating)
                 ) {
                     $el.velocity({
