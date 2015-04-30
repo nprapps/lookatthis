@@ -211,8 +211,6 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
-    $.deck('next');
-
     AUDIO.setUpPlayer();
     $.deck('next');
     $('#slide-intro').css('opacity', 1);

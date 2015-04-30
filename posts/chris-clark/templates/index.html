@@ -8,7 +8,6 @@
 
 
 <div class="section">
-    <img src="assets/{{ COPY.content[0].background_media }}" />
     {% for row in COPY.content %}
         {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
     {% endfor %}
