@@ -31,7 +31,7 @@ var AUDIO = (function() {
                 }
                 // once we've managed to loop past the current slide, move to that slide
                 else {
-                    $.fn.fullpage.moveTo(0, i);
+                    $.deck('go', i); 
                     animateTweets(i);
                     break;
                 }

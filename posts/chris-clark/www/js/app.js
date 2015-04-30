@@ -197,6 +197,16 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
+    
+    AUDIO.setUpPlayer();
+    $('.start').one("webkitTransitionEnd transitionend", function(event) {
+        $.deck('next');
+        $('#slide-intro').css('opacity', 1);
+        $playerWrapper.css({
+            'opacity': 1,
+            'visibility': 'visible'
+        });
+    });
 }
 
 var onDocumentKeyDown = function(e) {
