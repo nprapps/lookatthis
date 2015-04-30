@@ -375,58 +375,6 @@ img {
     max-width: 100%;
 }
 
-
-//audio
-.player-wrapper {
-    position: fixed;
-    bottom: 0;
-    height: 5rem;
-    background: rgba(0,0,0,0.5);
-    line-height: 5rem;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden;
-    .transition(opacity 1s ease-in);
-
-    .controls {
-        vertical-align: middle;
-        margin-right: 15px;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .player-progress {
-        cursor: pointer;
-        position: absolute;
-        left: 5rem;
-        top: 0;
-        bottom: 0;
-        right: 0;
-
-        .jp-seek-bar {
-            height: 100%;
-        }
-
-        .bar {
-            position: absolute;
-            height: 5rem;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            background-color: #373737;
-            opacity: 0.75;
-        }
-    }
-    .playback-info {
-        right: 1rem;
-        text-align: right;
-        line-height: 1;
-        .vertical-center;
-        position: absolute;
-    }
-}
-
 .vertical-center {
     position: relative;
     top: 50%;
@@ -445,6 +393,7 @@ img {
     opacity: 0;
     visibility: hidden;
     .transition(opacity 1s ease-in);
+    z-index: 20;
 
     .controls {
         vertical-align: middle;

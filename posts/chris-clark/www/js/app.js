@@ -197,16 +197,16 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
-    
+
     AUDIO.setUpPlayer();
-    $('.start').one("webkitTransitionEnd transitionend", function(event) {
-        $.deck('next');
-        $('#slide-intro').css('opacity', 1);
-        $playerWrapper.css({
-            'opacity': 1,
-            'visibility': 'visible'
-        });
+    $.deck('next');
+    $('#slide-intro').css('opacity', 1);
+    $playerWrapper.css({
+        'opacity': 1,
+        'visibility': 'visible'
     });
+    // $('.start').one("webkitTransitionEnd transitionend", function(event) {
+    // });
 }
 
 var onDocumentKeyDown = function(e) {
@@ -452,7 +452,7 @@ $(document).ready(function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
-    
+
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
@@ -490,8 +490,8 @@ $(document).ready(function() {
     onPageLoad();
     resize();
     determineTests();
-    
-    
+
+
     $player.jPlayer({
         swfPath: 'js/lib',
         loop: false,
