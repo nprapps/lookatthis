@@ -18,9 +18,32 @@
     <div class="controlArrow next"></div>
 </div>
 
-<div id="narrative-player"></div>
-<div id="ambient-player"></div>
-
+<div class="player-wrapper">
+    <div id="player" class="jp-jplayer"></div>
+    <div id="jp_container_1" class="jp-audio">
+        <div class="jp-type-single">
+            <div class="jp-gui jp-interface">
+                <div class="jp-controls-holder">
+                    <div class="jp-controls controls">
+                        <a href="#" class="play player-button" tabindex="1" title="play"><span class="fa fa-play"></span></a>
+                        <a href="#" class="pause player-button" tabindex="1" style="display: none;" title="pause"><span class="fa fa-pause"></span></a>
+                        <a href="#" class="replay player-button" tabindex="1" style="display: none;" title="pause"><span class="fa fa-undo"></span></a>
+                    </div>
+                </div>
+                <div class="jp-progress-container">
+                    <div class="player-progress jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar bar"></div>
+                        </div>
+                    </div>
+                    <div class="playback-info">
+                        <div class="current-time"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block wide_content %}

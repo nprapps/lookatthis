@@ -18,6 +18,14 @@ var $emailBtn;
 var $didNotLike;
 var $dislikeEmail;
 
+var $playerWrapper;
+var $player;
+var $playerButton;
+var $play;
+var $pause;
+var $replay;
+var $animatedElements = null;
+
 var mobileSuffix;
 var w;
 var h;
@@ -28,6 +36,8 @@ var callToActionTest;
 var completion = 0;
 var swipeTolerance = 40;
 var touchFactor = 1;
+
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var resize = function() {
     /*
@@ -432,6 +442,13 @@ $(document).ready(function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+    
+    $playerWrapper = $('.player-wrapper');
+    $player = $('#player');
+    $playerButton = $('.player-button');
+    $replay = $('.replay');
+    $play = $('.play');
+    $pause = $('.pause');
 
     w = $(window).width();
     h = $(window).height();
@@ -463,6 +480,23 @@ $(document).ready(function() {
     onPageLoad();
     resize();
     determineTests();
+    
+    
+    $player.jPlayer({
+        swfPath: 'js/lib',
+        loop: false,
+        supplied: 'mp3',
+        timeupdate: AUDIO.onTimeupdate,
+        cssSelectorAncestor: "#jp_container_1",
+        smoothPlayBar: true,
+        volume: NO_AUDIO ? 0 : 1
+    });
+
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/spacepix/assets/wiseman2.mp3' : 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
+
+    $player.jPlayer('setMedia', {
+        mp3: mp3FilePath
+    });
 
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);

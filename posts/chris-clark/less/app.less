@@ -294,7 +294,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 
     //bottom dark gradient on all slides
-    background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  70%,rgba(0, 0, 0, 0.7));
+    /*background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  70%,rgba(0, 0, 0, 0.7));*/
 
 
     .full-block-cell {
@@ -373,6 +373,147 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 img {
     max-width: 100%;
+}
+
+
+//audio
+.player-wrapper {
+    position: fixed;
+    bottom: 0;
+    height: 5rem;
+    background: rgba(0,0,0,0.5);
+    line-height: 5rem;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    .transition(opacity 1s ease-in);
+
+    .controls {
+        vertical-align: middle;
+        margin-right: 15px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .player-progress {
+        cursor: pointer;
+        position: absolute;
+        left: 5rem;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        .jp-seek-bar {
+            height: 100%;
+        }
+
+        .bar {
+            position: absolute;
+            height: 5rem;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #373737;
+            opacity: 0.75;
+        }
+    }
+    .playback-info {
+        right: 1rem;
+        text-align: right;
+        line-height: 1;
+        .vertical-center;
+        position: absolute;
+    }
+}
+
+.vertical-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+
+//audio
+.player-wrapper {
+    position: fixed;
+    bottom: 0;
+    height: 5rem;
+    background: rgba(0,0,0,0.5);
+    line-height: 5rem;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    .transition(opacity 1s ease-in);
+
+    .controls {
+        vertical-align: middle;
+        margin-right: @grid-gutter-width / 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .player-progress {
+        cursor: pointer;
+        position: absolute;
+        left: 5rem;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        .jp-seek-bar {
+            height: 100%;
+        }
+
+        .bar {
+            position: absolute;
+            height: 5rem;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #373737;
+            opacity: 0.75;
+        }
+    }
+    .playback-info {
+        right: 1rem;
+        text-align: right;
+        line-height: 1;
+        .vertical-center;
+        position: absolute;
+    }
+}
+
+.player-button,
+.player-button:focus,
+.player-button:visited,
+.player-button:hover {
+    display: block;
+    .square(5rem);
+    background: #373737;
+    color: #fff;
+    line-height: 5rem;
+    text-align: center;
+    font-size: @font-size-base * 2;
+    opacity: 0.75;
+
+
+    .no-touch & {
+        &:hover {
+            color: #fff;
+            background: lighten(#373737, 10%);
+            text-decoration: none;
+        }
+    }
+
+    .touch & {
+        &:active {
+            color: #fff;
+            background: lighten(#373737, 10%);
+            text-decoration: none;
+        }
+    }
 }
 
 .dark-overlay .full-block {
