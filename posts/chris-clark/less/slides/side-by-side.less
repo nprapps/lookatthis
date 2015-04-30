@@ -32,25 +32,30 @@
                     margin-bottom: 10px;
 
                     @media @screen-medium-above {
-                        margin-bottom: 20px;
+                        margin-bottom: 0px;
                     }
 
                     img {
                         display: block;
+                        border: solid;
+                        border-width:3px;
+                        border-radius:10px;
+                        border-color: rgba(255, 255, 255, .1);
                         width: 100%;
                         height: auto;
-                        max-width: 450px;
+                        max-width: 550px;
+                        margin-bottom:5px;
                     }
 
-                    @media @screen-medium-above {
-                        display: table-cell;
-                        width: 50%;
+                    // @media @screen-medium-above {
+                    //     display: table-cell;
+                    //     width: 50%;
 
-                        img {
-                            position: relative;
-                            left: -20px;
-                        }
-                    }
+                    //     img {
+                    //         position: relative;
+                    //         left: -20px;
+                    //     }
+                    // }
 
                     p {
                         text-shadow: none;
@@ -69,24 +74,29 @@
                 .second-side {
                     padding: 20px;
                     background: @side-by-side-screen;
-                    max-width: 450px;
+                    max-width: 550px;
+
 
                     @media @screen-small-above {
                         margin-bottom: 20px;
                     }
 
-                    @media @screen-medium-above {
-                        display: table-cell;
-                        vertical-align: middle;
-                        width: 50%;
+                    // @media @screen-medium-above {
+                    //     display: table-cell;
+                    //     vertical-align: middle;
+                    //     width: 50%;
 
-                    }
+                    // }
 
                     p {
+                        
                         text-shadow: none;
                         font-size: @small-type;
                         line-height: 1.5;
-                        padding-bottom: 5px;
+                        padding-top: 4px;
+
+                        vertical-align: center;
+
 
                         @media @screen-small-above {
                             font-size: 16px;
@@ -111,6 +121,7 @@
                         display: block;
                         width: 100%;
                         height: auto;
+
 
                         @media @screen-medium-above {
                             margin-left: 20px;

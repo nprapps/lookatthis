@@ -5,18 +5,11 @@
 * and tweak the controlArrow CSS rules later in this file.
 */
 @import "./lib/lookatthis-font.less";
-//@import "./lib/font-awesome/font-awesome";
+@import "./lib/font-awesome/font-awesome";
 
 @import "./lib/prefixer";
 @import "./share-modal.less";
-@import "./slides/conclusion.less";
-@import "./slides/framed-text.less";
-@import "./slides/full-bleed.less";
-@import "./slides/next-post.less";
-@import "./slides/side-by-side.less";
-@import "./slides/start.less";
-@import "./slides/titlecard.less";
-@import "./nudges.less";
+
 
 // Global variables
 @img-root: "../assets";
@@ -24,7 +17,7 @@
 @darker-overlay: rgba(0,0,0,0.7);
 @black-screen: rgba(0,0,0,0.8);
 @look-pink: #F60062;
-@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@side-by-side-screen: rgba(63, 63, 63, 0.6);
 @caption-screen-dark: rgba(175, 0, 71, 0.7);
 @pink: rgba(200, 66, 119, 1);
 @caption-screen-light: rgba(153, 9, 71, 0.7);
@@ -42,10 +35,38 @@
 @screen-tiny-above: ~"screen and (min-width: 481px)";
 @screen-tiny: ~"screen and (max-width: 480px)";
 
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.deck-container {
+    position: relative;
+    min-height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.js .deck-container {
+    visibility: hidden;
+}
+.ready .deck-container {
+    visibility: visible;
+}
+.touch .deck-container {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+}
+
+.deck-loading {
+    display: none;
+}
+
 body {
     color: #fff;
     font-family: "Gotham SSm", helvetica, arial, sans-serif;
-    font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
+    font: 20px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #111;
 }
@@ -53,6 +74,8 @@ body {
 h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
+
+.nobr {white-space:nowrap;}
 
 .animated {
   -webkit-animation-duration: 2s;
@@ -102,6 +125,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .primary-navigation {
     .controlArrow {
+        z-index: 100;
         position: fixed;
         top: 40%;
         width: 50px;
@@ -162,7 +186,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         */
 
         @media @screen-small-above {
-            left: 10px;
+            margin-left: 10px;
             padding-top: 25px;
         }
     }
@@ -177,16 +201,16 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         }
 
         /* Uncomment to use FontAwesome */
-        /*
-        &:before {
-            font-family: "FontAwesome";
-            content: "\f105";
-            display: block;
-        }
-        */
+
+        // &:before {
+        //     font-family: "FontAwesome";
+        //     content: "\f105";
+        //     display: block;
+        // }
+
 
         @media @screen-small-above {
-            right: 25px;
+            margin-right: 10px;
             padding-top: 25px;
         }
     }
@@ -217,32 +241,32 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     box-sizing: border-box;
     width: 100%;
 
-    .slides {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
+    .slide {
+        display: none;
+        background-color: #000;
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        opacity: 0;
 
-        //transition between slides
-        .instant {
-            .transition(all 0 ease-in);
+        &.deck-previous {
+            z-index: 5;
+        }
+        &.deck-current {
+            visibility: visible;
+            opacity: 1;
+            z-index: 10;
+        }
+        &.deck-next {
+            z-index: 15;
         }
 
-        .slidesContainer {
-            float: left;
-            position: relative;
-            height: 100%;
-            display: block;
-
-            .slide {
-                float: left;
-                height: 100%;
-                display: block;
-                overflow: auto;
-            }
+        &.fade {
+            .transition(all 0.5s ease-in);
         }
     }
 }
@@ -251,7 +275,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 .section, .slide {
     .background-size(cover);
     background-position: center center;
-    position: relative;
 }
 
 // full width container within a section or slide
@@ -263,10 +286,22 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     position: relative;
     z-index: 1;
 
+    @screen-tiny-above {
+        &:after {
+            display: none;
+        }
+
+    }
+
+    //bottom dark gradient on all slides
+    background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  70%,rgba(0, 0, 0, 0.7));
+
+
     .full-block-cell {
         display: table-cell;
         position: relative;
-        vertical-align: top;
+        vertical-align: center;
+        text-align: center;
         padding-top: 20px;
         @media @screen-small-above {
             padding-top: 0;
@@ -277,11 +312,61 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 
     .full-block-content {
-        max-width: 1200px;
+        max-width: 700px;
         margin: 0 auto;
         padding: 20px;
         @media @screen-small-above {
              padding: 20px 100px;
+        }
+
+        @media @screen-medium-above {
+             max-width: 900px;
+        }
+
+        .wide-content & {
+            max-width: 1100px;
+        }
+
+        a {
+            color: #ddd;
+            text-decoration: underline;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        p {
+            font-family: "georgia";
+            font-size: 16px;
+            text-align: left;
+            text-shadow: 2px 2px 2px #111;
+            line-height: 1.6;
+
+            @media @screen-small-above {
+                font-size: 22px;
+            }
+
+            @media @screen-medium-above {
+                font-size: 26px;
+            }
+
+        }
+
+        h4 {
+            margin: 0 auto;
+            padding-bottom: 10px;
+            font-size: 22px;
+            text-align: center;
+            text-shadow: 2px 2px 4px #111;
+            font-weight: bold;
+
+
+            @media @screen-small-above {
+                font-size: 42px;
+                line-height:1.1;
+            }
+
         }
     }
 }
@@ -314,9 +399,19 @@ img {
     line-height: 14px;
     @media @screen-small-above {
          position: absolute;
-         bottom: 10px;    
+         bottom: 10px;
          right: 25px;
          font-size: 12px;
          max-width: 1000px;
     }
 }
+
+@import "./slides/conclusion.less";
+@import "./slides/framed-text.less";
+@import "./slides/full-bleed.less";
+@import "./slides/next-post.less";
+@import "./slides/quote.less";
+@import "./slides/side-by-side.less";
+@import "./slides/start.less";
+@import "./slides/titlecard.less";
+@import "./nudges.less";

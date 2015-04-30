@@ -1,50 +1,98 @@
 .quote {
 
     .full-block-cell {
-        vertical-align: bottom;
-        padding-bottom: 100px;
+        display: block;
+        height: 100%;
+        vertical-align: top;
+        position: relative;
+        /*padding-bottom: 400px;*/
+        .full-block-content {
+            padding: 0;
+            position: absolute;
+            max-width: none;
+            width: 50%;
+            top: 50%;
+            left: 50%;
+            .translate(-50%,-50%);   
 
-        .full-block-content {margin: 0;}
-    }
+            @media @screen-small {
+                width: 100%;
+                // margin-top: 130px;
+                // max-width: 280px;
+                // margin-left: 11%;
+            }
 
-    .quote-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 225px;
-        .background-size(cover);
-        background-position: top left;
-        @media @screen-small-above {
-            height: 100%;
-            background-position: center center;
+
+            @media @screen-small-above {
+                // margin-top: -20%;
+                // padding: 20px;
+            }
+
+           @media @screen-medium-above  {
+                width: 33%;
+                // margin-top: -20%;
+                // padding: 20px;
+            }
+
+           @media @screen-large-above  {
+                width: 25%;
+                // margin-top:-48%;
+                // max-width:300px;
+                // padding: 20px;
+                // margin-left: -15%;
+            }
+
+
+            #slide-q& {
+                top: 75%;
+                left: 50%;
+
+                @media @screen-medium-above  {
+                    left: 20%;
+                }
+            }    
         }
     }
 
     .quote-text {
-        position: absolute;
-        top: 225px;
-        right: 0;
-        padding: 20px 20px 70px 20px;
+        text-align: left;
         color: #ddd;
+        background-color: rgba(255,255,255,.1); 
+        border: solid;
+        border-radius: 5px;
+        border-width: 0;//3px;
+        padding: 20px;
+        margin: 0 20px;
 
-        @media @screen-small-above {
-            top: auto;
-            bottom: 90px;
-            right: 25px;
-            max-width: 300px;
+
+
+
+
+       /* @media only screen and (min-width: 641px) and (max-width: 1024px) { 
+            
+            right: 10%;
+            max-width: 400px;
             padding: 20px;
-            background-color: rgba(0,0,0,.8);
-        }
+
+        }*/
+
+
 
         blockquote {
             border: 0;
             margin: 0;
             padding: 0;
 
+            p {
+                font-size:16px;
+                            }
+
             font-size: 13px;
+                    font-family: gotham;
+
             @media @screen-small-above {
                 font-size: 18px;
+
             }
         }
     }

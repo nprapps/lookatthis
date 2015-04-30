@@ -1,0 +1,38 @@
+// Breakpoints
+@screen-mega-above: ~"screen and (min-width: 1440px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
+.epilogue {
+    
+    .full-block-content {
+        p {
+            font-size: 13px;
+            color: #fff;
+            line-height: 1.3;
+            margin: 15px auto;
+            text-align: left;
+            font-family: georgia, serif;
+            max-width: 700px; 
+            text-shadow: 2px 2px 4px #000;
+            @media @screen-small-above {
+                max-width: 600px;
+                font-size: 22px;
+                line-height: 1.3;
+                text-align: justify;
+            }
+            @media @screen-mega-above {
+                font-size: 24px;
+            }
+            
+        }
+    }
+    
+    
+}
