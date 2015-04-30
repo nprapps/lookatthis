@@ -160,6 +160,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+    checkForVideo(toIndex);
 
     /*
     * Enable fades without totally screwing up the slides around them
@@ -188,6 +189,20 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         } else {
             ANALYTICS.trackEvent('tests-run', callToActionTest);
         }
+    }
+}
+
+var checkForVideo = function(toIndex) {
+    var $video = $slides.eq(toIndex).find('video');
+    if ($video.length > 0 && !isTouch) {
+        var sources = $video.find('source');
+        var video = $video.get(0);
+
+        if (!sources.attr('src')) {
+            sources.attr('src', sources.data('src'));
+            video.load();
+        }
+        video.play();
     }
 }
 
