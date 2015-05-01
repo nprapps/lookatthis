@@ -208,16 +208,20 @@ var checkForVideo = function(toIndex) {
             video.play();
         }
     } else {
-        var filmstripFolder = $slides.eq(toIndex).data('filmstrip-folder');
+        var $thisSlide = $slides.eq(toIndex);
+
+        var filmstripFolder = $thisSlide.data('filmstrip-folder');
+        var filmstripLength = $thisSlide.data('filmstrip-length');
         var number = 0;
         setInterval(function() {
-            number = number + 10;
-            var newImage = APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
+            if (number <= filmstripLength) {
+                number = number + 10;
+                var newImage = APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
 
-            $slides.eq(toIndex).css('background-image', 'url(' + newImage + ')');
-            // } else {
-            //     clearInterval();
-            // }
+                $thisSlide.css('background-image', 'url(' + newImage + ')');
+            } else {
+                clearInterval();
+            }
         }, 2000);
     }
 }
