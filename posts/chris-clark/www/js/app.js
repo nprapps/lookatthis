@@ -194,16 +194,35 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 }
 
 var checkForVideo = function(toIndex) {
-    var $video = $slides.eq(toIndex).find('video');
-    if ($video.length > 0 && !isTouch) {
-        var sources = $video.find('source');
-        var video = $video.get(0);
 
-        if (!sources.attr('src')) {
-            sources.attr('src', sources.data('src'));
-            video.load();
+    if (!isTouch) {
+        var $video = $slides.eq(toIndex).find('video');
+        if ($video.length > 0 && !isTouch) {
+            var sources = $video.find('source');
+            var video = $video.get(0);
+
+            if (!sources.attr('src')) {
+                sources.attr('src', sources.data('src'));
+                video.load();
+            }
+            video.play();
         }
-        video.play();
+    } else {
+        var currentImage = $slides.eq(toIndex).data('bgimage');
+        var filename = currentImage.split('/')[1];
+        var slug = filename.split('.')[0];
+        var number = parseInt(slug.split('video')[1]);
+
+        setInterval(function() {
+            number = number + 10;
+            if (number < 494) {
+                var newImage = 'http://127.0.0.1:8000/posts/chris-clark/assets/mobile/test-video0' + number + '.jpg';
+
+                $slides.eq(toIndex).css('background-image', 'url(' + newImage + ')');
+            } else {
+                clearInterval();
+            }
+        }, 2000);
     }
 }
 
@@ -296,15 +315,6 @@ var onPreviousArrowClick = function() {
      */
     lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
-}
-
-
-var onClippyCopy = function(e) {
-    /*
-     * Text copied to clipboard.
-     */
-    alert('Copied to your clipboard!');
-    ANALYTICS.copySummary();
 }
 
 var onTouchStart = function(e) {
@@ -473,12 +483,11 @@ $(document).ready(function() {
     $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
 
-
+    /*
+    * All of the nav bindings
+    */
     // $previousArrow.on('click', onPreviousArrowClick);
     // $nextArrow.on('click', onNextArrowClick);
-
-
-
     // if (isTouch) {
     //     $arrows.on('touchstart', fakeMobileHover);
     //     $arrows.on('touchend', rmFakeMobileHover);
@@ -486,8 +495,10 @@ $(document).ready(function() {
     //     $body.on('touchmove', onTouchMove);
     //     $body.on('touchend', onTouchEnd);
     // }
+    // $document.keydown(onDocumentKeyDown);
 
-    // Turn off Modernizr history when deploying
+
+    // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
 
     $.deck($slides, {
@@ -517,5 +528,4 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    // $document.keydown(onDocumentKeyDown);
 });

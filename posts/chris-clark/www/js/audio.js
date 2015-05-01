@@ -22,7 +22,6 @@ var AUDIO = (function() {
 
         for (var i = 0; i < $slides.length; i++) {
             var endTime = $slides.eq(i).data('slide-end-time');
-            console.log(position, endTime);
             // if the position is less than the end time of the slide of this loop
             if (position < endTime && currentIndex > 0) {
                 // if we're reached this slide, don't do anything
