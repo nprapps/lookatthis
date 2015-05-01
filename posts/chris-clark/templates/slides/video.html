@@ -1,6 +1,6 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_wrapper %}
-<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}" data-slide-end-time="{{ row.slide_end_time }}">
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}" data-slide-end-time="{{ row.slide_end_time }}" data-filmstrip-folder="{{ row.filmstrip_folder }}">
     {% block slide_body %}
     <div class="text full-block">
         <div class="full-block-cell">
