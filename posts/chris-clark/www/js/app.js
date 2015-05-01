@@ -225,7 +225,7 @@ var checkForVideo = function(toIndex) {
             } else {
                 clearInterval();
             }
-        }, 1000);
+        }, 300);
     }
 }
 
