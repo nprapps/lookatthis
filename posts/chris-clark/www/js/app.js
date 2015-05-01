@@ -214,15 +214,15 @@ var checkForVideo = function(toIndex) {
         var filmstripLength = $thisSlide.data('filmstrip-length');
         var number = 0;
         setInterval(function() {
+            number = number + 1;
             if (number <= filmstripLength) {
-                number = number + 10;
                 var newImage = APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
 
                 $thisSlide.css('background-image', 'url(' + newImage + ')');
             } else {
                 clearInterval();
             }
-        }, 2000);
+        }, 1000);
     }
 }
 
@@ -519,7 +519,7 @@ $(document).ready(function() {
         volume: NO_AUDIO ? 0 : 1
     });
 
-    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/lc-430.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/lc-430.mp3';
+    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/lc-430.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/lc-430.mp3';
 
     $player.jPlayer('setMedia', {
         mp3: mp3FilePath
