@@ -216,9 +216,12 @@ var checkForVideo = function(toIndex) {
         setInterval(function() {
             number = number + 1;
             if (number <= filmstripLength) {
-                var newImage = APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
+                var img = new Image();
+                img.src = 'http://stage-apps.npr.org/lookatthis/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
 
-                $thisSlide.css('background-image', 'url(' + newImage + ')');
+                img.onload = function() {
+                    $thisSlide.css('background-image', 'url(' + img.src + ')');
+                }
             } else {
                 clearInterval();
             }
