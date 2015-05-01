@@ -60,7 +60,7 @@ var onPageLoad = function() {
         'visibility': 'visible',
     });
     $slides.show();
-    showNavigation(0);
+    // showNavigation(0);
 };
 
 var trackCompletion = function(index) {
@@ -158,7 +158,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    showNavigation(toIndex);
+    // showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
     checkForVideo(toIndex);
@@ -453,21 +453,6 @@ $(document).ready(function() {
     $emailBtn = $('.btn-email');
     $didNotLike = $('.did-not-like');
     $dislikeEmail = $('.dislike-email');
-
-    $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
-    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
-    $facebookBtn.on('click', onFacebookBtnClick);
-    $emailBtn.on('click', onEmailBtnClick);
-    $dislikeEmail.on('click', onDislikeEmailClick);
-
-
-    $upNext.on('click', onNextPostClick);
-    $document.on('deck.change', onSlideChange);
-
-    $previousArrow.on('click', onPreviousArrowClick);
-    $nextArrow.on('click', onNextArrowClick);
-
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
@@ -478,26 +463,32 @@ $(document).ready(function() {
     w = $(window).width();
     h = $(window).height();
 
+    $startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $facebookBtn.on('click', onFacebookBtnClick);
+    $emailBtn.on('click', onEmailBtnClick);
+    $dislikeEmail.on('click', onDislikeEmailClick);
+    $upNext.on('click', onNextPostClick);
+    $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
 
-    if (isTouch) {
-        $arrows.on('touchstart', fakeMobileHover);
-        $arrows.on('touchend', rmFakeMobileHover);
-        $body.on('touchstart', onTouchStart);
-        $body.on('touchmove', onTouchMove);
-        $body.on('touchend', onTouchEnd);
-    }
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
+    // $previousArrow.on('click', onPreviousArrowClick);
+    // $nextArrow.on('click', onNextArrowClick);
+
+
+
+    // if (isTouch) {
+    //     $arrows.on('touchstart', fakeMobileHover);
+    //     $arrows.on('touchend', rmFakeMobileHover);
+    //     $body.on('touchstart', onTouchStart);
+    //     $body.on('touchmove', onTouchMove);
+    //     $body.on('touchend', onTouchEnd);
+    // }
 
     // Turn off Modernizr history when deploying
-    if (APP_CONFIG.DEPLOYMENT_TARGET) {
-        Modernizr.history = null;
-    }
+    Modernizr.history = null;
 
     $.deck($slides, {
         touch: { swipeTolerance: swipeTolerance }
@@ -506,7 +497,6 @@ $(document).ready(function() {
     onPageLoad();
     resize();
     determineTests();
-
 
     $player.jPlayer({
         swfPath: 'js/lib',
@@ -527,5 +517,5 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     window.addEventListener("deviceorientation", resize, true);
     $(window).resize(resize);
-    $document.keydown(onDocumentKeyDown);
+    // $document.keydown(onDocumentKeyDown);
 });
