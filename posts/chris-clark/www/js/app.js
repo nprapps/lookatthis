@@ -201,6 +201,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 }
 
 var checkForVideo = function(toIndex) {
+    /*
+    * Load the video when we get to the slide.
+    */
+
     if (!isTouch) {
         var $video = $slides.eq(toIndex).find('video');
         if ($video.length > 0 && !isTouch) {
@@ -217,6 +221,10 @@ var checkForVideo = function(toIndex) {
 }
 
 var initCarousel = function() {
+    /*
+    * Initialize the carousel for mobile devices
+    */
+
     $imageGrid.addClass('carousel');
 
     var $carouselItems = $imageGrid.children('.block');
@@ -250,6 +258,10 @@ var initCarousel = function() {
 }
 
 var removeCarousel = function() {
+    /*
+    * Set images to grid layout and remove interval.
+    */
+
     $imageGrid.removeClass('carousel');
 
     if (carousel) {
