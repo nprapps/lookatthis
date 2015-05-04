@@ -207,25 +207,6 @@ var checkForVideo = function(toIndex) {
             }
             video.play();
         }
-    } else {
-        var $thisSlide = $slides.eq(toIndex);
-
-        var filmstripFolder = $thisSlide.data('filmstrip-folder');
-        var filmstripLength = $thisSlide.data('filmstrip-length');
-        var number = 0;
-        setInterval(function() {
-            number = number + 1;
-            if (number <= filmstripLength) {
-                var img = new Image();
-                img.src = 'http://stage-apps.npr.org/lookatthis/posts/chris-clark/assets/' + filmstripFolder + '/filmstrip_' + number + '.jpg';
-
-                img.onload = function() {
-                    $thisSlide.css('background-image', 'url(' + img.src + ')');
-                }
-            } else {
-                clearInterval();
-            }
-        }, 300);
     }
 }
 
