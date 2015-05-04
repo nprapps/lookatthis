@@ -276,35 +276,6 @@ var onStartCardButtonClick = function() {
         'opacity': 1,
         'visibility': 'visible'
     });
-    // $('.start').one("webkitTransitionEnd transitionend", function(event) {
-    // });
-}
-
-var onDocumentKeyDown = function(e) {
-    /*
-    * Called when key is pressed
-    */
-    var keyOptions = $.deck('getOptions').keys;
-    if (keyOptions.next.indexOf(e.which) > -1) {
-        lastSlideExitEvent = 'exit-keyboard';
-        ANALYTICS.useKeyboardNavigation();
-        $.deck('next');
-    } else if (keyOptions.previous.indexOf(e.which) > -1) {
-        lastSlideExitEvent = 'exit-keyboard';
-        ANALYTICS.useKeyboardNavigation();
-        $.deck('prev');
-    }
-    return true;
-}
-
-var onSlideClick = function(e) {
-    /*
-    * Advance on slide tap on touch devices
-    */
-    if (isTouch && !$(e.target).is('button')) {
-        lastSlideExitEvent = 'exit-tap';
-        $.deck('next');
-    }
 }
 
 var onNextPostClick = function(e) {
@@ -315,114 +286,6 @@ var onNextPostClick = function(e) {
     ANALYTICS.trackEvent('next-post');
     window.top.location = NEXT_POST_URL;
     return true;
-}
-
-var fakeMobileHover = function() {
-    /*
-     * Fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
-}
-
-var rmFakeMobileHover = function() {
-    /*
-     * Remove fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
-}
-
-var onNextArrowClick = function() {
-    /*
-     * Next arrow click
-     */
-    lastSlideExitEvent = 'exit-next-button-click';
-    $.deck('next');
-}
-
-var onPreviousArrowClick = function() {
-    /*
-     * Previous arrow click
-     */
-    lastSlideExitEvent = 'exit-previous-button-click';
-    $.deck('prev');
-}
-
-var onTouchStart = function(e) {
-    /*
-     * Capture start position when swipe initiated
-     */
-    if (!startTouch) {
-        startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
-    }
-}
-
-var onTouchMove = function(e) {
-    /*
-     * Track finger swipe
-     */
-
-
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (!startTouch || touch.identifier !== startTouch.identifier) {
-            return true;
-        }
-
-
-        var yDistance = touch.screenY - startTouch.screenY;
-        var xDistance = touch.screenX - startTouch.screenX;
-        var direction = (xDistance > 0) ? 'right' : 'left';
-
-        if (Math.abs(yDistance) < Math.abs(xDistance)) {
-            e.preventDefault();
-        }
-
-        if (direction == 'right' && xDistance > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-right';
-        } else if (direction == 'right' && xDistance < swipeTolerance) {
-            $previousArrow.filter(':visible').css({
-                'left': (xDistance * touchFactor) + 'px'
-            });
-        }
-
-        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-left';
-        } else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
-            $nextArrow.filter(':visible').css({
-                'right': (Math.abs(xDistance) * touchFactor) + 'px'
-            });
-        }
-    });
-}
-
-var onTouchEnd = function(e) {
-    /*
-     * Clear swipe start position when swipe ends
-     */
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (startTouch && touch.identifier === startTouch.identifier) {
-            startTouch = undefined;
-        }
-    });
-}
-
-var resetArrows = function() {
-    /*
-     * Reset arrows when advancing slides
-     */
-    $nextArrow.animate({
-        'right': 0
-    });
-    $previousArrow.animate({
-        'left': 0
-    });
 }
 
 var determineTests = function() {
@@ -500,6 +363,7 @@ $(document).ready(function() {
     $emailBtn = $('.btn-email');
     $didNotLike = $('.did-not-like');
     $dislikeEmail = $('.dislike-email');
+
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
     $playerButton = $('.player-button');
@@ -511,7 +375,6 @@ $(document).ready(function() {
     h = $(window).height();
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
     $emailBtn.on('click', onEmailBtnClick);
@@ -519,21 +382,6 @@ $(document).ready(function() {
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
-
-    /*
-    * All of the nav bindings
-    */
-    // $previousArrow.on('click', onPreviousArrowClick);
-    // $nextArrow.on('click', onNextArrowClick);
-    // if (isTouch) {
-    //     $arrows.on('touchstart', fakeMobileHover);
-    //     $arrows.on('touchend', rmFakeMobileHover);
-    //     $body.on('touchstart', onTouchStart);
-    //     $body.on('touchmove', onTouchMove);
-    //     $body.on('touchend', onTouchEnd);
-    // }
-    // $document.keydown(onDocumentKeyDown);
-
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
