@@ -55,6 +55,8 @@ var resize = function() {
     else {
         $imageGrid.removeClass('carousel');
         clearInterval(carousel);
+        carousel = null;
+        $imageGrid.find('.block').removeClass('active');
     }
 };
 
@@ -225,16 +227,18 @@ var initCarousel = function() {
     $carouselItems.eq(currentItem).addClass('active');
     currentItem = currentItem + 1;
 
-    carousel = setInterval(function() {
-        $carouselItems.removeClass('active');
-        $carouselItems.eq(currentItem).addClass('active');
+    if (!carousel) {
+        carousel = setInterval(function() {
+            $carouselItems.removeClass('active');
+            $carouselItems.eq(currentItem).addClass('active');
 
-        if (currentItem < $carouselItems.length - 1) {
-            currentItem = currentItem + 1;
-        } else {
-            currentItem = 0;
-        }
-    }, 5000)
+            if (currentItem < $carouselItems.length - 1) {
+                currentItem = currentItem + 1;
+            } else {
+                currentItem = 0;
+            }
+        }, 5000)
+    }
 }
 
 var onStartCardButtonClick = function() {
