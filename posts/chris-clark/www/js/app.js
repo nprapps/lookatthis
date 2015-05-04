@@ -158,21 +158,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    // showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
     checkForVideo(toIndex);
     currentIndex = toIndex;
-    /*
-    * Enable fades without totally screwing up the slides around them
-    */
-
-    setTimeout(function() {
-        if ($slides.eq(toIndex + 1).hasClass('fade')) {
-            $slides.eq(toIndex).addClass('fade');
-        }
-    }, 50);
-
 
     if (isTouch) {
         initCarousel();
