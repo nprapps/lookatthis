@@ -160,12 +160,14 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
-    checkForVideo(toIndex);
     currentIndex = toIndex;
 
     if (isTouch) {
         initCarousel();
+    } else {
+        initVideo();
     }
+
     /*
     * Suppress the first events that get fired on page load
     */
@@ -185,23 +187,20 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }
 }
 
-var checkForVideo = function(toIndex) {
+var initVideo = function() {
     /*
     * Load the video when we get to the slide.
     */
+    var $video = $slides.eq(currentIndex).find('video');
+    if ($video.length > 0 && !isTouch) {
+        var sources = $video.find('source');
+        var video = $video.get(0);
 
-    if (!isTouch) {
-        var $video = $slides.eq(toIndex).find('video');
-        if ($video.length > 0 && !isTouch) {
-            var sources = $video.find('source');
-            var video = $video.get(0);
-
-            if (!sources.attr('src')) {
-                sources.attr('src', sources.data('src'));
-                video.load();
-            }
-            video.play();
+        if (!sources.attr('src')) {
+            sources.attr('src', sources.data('src'));
+            video.load();
         }
+        video.play();
     }
 }
 
