@@ -221,20 +221,25 @@ var initCarousel = function() {
 
     var $carouselItems = $imageGrid.children('.block');
     var currentItem = 0;
-    $carouselItems.eq(currentItem).addClass('active');
-    currentItem = currentItem + 1;
+    $carouselItems.eq(currentItem).velocity('fadeIn', {
+        duration: 800,
+    });
 
     if (!carousel) {
         carousel = setInterval(function() {
-            $carouselItems.removeClass('active');
-            $carouselItems.eq(currentItem).addClass('active');
+            $carouselItems.eq(currentItem).velocity('fadeOut', {
+                duration: 800,
+                complete: function() {
+                    if (currentItem < $carouselItems.length - 1) {
+                        currentItem = currentItem + 1;
+                    } else {
+                        currentItem = 0;
+                    }
 
-            if (currentItem < $carouselItems.length - 1) {
-                currentItem = currentItem + 1;
-            } else {
-                currentItem = 0;
-            }
-        }, 5000)
+                    $carouselItems.eq(currentItem).velocity('fadeIn');
+                }
+            })
+        }, 8000);
     }
 }
 
