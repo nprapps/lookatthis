@@ -240,9 +240,11 @@ var initCarousel = function() {
                         currentItem = 0;
                     }
 
-                    $carouselItems.eq(currentItem).velocity('fadeIn');
+                    $carouselItems.eq(currentItem).velocity('fadeIn', {
+                        duration: 800
+                    });
                 }
-            })
+            });
         }, 8000);
     }
 }
