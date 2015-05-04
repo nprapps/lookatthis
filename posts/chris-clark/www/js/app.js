@@ -220,6 +220,10 @@ var initCarousel = function() {
     $imageGrid.addClass('carousel');
 
     var $carouselItems = $imageGrid.children('.block');
+    $carouselItems.css({
+        'display': 'block',
+        'opacity': 0
+    })
     var currentItem = 0;
     $carouselItems.eq(currentItem).velocity('fadeIn', {
         duration: 800,
@@ -245,9 +249,17 @@ var initCarousel = function() {
 
 var removeCarousel = function() {
     $imageGrid.removeClass('carousel');
-    clearInterval(carousel);
-    carousel = null;
-    $imageGrid.find('.block').removeClass('active');
+
+    if (carousel) {
+        clearInterval(carousel);
+        carousel = null;
+        $imageGrid.find('.block')
+            .removeClass('active')
+            .css({
+                'display': 'inline-block',
+                'opacity': 1
+            });
+    }
 }
 
 var onStartCardButtonClick = function() {
