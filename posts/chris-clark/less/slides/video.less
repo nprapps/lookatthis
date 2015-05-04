@@ -63,10 +63,13 @@
 .image-grid.carousel {
     .block {
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 0;
+        left: 0;
+        margin: 2.5%;
         opacity: 0;
         .transition(opacity 0.5s ease-in);
+        max-width: 95%;
+        width: 100%;
 
         &.active {
             opacity: 1;
