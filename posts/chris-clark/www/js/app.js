@@ -53,10 +53,7 @@ var resize = function() {
         initCarousel();
     }
     else {
-        $imageGrid.removeClass('carousel');
-        clearInterval(carousel);
-        carousel = null;
-        $imageGrid.find('.block').removeClass('active');
+        removeCarousel();
     }
 };
 
@@ -239,6 +236,13 @@ var initCarousel = function() {
             }
         }, 5000)
     }
+}
+
+var removeCarousel = function() {
+    $imageGrid.removeClass('carousel');
+    clearInterval(carousel);
+    carousel = null;
+    $imageGrid.find('.block').removeClass('active');
 }
 
 var onStartCardButtonClick = function() {
