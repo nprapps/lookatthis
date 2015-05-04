@@ -48,13 +48,6 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
-
-    if (isTouch) {
-        initCarousel();
-    }
-    else {
-        removeCarousel();
-    }
 };
 
 var onPageLoad = function() {
@@ -181,6 +174,9 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }, 50);
 
 
+    if (isTouch) {
+        initCarousel();
+    }
     /*
     * Suppress the first events that get fired on page load
     */
@@ -224,7 +220,7 @@ var initCarousel = function() {
     /*
     * Initialize the carousel for mobile devices
     */
-
+    $imageGrid = $slides.eq(currentIndex).find('.image-grid');
     $imageGrid.addClass('carousel');
 
     var $carouselItems = $imageGrid.children('.block');
@@ -254,25 +250,6 @@ var initCarousel = function() {
                 }
             });
         }, 8000);
-    }
-}
-
-var removeCarousel = function() {
-    /*
-    * Set images to grid layout and remove interval.
-    */
-
-    $imageGrid.removeClass('carousel');
-
-    if (carousel) {
-        clearInterval(carousel);
-        carousel = null;
-        $imageGrid.find('.block')
-            .removeClass('active')
-            .css({
-                'display': 'inline-block',
-                'opacity': 1
-            });
     }
 }
 
@@ -364,7 +341,6 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
-    $imageGrid = $('.image-grid');
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
