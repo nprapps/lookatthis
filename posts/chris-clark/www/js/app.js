@@ -49,7 +49,7 @@ var resize = function() {
     $section.height(h);
     $slides.width(w);
 
-    if (w <= 768) {
+    if (isTouch) {
         initCarousel();
     }
     else {
