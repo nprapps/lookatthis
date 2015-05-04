@@ -4,11 +4,9 @@ var $document;
 var $body;
 var $section;
 var $slides;
-var $arrows;
-var $nextArrow;
-var $previousArrow;
 var $startCardButton;
-var isTouch = Modernizr.touch;
+var $imageGrid;
+
 var $likeStory;
 var $likeStoryButtons;
 var $facebook;
@@ -26,6 +24,7 @@ var $pause;
 var $replay;
 var $animatedElements = null;
 
+var isTouch = Modernizr.touch;
 var mobileSuffix;
 var w;
 var h;
@@ -33,6 +32,7 @@ var startTouch;
 var lastSlideExitEvent;
 var callToActionTest;
 var currentIndex;
+var carousel;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -48,6 +48,14 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
+
+    if (w <= 768) {
+        initCarousel();
+    }
+    else {
+        $imageGrid.removeClass('carousel');
+        clearInterval(carousel);
+    }
 };
 
 var onPageLoad = function() {
@@ -194,7 +202,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 }
 
 var checkForVideo = function(toIndex) {
-
     if (!isTouch) {
         var $video = $slides.eq(toIndex).find('video');
         if ($video.length > 0 && !isTouch) {
@@ -208,6 +215,26 @@ var checkForVideo = function(toIndex) {
             video.play();
         }
     }
+}
+
+var initCarousel = function() {
+    $imageGrid.addClass('carousel');
+
+    var $carouselItems = $imageGrid.children('.block');
+    var currentItem = 0;
+    $carouselItems.eq(currentItem).addClass('active');
+    currentItem = currentItem + 1;
+
+    carousel = setInterval(function() {
+        $carouselItems.removeClass('active');
+        $carouselItems.eq(currentItem).addClass('active');
+
+        if (currentItem < $carouselItems.length - 1) {
+            currentItem = currentItem + 1;
+        } else {
+            currentItem = 0;
+        }
+    }, 5000)
 }
 
 var onStartCardButtonClick = function() {
@@ -435,9 +462,8 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
-    $arrows = $('.controlArrow');
-    $previousArrow = $arrows.filter('.prev');
-    $nextArrow = $arrows.filter('.next');
+    $imageGrid = $('.image-grid');
+
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
     $likeStoryButtons = $('.btn-like-story');
@@ -510,6 +536,6 @@ $(document).ready(function() {
     });
 
     // Redraw slides if the window resizes
-    window.addEventListener("deviceorientation", resize, true);
+    $(window).on("orientationchange", resize);
     $(window).resize(resize);
 });
