@@ -1,5 +1,5 @@
 {% block slide_wrapper %}
-<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}" data-bgimage="{{ row.background_media }}">
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}">
     {% block slide_body %}
     <div class="text full-block">
         <div class="full-block-cell">
@@ -11,10 +11,14 @@
             <div class="credit">
                 {{ row.caption_and_credit|smarty }}
             </div>
-            {% endif %}    
+            {% endif %}
 
         </div><!--full-block-cell-->
     </div><!--full-block-->
     {% endblock slide_body %}
+    <div class="imgLiquid">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
+    </div>
 </div><!--slide-->
+
 {% endblock slide_wrapper %}
