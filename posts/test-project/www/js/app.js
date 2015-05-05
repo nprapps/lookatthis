@@ -93,7 +93,8 @@ var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-    var bgimg = $slide.children('img');
+    var $container = $slide.find('.imgLiquid');
+    var bgimg = $container.children('img');
 
     if (bgimg.data('bgimage')) {
         var image_filename = bgimg.data('bgimage').split('.')[0];
@@ -101,11 +102,13 @@ var loadImages = function($slide) {
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
         bgimg.attr('src', image_path);
+    }
 
-        $slide.imgLiquid({
+    if (bgimg.attr('src')) {
+        $container.imgLiquid({
             fill: true,
             horizontalAlign: "center",
-            verticalAlign: "top",
+            verticalAlign: "center",
         });
     }
 
