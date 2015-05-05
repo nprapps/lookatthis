@@ -101,13 +101,13 @@ var loadImages = function($slide) {
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
         bgimg.attr('src', image_path);
-    }
 
-    $slide.imgLiquid({
-        fill: true,
-        horizontalAlign: "center",
-        verticalAlign: "top",
-    });
+        $slide.imgLiquid({
+            fill: true,
+            horizontalAlign: "center",
+            verticalAlign: "top",
+        });
+    }
 
     var $images = $slide.find('img.lazy-load');
     if ($images.length > 0) {
