@@ -42,6 +42,74 @@
 @screen-tiny-above: ~"screen and (min-width: 481px)";
 @screen-tiny: ~"screen and (max-width: 480px)";
 
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.deck-container {
+    position: relative;
+    min-height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.js .deck-container {
+    visibility: hidden;
+}
+.ready .deck-container {
+    visibility: visible;
+}
+.touch .deck-container {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+}
+
+.deck-loading {
+    display: none;
+}
+
+.slide {
+    background-color: #000;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    opacity: 0;
+    /*min-height: 0;*/
+    &.deck-current {
+        opacity: 1;
+    }
+    &.fade {
+        .transition(opacity 1s ease-in);
+    }
+}
+
+.imgLiquid {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+}
+
+.deck-current {
+    z-index: 99;
+}
+
+.deck-child-current .slide {
+    visibility: hidden;
+}
+.deck-child-current .deck-previous, .deck-child-current .deck-before, .deck-child-current .deck-current {
+    visibility: visible;
+}
+
 body {
     color: #fff;
     font-family: "Gotham SSm", helvetica, arial, sans-serif;
@@ -102,6 +170,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
 .primary-navigation {
     .controlArrow {
+        z-index: 100;
         position: fixed;
         top: 40%;
         width: 50px;
@@ -162,7 +231,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         */
 
         @media @screen-small-above {
-            left: 10px;
+            margin-left: 10px;
             padding-top: 25px;
         }
     }
@@ -186,7 +255,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         */
 
         @media @screen-small-above {
-            right: 25px;
+            margin-right: 10px;
             padding-top: 25px;
         }
     }
@@ -230,28 +299,27 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         .instant {
             .transition(all 0 ease-in);
         }
-
-        .slidesContainer {
-            float: left;
-            position: relative;
-            height: 100%;
-            display: block;
-
-            .slide {
-                float: left;
-                height: 100%;
-                display: block;
-                overflow: auto;
-            }
-        }
     }
+
+    /*.slide {*/
+        /*float: left;*/
+        /*height: 100%;*/
+        /*display: block;*/
+        /*overflow: auto;*/
+        /*opacity: 0;*/
+        /*&.deck-current {*/
+            /*opacity: 1;*/
+        /*}*/
+        /*&.fade {*/
+            /*.transition(opacity 1s ease-in);*/
+        /*}*/
+    /*}*/
 }
 
 //full-bleed background images on sections and slides
 .section, .slide {
     .background-size(cover);
     background-position: center center;
-    position: relative;
 }
 
 // full width container within a section or slide
@@ -314,7 +382,7 @@ img {
     line-height: 14px;
     @media @screen-small-above {
          position: absolute;
-         bottom: 10px;    
+         bottom: 10px;
          right: 25px;
          font-size: 12px;
          max-width: 1000px;
