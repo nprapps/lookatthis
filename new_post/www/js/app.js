@@ -357,7 +357,7 @@ $(document).ready(function() {
     resize();
 
     // Redraw slides if the window resizes
-    window.addEventListener("orientationchange", resize, true);
+    $(window).on("orientationchange", resize);
     $(window).resize(resize);
     $document.keydown(onDocumentKeyDown);
 });
