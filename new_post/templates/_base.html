@@ -20,7 +20,7 @@
     {% block extra_head %}
     {% endblock extra_head %}
 </head>
-<body>
+<body class="deck-container">
     <a class="sr-only" href="#content">Skip To Content</a>
 
     {% block outer_content %}
@@ -37,9 +37,9 @@
 
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.js') }}
-    {{ JS.push('js/lib/jquery.fullpage.js') }}
+    {{ JS.push('js/lib/imgLiquid.js') }}
+    {{ JS.push('js/lib/deck.core.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
-    {{ JS.push('js/lib/hammer.js')}}
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
