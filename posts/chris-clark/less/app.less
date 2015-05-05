@@ -384,85 +384,78 @@ img {
 
 //audio
 .player-wrapper {
-    position: fixed;
-    bottom: 0;
-    height: 5rem;
-    background: rgba(0,0,0,0.5);
-    line-height: 5rem;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
     width: 100%;
+    z-index: 20;
     opacity: 0;
     visibility: hidden;
-    .transition(opacity 1s ease-in);
-    z-index: 20;
-
-    .controls {
-        vertical-align: middle;
-        margin-right: @grid-gutter-width / 2;
-        position: absolute;
-        left: 0;
-        top: 0;
+    
+    #jp_container_1 {
+        width: 370px;
+        height: 60px;
+        margin: 0 auto;
+        position: relative;
+        background: rgba(255,255,255,0.1);
     }
-
-    .player-progress {
-        cursor: pointer;
+    
+    .jp-controls{
         position: absolute;
-        left: 5rem;
-        top: 0;
-        bottom: 0;
-        right: 0;
-
+        top: 12px;
+        left: 20px;
+        width: 20px;
+        height: 30px;
+        overflow: hidden;
+        
+        a {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+    }
+    
+    .jp-progress-container {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        width: 300px;
+        
         .jp-seek-bar {
-            height: 100%;
-        }
-
-        .bar {
             position: absolute;
-            height: 5rem;
-            top: 0;
-            bottom: 0;
+            top: 13px;
             left: 0;
-            background-color: #373737;
-            opacity: 0.75;
+        }
+        
+        .player-progress {
+            cursor: pointer;
+            position: relative;
+            width: 250px;
+    
+            .jp-seek-bar {
+                height: 10px;
+                //background: rgba(255,255,255,0.5);
+            }
+    
+            .bar {
+                position: absolute;
+                height: 3px;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                background-color: #fff;
+                opacity: 0.75;
+            }
+        }
+        
+        .current-time {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 12px;
         }
     }
-    .playback-info {
-        right: 1rem;
-        text-align: right;
-        line-height: 1;
-        .vertical-center;
-        position: absolute;
-    }
-}
-
-.player-button,
-.player-button:focus,
-.player-button:visited,
-.player-button:hover {
-    display: block;
-    .square(5rem);
-    background: #373737;
-    color: #fff;
-    line-height: 5rem;
-    text-align: center;
-    font-size: @font-size-base * 2;
-    opacity: 0.75;
-
-
-    .no-touch & {
-        &:hover {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
-        }
-    }
-
-    .touch & {
-        &:active {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
-        }
-    }
+    
 }
 
 .dark-overlay .full-block {
