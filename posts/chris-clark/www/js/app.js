@@ -26,6 +26,7 @@ var $playerButton;
 var $play;
 var $pause;
 var $replay;
+var $currentTime;
 var $animatedElements = null;
 
 var isTouch = Modernizr.touch;
@@ -35,6 +36,7 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var callToActionTest;
+var curentTimeTest;
 var currentIndex;
 var carousel;
 
@@ -305,8 +307,14 @@ var onNextPostClick = function(e) {
 
 var determineTests = function() {
     var possibleCallToActionTests = ['facebook', 'email'];
+    var possibleTimeTests = ['yes', 'no'];
 
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
+    currentTimeTest = possibleTimeTests[getRandomInt(0, possibleTimeTests.length)];
+
+    if (currentTimeTest === 'no') {
+        $currentTime.hide();
+    }
 }
 
 var getRandomInt = function(min, max) {
@@ -390,6 +398,7 @@ $(document).ready(function() {
     $replay = $('.replay');
     $play = $('.play');
     $pause = $('.pause');
+    $currentTime = $('.current-time');
 
     w = $(window).width();
     h = $(window).height();

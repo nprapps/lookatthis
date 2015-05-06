@@ -26,7 +26,7 @@ var AUDIO = (function() {
 
     var onTimeupdate = function(e) {
         var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
-        $('.current-time').text(timeText);
+        $currentTime.text(timeText);
 
         var duration = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
