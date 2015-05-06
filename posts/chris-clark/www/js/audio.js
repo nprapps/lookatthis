@@ -22,91 +22,13 @@ var AUDIO = (function() {
         var position = e.jPlayer.status.currentTime;
 
         // implementing my own ended event everything is terrible
-        if (position >= duration - 0.5) {
+        if (position > 0 && position >= duration - 0.5) {
             onEnded();
         }
-
-        for (var i = 0; i < $slides.length; i++) {
-            var endTime = $slides.eq(i).data('slide-end-time');
-            // if the position is less than the end time of the slide of this loop
-            if (position < endTime && currentIndex > 0) {
-                // if we're reached this slide, don't do anything
-                if (i === currentIndex) {
-                    break;
-                }
-                // once we've managed to loop past the current slide, move to that slide
-                else {
-                    $.deck('go', i);
-                    break;
-                }
-            }
-        }
-
-        if ($animatedElements) {
-            for (var i = 0; i < $animatedElements.length; i++) {
-                var $el = $animatedElements.eq(i);
-
-                var entranceTime = $el.data('entrance') || null;
-                var exitTime = $el.data('exit') || slideEndTime - 2;
-                if ($el.hasClass('fast')) {
-                    var speed = 1000;
-                } else {
-                    var speed = 2000;
-                }
-                if (
-                    (position > entranceTime) &&
-                    (position < exitTime) &&
-                    ($el.css('opacity') < 1) &&
-                    (!isAnimating)
-                ) {
-                    $el.velocity({
-                        opacity: 1
-                    }, {
-                        duration: speed,
-                        easing: "ease-in",
-                        begin: function() {
-                            isAnimating = true;
-                        },
-                        complete: function() {
-                            isAnimating = false;
-                        }
-                    });
-                }
-                if (position > exitTime && $el.css('opacity') !== 0 && !isAnimating) {
-                    $el.velocity({
-                        opacity: 0
-                    }, {
-                        duration: speed,
-                        easing: "ease-in",
-                        begin: function() {
-                            isAnimating = true;
-                        },
-                        complete: function(){
-                            isAnimating = false;
-                        }
-                    });
-                }
-            }
-        }
-
-        if (position > endTime - 2 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
-            $slides.eq(currentIndex).velocity({
-                'opacity': 0
-            },
-            {
-                duration: 2000,
-                easing: "ease-in"
-            });
-        }
-
     }
 
     var onEnded = function() {
-        $play.hide();
-        $pause.hide();
-        $replay.show();
-
-        $player.jPlayer('pause');
+        $.deck('next');
     }
 
     var _resumePlayer = function() {
