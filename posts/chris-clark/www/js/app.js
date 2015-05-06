@@ -21,6 +21,7 @@ var $dislikeEmail;
 
 var $playerWrapper;
 var $player;
+var $playerUI;
 var $playerButton;
 var $play;
 var $pause;
@@ -263,13 +264,33 @@ var onStoryBeginButtonClick = function() {
     $introText.velocity('fadeOut', {
         duration: 2000
     });
-
-    $playerWrapper.css('visibility', 'visible');
-    $playerWrapper.velocity('fadeIn', {
+    $playerWrapper.css({
+        'display': 'block',
+        'visibility': 'visible'
+    });
+    $playerWrapper.velocity({
+        'opacity': 0.5,
+    }, {
         duration: 2000
     });
 
     AUDIO.switchAudio();
+}
+
+var onPlayerUIEnter = function() {
+    $playerWrapper.velocity({
+        opacity: 1
+    }, {
+        duration: 500,
+    });
+}
+
+var onPlayerUIExit = function() {
+    $playerWrapper.velocity({
+        opacity: 0.5
+    }, {
+        duration: 500,
+    });
 }
 
 var onNextPostClick = function(e) {
@@ -364,6 +385,7 @@ $(document).ready(function() {
 
     $playerWrapper = $('.player-wrapper');
     $player = $('#player');
+    $playerUI = $('.jp-audio');
     $playerButton = $('.player-button');
     $replay = $('.replay');
     $play = $('.play');
@@ -382,7 +404,7 @@ $(document).ready(function() {
     $playerButton.on('click', AUDIO.toggleAudio);
     $previousArrow.on('click', AUDIO.reset);
     $storyBeginButton.on('click', onStoryBeginButtonClick);
-
+    $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
