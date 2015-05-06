@@ -6,6 +6,7 @@ var $section;
 var $slides;
 var $startCardButton;
 var $imageGrid;
+var $arrows;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -137,17 +138,14 @@ var showNavigation = function(index) {
     /*
     * Hide and show arrows based on slide index
     */
-    if (index === 0) {
-        $arrows.hide();
-        $previousArrow.css('left', 0);
-        $nextArrow.css('right', 0);
-    } else if ($slides.last().index() === index) {
+    if ($slides.last().index() === index) {
         $arrows.show();
         $nextArrow.hide().css('right', 0);
+        $playerWrapper.hide();
     } else {
-        $arrows.show();
+        $arrows.hide();
+        $playerWrapper.show();
     }
-
     if (isTouch) {
         resetArrows();
     }
@@ -160,6 +158,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+    showNavigation(toIndex);
     currentIndex = toIndex;
 
     if (isTouch) {
@@ -329,6 +328,9 @@ $(document).ready(function() {
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
+    $arrows = $('.controlArrow');
+    $prevArrow = $('.prev');
+    $nextArrow = $('.next');
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
@@ -358,6 +360,7 @@ $(document).ready(function() {
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
+    $prevArrow.on('click', AUDIO.reset);
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;

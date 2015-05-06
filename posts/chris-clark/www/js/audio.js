@@ -129,7 +129,7 @@ var AUDIO = (function() {
 
     var reset = function(e) {
         e.preventDefault();
-        $.fn.fullpage.moveTo(0, 1);
+        $.deck('go', 1);
         $player.jPlayer('playHead', 0);
         $player.jPlayer('play');
 
