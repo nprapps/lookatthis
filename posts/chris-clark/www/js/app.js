@@ -256,6 +256,7 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
+    AUDIO.setUpPlayer();
 }
 
 var onStoryBeginButtonClick = function() {
@@ -268,7 +269,7 @@ var onStoryBeginButtonClick = function() {
         duration: 2000
     });
 
-    AUDIO.setUpPlayer();
+    AUDIO.switchAudio();
 }
 
 var onNextPostClick = function(e) {
