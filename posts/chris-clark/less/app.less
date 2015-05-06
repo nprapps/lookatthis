@@ -271,10 +271,21 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     }
 }
 
+.img-wrapper {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+}
+
 //full-bleed background images on sections and slides
 .section, .slide {
     .background-size(cover);
     background-position: center center;
+    background-repeat: repeat;
 }
 
 // full width container within a section or slide

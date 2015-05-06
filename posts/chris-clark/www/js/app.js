@@ -123,6 +123,22 @@ var loadImages = function($slide) {
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
         }
+    } else if ($slide.find('.img-wrapper').data('bgimage')) {
+        $wrapper = $slide.find('.img-wrapper');
+        var image_filename = $wrapper.data('bgimage').split('.')[0];
+        var image_extension = '.' + $wrapper.data('bgimage').split('.')[1];
+        // Mobile suffix should be blank by default.
+        mobileSuffix = '';
+
+        if (w < 769 && $slide.hasClass('mobile-crop')) {
+            mobileSuffix = '-sq';
+        }
+
+        var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
+
+        if ($wrapper.css('background-image') === 'none') {
+            $wrapper.css('background-image', 'url(' + image_path + ')');
+        }
     }
 
     var $images = $slide.find('img.lazy-load');
@@ -175,6 +191,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 
     if (!isTouch) {
         initVideo();
+    } else {
+        initAnimation();
     }
 
     /*
@@ -211,6 +229,23 @@ var initVideo = function() {
         }
         video.play();
     }
+}
+
+var initAnimation = function() {
+    var $wrapper = $slides.eq(currentIndex).find('.img-wrapper');
+    $wrapper.css({
+        'width': w * 2,
+        'height': h * 2,
+        'background-size': w * 4
+    })
+
+    $wrapper.velocity({
+        translateX: '-' + w + 'px',
+        translateY: '-' + h + 'px'
+    }, {
+        duration: 100000,
+        easing: "linear"
+    });
 }
 
 // var initCarousel = function() {
