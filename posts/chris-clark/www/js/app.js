@@ -257,7 +257,6 @@ var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'exit-start-card-button-click';
     AUDIO.setUpPlayer();
     $.deck('next');
-    $('#slide-intro').css('opacity', 1);
     $playerWrapper.css({
         'opacity': 1,
         'visibility': 'visible'
