@@ -125,7 +125,7 @@ var loadImages = function($slide) {
         if ($slide.css('background-image') === 'none') {
             $slide.css('background-image', 'url(' + image_path + ')');
         }
-    } else if ($slide.find('.img-wrapper').data('bgimage')) {
+    } else if ($slide.find('.img-wrapper').data('bgimage') && isTouch) {
         $wrapper = $slide.find('.img-wrapper');
         var image_filename = $wrapper.data('bgimage').split('.')[0];
         var image_extension = '.' + $wrapper.data('bgimage').split('.')[1];
