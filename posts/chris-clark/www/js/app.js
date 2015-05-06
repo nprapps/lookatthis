@@ -7,6 +7,8 @@ var $slides;
 var $startCardButton;
 var $imageGrid;
 var $arrows;
+var $storyBeginButton;
+var $introText;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -248,54 +250,25 @@ var initAnimation = function() {
     });
 }
 
-// var initCarousel = function() {
-//     /*
-//     * Initialize the carousel for mobile devices
-//     */
-//     $imageGrid = $slides.eq(currentIndex).find('.image-grid');
-//     $imageGrid.addClass('carousel');
-
-//     var $carouselItems = $imageGrid.children('.block');
-//     $carouselItems.css({
-//         'display': 'block',
-//         'opacity': 0
-//     })
-//     var currentItem = 0;
-//     $carouselItems.eq(currentItem).velocity('fadeIn', {
-//         duration: 800,
-//     });
-
-//     if (!carousel) {
-//         carousel = setInterval(function() {
-//             $carouselItems.eq(currentItem).velocity('fadeOut', {
-//                 duration: 800,
-//                 complete: function() {
-//                     if (currentItem < $carouselItems.length - 1) {
-//                         currentItem = currentItem + 1;
-//                     } else {
-//                         currentItem = 0;
-//                     }
-
-//                     $carouselItems.eq(currentItem).velocity('fadeIn', {
-//                         duration: 800
-//                     });
-//                 }
-//             });
-//         }, 8000);
-//     }
-// }
-
 var onStartCardButtonClick = function() {
     /*
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
-    AUDIO.setUpPlayer();
     $.deck('next');
-    $playerWrapper.css({
-        'opacity': 1,
-        'visibility': 'visible'
+}
+
+var onStoryBeginButtonClick = function() {
+    $introText.velocity('fadeOut', {
+        duration: 2000
     });
+
+    $playerWrapper.css('visibility', 'visible');
+    $playerWrapper.velocity('fadeIn', {
+        duration: 2000
+    });
+
+    AUDIO.setUpPlayer();
 }
 
 var onNextPostClick = function(e) {
@@ -375,6 +348,8 @@ $(document).ready(function() {
     $arrows = $('.controlArrow');
     $previousArrow = $('.prev');
     $nextArrow = $('.next');
+    $storyBeginButton = $('.btn-video');
+    $introText = $('.intro-text');
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
@@ -405,6 +380,8 @@ $(document).ready(function() {
     $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
     $previousArrow.on('click', AUDIO.reset);
+    $storyBeginButton.on('click', onStoryBeginButtonClick);
+
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
@@ -425,12 +402,6 @@ $(document).ready(function() {
         cssSelectorAncestor: "#jp_container_1",
         smoothPlayBar: true,
         volume: NO_AUDIO ? 0 : 1
-    });
-
-    var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/lc-430.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/lc-430.mp3';
-
-    $player.jPlayer('setMedia', {
-        mp3: mp3FilePath
     });
 
     // Redraw slides if the window resizes

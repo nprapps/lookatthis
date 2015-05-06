@@ -11,8 +11,9 @@
                         <source data-src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/chris-clark/{{ row.video }}">
                     </video>
                 </div>
-
-                {{ row.text1|smarty }}
+                <div class="intro-text">
+                    {{ row.text1|smarty }}
+                </div>
                 {% endblock slide_content %}
             </div><!--full-block-content-->
 

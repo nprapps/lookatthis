@@ -2,6 +2,12 @@ var AUDIO = (function() {
     var isAnimating = false;
 
     var setUpPlayer = function() {
+        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/lc-430.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/lc-430.mp3';
+
+        $player.jPlayer('setMedia', {
+            mp3: mp3FilePath
+        });
+
         $player.jPlayer('play');
 
         $play.hide();
