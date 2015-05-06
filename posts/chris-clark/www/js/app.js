@@ -151,6 +151,18 @@ var showNavigation = function(index) {
     }
 }
 
+var resetArrows = function() {
+    /*
+     * Reset arrows when advancing slides
+     */
+    $nextArrow.animate({
+        'right': 0
+    });
+    $previousArrow.animate({
+        'left': 0
+    });
+}
+
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called transitioning between slides.
@@ -161,9 +173,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     currentIndex = toIndex;
 
-    if (isTouch) {
-        initCarousel();
-    } else {
+    if (!isTouch) {
         initVideo();
     }
 
@@ -203,42 +213,42 @@ var initVideo = function() {
     }
 }
 
-var initCarousel = function() {
-    /*
-    * Initialize the carousel for mobile devices
-    */
-    $imageGrid = $slides.eq(currentIndex).find('.image-grid');
-    $imageGrid.addClass('carousel');
+// var initCarousel = function() {
+//     /*
+//     * Initialize the carousel for mobile devices
+//     */
+//     $imageGrid = $slides.eq(currentIndex).find('.image-grid');
+//     $imageGrid.addClass('carousel');
 
-    var $carouselItems = $imageGrid.children('.block');
-    $carouselItems.css({
-        'display': 'block',
-        'opacity': 0
-    })
-    var currentItem = 0;
-    $carouselItems.eq(currentItem).velocity('fadeIn', {
-        duration: 800,
-    });
+//     var $carouselItems = $imageGrid.children('.block');
+//     $carouselItems.css({
+//         'display': 'block',
+//         'opacity': 0
+//     })
+//     var currentItem = 0;
+//     $carouselItems.eq(currentItem).velocity('fadeIn', {
+//         duration: 800,
+//     });
 
-    if (!carousel) {
-        carousel = setInterval(function() {
-            $carouselItems.eq(currentItem).velocity('fadeOut', {
-                duration: 800,
-                complete: function() {
-                    if (currentItem < $carouselItems.length - 1) {
-                        currentItem = currentItem + 1;
-                    } else {
-                        currentItem = 0;
-                    }
+//     if (!carousel) {
+//         carousel = setInterval(function() {
+//             $carouselItems.eq(currentItem).velocity('fadeOut', {
+//                 duration: 800,
+//                 complete: function() {
+//                     if (currentItem < $carouselItems.length - 1) {
+//                         currentItem = currentItem + 1;
+//                     } else {
+//                         currentItem = 0;
+//                     }
 
-                    $carouselItems.eq(currentItem).velocity('fadeIn', {
-                        duration: 800
-                    });
-                }
-            });
-        }, 8000);
-    }
-}
+//                     $carouselItems.eq(currentItem).velocity('fadeIn', {
+//                         duration: 800
+//                     });
+//                 }
+//             });
+//         }, 8000);
+//     }
+// }
 
 var onStartCardButtonClick = function() {
     /*
@@ -329,7 +339,7 @@ $(document).ready(function() {
     $navButton = $('.primary-navigation-btn');
     $startCardButton = $('.btn-go');
     $arrows = $('.controlArrow');
-    $prevArrow = $('.prev');
+    $previousArrow = $('.prev');
     $nextArrow = $('.next');
 
     $upNext = $('.up-next');
@@ -360,7 +370,7 @@ $(document).ready(function() {
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
     $playerButton.on('click', AUDIO.toggleAudio);
-    $prevArrow.on('click', AUDIO.reset);
+    $previousArrow.on('click', AUDIO.reset);
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
