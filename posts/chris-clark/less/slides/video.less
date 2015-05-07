@@ -1,14 +1,14 @@
 .slide.video {
-    
+
     .fullscreen {
         position: absolute;
         top: 10px;
         right: 20px;
-        opacity: .5;
+        opacity: 0;
         cursor: pointer;
         z-index: 22;
         .transition(opacity 1s ease);
-        
+
         .label {
               float: left;
               line-height: 2.8;
@@ -20,19 +20,19 @@
               opacity: 0;
               .transition(opacity 1s ease);
         }
-        
+
         &:hover {
             opacity: 1;
-            
+
             .label {
                 opacity: 1;
             }
         }
-        
+
         span {
             font-size: 20px;
             color: #fff;
-            
+
         }
     }
 

@@ -9,6 +9,7 @@ var $imageGrid;
 var $arrows;
 var $storyBeginButton;
 var $introText;
+var $fullscreenButton;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -39,6 +40,7 @@ var callToActionTest;
 var curentTimeTest;
 var currentIndex;
 var carousel;
+var fullscreenEnabled = false;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -276,6 +278,16 @@ var onStoryBeginButtonClick = function() {
         duration: 2000
     });
 
+    $fullscreenButton.css({
+        'display': 'block',
+        'visibility': 'visible'
+    });
+    $fullscreenButton.velocity({
+        'opacity': 0.5,
+    }, {
+        duration: 2000
+    });
+
     AUDIO.switchAudio();
 }
 
@@ -303,6 +315,20 @@ var onNextPostClick = function(e) {
     ANALYTICS.trackEvent('next-post');
     window.top.location = NEXT_POST_URL;
     return true;
+}
+
+var onFullScreenButtonClick = function(e) {
+    e.preventDefault();
+
+    if (screenfull.enabled) {
+        if (fullscreenEnabled) {
+            screenfull.exit();
+            fullscreenEnabled = false;
+        } else {
+            screenfull.request();
+            fullscreenEnabled = true;
+        }
+    }
 }
 
 var determineTests = function() {
@@ -380,6 +406,7 @@ $(document).ready(function() {
     $nextArrow = $('.next');
     $storyBeginButton = $('.btn-video');
     $introText = $('.intro-text');
+    $fullscreenButton = $('.fullscreen');
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
@@ -414,6 +441,7 @@ $(document).ready(function() {
     $previousArrow.on('click', AUDIO.reset);
     $storyBeginButton.on('click', onStoryBeginButtonClick);
     $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
+    $fullscreenButton.on('click', onFullScreenButtonClick);
 
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
