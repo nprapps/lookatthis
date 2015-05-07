@@ -215,19 +215,19 @@ var ANALYTICS = (function () {
     }
 
     var completeTwentyFivePercent =  function() {
-        trackEvent('completion', '0.25');
+        trackEvent('completion', '0.25', null, currentTimeTest);
     }
 
     var completeFiftyPercent =  function() {
-        trackEvent('completion', '0.5');
+        trackEvent('completion', '0.5', null, currentTimeTest);
     }
 
     var completeSeventyFivePercent =  function() {
-        trackEvent('completion', '0.75');
+        trackEvent('completion', '0.75', null, currentTimeTest);
     }
 
     var completeOneHundredPercent =  function() {
-        trackEvent('completion', '1');
+        trackEvent('completion', '1', null, currentTimeTest);
     }
 
     // SLIDES

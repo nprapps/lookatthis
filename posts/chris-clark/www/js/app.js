@@ -487,7 +487,7 @@ $(document).ready(function() {
         supplied: 'mp3',
         timeupdate: AUDIO.onTimeupdate,
         cssSelectorAncestor: "#jp_container_1",
-        smoothPlayBar: true,
+        // smoothPlayBar: true,
         volume: NO_AUDIO ? 0 : 1
     });
 
