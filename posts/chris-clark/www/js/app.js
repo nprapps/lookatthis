@@ -10,6 +10,7 @@ var $arrows;
 var $storyBeginButton;
 var $introText;
 var $fullscreenButton;
+var $nextPostWrapper;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -427,13 +428,14 @@ $(document).ready(function() {
     $section = $('.section');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
-    $startCardButton = $('.btn-go');
+    $startCardButton = $('.btn-start');
     $arrows = $('.controlArrow');
     $previousArrow = $('.prev');
     $nextArrow = $('.next');
     $storyBeginButton = $('.btn-video');
     $introText = $('.intro-text');
     $fullscreenButton = $('.fullscreen');
+    $nextPostWrapper = $('.next-post-wrapper');
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
@@ -473,9 +475,7 @@ $(document).ready(function() {
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
 
-    $.deck($slides, {
-        touch: { swipeTolerance: swipeTolerance }
-    });
+    $.deck($slides);
 
     onPageLoad();
     resize();
