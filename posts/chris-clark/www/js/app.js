@@ -279,15 +279,17 @@ var onStoryBeginButtonClick = function() {
         duration: 2000
     });
 
-    $fullscreenButton.css({
-        'display': 'block',
-        'visibility': 'visible'
-    });
-    $fullscreenButton.velocity({
-        'opacity': 0.5,
-    }, {
-        duration: 2000
-    });
+    if (!isTouch) {
+        $fullscreenButton.css({
+            'display': 'block',
+            'visibility': 'visible'
+        });
+        $fullscreenButton.velocity({
+            'opacity': 0.5,
+        }, {
+            duration: 2000
+        });
+    }
 
     AUDIO.switchAudio();
 }
