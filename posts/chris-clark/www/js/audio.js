@@ -65,11 +65,34 @@ var AUDIO = (function() {
 
     var onEnded = function() {
         if (onStory) {
-            $.deck('next');
+            // $.deck('next');
 
             if (!completed) {
                 ANALYTICS.completeOneHundredPercent();
                 completed = true;
+
+                $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
+
+                $playerWrapper.velocity('fadeOut', {
+                    duration: 2000
+                });
+                $nextPostWrapper.velocity('fadeIn', {
+                    duration: 2000
+                });
+
+                $previousArrow.css({
+                    'display': 'block',
+                });
+                $previousArrow.velocity({
+                    'opacity': 0.5
+                }, {
+                    duration: 2000
+                });
+
+                var $video = $slides.eq(currentIndex).find('video');
+                var video = $video.get(0);
+
+                video.pause();
             }
         }
     }
@@ -108,12 +131,16 @@ var AUDIO = (function() {
 
     var reset = function(e) {
         e.preventDefault();
-        $.deck('go', 1);
+
+        $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
 
         $playerWrapper.velocity('fadeOut', {
             duration: 0
         });
         $fullscreenButton.velocity('fadeOut', {
+            duration: 0
+        });
+        $nextPostWrapper.velocity('fadeOut', {
             duration: 0
         });
         $introText.velocity('fadeIn', {
