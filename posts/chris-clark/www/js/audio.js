@@ -1,5 +1,6 @@
 var AUDIO = (function() {
     var isAnimating = false;
+    var onStory = false;
 
     var setUpPlayer = function() {
         var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
@@ -17,6 +18,8 @@ var AUDIO = (function() {
         $player.jPlayer('setMedia', {
             mp3: mp3FilePath
         });
+
+        onStory = true;
 
         $player.jPlayer('play');
 
@@ -38,7 +41,9 @@ var AUDIO = (function() {
     }
 
     var onEnded = function() {
-        $.deck('next');
+        if (onStory) {
+            $.deck('next');
+        }
     }
 
     var _resumePlayer = function() {
