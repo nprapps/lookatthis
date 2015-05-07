@@ -3,6 +3,12 @@
 <div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}">
     {% block slide_body %}
     <div class="text full-block">
+        
+        <div class="fullscreen">
+            <span class="label">fullscreen</span>
+            <span class="fa fa-arrows-alt"></span>
+        </div>
+        
         <div class="full-block-cell">
             <div class="full-block-content">
                 {% block slide_content %}
