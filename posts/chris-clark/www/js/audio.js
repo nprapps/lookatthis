@@ -48,6 +48,8 @@ var AUDIO = (function() {
 
     var _resumePlayer = function() {
         $player.jPlayer('play');
+        $play.hide();
+        $pause.show();
     }
 
     var _pausePlayer = function(end) {
@@ -55,18 +57,24 @@ var AUDIO = (function() {
         if (end) {
             $playedBar.css('width', $thisPlayerProgress.width() + 'px');
         }
+        $play.show();
+        $pause.hide();
     }
 
     var toggleAudio = function(e) {
         e.preventDefault();
         if ($player.data().jPlayer.status.paused) {
             _resumePlayer();
-            $play.hide();
-            $pause.show();
         } else {
             _pausePlayer(false);
-            $play.show();
-            $pause.hide();
+        }
+    }
+
+    var visibilityToggle = function() {
+        if (isHidden()) {
+            _pausePlayer(false);
+        } else {
+            _resumePlayer();
         }
     }
 
@@ -87,6 +95,7 @@ var AUDIO = (function() {
         'switchAudio': switchAudio,
         'onTimeupdate': onTimeupdate,
         'reset': reset,
+        'visibilityToggle': visibilityToggle,
         'onEnded': onEnded
     }
 }());
