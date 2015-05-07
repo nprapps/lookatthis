@@ -397,22 +397,31 @@ img {
 
 //audio
 .player-wrapper {
-    position: absolute;
-    bottom: 40px;
+    position: fixed;
+    bottom: 0;
     left: 0;
     width: 100%;
     z-index: 20;
     opacity: 0;
     visibility: hidden;
+    
+    @media @screen-tiny-above {
+       bottom: 40px; 
+    }
 
     #jp_container_1 {
-        width: 370px;
+        width: 100%;
         height: 60px;
         margin: 0 auto;
         position: relative;
         background: rgba(255,255,255,0.1);
         text-shadow: 2px 2px 2px #333;
         .box-shadow(2px 2px 2px rgba(0,0,0,.2));
+        
+        @media @screen-tiny-above {
+           width: 370px;
+           height: 60px;
+        }
     }
 
     .jp-controls{
@@ -422,6 +431,7 @@ img {
         width: 20px;
         height: 30px;
         overflow: hidden;
+        z-index: 20;
 
         a {
             font-size: 14px;
@@ -432,22 +442,35 @@ img {
 
     .jp-progress-container {
         position: absolute;
-        top: 15px;
-        right: 60px;
-        width: 270px;
-
-        .jp-seek-bar {
-            position: absolute;
-            top: 13px;
-            left: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        
+        @media @screen-tiny-above {
+           position: absolute;
+           top: 15px;
+           left: auto;
+           right: 60px;
+           width: 270px;
         }
+
+        
 
         .player-progress {
             cursor: pointer;
-
+            
             .jp-seek-bar {
-                height: 10px;
-                //background: rgba(255,255,255,0.5);
+                position: absolute;
+                top: 0;
+                left: 0; 
+                height: 60px;
+                
+                @media @screen-tiny-above {
+                   position: absolute;
+                   top: 13px;
+                   left: 0; 
+                   height: 10px;
+                }
             }
 
             .bar {
