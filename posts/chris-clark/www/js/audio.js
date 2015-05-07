@@ -81,7 +81,22 @@ var AUDIO = (function() {
     var reset = function(e) {
         e.preventDefault();
         $.deck('go', 1);
-        $player.jPlayer('playHead', 0);
+
+        $playerWrapper.velocity('fadeOut', {
+            duration: 0
+        });
+        $fullscreenButton.velocity('fadeOut', {
+            duration: 0
+        });
+        $introText.velocity('fadeIn', {
+            duration: 2000
+        });
+
+        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
+
+        $player.jPlayer('setMedia', {
+            mp3: mp3FilePath
+        });
         $player.jPlayer('play');
 
         $play.hide();
