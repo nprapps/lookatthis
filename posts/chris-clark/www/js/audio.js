@@ -71,6 +71,8 @@ var AUDIO = (function() {
                 ANALYTICS.completeOneHundredPercent();
                 completed = true;
 
+                $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
+
                 $playerWrapper.velocity('fadeOut', {
                     duration: 2000
                 });
@@ -130,10 +132,15 @@ var AUDIO = (function() {
     var reset = function(e) {
         e.preventDefault();
 
+        $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
+
         $playerWrapper.velocity('fadeOut', {
             duration: 0
         });
         $fullscreenButton.velocity('fadeOut', {
+            duration: 0
+        });
+        $nextPostWrapper.velocity('fadeOut', {
             duration: 0
         });
         $introText.velocity('fadeIn', {
