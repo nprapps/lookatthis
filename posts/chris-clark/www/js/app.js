@@ -191,7 +191,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    trackCompletion(toIndex);
+    // trackCompletion(toIndex);
     document.activeElement.blur();
     showNavigation(toIndex);
     currentIndex = toIndex;
@@ -487,7 +487,7 @@ $(document).ready(function() {
         supplied: 'mp3',
         timeupdate: AUDIO.onTimeupdate,
         cssSelectorAncestor: "#jp_container_1",
-        smoothPlayBar: true,
+        // smoothPlayBar: true,
         volume: NO_AUDIO ? 0 : 1
     });
 

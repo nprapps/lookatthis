@@ -1,6 +1,10 @@
 var AUDIO = (function() {
     var isAnimating = false;
     var onStory = false;
+    var twentyFiveComplete = false;
+    var fiftyComplete = false;
+    var seventyFiveComplete = false;
+    var completed = false;
 
     var setUpPlayer = function() {
         var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
@@ -38,11 +42,35 @@ var AUDIO = (function() {
         if (position > 0 && position >= duration - 0.5) {
             onEnded();
         }
+
+        if (onStory) {
+            _trackCompletion(position, duration);
+        }
+    }
+
+    var _trackCompletion = function(position, duration) {
+        var completion = position / duration;
+
+        if (completion >= 0.25 && !twentyFiveComplete) {
+            ANALYTICS.completeTwentyFivePercent();
+            twentyFiveComplete = true;
+        } else if (completion >= 0.5 && !fiftyComplete) {
+            ANALYTICS.completeFiftyPercent();
+            fiftyComplete = true;
+        } else if (completion >= 0.75 && !seventyFiveComplete) {
+            ANALYTICS.completeSeventyFivePercent();
+            seventyFiveComplete = true;
+        }
     }
 
     var onEnded = function() {
         if (onStory) {
             $.deck('next');
+
+            if (!completed) {
+                ANALYTICS.completeOneHundredPercent();
+                completed = true;
+            }
         }
     }
 
