@@ -312,8 +312,6 @@ var initAnimation = function() {
         });
     }
 
-    $slide.css('overflow', 'hidden');
-
     animateImage($imgWrapper);
 }
 

@@ -247,6 +247,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         background-color: #000;
         position: absolute;
         visibility: hidden;
+        overflow: hidden;
         top: 0;
         left: 0;
         bottom: 0;
@@ -439,7 +440,7 @@ img {
             left: 0;
             padding-left: 10px;
             outline-style: none;
-            
+
             .touch & {
                 width: 60px;
                 height: 45px;
@@ -480,22 +481,22 @@ img {
                 @media @screen-tiny-above {
                    position: absolute;
                    top: 3px;
-                   left: 0; 
+                   left: 0;
                    height: 22px;
                    padding-top: 10px;
                    padding-right: 2px;
                    border-left: 1px solid rgba(255, 255, 255, 0);
                    border-right: 1px solid rgba(255, 255, 255, 0);
-                   
+
                    .no-touch & {
                     .transition(opacity 3s ease);
-                   
+
                         &:hover {
                             border-left: 1px solid rgba(255, 255, 255, 0.3);
                             border-right: 1px solid rgba(255, 255, 255, 0.3);
                         }
                     }
-                   
+
                 }
             }
 
