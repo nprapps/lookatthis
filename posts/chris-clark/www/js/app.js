@@ -179,7 +179,6 @@ var showNavigation = function(index) {
     if ($slides.last().index() === index) {
         $arrows.show();
         $nextArrow.hide().css('right', 0);
-        $playerWrapper.hide();
     } else {
         $arrows.hide();
         $playerWrapper.show();

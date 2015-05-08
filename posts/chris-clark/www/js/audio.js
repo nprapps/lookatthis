@@ -73,8 +73,13 @@ var AUDIO = (function() {
 
                 $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
 
-                $playerWrapper.velocity('fadeOut', {
-                    duration: 2000
+                $playerWrapper.velocity({
+                    'opacity': 0
+                }, {
+                    duration: 2000,
+                    complete: function() {
+                        $playerWrapper.css('visibility', 'hidden');
+                    }
                 });
                 $nextPostWrapper.velocity('fadeIn', {
                     duration: 2000
@@ -136,12 +141,6 @@ var AUDIO = (function() {
 
         $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
 
-        $playerWrapper.velocity('fadeOut', {
-            duration: 0
-        });
-        $fullscreenButton.velocity('fadeOut', {
-            duration: 0
-        });
         $nextPostWrapper.velocity('fadeOut', {
             duration: 0
         });
