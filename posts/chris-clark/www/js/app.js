@@ -250,9 +250,11 @@ var initAnimation = function() {
     var $slide = $slides.eq(currentIndex);
     var $wrapper = $slide.find('.img-wrapper');
 
-    $slide.css({
-        height: $introText.height() + 60
-    })
+    if ($introText.height() > $slide.height()) {
+        $slide.css({
+            height: $introText.height() + 60
+        });
+    }
 
     $wrapper.css({
         'width': w * 2,
