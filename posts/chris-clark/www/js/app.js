@@ -59,7 +59,7 @@ var resize = function() {
     $section.height(h);
     $slides.width(w);
 
-    if ($introText.height() > h) {
+    if ($introText.height() + 60 > h) {
         $slides.height($introText.height() + 60);
     } else {
         $slides.height(h);
@@ -263,7 +263,7 @@ var initVideo = function() {
 var initAnimation = function() {
     var $slide = $slides.eq(currentIndex);
 
-    if ($introText.height() > $slide.height()) {
+    if ($introText.height() + 60 > $slide.height()) {
         $slide.css({
             height: $introText.height() + 60
         });
