@@ -11,6 +11,7 @@ var $storyBeginButton;
 var $introText;
 var $fullscreenButton;
 var $nextPostWrapper;
+var $imgWrapper;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -57,6 +58,12 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
+
+    $imgWrapper.css({
+        'width': w * 2,
+        'height': h * 2,
+        'background-size': w * 4
+    })
 };
 
 var onPageLoad = function() {
@@ -248,7 +255,6 @@ var initVideo = function() {
 
 var initAnimation = function() {
     var $slide = $slides.eq(currentIndex);
-    var $wrapper = $slide.find('.img-wrapper');
 
     if ($introText.height() > $slide.height()) {
         $slide.css({
@@ -256,14 +262,14 @@ var initAnimation = function() {
         });
     }
 
-    $wrapper.css({
+    $imgWrapper.css({
         'width': w * 2,
         'height': h * 2,
         'background-size': w * 4,
     })
 
     var animateImage = function($wrapper) {
-        $wrapper.velocity({
+        $imgWrapper.velocity({
             translateX: '-' + w + 'px',
             translateY: '-' + h/2 + 'px'
         }, {
@@ -302,7 +308,7 @@ var initAnimation = function() {
 
     $slide.css('overflow', 'hidden');
 
-    animateImage($wrapper);
+    animateImage($imgWrapper);
 }
 
 var onStartCardButtonClick = function() {
@@ -488,6 +494,7 @@ $(document).ready(function() {
     $nextArrow = $('.next');
     $storyBeginButton = $('.btn-video');
     $introText = $('.intro-text');
+    $imgWrapper = $('.img-wrapper');
     $fullscreenButton = $('.fullscreen');
     $nextPostWrapper = $('.next-post-wrapper');
 
