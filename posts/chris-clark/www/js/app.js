@@ -58,9 +58,8 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
-    console.log('fire');
 
-    if ($introText.height() > $slides.height()) {
+    if ($introText.height() + 60 > h) {
         $slides.height($introText.height() + 60);
     } else {
         $slides.height(h);
@@ -264,7 +263,7 @@ var initVideo = function() {
 var initAnimation = function() {
     var $slide = $slides.eq(currentIndex);
 
-    if ($introText.height() > $slide.height()) {
+    if ($introText.height() + 60 > $slide.height()) {
         $slide.css({
             height: $introText.height() + 60
         });
@@ -332,7 +331,6 @@ var onStoryBeginButtonClick = function() {
         duration: 2000
     });
     $playerWrapper.css({
-        'display': 'block',
         'visibility': 'visible'
     });
     $playerWrapper.velocity({
