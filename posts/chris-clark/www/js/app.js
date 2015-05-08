@@ -255,10 +255,35 @@ var initAnimation = function() {
 
     $wrapper.velocity({
         translateX: '-' + w + 'px',
-        translateY: '-' + h + 'px'
+        translateY: '-' + h/2 + 'px'
     }, {
-        duration: 100000,
-        easing: "linear"
+        duration: 120000,
+        easing: "linear",
+        complete: function() {
+            $wrapper.velocity({
+                translateX: 0
+            }, {
+                duration: 120000,
+                easing: "linear",
+                complete: function() {
+                    $wrapper.velocity({
+                        translateX: '-' + w + 'px',
+                        translateY: 0
+                    }, {
+                        duration: 120000,
+                        easing: "linear",
+                        complete: function() {
+                            $wrapper.velocity({
+                                translateX: 0
+                            }, {
+                                duration: 120000,
+                                easing: 'linear'
+                            });
+                        }
+                    })
+                }
+            })
+        }
     });
 
     $slide.css('overflow', 'hidden');
