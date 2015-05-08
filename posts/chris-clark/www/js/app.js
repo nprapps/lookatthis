@@ -244,7 +244,7 @@ var initAnimation = function() {
     $wrapper.css({
         'width': w * 2,
         'height': h * 2,
-        'background-size': w * 4
+        'background-size': w * 4,
     })
 
     $wrapper.velocity({
@@ -254,6 +254,8 @@ var initAnimation = function() {
         duration: 100000,
         easing: "linear"
     });
+
+    $slides.eq(currentIndex).css('overflow', 'hidden');
 }
 
 var onStartCardButtonClick = function() {
