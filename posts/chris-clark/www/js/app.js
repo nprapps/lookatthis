@@ -58,9 +58,8 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
-    console.log('fire');
 
-    if ($introText.height() > $slides.height()) {
+    if ($introText.height() > h) {
         $slides.height($introText.height() + 60);
     } else {
         $slides.height(h);
