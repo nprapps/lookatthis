@@ -331,7 +331,6 @@ var onStoryBeginButtonClick = function() {
         duration: 2000
     });
     $playerWrapper.css({
-        'display': 'block',
         'visibility': 'visible'
     });
     $playerWrapper.velocity({
