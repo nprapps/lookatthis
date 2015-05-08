@@ -280,9 +280,9 @@ var initAnimation = function() {
                                 easing: 'linear'
                             });
                         }
-                    })
+                    });
                 }
-            })
+            });
         }
     });
 
@@ -324,6 +324,7 @@ var onStoryBeginButtonClick = function() {
         });
     } else {
         $slides.eq(currentIndex).css('height', h);
+        $body.velocity("scroll", { duration: 500 });
     }
 
     AUDIO.switchAudio();
