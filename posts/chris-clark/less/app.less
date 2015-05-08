@@ -478,8 +478,21 @@ img {
                    position: absolute;
                    top: 3px;
                    left: 0; 
-                   height: 20px;
+                   height: 22px;
                    padding-top: 10px;
+                   padding-right: 2px;
+                   border-left: 1px solid rgba(255, 255, 255, 0);
+                   border-right: 1px solid rgba(255, 255, 255, 0);
+                   
+                   .no-touch & {
+                    .transition(opacity 3s ease);
+                   
+                        &:hover {
+                            border-left: 1px solid rgba(255, 255, 255, 0.3);
+                            border-right: 1px solid rgba(255, 255, 255, 0.3);
+                        }
+                    }
+                   
                 }
             }
 
@@ -500,7 +513,7 @@ img {
             position: absolute;
             top: 0;
             right: -50px;
-            font-size: 12px;
+            font-size: 11px;
         }
     }
 
