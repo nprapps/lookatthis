@@ -477,7 +477,11 @@ $(document).ready(function() {
     // Turn off Modernizr history so we don't get hashing
     Modernizr.history = null;
 
-    $.deck($slides);
+    $.deck($slides, {
+        touch: {
+            swipeDirection: false
+        }
+    });
 
     onPageLoad();
     resize();
