@@ -59,18 +59,18 @@ var resize = function() {
     $section.height(h);
     $slides.width(w);
 
-    if ($introText.height() + 60 > h) {
-        $slides.height($introText.height() + 60);
-    } else {
-        $slides.height(h);
+    if (isTouch) {
+        if ($introText.height() + 60 > h) {
+            $slides.height($introText.height() + 60);
+        } else {
+            $slides.height(h);
+        }
+        $imgWrapper.css({
+            'width': w * 2,
+            'height': h * 2,
+            'background-size': w * 4,
+        });
     }
-    $imgWrapper.css({
-        'width': w * 2,
-        'height': h * 2,
-        'background-size': w * 4,
-    });
-
-
 };
 
 var onPageLoad = function() {
