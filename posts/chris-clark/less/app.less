@@ -172,8 +172,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         opacity: 0;
 
         &:before {
-            font-family: "FontAwesome";
-            content: '\f0e2';
+            font-family: "lookatthis";
+            content: '\e801';
             display: block;
         }
 
@@ -307,10 +307,6 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
 
     }
 
-    //bottom dark gradient on all slides
-    /*background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  70%,rgba(0, 0, 0, 0.7));*/
-
-
     .full-block-cell {
         display: table-cell;
         position: relative;
@@ -405,9 +401,9 @@ img {
     z-index: 20;
     opacity: 0;
     visibility: hidden;
-    
+
     @media @screen-tiny-above {
-       bottom: 40px; 
+       bottom: 40px;
     }
 
     #jp_container_1 {
@@ -418,7 +414,7 @@ img {
         background: rgba(255,255,255,0.1);
         text-shadow: 2px 2px 2px #333;
         .box-shadow(2px 2px 2px rgba(0,0,0,.2));
-        
+
         @media @screen-tiny-above {
            width: 370px;
            height: 60px;
@@ -446,7 +442,7 @@ img {
                 width: 40px;
                 height: 45px;
             }
-            
+
             @media @screen-tiny-above {
                padding-left: 15px;
             }
@@ -458,7 +454,7 @@ img {
         top: 0;
         left: 0;
         width: 100%;
-        
+
         @media @screen-tiny-above {
            position: absolute;
            top: 15px;
@@ -467,17 +463,17 @@ img {
            width: 270px;
         }
 
-        
+
 
         .player-progress {
             cursor: pointer;
-            
+
             .jp-seek-bar {
                 position: absolute;
                 top: 0;
-                left: 0; 
+                left: 0;
                 height: 60px;
-                
+
                 @media @screen-tiny-above {
                    position: absolute;
                    top: 3px;

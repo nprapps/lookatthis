@@ -146,6 +146,11 @@ var AUDIO = (function() {
         $introText.velocity('fadeIn', {
             duration: 2000
         });
+        $arrows.velocity('fadeOut', { duration: 0 });
+
+        var $video = $slides.eq(currentIndex).find('video');
+        var video = $video.get(0);
+        video.play();
 
         var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
 

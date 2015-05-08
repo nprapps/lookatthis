@@ -240,20 +240,60 @@ var initVideo = function() {
 }
 
 var initAnimation = function() {
-    var $wrapper = $slides.eq(currentIndex).find('.img-wrapper');
+    var $slide = $slides.eq(currentIndex);
+    var $wrapper = $slide.find('.img-wrapper');
+
+    $slide.css({
+        height: $introText.height() + 60
+    })
+
     $wrapper.css({
         'width': w * 2,
         'height': h * 2,
-        'background-size': w * 4
+        'background-size': w * 4,
     })
 
-    $wrapper.velocity({
-        translateX: '-' + w + 'px',
-        translateY: '-' + h + 'px'
-    }, {
-        duration: 100000,
-        easing: "linear"
-    });
+    var animateImage = function($wrapper) {
+        $wrapper.velocity({
+            translateX: '-' + w + 'px',
+            translateY: '-' + h/2 + 'px'
+        }, {
+            duration: 120000,
+            easing: "linear",
+            complete: function() {
+                $wrapper.velocity({
+                    translateX: 0
+                }, {
+                    duration: 120000,
+                    easing: "linear",
+                    complete: function() {
+                        $wrapper.velocity({
+                            translateX: '-' + w + 'px',
+                            translateY: 0
+                        }, {
+                            duration: 120000,
+                            easing: "linear",
+                            complete: function() {
+                                $wrapper.velocity({
+                                    translateX: 0
+                                }, {
+                                    duration: 120000,
+                                    easing: 'linear',
+                                    complete: function() {
+                                        animateImage($wrapper);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    $slide.css('overflow', 'hidden');
+
+    animateImage($wrapper);
 }
 
 var onStartCardButtonClick = function() {
@@ -289,6 +329,9 @@ var onStoryBeginButtonClick = function() {
         }, {
             duration: 2000
         });
+    } else {
+        $slides.eq(currentIndex).css('height', h);
+        $body.velocity("scroll", { duration: 500 });
     }
 
     AUDIO.switchAudio();
