@@ -240,7 +240,13 @@ var initVideo = function() {
 }
 
 var initAnimation = function() {
-    var $wrapper = $slides.eq(currentIndex).find('.img-wrapper');
+    var $slide = $slides.eq(currentIndex);
+    var $wrapper = $slide.find('.img-wrapper');
+
+    $slide.css({
+        height: $introText.height() + 60
+    })
+
     $wrapper.css({
         'width': w * 2,
         'height': h * 2,
@@ -255,7 +261,7 @@ var initAnimation = function() {
         easing: "linear"
     });
 
-    $slides.eq(currentIndex).css('overflow', 'hidden');
+    $slide.css('overflow', 'hidden');
 }
 
 var onStartCardButtonClick = function() {
@@ -291,6 +297,8 @@ var onStoryBeginButtonClick = function() {
         }, {
             duration: 2000
         });
+    } else {
+        $slides.eq(currentIndex).css('height', h);
     }
 
     AUDIO.switchAudio();
