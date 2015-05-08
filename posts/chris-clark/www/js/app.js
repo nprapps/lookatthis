@@ -226,7 +226,14 @@ var initVideo = function() {
     /*
     * Load the video when we get to the slide.
     */
+
     var $video = $slides.eq(currentIndex).find('video');
+
+    $video.css({
+        'width': w,
+        'height': h
+    });
+
     if ($video.length > 0 && !isTouch) {
         var sources = $video.find('source');
         var video = $video.get(0);
