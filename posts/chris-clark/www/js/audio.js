@@ -132,6 +132,8 @@ var AUDIO = (function() {
     var reset = function(e) {
         e.preventDefault();
 
+        completed = false;
+
         $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
 
         $playerWrapper.velocity('fadeOut', {
