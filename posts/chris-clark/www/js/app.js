@@ -58,12 +58,20 @@ var resize = function() {
     h = $(window).height();
     $section.height(h);
     $slides.width(w);
+    console.log('fire');
 
+    if ($introText.height() > $slides.height()) {
+        $slides.height($introText.height() + 60);
+    } else {
+        $slides.height(h);
+    }
     $imgWrapper.css({
         'width': w * 2,
         'height': h * 2,
-        'background-size': w * 4
-    })
+        'background-size': w * 4,
+    });
+
+
 };
 
 var onPageLoad = function() {
@@ -261,12 +269,11 @@ var initAnimation = function() {
             height: $introText.height() + 60
         });
     }
-
     $imgWrapper.css({
         'width': w * 2,
         'height': h * 2,
         'background-size': w * 4,
-    })
+    });
 
     var animateImage = function($wrapper) {
         $imgWrapper.velocity({
@@ -557,7 +564,7 @@ $(document).ready(function() {
     });
 
     // Redraw slides if the window resizes
-    $(window).on("orientationchange", resize);
+    window.addEventListener("orientationchange", resize);
     $(window).resize(resize);
 
     // listen for page visibility changes
