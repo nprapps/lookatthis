@@ -253,40 +253,47 @@ var initAnimation = function() {
         'background-size': w * 4,
     })
 
-    $wrapper.velocity({
-        translateX: '-' + w + 'px',
-        translateY: '-' + h/2 + 'px'
-    }, {
-        duration: 120000,
-        easing: "linear",
-        complete: function() {
-            $wrapper.velocity({
-                translateX: 0
-            }, {
-                duration: 120000,
-                easing: "linear",
-                complete: function() {
-                    $wrapper.velocity({
-                        translateX: '-' + w + 'px',
-                        translateY: 0
-                    }, {
-                        duration: 120000,
-                        easing: "linear",
-                        complete: function() {
-                            $wrapper.velocity({
-                                translateX: 0
-                            }, {
-                                duration: 120000,
-                                easing: 'linear'
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
+    var animateImage = function($wrapper) {
+        $wrapper.velocity({
+            translateX: '-' + w + 'px',
+            translateY: '-' + h/2 + 'px'
+        }, {
+            duration: 120000,
+            easing: "linear",
+            complete: function() {
+                $wrapper.velocity({
+                    translateX: 0
+                }, {
+                    duration: 120000,
+                    easing: "linear",
+                    complete: function() {
+                        $wrapper.velocity({
+                            translateX: '-' + w + 'px',
+                            translateY: 0
+                        }, {
+                            duration: 120000,
+                            easing: "linear",
+                            complete: function() {
+                                $wrapper.velocity({
+                                    translateX: 0
+                                }, {
+                                    duration: 120000,
+                                    easing: 'linear',
+                                    complete: function() {
+                                        animateImage($wrapper);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     $slide.css('overflow', 'hidden');
+
+    animateImage($wrapper);
 }
 
 var onStartCardButtonClick = function() {
