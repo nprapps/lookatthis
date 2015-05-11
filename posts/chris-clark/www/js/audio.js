@@ -148,7 +148,9 @@ var AUDIO = (function() {
             complete: function() {
                 $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
                 $introText.velocity('fadeIn', { duration: 2000 });
-                $fullscreenButton.css('opacity', 0.5);
+                if (!isTouch) {
+                    $fullscreenButton.css('opacity', 0.5)
+                }
                 var $video = $slides.eq(currentIndex).find('video');
                 var video = $video.get(0);
                 video.play();
