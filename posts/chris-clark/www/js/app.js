@@ -10,6 +10,7 @@ var $arrows;
 var $storyBeginButton;
 var $introText;
 var $fullscreenButton;
+var $fullscreenLabel;
 var $nextPostWrapper;
 var $imgWrapper;
 
@@ -84,30 +85,6 @@ var onPageLoad = function() {
     });
     $slides.show();
 };
-
-var trackCompletion = function(index) {
-    /*
-    * Track completion based on slide index.
-    */
-    how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
-
-    if (how_far >= completion + 0.25) {
-        completion = how_far - (how_far % 0.25);
-
-        if (completion === 0.25) {
-            ANALYTICS.completeTwentyFivePercent();
-        }
-        else if (completion === 0.5) {
-            ANALYTICS.completeFiftyPercent();
-        }
-        else if (completion === 0.75) {
-            ANALYTICS.completeSeventyFivePercent();
-        }
-        else if (completion === 1) {
-            ANALYTICS.completeOneHundredPercent();
-        }
-    }
-}
 
 var lazyLoad = function(slideIndex) {
     /*
@@ -375,9 +352,11 @@ var onFullScreenButtonClick = function(e) {
         if (fullscreenEnabled) {
             screenfull.exit();
             fullscreenEnabled = false;
+            $fullscreenLabel.text('Fullscreen');
         } else {
             screenfull.request();
             fullscreenEnabled = true;
+            $fullscreenLabel.text('Exit');
         }
     }
 }
@@ -486,6 +465,7 @@ $(document).ready(function() {
     $introText = $('.intro-text');
     $imgWrapper = $('.img-wrapper');
     $fullscreenButton = $('.fullscreen');
+    $fullscreenLabel = $('.fullscreen .label');
     $nextPostWrapper = $('.next-post-wrapper');
 
     $upNext = $('.up-next');

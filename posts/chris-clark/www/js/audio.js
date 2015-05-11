@@ -78,6 +78,7 @@ var AUDIO = (function() {
                     $playerWrapper.css('visibility', 'hidden');
                 }
             });
+            $fullscreenButton.css('opacity', 0);
             $nextPostWrapper.velocity('fadeIn', {
                 duration: 2000,
                 complete: function() {
@@ -146,6 +147,7 @@ var AUDIO = (function() {
         $arrows.velocity('fadeOut', { duration: 0 });
 
         $introText.velocity('fadeIn', { duration: 2000 });
+        $fullscreenButton.css('opacity', 0.5);
 
         var $video = $slides.eq(currentIndex).find('video');
         var video = $video.get(0);
