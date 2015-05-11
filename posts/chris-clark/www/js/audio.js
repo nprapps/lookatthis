@@ -141,10 +141,10 @@ var AUDIO = (function() {
 
         completed = false;
 
-        $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
-
         $nextPostWrapper.velocity('fadeOut', { duration: 0 });
         $arrows.velocity('fadeOut', { duration: 0 });
+
+        $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
 
         $introText.velocity('fadeIn', { duration: 2000 });
         $fullscreenButton.css('opacity', 0.5);
