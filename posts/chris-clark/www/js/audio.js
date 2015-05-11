@@ -141,28 +141,30 @@ var AUDIO = (function() {
 
         completed = false;
 
-        $nextPostWrapper.velocity('fadeOut', { duration: 0 });
-        $arrows.velocity('fadeOut', { duration: 0 });
+        $arrows.velocity('fadeOut', { duration: 500 });
 
-        $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
+        $nextPostWrapper.velocity('fadeOut', {
+            duration: 500,
+            complete: function() {
+                $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
+                $introText.velocity('fadeIn', { duration: 2000 });
+                $fullscreenButton.css('opacity', 0.5);
+                var $video = $slides.eq(currentIndex).find('video');
+                var video = $video.get(0);
+                video.play();
 
-        $introText.velocity('fadeIn', { duration: 2000 });
-        $fullscreenButton.css('opacity', 0.5);
+                var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
 
-        var $video = $slides.eq(currentIndex).find('video');
-        var video = $video.get(0);
-        video.play();
+                $player.jPlayer('setMedia', {
+                    mp3: mp3FilePath
+                });
+                $player.jPlayer('play');
 
-        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
-
-        $player.jPlayer('setMedia', {
-            mp3: mp3FilePath
+                $play.hide();
+                $replay.hide();
+                $pause.show();
+            }
         });
-        $player.jPlayer('play');
-
-        $play.hide();
-        $replay.hide();
-        $pause.show();
     }
 
     return {
