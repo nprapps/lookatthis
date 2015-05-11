@@ -146,14 +146,18 @@ var AUDIO = (function() {
         $nextPostWrapper.velocity('fadeOut', {
             duration: 500,
             complete: function() {
+                // fade in ui elements
                 $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
                 $introText.velocity('fadeIn', { duration: 2000 });
+
+                // handle desktop
                 if (!isTouch) {
                     $fullscreenButton.css('opacity', 0.5)
+                    video.play();
+                // handle mobile
+                } else {
+                    resize();
                 }
-                var $video = $slides.eq(currentIndex).find('video');
-                var video = $video.get(0);
-                video.play();
 
                 var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
 
