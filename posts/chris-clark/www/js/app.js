@@ -28,7 +28,6 @@ var $playerUI;
 var $playerButton;
 var $play;
 var $pause;
-var $replay;
 var $currentTime;
 var $animatedElements = null;
 
@@ -60,6 +59,7 @@ var resize = function() {
     $slides.width(w);
 
     if (isTouch) {
+        // if the text overflows on the slide, resize the slide so it contains the overflow
         if ($introText.height() + 60 > h) {
             $slides.height($introText.height() + 60);
         } else {
@@ -83,7 +83,6 @@ var onPageLoad = function() {
         'visibility': 'visible',
     });
     $slides.show();
-    // showNavigation(0);
 };
 
 var trackCompletion = function(index) {
@@ -123,7 +122,6 @@ var lazyLoad = function(slideIndex) {
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
     };
-
 }
 
 var loadImages = function($slide) {
@@ -205,7 +203,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    // trackCompletion(toIndex);
     document.activeElement.blur();
     showNavigation(toIndex);
     currentIndex = toIndex;
@@ -222,16 +219,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     ANALYTICS.exitSlide(fromIndex.toString());
     if (lastSlideExitEvent) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
-    }
-
-    if (toIndex === $slides.length - 1) {
-        if (APP_CONFIG.POSTED_ON_FB && callToActionTest === 'facebook') {
-            ANALYTICS.trackEvent('tests-run', 'facebook-post');
-        } else if (!(APP_CONFIG.POSTED_ON_FB) && callToActionTest === 'facebook') {
-            ANALYTICS.trackEvent('tests-run', 'facebook-page');
-        } else {
-            ANALYTICS.trackEvent('tests-run', callToActionTest);
-        }
     }
 }
 
@@ -351,6 +338,7 @@ var onStoryBeginButtonClick = function() {
         $body.velocity("scroll", { duration: 500 });
     }
 
+    ANALYTICS.trackEvent('begin-story');
     AUDIO.switchAudio();
 }
 
@@ -514,7 +502,6 @@ $(document).ready(function() {
     $player = $('#player');
     $playerUI = $('.jp-audio');
     $playerButton = $('.player-button');
-    $replay = $('.replay');
     $play = $('.play');
     $pause = $('.pause');
     $currentTime = $('.current-time');

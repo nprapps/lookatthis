@@ -64,41 +64,40 @@ var AUDIO = (function() {
     }
 
     var onEnded = function() {
-        if (onStory) {
-            // $.deck('next');
+        if (onStory && !completed) {
+            ANALYTICS.completeOneHundredPercent();
+            completed = true;
 
-            if (!completed) {
-                ANALYTICS.completeOneHundredPercent();
-                completed = true;
+            $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
 
-                $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
+            $playerWrapper.velocity({
+                'opacity': 0
+            }, {
+                duration: 2000,
+                complete: function() {
+                    $playerWrapper.css('visibility', 'hidden');
+                }
+            });
+            $nextPostWrapper.velocity('fadeIn', {
+                duration: 2000,
+                complete: function() {
+                    ANALYTICS.trackEvent('tests-run', callToActionTest);
+                }
+            });
 
-                $playerWrapper.velocity({
-                    'opacity': 0
-                }, {
-                    duration: 2000,
-                    complete: function() {
-                        $playerWrapper.css('visibility', 'hidden');
-                    }
-                });
-                $nextPostWrapper.velocity('fadeIn', {
-                    duration: 2000
-                });
+            $previousArrow.css({
+                'display': 'block',
+            });
+            $previousArrow.velocity({
+                'opacity': 0.5
+            }, {
+                duration: 2000
+            });
 
-                $previousArrow.css({
-                    'display': 'block',
-                });
-                $previousArrow.velocity({
-                    'opacity': 0.5
-                }, {
-                    duration: 2000
-                });
+            var $video = $slides.eq(currentIndex).find('video');
+            var video = $video.get(0);
 
-                var $video = $slides.eq(currentIndex).find('video');
-                var video = $video.get(0);
-
-                video.pause();
-            }
+            video.pause();
         }
     }
 
@@ -127,10 +126,12 @@ var AUDIO = (function() {
     }
 
     var visibilityToggle = function() {
-        if (isHidden()) {
-            _pausePlayer(false);
-        } else {
-            _resumePlayer();
+        if (!completed) {
+            if (isHidden()) {
+                _pausePlayer(false);
+            } else {
+                _resumePlayer();
+            }
         }
     }
 
@@ -141,13 +142,10 @@ var AUDIO = (function() {
 
         $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
 
-        $nextPostWrapper.velocity('fadeOut', {
-            duration: 0
-        });
-        $introText.velocity('fadeIn', {
-            duration: 2000
-        });
+        $nextPostWrapper.velocity('fadeOut', { duration: 0 });
         $arrows.velocity('fadeOut', { duration: 0 });
+
+        $introText.velocity('fadeIn', { duration: 2000 });
 
         var $video = $slides.eq(currentIndex).find('video');
         var video = $video.get(0);
