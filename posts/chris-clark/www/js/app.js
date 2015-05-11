@@ -13,6 +13,9 @@ var $fullscreenButton;
 var $fullscreenLabel;
 var $nextPostWrapper;
 var $imgWrapper;
+var $videoWrapper;
+var $video;
+var video;
 
 var $likeStory;
 var $likeStoryButtons;
@@ -70,6 +73,11 @@ var resize = function() {
             'width': w * 2,
             'height': h * 2,
             'background-size': w * 4,
+        });
+    } else {
+        $video.css({
+            'width': w,
+            'height': h
         });
     }
 };
@@ -203,9 +211,6 @@ var initVideo = function() {
     /*
     * Load the video when we get to the slide.
     */
-
-    var $video = $slides.eq(currentIndex).find('video');
-
     $video.css({
         'width': w,
         'height': h
@@ -213,7 +218,6 @@ var initVideo = function() {
 
     if ($video.length > 0 && !isTouch) {
         var sources = $video.find('source');
-        var video = $video.get(0);
 
         if (!sources.attr('src')) {
             sources.attr('src', sources.data('src'));
@@ -467,6 +471,9 @@ $(document).ready(function() {
     $fullscreenButton = $('.fullscreen');
     $fullscreenLabel = $('.fullscreen .label');
     $nextPostWrapper = $('.next-post-wrapper');
+    $videoWrapper = $('.video-bg');
+    $video = $('video')
+    video = $video.get(0);
 
     $upNext = $('.up-next');
     $likeStory = $('.like-story');
