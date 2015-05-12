@@ -113,22 +113,26 @@ var loadImages = function($slide) {
     /*
     * Sets the background image on a div for our fancy slides.
     */
-    if ($slide.data('bgimage')) {
-        var image_filename = $slide.data('bgimage').split('.')[0];
-        var image_extension = '.' + $slide.data('bgimage').split('.')[1];
-        // Mobile suffix should be blank by default.
-        mobileSuffix = '';
+    var $container = $slide.find('.imgLiquid');
+    var bgimg = $container.children('img');
 
-        if (w < 769 && $slide.hasClass('mobile-crop')) {
-            mobileSuffix = '-sq';
-        }
-
+    if (bgimg.data('bgimage')) {
+        var image_filename = bgimg.data('bgimage').split('.')[0];
+        var image_extension = '.' + bgimg.data('bgimage').split('.')[1];
         var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-        if ($slide.css('background-image') === 'none') {
-            $slide.css('background-image', 'url(' + image_path + ')');
-        }
-    } else if ($slide.find('.img-wrapper').data('bgimage') && isTouch) {
+        bgimg.attr('src', image_path);
+    }
+
+    if (bgimg.attr('src')) {
+        $container.imgLiquid({
+            fill: true,
+            horizontalAlign: "center",
+            verticalAlign: "center",
+        });
+    }
+
+    if ($slide.find('.img-wrapper').data('bgimage') && isTouch) {
         $wrapper = $slide.find('.img-wrapper');
         var image_filename = $wrapper.data('bgimage').split('.')[0];
         var image_extension = '.' + $wrapper.data('bgimage').split('.')[1];
