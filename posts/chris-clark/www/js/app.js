@@ -247,20 +247,20 @@ var initAnimation = function() {
             translateY: '-' + h/2 + 'px'
         }, {
             duration: 120000,
-            easing: "linear",
+            easing: 'linear',
             complete: function() {
                 $wrapper.velocity({
                     translateX: 0
                 }, {
                     duration: 120000,
-                    easing: "linear",
+                    easing: 'linear',
                     complete: function() {
                         $wrapper.velocity({
                             translateX: '-' + w + 'px',
                             translateY: 0
                         }, {
                             duration: 120000,
-                            easing: "linear",
+                            easing: 'linear',
                             complete: function() {
                                 $wrapper.velocity({
                                     translateX: 0
