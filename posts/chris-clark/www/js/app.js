@@ -220,7 +220,9 @@ var initVideo = function() {
         var sources = $video.find('source');
 
         if (!sources.attr('src')) {
-            sources.attr('src', sources.data('src'));
+            var videoPath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' : 'http://assets.apps.npr.org/lookatthis/chris-clark/';
+            var source = videoPath + sources.data('src');
+            sources.attr('src', source);
             video.load();
         }
         video.play();
