@@ -315,7 +315,10 @@ var onStoryBeginButtonClick = function() {
     } else {
         $slides.eq(currentIndex).css('height', h);
         resize();
-        $body.velocity("scroll", { duration: 500 });
+        $body.velocity("scroll", {
+            duration: 500,
+            mobileHA: false
+        });
     }
 
     $playerWrapper.css({
@@ -326,6 +329,15 @@ var onStoryBeginButtonClick = function() {
     }, {
         duration: 2000
     });
+
+    // the worst hack for forcing the story player to the bottom on mobile
+    if (isTouch) {
+        $('html').velocity('scroll', {
+            duration: 10,
+            offset: '1px',
+            mobileHA: false
+        });
+    }
 
     ANALYTICS.beginStory();
     AUDIO.switchAudio();
