@@ -436,33 +436,6 @@ var onDislikeEmailClick = function() {
     ANALYTICS.trackEvent('email-btn-click');
 }
 
-// var onVisibilityChange = function() {
-//     AUDIO.visibilityToggle();
-// }
-
-// var getHiddenProperty = function() {
-//     var prefixes = ['webkit','moz','ms','o'];
-
-//     // if 'hidden' is natively supported just return it
-//     if ('hidden' in document) return 'hidden';
-
-//     // otherwise loop over all the known prefixes until we find one
-//     for (var i = 0; i < prefixes.length; i++){
-//         if ((prefixes[i] + 'Hidden') in document)
-//             return prefixes[i] + 'Hidden';
-//     }
-
-//     // otherwise it's not supported
-//     return null;
-// }
-
-// var isHidden = function() {
-//     var prop = getHiddenProperty();
-//     if (!prop) return false;
-
-//     return document[prop];
-// }
-
 $(document).ready(function() {
     $document = $(document);
     $body = $('body');
@@ -543,11 +516,4 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     window.addEventListener("orientationchange", resize);
     $(window).resize(resize);
-
-    // listen for page visibility changes
-    // visibilityProperty = getHiddenProperty();
-    // if (visibilityProperty) {
-    //     var evtname = visibilityProperty.replace(/[H|h]idden/,'') + 'visibilitychange';
-    //     document.addEventListener(evtname, onVisibilityChange);
-    // }
 });

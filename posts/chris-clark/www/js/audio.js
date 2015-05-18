@@ -125,21 +125,17 @@ var AUDIO = (function() {
             _pausePlayer(false);
         }
     }
-
-    var visibilityToggle = function() {
-        if (!completed) {
-            if (isHidden()) {
-                _pausePlayer(false);
-            } else {
-                _resumePlayer();
-            }
-        }
-    }
-
     var reset = function(e) {
         e.preventDefault();
 
+        // reset all completion flags
+        twentyFiveComplete = false;
+        fiftyComplete = false;
+        seventyFiveComplete = false;
         completed = false;
+
+        // reset story flag
+        onStory = false;
 
         $arrows.velocity('fadeOut', { duration: 500 });
 
@@ -180,7 +176,6 @@ var AUDIO = (function() {
         'switchAudio': switchAudio,
         'onTimeupdate': onTimeupdate,
         'reset': reset,
-        'visibilityToggle': visibilityToggle,
         'onEnded': onEnded
     }
 }());
