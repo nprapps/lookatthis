@@ -36,7 +36,7 @@ Look At This
 What is this?
 -------------
 
-Look At This contains all of the stories built for lookatthisstory.tumblr.com as well as the Tumblr theme. It contains a basic post template and tooling for creating, editing and deploying a new post.
+Look At This contains all of the stories built for [lookatthisstory.tumblr.com](http://lookatthisstory.tumblr.com) as well as the Tumblr theme. It contains a basic post template and tooling for creating, editing and deploying a new post.
 
 Assumptions
 -----------
