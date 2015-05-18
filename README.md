@@ -131,8 +131,7 @@ Working with posts on the command line revolves around the `fab post:$SLUG` comm
 
 ### Starting a new post
 
-1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder.
-2.  Copy the [sample copy spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0AqjLQISCZzBkdGdxRXdtVDNDMzIwNmN3S2RQd196NUE&usp=drive_web#gid=1) into a new spreadsheet and copy the URL. That URL should be pasted in the ``posts/$SLUG/post_config.py`` file with the variable ``COPY_GOOGLE_DOC_URL``.
+1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder. It will also create a spreadsheet for you and give you the URL to that spreadsheet in the terminal.
 
 ### Working on an existing post
 
@@ -145,13 +144,11 @@ The default COPY document has several sheets. You will create new slides in the 
 * `id`: a unique ID for the slide (see below for guidelines)
 * `template`: the name of the slide template
 * `text1`, `text2`, `text3`: fields for the various pieces of text your template requires (see below for guidelines)
-* `media`: images or video that your template will use (not required)
-* `media_credit`: Photo/video credit (not the caption)
-* `caption`: Caption for the photo
-* `color`: a background color for the slide (not required)
-* `author`: Author of the post (only on the title post)
-* `date`: Date of publication
+* `foreground_media`: image that your template will use in the foreground of the slide, such as a side-by-side (not required)
+* `background_media`: image that your template will use as the background image (not required)
+* `caption_and_credit`: Caption for the photo and credit
 * `extra_class`: An extra class for style changes that don't require a change in the markup. Examples include `dark-overlay` and `blur-background`.
+* `preload_image`: In the imgLiquid container for the background image, embed the src of the image in the baked page (i.e. don't lazy load). Basically, this is so Google News and other web crawlers can pick up an image.
 
 You may use `<em>` and `<strong>` in any of the text fields, when appropriate. You should avoid using `<h1>` or other context-specific tags.
 
