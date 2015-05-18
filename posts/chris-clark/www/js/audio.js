@@ -121,8 +121,10 @@ var AUDIO = (function() {
         e.preventDefault();
         if ($player.data().jPlayer.status.paused) {
             _resumePlayer();
+            ANALYTICS.trackEvent('resume-audio');
         } else {
             _pausePlayer(false);
+            ANALYTICS.trackEvent('pause-audio');
         }
     }
     var reset = function(e) {
