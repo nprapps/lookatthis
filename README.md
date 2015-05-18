@@ -3,7 +3,7 @@ Copyright 2014 NPR.  All rights reserved.  No part of these materials may be rep
 (Want to use this code? Send an email to nprapps@npr.org!)
 
 
-lookatthis
+Look At This
 ========================
 
 * [What is this?](#what-is-this)
@@ -36,7 +36,7 @@ lookatthis
 What is this?
 -------------
 
-**TKTK: Describe lookatthis here.**
+Look At This contains all of the stories built for lookatthisstory.tumblr.com as well as the Tumblr theme. It contains a basic post template and tooling for creating, editing and deploying a new post.
 
 Assumptions
 -----------
