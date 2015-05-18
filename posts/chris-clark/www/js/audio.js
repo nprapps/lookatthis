@@ -31,6 +31,10 @@ var AUDIO = (function() {
         $pause.show();
     }
 
+    var onSeek = function(e) {
+        ANALYTICS.trackEvent('seek-audio');
+    }
+
     var onTimeupdate = function(e) {
         var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
         $currentTime.text(timeText);
@@ -176,6 +180,7 @@ var AUDIO = (function() {
         'toggleAudio': toggleAudio,
         'setUpPlayer': setUpPlayer,
         'switchAudio': switchAudio,
+        'onSeek': onSeek,
         'onTimeupdate': onTimeupdate,
         'reset': reset,
         'onEnded': onEnded

@@ -510,7 +510,8 @@ $(document).ready(function() {
         timeupdate: AUDIO.onTimeupdate,
         cssSelectorAncestor: "#jp_container_1",
         // smoothPlayBar: true,
-        volume: NO_AUDIO ? 0 : 1
+        volume: NO_AUDIO ? 0 : 1,
+        seeked: AUDIO.onSeek
     });
 
     // Redraw slides if the window resizes
