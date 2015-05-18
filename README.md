@@ -131,7 +131,7 @@ Working with posts on the command line revolves around the `fab post:$SLUG` comm
 
 ### Starting a new post
 
-1.  `fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder. It will also create a spreadsheet for you and give you the URL to that spreadsheet in the terminal.
+`fab post:$SLUG`: This function will ask you to create a new post and place it in the `posts` folder. It will also create a spreadsheet for you and give you the URL to that spreadsheet in the terminal.
 
 ### Working on an existing post
 
