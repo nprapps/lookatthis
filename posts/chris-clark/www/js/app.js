@@ -301,14 +301,6 @@ var onStoryBeginButtonClick = function() {
     $introText.velocity('fadeOut', {
         duration: 2000
     });
-    $playerWrapper.css({
-        'visibility': 'visible'
-    });
-    $playerWrapper.velocity({
-        'opacity': 0.5,
-    }, {
-        duration: 2000
-    });
 
     if (!isTouch) {
         $fullscreenButton.css({
@@ -322,8 +314,18 @@ var onStoryBeginButtonClick = function() {
         });
     } else {
         $slides.eq(currentIndex).css('height', h);
+        resize();
         $body.velocity("scroll", { duration: 500 });
     }
+
+    $playerWrapper.css({
+        'visibility': 'visible'
+    });
+    $playerWrapper.velocity({
+        'opacity': 0.5,
+    }, {
+        duration: 2000
+    });
 
     ANALYTICS.beginStory();
     AUDIO.switchAudio();
