@@ -363,10 +363,12 @@ var onFullScreenButtonClick = function(e) {
             screenfull.exit();
             fullscreenEnabled = false;
             $fullscreenLabel.text('Fullscreen');
+            ANALYTICS.trackEvent('fullscreen-stop');
         } else {
             screenfull.request();
             fullscreenEnabled = true;
             $fullscreenLabel.text('Exit');
+            ANALYTICS.trackEvent('fullscreen-start');
         }
     }
 }
