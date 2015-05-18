@@ -17,7 +17,7 @@ var AUDIO = (function() {
     }
 
     var switchAudio = function() {
-        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/audio4.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/audio4.mp3';
+        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/audio5.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/audio5.mp3';
 
         $player.jPlayer('setMedia', {
             mp3: mp3FilePath
