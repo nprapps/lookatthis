@@ -167,10 +167,11 @@ var AUDIO = (function() {
                 $player.jPlayer('play');
 
                 $play.hide();
-                $replay.hide();
                 $pause.show();
             }
         });
+
+        ANALYTICS.trackEvent('reset');
     }
 
     return {
