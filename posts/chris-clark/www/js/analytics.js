@@ -239,6 +239,12 @@ var ANALYTICS = (function () {
         trackEvent('slide-exit', slideIndex, timeOnLastSlide, lastSlideExitEvent);
     }
 
+    var beginStory = function() {
+        var currentTime = new Date();
+        timeOnIntro = Math.abs(currentTime - slideStartTime);
+        trackEvent('begin-story', null, timeOnIntro);
+    }
+
     // This depends on exitSlide executing
     var firstRightArrowClick = function(test) {
         trackEvent('first-right-arrow-clicked', test, timeOnLastSlide);
@@ -266,6 +272,7 @@ var ANALYTICS = (function () {
         'completeSeventyFivePercent': completeSeventyFivePercent,
         'completeOneHundredPercent': completeOneHundredPercent,
         'exitSlide': exitSlide,
+        'beginStory': beginStory,
         'firstRightArrowClick': firstRightArrowClick
     };
 }());

@@ -325,7 +325,7 @@ var onStoryBeginButtonClick = function() {
         $body.velocity("scroll", { duration: 500 });
     }
 
-    ANALYTICS.trackEvent('begin-story');
+    ANALYTICS.beginStory();
     AUDIO.switchAudio();
 }
 
