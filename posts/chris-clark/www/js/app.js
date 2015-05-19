@@ -293,6 +293,7 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
+    ANALYTICS.begin();
     $.deck('next');
     AUDIO.setUpPlayer();
 }
@@ -377,12 +378,12 @@ var onFullScreenButtonClick = function(e) {
             screenfull.exit();
             fullscreenEnabled = false;
             $fullscreenLabel.text('Fullscreen');
-            ANALYTICS.trackEvent('fullscreen-stop');
+            ANALYTICS.stopFullscreen();
         } else {
             screenfull.request();
             fullscreenEnabled = true;
             $fullscreenLabel.text('Exit');
-            ANALYTICS.trackEvent('fullscreen-start');
+            ANALYTICS.startFullscreen();
         }
     }
 }
