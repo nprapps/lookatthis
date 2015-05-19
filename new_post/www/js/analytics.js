@@ -80,8 +80,6 @@ var ANALYTICS = (function () {
 
         ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
         ga('send', 'pageview');
-
-        debugger;
      }
 
     /*
