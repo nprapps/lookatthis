@@ -214,20 +214,20 @@ var ANALYTICS = (function () {
         }
     }
 
-    var completeTwentyFivePercent =  function() {
-        trackEvent('completion', '0.25', null, currentTimeTest);
+    var completeTwentyFivePercent =  function(timesPlayed) {
+        trackEvent('completion', '0.25', timesPlayed, currentTimeTest);
     }
 
-    var completeFiftyPercent =  function() {
-        trackEvent('completion', '0.5', null, currentTimeTest);
+    var completeFiftyPercent =  function(timesPlayed) {
+        trackEvent('completion', '0.5', timesPlayed, currentTimeTest);
     }
 
-    var completeSeventyFivePercent =  function() {
-        trackEvent('completion', '0.75', null, currentTimeTest);
+    var completeSeventyFivePercent =  function(timesPlayed) {
+        trackEvent('completion', '0.75', timesPlayed, currentTimeTest);
     }
 
-    var completeOneHundredPercent =  function() {
-        trackEvent('completion', '1', null, currentTimeTest);
+    var completeOneHundredPercent =  function(timesPlayed) {
+        trackEvent('completion', '1', timesPlayed, currentTimeTest);
     }
 
     // SLIDES

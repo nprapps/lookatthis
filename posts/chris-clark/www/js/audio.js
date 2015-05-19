@@ -5,6 +5,7 @@ var AUDIO = (function() {
     var fiftyComplete = false;
     var seventyFiveComplete = false;
     var completed = false;
+    var timesPlayed = 0;
 
     var setUpPlayer = function() {
         var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
@@ -56,20 +57,20 @@ var AUDIO = (function() {
         var completion = position / duration;
 
         if (completion >= 0.25 && !twentyFiveComplete) {
-            ANALYTICS.completeTwentyFivePercent();
+            ANALYTICS.completeTwentyFivePercent(timesPlayed);
             twentyFiveComplete = true;
         } else if (completion >= 0.5 && !fiftyComplete) {
-            ANALYTICS.completeFiftyPercent();
+            ANALYTICS.completeFiftyPercent(timesPlayed);
             fiftyComplete = true;
         } else if (completion >= 0.75 && !seventyFiveComplete) {
-            ANALYTICS.completeSeventyFivePercent();
+            ANALYTICS.completeSeventyFivePercent(timesPlayed);
             seventyFiveComplete = true;
         }
     }
 
     var onEnded = function() {
         if (onStory && !completed) {
-            ANALYTICS.completeOneHundredPercent();
+            ANALYTICS.completeOneHundredPercent(timesPlayed);
             completed = true;
 
             $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
@@ -142,6 +143,9 @@ var AUDIO = (function() {
 
         // reset story flag
         onStory = false;
+
+        timesPlayed = timesPlayed + 1;
+
 
         $arrows.velocity('fadeOut', { duration: 500 });
 
