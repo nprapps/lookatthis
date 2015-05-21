@@ -39,7 +39,9 @@
     }
 
     .full-block-cell {
-        background: rgba(6,42,53,0.6);
+        .no-touch & {
+            background: rgba(6,42,53,0.6);
+        }
     }
     .full-block-content {
         max-width: 700px;
@@ -329,7 +331,7 @@
              opacity: 0.6;
         }
 
-        @media @screen-small-above {
+        @media @screen-medium-above {
             height: auto;
         }
 
