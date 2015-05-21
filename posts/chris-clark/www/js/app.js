@@ -93,13 +93,14 @@ var onPageLoad = function() {
     });
     $slides.show();
 
-    var sources = $video.find('source');
-    if (!sources.attr('src')) {
-        var videoPath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/whales/assets/' : 'http://assets.apps.npr.org/lookatthis/whales/';
-        var source = videoPath + sources.data('src');
-        sources.attr('src', source);
-        video.load();
-    }
+    // var sources = $video.find('source');
+    // if (!sources.attr('src')) {
+    //     var videoPath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/whales/assets/' : 'http://assets.apps.npr.org/lookatthis/whales/';
+    //     var source = videoPath + sources.data('src');
+    //     sources.attr('src', source);
+    //     video.load();
+    // }
+    video.load();
 };
 
 var lazyLoad = function(slideIndex) {
