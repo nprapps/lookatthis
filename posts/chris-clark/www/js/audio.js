@@ -77,6 +77,7 @@ var AUDIO = (function() {
         if (onStory && !completed) {
             ANALYTICS.completeOneHundredPercent();
             completed = true;
+            $slides.eq(currentIndex).css('overflow', 'auto');
 
             $slides.eq(currentIndex).find('.full-block-content').addClass('up-next');
 
@@ -157,6 +158,8 @@ var AUDIO = (function() {
                 // fade in ui elements
                 $slides.eq(currentIndex).find('.full-block-content').removeClass('up-next');
                 $introText.velocity('fadeIn', { duration: 2000 });
+
+                $slides.eq(currentIndex).css('overflow', 'hidden');
 
                 // handle desktop
                 if (!isTouch) {
