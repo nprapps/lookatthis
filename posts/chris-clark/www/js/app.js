@@ -224,7 +224,7 @@ var initVideo = function() {
         var sources = $video.find('source');
 
         if (!sources.attr('src')) {
-            var videoPath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/' : 'http://assets.apps.npr.org/lookatthis/chris-clark/';
+            var videoPath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/whales/assets/' : 'http://assets.apps.npr.org/lookatthis/whales/';
             var source = videoPath + sources.data('src');
             sources.attr('src', source);
             video.load();
