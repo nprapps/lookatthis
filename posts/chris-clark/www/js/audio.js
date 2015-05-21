@@ -1,6 +1,7 @@
 var AUDIO = (function() {
     var isAnimating = false;
     var onStory = false;
+    var fourFiveSeconds = false;
     var twentyFiveComplete = false;
     var fiftyComplete = false;
     var seventyFiveComplete = false;
@@ -54,6 +55,11 @@ var AUDIO = (function() {
 
     var _trackCompletion = function(position, duration) {
         var completion = position / duration;
+
+        if (position > 5 && !fourFiveSeconds) {
+            ANALYTICS.fiveSecondsComplete();
+            fourFiveSeconds = true;
+        }
 
         if (completion >= 0.25 && !twentyFiveComplete) {
             ANALYTICS.completeTwentyFivePercent();
