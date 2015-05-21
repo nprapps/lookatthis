@@ -89,7 +89,15 @@ var AUDIO = (function() {
                     $playerWrapper.css('visibility', 'hidden');
                 }
             });
-            $fullscreenButton.css('opacity', 0);
+
+            // get rid of the image animation
+            if (isTouch) {
+                $imgWrapper.velocity('stop');
+                $imgWrapper.velocity('fadeOut', { duration: 2000 });
+            } else {
+                $fullscreenButton.css('opacity', 0);
+            }
+
             $nextPostWrapper.velocity('fadeIn', {
                 duration: 2000,
                 complete: function() {
@@ -108,7 +116,6 @@ var AUDIO = (function() {
 
             var $video = $slides.eq(currentIndex).find('video');
             var video = $video.get(0);
-
             video.pause();
         }
     }
@@ -167,7 +174,9 @@ var AUDIO = (function() {
                     video.play();
                 // handle mobile
                 } else {
+                    $imgWrapper.velocity('fadeIn', { duration: 2000 });
                     resize();
+                    initAnimation();
                 }
 
                 var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/prototype/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/prototype/whale.mp3';
