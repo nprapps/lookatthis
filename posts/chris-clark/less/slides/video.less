@@ -175,21 +175,30 @@
     margin: 0 auto;
     width: 100%;
     
+    
     .more-info {
             
-             p {
-                font-family: georgia;
-                font-size: 14px;
+        p {
+            font-family: gotham, helvetica, sans-serif;
+            font-size: 11px;
+            color: #fff;
+            text-align: left;
+            line-height: 1.2;
+            @media @screen-small-above {
+                font-size: 13px;
             }
+        }
             
-            h4 {
-                font-size: 18px;
-                text-transform: uppercase;
-                font-weight: bold;
-                margin: 0 0 5px 0;
-                padding: 0;
-                text-shadow: none;
-            }
+        h3 {
+            font-size: 18px;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            padding: 0;
+            text-shadow: none;
+            text-align: left;
+        }
     }
 
     .primary-column {
@@ -218,7 +227,6 @@
         h3 {
             margin: 0 0 10px 0;
             font-size: 18px;
-            text-transform: uppercase;
             font-weight: bold;
             text-align: left;
         }
@@ -237,7 +245,7 @@
 
         .share-panel {
             h4, h5, p {
-                font-family: "Gotham", helvetica, arial, sans-serif;
+                
                 text-shadow: none;
                 text-align: left;
                 max-width: 100%;
@@ -467,18 +475,16 @@
         font-family: gotham, helvetica, sans-serif;
 
         h6 {
-            font-size: 16px;
+            font-size: 18px;
             margin: 10px 0;
             font-weight: bold;
-            text-transform: uppercase;
             color: #eee;
             text-align: left;
         }
         p {
             font-family: gotham, helvetica, sans-serif;
             font-size: 11px;
-            color: #ccc;
-            text-shadow: none;
+            color: #fff;
             text-align: left;
             line-height: 1.2;
             @media @screen-small-above {
