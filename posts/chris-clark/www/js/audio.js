@@ -8,7 +8,7 @@ var AUDIO = (function() {
     var completed = false;
 
     var setUpPlayer = function() {
-        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/whale.mp3';
+        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/whales/assets/whale.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/whale.mp3';
 
         $player.jPlayer('setMedia', {
             mp3: mp3FilePath
@@ -18,7 +18,7 @@ var AUDIO = (function() {
     }
 
     var switchAudio = function() {
-        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/chris-clark/assets/audio7.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/audio7.mp3';
+        var mp3FilePath = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/whales/assets/audio7.mp3' : 'http://assets.apps.npr.org/lookatthis/chris-clark/audio7.mp3';
 
         $player.jPlayer('setMedia', {
             mp3: mp3FilePath
