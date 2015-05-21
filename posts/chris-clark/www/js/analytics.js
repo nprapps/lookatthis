@@ -201,6 +201,9 @@ var ANALYTICS = (function () {
             usedKeyboardNavigation = true;
         }
     }
+    var fiveSecondsComplete =  function() {
+        trackEvent('audio-five-seconds', null, null, currentTimeTest);
+    }
 
     var completeTwentyFivePercent =  function() {
         trackEvent('completion', '0.25', null, currentTimeTest);
@@ -280,6 +283,7 @@ var ANALYTICS = (function () {
         'actOnFeaturedFacebook': actOnFeaturedFacebook,
         'copySummary': copySummary,
         'useKeyboardNavigation': useKeyboardNavigation,
+        'fiveSecondsComplete': fiveSecondsComplete,
         'completeTwentyFivePercent': completeTwentyFivePercent,
         'completeFiftyPercent': completeFiftyPercent,
         'completeSeventyFivePercent': completeSeventyFivePercent,
