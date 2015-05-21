@@ -183,6 +183,11 @@
     
     
     .more-info {
+        
+        @media @screen-medium-above {
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
             
         p {
             font-family: gotham, helvetica, sans-serif;
@@ -193,6 +198,10 @@
             @media @screen-small-above {
                 font-size: 13px;
             }
+            @media @screen-medium-above {
+                font-size: 16px;
+                line-height: 1.5;
+            }
         }
             
         h3 {
@@ -202,7 +211,7 @@
             font-weight: bold;
             margin: 0 0 5px 0;
             padding: 0;
-            text-shadow: none;
+            text-shadow: 2px 2px 2px #111;
             text-align: left;
         }
     }
@@ -235,6 +244,8 @@
             font-size: 18px;
             font-weight: bold;
             text-align: left;
+            text-shadow: 2px 2px 2px #111;
+
         }
 
         p {
@@ -250,6 +261,10 @@
         }
 
         .share-panel {
+            
+            @media @screen-medium-above {
+                margin-bottom: 20px;
+            }
             h4, h5, p {
                 
                 text-shadow: none;
@@ -484,8 +499,10 @@
             font-size: 18px;
             margin: 10px 0;
             font-weight: bold;
-            color: #eee;
+            color: #fff;
             text-align: left;
+            text-shadow: 2px 2px 2px #111;
+
         }
         p {
             font-family: gotham, helvetica, sans-serif;
