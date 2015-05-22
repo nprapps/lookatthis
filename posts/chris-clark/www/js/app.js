@@ -101,9 +101,6 @@ var onPageLoad = function() {
     //     video.load();
     // }
     if (!isTouch) {
-        video.ontimeupdate = function() {
-            console.log(video.currentTime, video.buffered.end(0));
-        }
         video.load();
     }
 };
