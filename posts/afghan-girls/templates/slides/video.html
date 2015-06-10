@@ -1,0 +1,23 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_wrapper %}
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" data-anchor="{{ row.id }}" id="slide-{{ row.id }}">
+    {% block slide_body %}
+    <div class="full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                <div class="video-bg">
+                    <video>
+                        <source data-src="assets/{{ row.background_media }}">
+                    </video>
+                </div>
+                {% block slide_content %}
+                    <div class="bleed-box">
+                        {{ row.text1 }}
+                    </div>
+                {% endblock slide_content %}
+            </div><!--full-block-content-->
+        </div>
+    </div>
+    {% endblock slide_body %}
+</div><!--slide-->
+{% endblock slide_wrapper %}

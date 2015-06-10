@@ -121,6 +121,20 @@ var loadImages = function($slide) {
     }
 };
 
+var checkForVideo = function(slideIndex) {
+    var $video = $slides.eq(slideIndex).find('video');
+    if ($video.length > 0 && !isTouch) {
+        var sources = $video.find('source');
+        var video = $video.get(0);
+
+        if (!sources.attr('src')) {
+            sources.attr('src', sources.data('src'));
+            video.load();
+        }
+        video.play();
+    }
+}
+
 var showNavigation = function(index) {
     /*
     * Hide and show arrows based on slide index
@@ -146,6 +160,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
+    checkForVideo(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
