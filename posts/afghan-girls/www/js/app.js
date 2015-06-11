@@ -132,6 +132,11 @@ var checkForVideo = function(slideIndex) {
             video.load();
         }
         video.play();
+    } else if ($video.length <= 0 && !isTouch) {
+        var $allVideos = $slides.find('video');
+        $allVideos.each(function() {
+            $(this)[0].pause();
+        });
     }
 }
 
