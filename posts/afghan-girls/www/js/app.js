@@ -9,6 +9,13 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
+var $controlBtn;
+var $thisPlayerProgress;
+var $playedBar;
+var $subtitleWrapper;
+var $subtitles;
+var $ambientPlayer;
+var $narrativePlayer;
 
 var mobileSuffix;
 var w;
@@ -166,6 +173,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     */
     lazyLoad(toIndex);
     checkForVideo(toIndex);
+    AUDIO.checkForAudio(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
@@ -331,6 +339,14 @@ var resetArrows = function() {
     });
 }
 
+var onControlBtnClick = function(e) {
+    e.preventDefault();
+    AUDIO.toggleNarrativeAudio();
+    ANALYTICS.trackEvent('pause-button');
+
+    e.stopPropagation();
+}
+
 
 $(document).ready(function() {
     $document = $(document);
@@ -343,9 +359,13 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $controlBtn = $('.control-btn');
+    $narrativePlayer = $('#narrative-player');
+    $ambientPlayer = $('#ambient-player');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
+    $controlBtn.on('click', onControlBtnClick);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
@@ -378,6 +398,8 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
+    AUDIO.setUpNarrativePlayer();
+    AUDIO.setUpAmbientPlayer();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);

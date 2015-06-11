@@ -4,14 +4,15 @@
 * Fonts: To use FontAwesome, uncomment font-awesome, comment out the custom font,
 * and tweak the controlArrow CSS rules later in this file.
 */
-@import "./lib/lookatthis-font.less";
-//@import "./lib/font-awesome/font-awesome";
+// @import "./lib/lookatthis-font.less";
+@import "./lib/font-awesome/font-awesome";
 
 @import "./lib/prefixer";
 @import "./share-modal.less";
 @import "./slides/conclusion.less";
 @import "./slides/framed-text.less";
 @import "./slides/full-bleed.less";
+@import "./slides/narrative-audio.less";
 @import "./slides/next-post.less";
 @import "./slides/side-by-side.less";
 @import "./slides/start.less";
@@ -216,20 +217,20 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     .controlArrow.prev {
         left: 0;
 
-        &:before {
-            font-family: "lookatthis";
-            content: '\e801';
-            display: block;
-        }
+        // &:before {
+        //     font-family: "lookatthis";
+        //     content: '\e801';
+        //     display: block;
+        // }
 
         /* Uncomment to use FontAwesome */
-        /*
+
         &:before {
             font-family: "FontAwesome";
             content: '\f104';
             display: block;
         }
-        */
+
 
         @media @screen-small-above {
             margin-left: 10px;
@@ -240,20 +241,20 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         right: 0;
         padding: 0 0 0 5px;
 
-        &:before {
-            font-family: "lookatthis";
-            content: "\e800";
-            display: block;
-        }
+        // &:before {
+        //     font-family: "lookatthis";
+        //     content: "\e800";
+        //     display: block;
+        // }
 
         /* Uncomment to use FontAwesome */
-        /*
+
         &:before {
             font-family: "FontAwesome";
             content: "\f105";
             display: block;
         }
-        */
+
 
         @media @screen-small-above {
             margin-right: 10px;
