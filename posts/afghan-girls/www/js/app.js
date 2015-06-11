@@ -87,7 +87,7 @@ var lazyLoad = function(slideIndex) {
     mobileSuffix = '';
 
     if (w < 769) {
-        mobileSuffix = '-sq';
+        // mobileSuffix = '-sq';
     }
 
     for (var i = 0; i < slides.length; i++) {
@@ -130,15 +130,17 @@ var loadImages = function($slide) {
 
 var checkForVideo = function(slideIndex) {
     var $video = $slides.eq(slideIndex).find('video');
-    if ($video.length > 0 && !isTouch) {
+    if ($video.length > 0) {
         var sources = $video.find('source');
         var video = $video.get(0);
 
         if (!sources.attr('src')) {
-            sources.attr('src', sources.data('src'));
+            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
             video.load();
         }
-        video.play();
+        if (!isTouch) {
+            video.play();
+        }
     } else if ($video.length <= 0 && !isTouch) {
         var $allVideos = $slides.find('video');
         $allVideos.each(function() {

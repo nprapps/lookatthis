@@ -15,18 +15,16 @@ var AUDIO = (function() {
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
 
-            console.log(loopId, $currentSlide.attr('id'));
             if (loopId === $currentSlide.attr('id') && narrativeFilename !== null) {
                 $thisPlayerProgress = $currentSlide.find('.player-progress');
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
 
                 narrativeURL =  'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + narrativeFilename;
-                console.log(narrativeURL);
                 setNarrativeMedia();
             } else {
                 _pauseNarrativePlayer();
-                narrativeVisible = false;
+                // narrativeVisible = false;
             }
 
             // if (rowAnchor === slideAnchor && ambientFilename !== null && !NO_AUDIO) {
@@ -64,7 +62,7 @@ var AUDIO = (function() {
     var _startNarrativePlayer = function() {
         narrativeVisible = true;
         setTimeout(function() {
-            if (narrativeVisible) {
+            if (narrativeVisible === true) {
                 $narrativePlayer.jPlayer('play');
                 $controlBtn.removeClass('play').addClass('pause');
             }
