@@ -22,7 +22,7 @@ def less(static_path, filename):
 
 # render copytext
 def copy_js(slug):
-    copy = 'window.copy = ' + copytext.Copy('data/%s.xlsx' % slug).json()
+    copy = 'window.COPY = ' + copytext.Copy('data/%s.xlsx' % slug).json()
     return copy, 200, { 'content-type': 'application/javascript' }
 
 # Audio route to serve range headers for Safari.
