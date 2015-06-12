@@ -22,6 +22,7 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var completion = 0;
 var swipeTolerance = 40;

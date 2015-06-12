@@ -16,7 +16,7 @@ var AUDIO = (function() {
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
 
-            if (loopId === $currentSlide.attr('id') && narrativeFilename !== null) {
+            if (loopId === $currentSlide.attr('id') && narrativeFilename !== null && !NO_AUDIO) {
                 $thisPlayerProgress = $currentSlide.find('.player-progress');
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
@@ -28,7 +28,7 @@ var AUDIO = (function() {
                 // narrativeVisible = false;
             }
 
-            if (loopId === $currentSlide.attr('id') && ambientFilename !== null) {
+            if (loopId === $currentSlide.attr('id') && ambientFilename !== null && !NO_AUDIO) {
 
                 ambientURL = 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + ambientFilename;
 
