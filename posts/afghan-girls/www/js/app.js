@@ -147,10 +147,14 @@ var checkForVideo = function(slideIndex) {
         }
         if (!isTouch) {
             video.play();
+            if (NO_AUDIO) {
+                video.volume = 0;
+            }
         }
     } else if ($video.length <= 0 && !isTouch) {
         var $allVideos = $slides.find('video');
         $allVideos.each(function() {
+            $(this)[0].currentTime = 0;
             $(this)[0].pause();
         });
     }
