@@ -11,6 +11,7 @@ var AUDIO = (function() {
         for (var i = 0; i < COPY.content.length; i++) {
             var rowAnchor = COPY.content[i]['id'];
             var narrativeFilename = COPY.content[i]['narrative_audio'];
+            var ambientFilename = COPY.content[i]['ambient_audio']
 
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
@@ -27,19 +28,16 @@ var AUDIO = (function() {
                 // narrativeVisible = false;
             }
 
-            // if (rowAnchor === slideAnchor && ambientFilename !== null && !NO_AUDIO) {
+            if (loopId === $currentSlide.attr('id') && ambientFilename !== null) {
 
-            //     ambientURL = APP_CONFIG.S3_BASE_URL + '/assets/audio/' + ambientFilename;
+                ambientURL = 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + ambientFilename;
 
-            //     if (ambientFilename === 'STOP') {
-            //         $ambientPlayer.jPlayer('pause');
-            //         return;
-            //     }
-
-            //     if (ambientURL !== $ambientPlayer.data().jPlayer.status.src) {
-            //         setAmbientMedia(ambientURL);
-            //     }
-            // }
+                if (ambientFilename === 'STOP') {
+                    $ambientPlayer.jPlayer('pause');
+                    return;
+                }
+                setAmbientMedia(ambientURL);
+            }
         }
     }
 
