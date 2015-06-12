@@ -135,7 +135,13 @@ var checkForVideo = function(slideIndex) {
         var video = $video.get(0);
 
         if (!sources.attr('src')) {
-            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
+            if (isTouch) {
+                var slug = sources.data('src').split('.')[0];
+                var ext = sources.data('src').split('.')[1];
+                sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + slug + '-portrait.' + ext);
+            } else {
+                sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
+            }
             video.load();
         }
         if (!isTouch) {
