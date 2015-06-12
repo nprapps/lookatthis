@@ -127,24 +127,27 @@ var loadImages = function($slide) {
             $images.eq(i).attr('src', 'assets/' + image);
         }
     }
+
+    var $video = $slide.find('video');
+    var sources = $video.find('source');
+    var video = $video.get(0);
+    if ($video.length > 0 && !sources.attr('src')) {
+        if (isTouch) {
+            var slug = sources.data('src').split('.')[0];
+            var ext = sources.data('src').split('.')[1];
+            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + slug + '-portrait.' + ext);
+        } else {
+            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
+        }
+        video.load();
+    }
 };
 
 var checkForVideo = function(slideIndex) {
     var $video = $slides.eq(slideIndex).find('video');
-    if ($video.length > 0) {
-        var sources = $video.find('source');
-        var video = $video.get(0);
+    var video = $video.get(0);
 
-        if (!sources.attr('src')) {
-            if (isTouch) {
-                var slug = sources.data('src').split('.')[0];
-                var ext = sources.data('src').split('.')[1];
-                sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + slug + '-portrait.' + ext);
-            } else {
-                sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
-            }
-            video.load();
-        }
+    if ($video.length > 0) {
         if (!isTouch) {
             video.play();
             if (NO_AUDIO) {
