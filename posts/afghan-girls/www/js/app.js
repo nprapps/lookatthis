@@ -17,7 +17,6 @@ var $subtitleWrapper;
 var $subtitles;
 var $ambientPlayer;
 var $narrativePlayer;
-var $videos;
 
 var mobileSuffix;
 var w;
@@ -373,9 +372,8 @@ $(document).ready(function() {
         $body.on('touchmove', onTouchMove);
         $body.on('touchend', onTouchEnd);
     }
+    VIDEO.setUpVideo();
 
-    $videos.on('ended', VIDEO.onVideoEnded);
-    $videos.on('timeupdate', VIDEO.onVideoTimeupdate);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));

@@ -1,10 +1,22 @@
 var VIDEO = (function() {
-    var video = $('video').get(0);
-    var $thisPlayerProgress = $('.video .player-progress');
-    var $videoPlayedBar = $('.video .played');
+    var $video;
+    var video;
+    var $thisPlayerProgress;
+    var $videoPlayedBar
+
+    var setupVideo = function() {
+        $video = $('video');
+        video = $('video').get(0);
+        $thisPlayerProgress = $('.video .player-progress');
+        $videoPlayedBar = $('.video .played');
+
+        $video.on('ended', VIDEO.onVideoEnded);
+        $video.on('timeupdate', VIDEO.onVideoTimeupdate);
+    }
+
     var checkForVideo = function(index) {
-        var $video = $slides.eq(index).find('video');
-        if ($video.length > 0) {
+        var $thisSlideVideo = $slides.eq(index).find('video');
+        if ($thisSlideVideo.length > 0) {
             if (!isTouch) {
                 video.play();
                 $videoControlBtn.removeClass('play').addClass('pause');
@@ -13,7 +25,7 @@ var VIDEO = (function() {
                     video.volume = 0;
                 }
             }
-        } else if ($video.length <= 0 && !isTouch) {
+        } else if ($thisSlideVideo.length <= 0 && !isTouch) {
             $videos.each(function() {
                 $(this).get(0).currentTime = 0;
                 $(this).get(0).pause();
