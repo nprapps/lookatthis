@@ -372,8 +372,6 @@ $(document).ready(function() {
         $body.on('touchmove', onTouchMove);
         $body.on('touchend', onTouchEnd);
     }
-    VIDEO.setUpVideo();
-
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));
@@ -394,6 +392,7 @@ $(document).ready(function() {
     resize();
     AUDIO.setUpNarrativePlayer();
     AUDIO.setUpAmbientPlayer();
+    VIDEO.setupVideo();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);

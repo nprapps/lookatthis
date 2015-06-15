@@ -12,6 +12,7 @@ var VIDEO = (function() {
 
         $video.on('ended', VIDEO.onVideoEnded);
         $video.on('timeupdate', VIDEO.onVideoTimeupdate);
+        $thisPlayerProgress.on('click', onSeekBarClick);
     }
 
     var checkForVideo = function(index) {
@@ -44,7 +45,6 @@ var VIDEO = (function() {
     }
 
     var onVideoEnded = function() {
-        AUDIO.startAmbientAudio();
         $.deck('next');
     }
 
@@ -61,7 +61,15 @@ var VIDEO = (function() {
         }
     }
 
+    var onSeekBarClick = function(e) {
+        var duration = video.duration;
+        var percentage = e.offsetX / $(this).width();
+        var clickedPosition = duration * percentage;
+        video.currentTime = clickedPosition;
+    }
+
     return {
+        'setupVideo': setupVideo,
         'checkForVideo': checkForVideo,
         'toggleVideo': toggleVideo,
         'onVideoEnded': onVideoEnded,
