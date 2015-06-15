@@ -9,7 +9,8 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
-var $controlBtn;
+var $audioControlBtn
+var $videoControlBtn;
 var $thisPlayerProgress;
 var $playedBar;
 var $subtitleWrapper;
@@ -156,7 +157,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     */
     lazyLoad(toIndex);
     AUDIO.checkForAudio(toIndex);
-    VIDEO.toggleVideo(toIndex);
+    VIDEO.checkForVideo(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
@@ -322,11 +323,18 @@ var resetArrows = function() {
     });
 }
 
-var onControlBtnClick = function(e) {
+var onAudioControlBtnClick = function(e) {
     e.preventDefault();
     AUDIO.toggleNarrativeAudio();
-    ANALYTICS.trackEvent('pause-button');
+    ANALYTICS.trackEvent('audio-pause-button');
+    e.stopPropagation();
+}
 
+var onVideoControlBtnClick = function(e) {
+    var $this = $(this);
+    e.preventDefault();
+    VIDEO.toggleVideo($this);
+    ANALYTICS.trackEvent('video-pause-button');
     e.stopPropagation();
 }
 
@@ -342,14 +350,16 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
-    $controlBtn = $('.control-btn');
+    $audioControlBtn = $('.narrative-audio .control-btn');
+    $videoControlBtn = $('.video .control-btn');
     $narrativePlayer = $('#narrative-player');
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $controlBtn.on('click', onControlBtnClick);
+    $audioControlBtn.on('click', onAudioControlBtnClick);
+    $videoControlBtn.on('click', onVideoControlBtnClick);
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
 
@@ -365,6 +375,7 @@ $(document).ready(function() {
     }
 
     $videos.on('ended', VIDEO.onVideoEnded);
+    $videos.on('timeupdate', VIDEO.onVideoTimeupdate);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));

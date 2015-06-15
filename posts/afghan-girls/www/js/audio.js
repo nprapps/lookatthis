@@ -24,7 +24,7 @@ var AUDIO = (function() {
                 narrativeURL =  'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + narrativeFilename;
                 setNarrativeMedia();
             } else {
-                _pauseNarrativePlayer();
+                // _pauseNarrativePlayer();
                 // narrativeVisible = false;
             }
 

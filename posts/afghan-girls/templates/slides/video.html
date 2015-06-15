@@ -9,6 +9,15 @@
                     <video>
                         <source src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/{{ row.background_media }}">
                     </video>
+                    <div class="controls">
+                        <div class="control-group">
+                            <a href="#" class="play control-btn"></a>
+                            <div class="player-progress">
+                                <div class="total"></div>
+                                <div class="played"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {% block slide_content %}
                     <div class="bleed-box">
