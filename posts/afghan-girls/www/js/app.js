@@ -16,6 +16,7 @@ var $subtitleWrapper;
 var $subtitles;
 var $ambientPlayer;
 var $narrativePlayer;
+var $videos;
 
 var mobileSuffix;
 var w;
@@ -127,41 +128,7 @@ var loadImages = function($slide) {
             $images.eq(i).attr('src', 'assets/' + image);
         }
     }
-
-    var $video = $slide.find('video');
-    var sources = $video.find('source');
-    var video = $video.get(0);
-    if ($video.length > 0 && !sources.attr('src')) {
-        if (isTouch) {
-            var slug = sources.data('src').split('.')[0];
-            var ext = sources.data('src').split('.')[1];
-            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + slug + '-portrait.' + ext);
-        } else {
-            sources.attr('src', 'http://assets.apps.npr.org/lookatthis/afghan-girls/' + sources.data('src'));
-        }
-        video.load();
-    }
 };
-
-var checkForVideo = function(slideIndex) {
-    var $video = $slides.eq(slideIndex).find('video');
-    var video = $video.get(0);
-
-    if ($video.length > 0) {
-        if (!isTouch) {
-            video.play();
-            if (NO_AUDIO) {
-                video.volume = 0;
-            }
-        }
-    } else if ($video.length <= 0 && !isTouch) {
-        var $allVideos = $slides.find('video');
-        $allVideos.each(function() {
-            $(this)[0].currentTime = 0;
-            $(this)[0].pause();
-        });
-    }
-}
 
 var showNavigation = function(index) {
     /*
@@ -188,8 +155,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    checkForVideo(toIndex);
     AUDIO.checkForAudio(toIndex);
+    VIDEO.toggleVideo(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
@@ -378,11 +345,11 @@ $(document).ready(function() {
     $controlBtn = $('.control-btn');
     $narrativePlayer = $('#narrative-player');
     $ambientPlayer = $('#ambient-player');
+    $videos = $('video');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $controlBtn.on('click', onControlBtnClick);
-
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
 
@@ -396,6 +363,8 @@ $(document).ready(function() {
         $body.on('touchmove', onTouchMove);
         $body.on('touchend', onTouchEnd);
     }
+
+    $videos.on('ended', VIDEO.onVideoEnded);
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
     var clippy = new ZeroClipboard($(".clippy"));

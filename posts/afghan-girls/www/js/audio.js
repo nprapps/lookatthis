@@ -162,6 +162,11 @@ var AUDIO = (function() {
         }).jPlayer('pause');
     }
 
+    var startAmbientAudio = function() {
+        ambientURL = 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/prototype/school-ambi.mp3'
+        setAmbientMedia(ambientURL);
+    }
+
     var toggleAllAudio = function() {
         if (isHidden()) {
             if (narrativeVisible) {
@@ -186,5 +191,6 @@ var AUDIO = (function() {
         'setAmbientMedia': setAmbientMedia,
         'fakeAmbientPlayer': fakeAmbientPlayer,
         'fakeNarrativePlayer': fakeNarrativePlayer,
+        'startAmbientAudio': startAmbientAudio
     }
 }());
