@@ -511,6 +511,18 @@ img {
 
 //video controls
 &.video-bg {
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        background-color: #fff;
+        color: #000;
+
+        &.play{padding: 6px 0 0 13px;}
+        &.pause{padding: 6px 0 0 12px;}
+        &.pause:before {font-size: 14px;}
+        &.play:before {font-size: 14px;}
+    }
+    
     .player-progress {
         width: 100%;
         position: absolute;
