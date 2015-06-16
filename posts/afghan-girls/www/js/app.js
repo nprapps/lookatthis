@@ -362,7 +362,6 @@ var onVideoControlBtnClick = function(e) {
     var $this = $(this);
     e.preventDefault();
     VIDEO.toggleVideo($this);
-    ANALYTICS.trackEvent('video-pause-button');
     e.stopPropagation();
 }
 

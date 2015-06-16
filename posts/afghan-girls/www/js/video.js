@@ -38,14 +38,17 @@ var VIDEO = (function() {
         if (video.paused) {
             video.play();
             $this.removeClass('play').addClass('pause');
+            ANALYTICS.trackEvent('resume-video');
         } else {
             video.pause();
             $this.removeClass('pause').addClass('play');
+            ANALYTICS.trackEvent('pause-video');
         }
     }
 
     var onVideoEnded = function() {
         $.deck('next');
+        ANALYTICS.trackEvent('video-ended');
     }
 
     var onVideoTimeupdate = function() {
@@ -66,6 +69,7 @@ var VIDEO = (function() {
         var percentage = e.offsetX / $(this).width();
         var clickedPosition = duration * percentage;
         video.currentTime = clickedPosition;
+        ANALYTICS.trackEvent('video-seek');
     }
 
     return {
