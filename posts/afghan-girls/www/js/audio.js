@@ -21,7 +21,7 @@ var AUDIO = (function() {
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
 
-                narrativeURL =  'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + narrativeFilename;
+                narrativeURL =  ASSETS_PATH + narrativeFilename;
                 setNarrativeMedia();
             } else {
                 if (!$narrativePlayer.data().jPlayer.status.paused) {
@@ -32,7 +32,7 @@ var AUDIO = (function() {
 
             if (loopId === $currentSlide.attr('id') && ambientFilename !== null && !NO_AUDIO) {
 
-                ambientURL = 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/' + ambientFilename;
+                ambientURL = ASSETS_PATH + ambientFilename;
 
                 if (ambientFilename === 'STOP') {
                     $ambientPlayer.jPlayer('pause');
@@ -92,7 +92,7 @@ var AUDIO = (function() {
 
     var fakeNarrativePlayer = function() {
         $narrativePlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/assets/' + 'prototype/hadia-president.mp3'
+            mp3: ASSETS_PATH + 'prototype/hadia-president.mp3'
         }).jPlayer('pause');
     }
 
@@ -160,7 +160,7 @@ var AUDIO = (function() {
 
     var fakeAmbientPlayer = function() {
         $ambientPlayer.jPlayer('setMedia', {
-            mp3: APP_CONFIG.S3_BASE_URL + '/assets/audio/' + 'doctor_ambient.mp3'
+            mp3: ASSETS_PATH + 'prototype/school-ambi.mp3'
         }).jPlayer('pause');
     }
 

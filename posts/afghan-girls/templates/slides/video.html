@@ -7,7 +7,11 @@
             <div class="full-block-content">
                 <div class="video-bg">
                     <video>
-                        <source src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/afghan-girls/{{ row.background_media }}">
+                        {% if DEPLOYMENT_TARGET %}
+                            <source src="{{ S3_BASE_URL }}/posts/{{ DEPLOY_SLUG }}/assets/{{ row.background_media }}">
+                        {% else %}
+                            <source src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/{{ DEPLOY_SLUG }}/{{ row.background_media }}">
+                        {% endif %}
                     </video>
                     <div class="controls">
                         <div class="control-group">
