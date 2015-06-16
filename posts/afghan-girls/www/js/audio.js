@@ -187,6 +187,6 @@ var AUDIO = (function() {
         'setupNarrativePlayer': setupNarrativePlayer,
         'setAmbientMedia': setAmbientMedia,
         'fakeAmbientPlayer': fakeAmbientPlayer,
-        'fakeNarrativePlayer': fakeNarrativePlayer,
+        'fakeNarrativePlayer': fakeNarrativePlayer
     }
 }());
