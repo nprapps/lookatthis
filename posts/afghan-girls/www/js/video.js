@@ -1,18 +1,18 @@
 var VIDEO = (function() {
     var $video;
     var video;
-    var $thisPlayerProgress;
+    var $videoPlayerProgress;
     var $videoPlayedBar;
 
     var setupVideo = function() {
         $video = $('video');
         video = $('video').get(0);
-        $thisPlayerProgress = $('.video .player-progress');
+        $videoPlayerProgress = $('.video .player-progress');
         $videoPlayedBar = $('.video .played');
 
         $video.on('ended', VIDEO.onVideoEnded);
         $video.on('timeupdate', VIDEO.onVideoTimeupdate);
-        $thisPlayerProgress.on('click', onSeekBarClick);
+        $videoPlayerProgress.on('click', onSeekBarClick);
     }
 
     var checkForVideo = function(index) {
@@ -54,7 +54,7 @@ var VIDEO = (function() {
         var percentage = position / duration;
 
         if (position > 0) {
-            $videoPlayedBar.css('width', $thisPlayerProgress.width() *percentage + 'px');
+            $videoPlayedBar.css('width', $videoPlayerProgress.width() *percentage + 'px');
             if (percentage === 1) {
                 $videoControlBtn.removeClass('pause').addClass('play');
             }
