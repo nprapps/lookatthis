@@ -2,7 +2,7 @@ var VIDEO = (function() {
     var $video;
     var video;
     var $thisPlayerProgress;
-    var $videoPlayedBar
+    var $videoPlayedBar;
 
     var setupVideo = function() {
         $video = $('video');

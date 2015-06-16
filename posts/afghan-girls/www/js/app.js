@@ -24,6 +24,7 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+var SKIP_INTRO = (window.location.search.indexOf('skipintro') >= 0);
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -169,7 +170,34 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
-    $.deck('next');
+    if (SKIP_INTRO) {
+        $.deck('go', 2);
+        var newURL = removeURLParameter(window.location.href, 'skipintro');
+        window.history.pushState('', '', newURL);
+    } else {
+        $.deck('next');
+    }
+}
+
+var removeURLParameter = function(url, parameter) {
+    //prefer to use l.search if you have a location/link object
+    var urlparts= url.split('?');
+    if (urlparts.length>=2) {
+
+        var prefix= encodeURIComponent(parameter);
+        var pars= urlparts[1].split(/[&;]/g);
+        //reverse iteration as may be destructive
+        for (var i= pars.length; i-- > 0;) {
+            //idiom for string.startsWith
+            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                pars.splice(i, 1);
+            }
+        }
+        url= urlparts[0]+'?'+pars.join('&');
+        return url;
+    } else {
+        return url;
+    }
 }
 
 var onDocumentKeyDown = function(e) {
