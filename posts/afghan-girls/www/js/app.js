@@ -418,8 +418,8 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
-    AUDIO.setUpNarrativePlayer();
-    AUDIO.setUpAmbientPlayer();
+    AUDIO.setupNarrativePlayer();
+    AUDIO.setupAmbientPlayer();
     VIDEO.setupVideo();
 
     // Redraw slides if the window resizes

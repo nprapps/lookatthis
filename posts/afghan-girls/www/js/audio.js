@@ -43,7 +43,7 @@ var AUDIO = (function() {
         }
     }
 
-    var setUpNarrativePlayer = function() {
+    var setupNarrativePlayer = function() {
         $narrativePlayer.jPlayer({
             swfPath: 'js/lib',
             loop: false,
@@ -145,7 +145,7 @@ var AUDIO = (function() {
         }
     }
 
-    var setUpAmbientPlayer = function() {
+    var setupAmbientPlayer = function() {
         $ambientPlayer.jPlayer({
             swfPath: 'js/lib',
             supplied: 'mp3',
@@ -183,8 +183,8 @@ var AUDIO = (function() {
         'checkForAudio': checkForAudio,
         'toggleNarrativeAudio': toggleNarrativeAudio,
         'toggleAllAudio': toggleAllAudio,
-        'setUpAmbientPlayer': setUpAmbientPlayer,
-        'setUpNarrativePlayer': setUpNarrativePlayer,
+        'setupAmbientPlayer': setupAmbientPlayer,
+        'setupNarrativePlayer': setupNarrativePlayer,
         'setAmbientMedia': setAmbientMedia,
         'fakeAmbientPlayer': fakeAmbientPlayer,
         'fakeNarrativePlayer': fakeNarrativePlayer,

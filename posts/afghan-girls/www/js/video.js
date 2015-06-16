@@ -47,6 +47,9 @@ var VIDEO = (function() {
     }
 
     var onVideoEnded = function() {
+        if (isTouch) {
+            video.webkitExitFullscreen();
+        }
         $.deck('next');
         ANALYTICS.trackEvent('video-ended');
     }
