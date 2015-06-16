@@ -506,4 +506,46 @@ img {
             }
         }
     }
+
+}
+
+//video controls
+&.video-bg {
+    .player-progress {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 50px;
+        height: 35px;
+        max-width: 530px;
+        
+        &:hover {
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .total {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .total {
+            background-color: transparent;
+        }
+        .played {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            background-color: #e0e0e0;
+            width: 0;
+            height: 4px;
+            z-index: 1;
+            .transition(width 0.5s linear);
+
+            &.no-transition {
+                .transition(none);
+            }
+        }
+    }
 }
