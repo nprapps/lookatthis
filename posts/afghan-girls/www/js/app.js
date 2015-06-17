@@ -183,15 +183,16 @@ var onStartCardButtonClick = function() {
 var removeURLParameter = function(url, parameter) {
     var urlParts= url.split('?');
     if (urlParts.length >= 2) {
-
         var prefix = encodeURIComponent(parameter);
         var params = urlParts[1].split(/[&;]/g);
+
         for (var i = params.length; i-- > 0;) {
             if (params[i].lastIndexOf(prefix, 0) !== -1) {
                 params.splice(i, 1);
             }
         }
-        url = urlparts[0];
+
+        url = urlParts[0];
         if (params.length > 0) {
             url = url + '?' + params.join('&');
         }
