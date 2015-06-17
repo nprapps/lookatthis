@@ -159,6 +159,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     AUDIO.checkForAudio(toIndex);
     VIDEO.checkForVideo(toIndex);
+    FILMSTRIP.initFilmstrip(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
