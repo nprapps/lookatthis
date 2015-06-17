@@ -231,11 +231,11 @@ that use the API provided by core.
         var topToBottom = yDistance > tolerance && listenToVertical;
         var bottomToTop = yDistance < -tolerance && listenToVertical;
 
-        if (leftToRight || topToBottom) {
+        if ((leftToRight || topToBottom) && !$('.deck-current').hasClass('video')) {
           $.deck('prev');
           startTouch = undefined;
         }
-        else if (rightToLeft || bottomToTop) {
+        else if ((rightToLeft || bottomToTop) && !$('.deck-current').hasClass('video')) {
           $.deck('next');
           startTouch = undefined;
         }

@@ -295,13 +295,14 @@ var onTouchMove = function(e) {
     /*
      * Track finger swipe
      */
-
+    if ($('.deck-current').hasClass('video')) {
+        return false;
+    }
 
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (!startTouch || touch.identifier !== startTouch.identifier) {
             return true;
         }
-
 
         var yDistance = touch.screenY - startTouch.screenY;
         var xDistance = touch.screenX - startTouch.screenX;
