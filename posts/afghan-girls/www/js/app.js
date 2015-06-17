@@ -219,7 +219,7 @@ var onSlideClick = function(e) {
     /*
     * Advance on slide tap on touch devices
     */
-    if (isTouch && !$(e.target).is('button')) {
+    if (isTouch && !$(e.target).is('button') && !$('.deck-current').hasClass('video')) {
         lastSlideExitEvent = 'exit-tap';
         $.deck('next');
     }
