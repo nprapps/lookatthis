@@ -181,20 +181,20 @@ var onStartCardButtonClick = function() {
 }
 
 var removeURLParameter = function(url, parameter) {
-    //prefer to use l.search if you have a location/link object
-    var urlparts= url.split('?');
-    if (urlparts.length>=2) {
+    var urlParts= url.split('?');
+    if (urlParts.length >= 2) {
 
-        var prefix= encodeURIComponent(parameter);
-        var pars= urlparts[1].split(/[&;]/g);
-        //reverse iteration as may be destructive
-        for (var i= pars.length; i-- > 0;) {
-            //idiom for string.startsWith
-            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
-                pars.splice(i, 1);
+        var prefix = encodeURIComponent(parameter);
+        var params = urlParts[1].split(/[&;]/g);
+        for (var i = params.length; i-- > 0;) {
+            if (params[i].lastIndexOf(prefix, 0) !== -1) {
+                params.splice(i, 1);
             }
         }
-        url= urlparts[0]+'?'+pars.join('&');
+        url = urlparts[0];
+        if (params.length > 0) {
+            url = url + '?' + params.join('&');
+        }
         return url;
     } else {
         return url;
