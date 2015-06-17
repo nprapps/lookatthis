@@ -6,11 +6,11 @@
         <div class="full-block-cell">
             <div class="full-block-content">
                 <div class="video-bg">
-                    <video>
+                    <video poster="assets/{{ row.foreground_media }}">
                         {% if DEPLOYMENT_TARGET %}
-                            <source src="{{ S3_BASE_URL }}/posts/{{ DEPLOY_SLUG }}/assets/{{ row.background_media }}">
+                            <source src="{{ S3_BASE_URL }}/posts/{{ DEPLOY_SLUG }}/assets/{{ row.video }}">
                         {% else %}
-                            <source src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/{{ DEPLOY_SLUG }}/{{ row.background_media }}">
+                            <source src="http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/{{ DEPLOY_SLUG }}/{{ row.video }}">
                         {% endif %}
                     </video>
                     <div class="controls">
@@ -32,5 +32,8 @@
         </div>
     </div>
     {% endblock slide_body %}
+    <div class="imgLiquid">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
+    </div>
 </div><!--slide-->
 {% endblock slide_wrapper %}
