@@ -1,3 +1,22 @@
+.touch .full-block-cell {
+    background: rgba(0,0,0,0.5); 
+    
+    .bleed-box p {
+        font-size: 11px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    }
+}
+
+.no-touch .full-block-cell {
+    .bleed-box p {display: none;}
+}
+
 .video-bg > video {
     width: 100%;
     height: auto;
@@ -24,8 +43,12 @@
     object-fit: cover;
 }
 
-.touch .video-bg .controls {
-    display: none;
+.touch .video-bg {
+    padding: 5px 5px 0 5px;
+    background-color: #fff;
+    
+    .controls {display: none;}
+    
 }
 
 .video-bg .controls {
