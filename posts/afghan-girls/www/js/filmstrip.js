@@ -34,10 +34,7 @@ var FILMSTRIP = (function() {
                 if (loadedImages.length === length) {
                     // ensure the images are in order
                     loadedImages.sort(_dynamicSort('src'));
-
-                    setTimeout(function() {
-                        _animateFilmstrip(loadedImages);
-                    }, 500);
+                    _animateFilmstrip(loadedImages);
                 }
             }
             img.src = fullImagePath;
