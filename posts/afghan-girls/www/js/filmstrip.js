@@ -1,5 +1,7 @@
 var FILMSTRIP = (function() {
     var $currentSlide = null;
+    var animating = false;
+
 
     var initFilmstrip = function(slideIndex) {
         $currentSlide = $slides.eq(slideIndex);
@@ -43,15 +45,18 @@ var FILMSTRIP = (function() {
 
     var _animateFilmstrip = function(loadedImages) {
         var $filmstripContainer = $currentSlide.find('.imgLiquid');
-        var imageCounter = 0;
-
-        var animation = setInterval(function() {
-            $filmstripContainer.css('background-image', 'url(' + loadedImages[imageCounter].src + ')');
-            imageCounter = imageCounter + 1;
-            if (imageCounter === loadedImages.length) {
-                clearInterval(animation);
-            }
-        }, 200);
+        if (!animating) {
+            var imageCounter = 0;
+            animating = true;
+            var animation = setInterval(function() {
+                $filmstripContainer.css('background-image', 'url(' + loadedImages[imageCounter].src + ')');
+                imageCounter = imageCounter + 1;
+                if (imageCounter === loadedImages.length) {
+                    clearInterval(animation);
+                    animating = false;
+                }
+            }, 200);
+        }
     }
 
     var _dynamicSort = function(property) {
