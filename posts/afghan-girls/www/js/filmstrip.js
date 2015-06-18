@@ -26,7 +26,7 @@ var FILMSTRIP = (function() {
                 var numPrefix = '0';
             }
 
-            var fullImagePath = imageSlug + numPrefix + i.toString() + '.JPG';
+            var fullImagePath = imageSlug + numPrefix + i.toString() + '.jpg';
             var img = new Image();
             img.onload = function() {
                 loadedImages.push(this);
