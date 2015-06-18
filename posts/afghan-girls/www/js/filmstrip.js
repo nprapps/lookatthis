@@ -44,8 +44,8 @@ var FILMSTRIP = (function() {
     }
 
     var _animateFilmstrip = function(loadedImages) {
-        var $filmstripContainer = $currentSlide.find('.imgLiquid');
         if (!animating) {
+            var $filmstripContainer = $currentSlide.find('.imgLiquid');
             var imageCounter = 0;
             animating = true;
             var animation = setInterval(function() {
