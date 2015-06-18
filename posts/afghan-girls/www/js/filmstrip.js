@@ -31,11 +31,13 @@ var FILMSTRIP = (function() {
             img.onload = function() {
                 loadedImages.push(this);
 
-                // when all the images have loaded, start the animation
                 if (loadedImages.length === length) {
+                    // ensure the images are in order
+                    loadedImages.sort(_dynamicSort('src'));
+
                     setTimeout(function() {
                         _animateFilmstrip(loadedImages);
-                    }, 1000);
+                    }, 500);
                 }
             }
             img.src = fullImagePath;
@@ -46,14 +48,24 @@ var FILMSTRIP = (function() {
         var $filmstripContainer = $currentSlide.find('.imgLiquid');
         var imageCounter = 0;
 
-        setInterval(function() {
+        var animation = setInterval(function() {
             $filmstripContainer.css('background-image', 'url(' + loadedImages[imageCounter].src + ')');
             imageCounter = imageCounter + 1;
-
-            if (imageCounter > loadedImages.length) {
-                clearInterval();
+            if (imageCounter === loadedImages.length) {
+                clearInterval(animation);
             }
         }, 200);
+    }
+
+    var _dynamicSort = function(property) {
+        /*
+        * Sorts an array of objects by a given property
+        */
+        var sortOrder = 1;
+        return function (a,b) {
+            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+            return result * sortOrder;
+        }
     }
 
     return {
