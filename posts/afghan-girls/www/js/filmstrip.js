@@ -2,7 +2,6 @@ var FILMSTRIP = (function() {
     var $currentSlide = null;
     var animating = false;
 
-
     var initFilmstrip = function(slideIndex) {
         $currentSlide = $slides.eq(slideIndex);
         for (var i = 0; i < COPY.content.length; i++) {
@@ -64,7 +63,7 @@ var FILMSTRIP = (function() {
         * Sorts an array of objects by a given property
         */
         var sortOrder = 1;
-        return function (a,b) {
+        return function (a, b) {
             var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
             return result * sortOrder;
         }
