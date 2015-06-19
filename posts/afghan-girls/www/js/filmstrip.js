@@ -1,9 +1,12 @@
 var FILMSTRIP = (function() {
     var $currentSlide = null;
+    var $filmstripContainer = null;
     var animating = false;
 
     var initFilmstrip = function(slideIndex) {
         $currentSlide = $slides.eq(slideIndex);
+        $filmstripContainer = $currentSlide.find('.imgLiquid');
+
         for (var i = 0; i < COPY.content.length; i++) {
             var rowAnchor = COPY.content[i]['id'];
             var loopId = 'slide-' + rowAnchor;
@@ -18,7 +21,6 @@ var FILMSTRIP = (function() {
     }
 
     var _loadImages = function(folder, length) {
-        var loadedImages = [];
         var imageSlug = 'assets/sequences/' + folder + '/' + folder;
         for (var i = 1; i <= length; i++) {
             if (i < 10) {
@@ -28,44 +30,26 @@ var FILMSTRIP = (function() {
             }
 
             var fullImagePath = imageSlug + numPrefix + i.toString() + '.jpg';
-            var img = new Image();
-            img.onload = function() {
-                loadedImages.push(this);
-
-                if (loadedImages.length === length) {
-                    // ensure the images are in order
-                    loadedImages.sort(_dynamicSort('src'));
-                    _animateFilmstrip(loadedImages);
-                }
-            }
-            img.src = fullImagePath;
+            $filmstripContainer.append('<img class="frame" src="' + fullImagePath + '">');
+            console.log($filmstripContainer);
         }
+
+        _animateFilmstrip();
     }
 
-    var _animateFilmstrip = function(loadedImages) {
+    var _animateFilmstrip = function() {
         if (!animating) {
-            var $filmstripContainer = $currentSlide.find('.imgLiquid');
             var imageCounter = 0;
+            var $frames = $filmstripContainer.find('.frame');
             animating = true;
             var animation = setInterval(function() {
-                $filmstripContainer.css('background-image', 'url(' + loadedImages[imageCounter].src + ')');
+                $frames.eq(imageCounter).css('opacity', 1);
                 imageCounter = imageCounter + 1;
-                if (imageCounter === loadedImages.length) {
+                if (imageCounter === $frames.length) {
                     clearInterval(animation);
                     animating = false;
                 }
             }, 200);
-        }
-    }
-
-    var _dynamicSort = function(property) {
-        /*
-        * Sorts an array of objects by a given property
-        */
-        var sortOrder = 1;
-        return function (a, b) {
-            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-            return result * sortOrder;
         }
     }
 
