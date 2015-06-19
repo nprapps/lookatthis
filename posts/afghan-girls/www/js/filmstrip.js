@@ -43,7 +43,6 @@ var FILMSTRIP = (function() {
         var loadChecker = setInterval(function() {
             $frames.each(function() {
                 if (!$(this).attr('loaded')) {
-                    console.log('not ready');
                     return false;
                 } else {
                     _animateFilmstrip();
