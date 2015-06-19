@@ -105,7 +105,7 @@ var loadImages = function($slide) {
     * Sets the background image on a div for our fancy slides.
     */
     var $container = $slide.find('.imgLiquid');
-    var bgimg = $container.children('img');
+    var bgimg = $container.children('img.liquid');
 
     if (bgimg.data('bgimage')) {
         var image_filename = bgimg.data('bgimage').split('.')[0];
@@ -159,6 +159,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     AUDIO.checkForAudio(toIndex);
     VIDEO.checkForVideo(toIndex);
+    FILMSTRIP.clearFilmstrip(fromIndex);
     FILMSTRIP.initFilmstrip(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
