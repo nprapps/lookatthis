@@ -17,6 +17,7 @@ var $subtitleWrapper;
 var $subtitles;
 var $ambientPlayer;
 var $narrativePlayer;
+var $skipIntroBtn;
 
 var mobileSuffix;
 var w;
@@ -369,6 +370,12 @@ var onVideoControlBtnClick = function(e) {
     e.stopPropagation();
 }
 
+var onSkipIntroBtnClick = function(e) {
+    e.preventDefault();
+    $.deck('next');
+    e.stopPropagation();
+}
+
 
 $(document).ready(function() {
     $document = $(document);
@@ -386,6 +393,7 @@ $(document).ready(function() {
     $narrativePlayer = $('#narrative-player');
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
+    $skipIntroBtn = $('.skip-intro');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -393,6 +401,7 @@ $(document).ready(function() {
     $videoControlBtn.on('click', onVideoControlBtnClick);
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
+    $skipIntroBtn.on('click', onSkipIntroBtnClick);
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
