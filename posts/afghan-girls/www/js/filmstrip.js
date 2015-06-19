@@ -35,21 +35,11 @@ var FILMSTRIP = (function() {
                 }
 
                 var fullImagePath = imageSlug + numPrefix + i.toString() + '.jpg';
-                $filmstripContainer.append('<img class="frame" src="' + fullImagePath + '" onload="FILMSTRIP.onFrameLoad(this)">');
+                $filmstripContainer.append('<img class="frame" src="' + fullImagePath + '">');
             }
         }
-        $frames = $filmstripContainer.find('.frame');
 
-        var loadChecker = setInterval(function() {
-            $frames.each(function() {
-                if (!$(this).attr('loaded')) {
-                    return false;
-                } else {
-                    _animateFilmstrip();
-                    clearInterval(loadChecker);
-                }
-            });
-        }, 100);
+        $filmstripContainer.imagesLoaded(_animateFilmstrip);
     }
 
     var _animateFilmstrip = function() {
@@ -74,13 +64,8 @@ var FILMSTRIP = (function() {
         $slides.eq(index).find('.imgLiquid .frame').css('opacity', 0);
     }
 
-    var onFrameLoad = function(thisImage) {
-        $(thisImage).attr('loaded', 'true');
-    }
-
     return {
         'initFilmstrip': initFilmstrip,
-        'clearFilmstrip': clearFilmstrip,
-        'onFrameLoad': onFrameLoad
+        'clearFilmstrip': clearFilmstrip
     }
 }());
