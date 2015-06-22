@@ -9,6 +9,10 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var $audioPlayer;
+var $playerWrapper;
+var $playerButtons;
+var $play;
+var $pause;
 var isTouch = Modernizr.touch;
 
 var mobileSuffix;
@@ -162,6 +166,11 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
+    $('.player-wrapper').css({
+        opacity: 1,
+        visibility: 'visible'
+    })
+
     $.deck('next');
 }
 
@@ -328,9 +337,14 @@ $(document).ready(function() {
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
     $audioPlayer = $('#audio-player');
+    $playerWrapper = $('.player-wrapper');
+    $playerButtons = $('.player-button');
+    $play = $('.play');
+    $pause = $('.pause');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
+    $playerButtons.on('click', AUDIO.toggleAudio);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
