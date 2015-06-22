@@ -8,6 +8,7 @@ var $arrows;
 var $nextArrow;
 var $previousArrow;
 var $startCardButton;
+var $audioPlayer;
 var isTouch = Modernizr.touch;
 
 var mobileSuffix;
@@ -15,6 +16,8 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -148,6 +151,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    AUDIO.checkForAudio(toIndex);
     document.activeElement.blur();
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
@@ -323,6 +327,7 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
+    $audioPlayer = $('#audio-player');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -358,6 +363,7 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
+    AUDIO.setupAudio();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
