@@ -16,6 +16,7 @@ var AUDIO = (function() {
                 $controlBtn = $currentSlide.find('.control-btn');
 
                 _playAudio();
+                break;
             } else {
                 _pauseAudio();
             }
