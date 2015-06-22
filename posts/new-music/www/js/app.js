@@ -9,12 +9,6 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var $audioPlayer;
-var $playerWrapper;
-var $playerButtons;
-var $play;
-var $pause;
-var $artist;
-var $title;
 var isTouch = Modernizr.touch;
 
 var mobileSuffix;
@@ -327,6 +321,13 @@ var resetArrows = function() {
 }
 
 
+var onControlBtnClick = function(e) {
+    e.preventDefault();
+    AUDIO.toggleAudio();
+    ANALYTICS.trackEvent('pause-button');
+    e.stopPropagation();
+}
+
 $(document).ready(function() {
     $document = $(document);
     $body = $('body');
@@ -339,22 +340,19 @@ $(document).ready(function() {
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
     $audioPlayer = $('#audio-player');
-    $playerWrapper = $('.player-wrapper');
-    $playerButtons = $('.player-button');
-    $play = $('.play');
-    $pause = $('.pause');
-    $artist = $('.artist');
-    $title = $('.title');
+    $progressIndicator = $('.progress-indicator');
+    $currentProgress = $('.current-progress');
+    $controlBtn = $('.control-btn');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $playerButtons.on('click', AUDIO.toggleAudio);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+    $controlBtn.on('click', onControlBtnClick);
 
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);

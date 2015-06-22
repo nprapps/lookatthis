@@ -9,6 +9,7 @@
 
 @import "./lib/prefixer";
 @import "./share-modal.less";
+@import "./slides/audio.less";
 @import "./slides/conclusion.less";
 @import "./slides/framed-text.less";
 @import "./slides/full-bleed.less";
@@ -394,87 +395,5 @@ img {
          right: 25px;
          font-size: 12px;
          max-width: 1000px;
-    }
-}
-
-.player-wrapper {
-    position: fixed;
-    bottom: 0;
-    height: 5rem;
-    background: rgba(0,0,0,0.5);
-    line-height: 5rem;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-    .transition(opacity 1s ease-in);
-
-    .controls {
-        vertical-align: middle;
-        margin-right: @grid-gutter-width / 2;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .player-progress {
-        cursor: pointer;
-        position: absolute;
-        left: 5rem;
-        top: 0;
-        bottom: 0;
-        right: 0;
-
-        .jp-seek-bar {
-            height: 100%;
-        }
-
-        .bar {
-            position: absolute;
-            height: 5rem;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            background-color: #373737;
-            opacity: 0.75;
-        }
-    }
-    .playback-info {
-        right: 1rem;
-        text-align: right;
-        line-height: 1;
-        .vertical-center;
-        position: absolute;
-    }
-}
-
-.player-button,
-.player-button:focus,
-.player-button:visited,
-.player-button:hover {
-    display: block;
-    .square(5rem);
-    background: #373737;
-    color: #fff;
-    line-height: 5rem;
-    text-align: center;
-    font-size: @font-size-base * 2;
-    opacity: 0.75;
-
-
-    .no-touch & {
-        &:hover {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
-        }
-    }
-
-    .touch & {
-        &:active {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
-        }
     }
 }

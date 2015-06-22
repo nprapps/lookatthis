@@ -12,13 +12,14 @@ var AUDIO = (function() {
             var loopId = 'slide-' + rowAnchor;
 
             if (loopId === $currentSlide.attr('id') && filename !== null) {
-
                 audioURL = ASSETS_PATH + 'audio/' + filename;
-                if ($audioPlayer.data().jPlayer.status.src !== audioURL) {
-                    $artist.text(artist);
-                    $title.text(title);
-                    _playAudio();
-                }
+                $thisPlayerProgress = $currentSlide.find('.player-progress');
+                $playedBar = $currentSlide.find('.player-progress .played');
+                $controlBtn = $currentSlide.find('.control-btn');
+
+                _playAudio();
+            } else {
+                _pauseAudio();
             }
         }
     }
@@ -29,8 +30,6 @@ var AUDIO = (function() {
             loop: false,
             supplied: 'mp3',
             timeupdate: onTimeupdate,
-            cssSelectorAncestor: "#jp_container_1",
-            smoothPlayBar: true,
             volume: NO_AUDIO ? 0 : 1
         });
     }
@@ -39,30 +38,44 @@ var AUDIO = (function() {
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
         }).jPlayer('play');
-
-        $play.hide();
-        $pause.show();
+        $controlBtn.removeClass('play').addClass('pause');
     }
 
     var _pauseAudio = function() {
         $audioPlayer.jPlayer('pause');
-        $play.show();
-        $pause.hide();
+        $controlBtn.removeClass('pause').addClass('play');
     }
 
     var _resumeAudio = function() {
         $audioPlayer.jPlayer('play');
-        $play.hide();
-        $pause.show();
+        $controlBtn.removeClass('play').addClass('pause');
     }
 
 
-    var onTimeupdate = function() {
+    var onTimeupdate = function(e) {
+        var totalTime = e.jPlayer.status.duration;
+        var position = e.jPlayer.status.currentTime;
 
+        // animate progress bar
+        var percentage = position / totalTime;
+
+        if (position > 0) {
+            // if we're resetting the bar. ugh.
+            if ($playedBar.width() == $thisPlayerProgress.width()) {
+                $playedBar.addClass('no-transition');
+                $playedBar.css('width', 0);
+            } else {
+                $playedBar.removeClass('no-transition');
+                $playedBar.css('width', $thisPlayerProgress.width() * percentage + 'px');
+
+                if (percentage === 1) {
+                    $controlBtn.removeClass('pause').addClass('play');
+                }
+            }
+        }
     }
 
-    var toggleAudio = function(e) {
-        e.preventDefault();
+    var toggleAudio = function() {
         if ($audioPlayer.data().jPlayer.status.paused) {
             _resumeAudio();
         } else {
