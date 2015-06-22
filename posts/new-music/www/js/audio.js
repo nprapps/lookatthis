@@ -2,23 +2,23 @@ var AUDIO = (function() {
     var audioURL = null;
 
     var checkForAudio = function(slideIndex) {
-        for (var i = 0; i < COPY.content.length; i++) {
-            var rowAnchor = COPY.content[i]['id'];
-            var filename = COPY.content[i]['audio'];
+        for (var i = 0; i < COPY.audio.length; i++) {
+            var rowAnchor = COPY.audio[i]['slide-id'];
+            var artist = COPY.audio[i]['artist'];
+            var title = COPY.audio[i]['title'];
+            var filename = COPY.audio[i]['filename'];
 
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
 
             if (loopId === $currentSlide.attr('id') && filename !== null) {
 
-                audioURL = ASSETS_PATH + filename;
+                audioURL = ASSETS_PATH + 'audio/' + filename;
                 if ($audioPlayer.data().jPlayer.status.src !== audioURL) {
+                    $artist.text(artist);
+                    $title.text(title);
                     _playAudio();
                 }
-            } else {
-                // if (!$audioPlayer.data().jPlayer.status.paused) {
-                //     _pauseAudio();
-                // }
             }
         }
     }

@@ -13,6 +13,8 @@ var $playerWrapper;
 var $playerButtons;
 var $play;
 var $pause;
+var $artist;
+var $title;
 var isTouch = Modernizr.touch;
 
 var mobileSuffix;
@@ -341,6 +343,8 @@ $(document).ready(function() {
     $playerButtons = $('.player-button');
     $play = $('.play');
     $pause = $('.pause');
+    $artist = $('.artist');
+    $title = $('.title');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
