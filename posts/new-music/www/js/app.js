@@ -123,7 +123,6 @@ var loadImages = function($slide) {
         }
     }
 };
-
 var showNavigation = function(index) {
     /*
     * Hide and show arrows based on slide index
