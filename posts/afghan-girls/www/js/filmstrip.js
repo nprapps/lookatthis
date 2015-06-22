@@ -1,13 +1,8 @@
 var FILMSTRIP = (function() {
-    var $currentSlide = null;
-    var $filmstripContainer = null;
     var animating = false;
     var animation = null;
 
-    var initFilmstrip = function(slideIndex) {
-        $currentSlide = $slides.eq(slideIndex);
-        $filmstripContainer = $currentSlide.find('.imgLiquid');
-
+    var initFilmstrip = function($slide) {
         for (var i = 0; i < COPY.content.length; i++) {
             var rowAnchor = COPY.content[i]['id'];
             var loopId = 'slide-' + rowAnchor;
@@ -15,14 +10,15 @@ var FILMSTRIP = (function() {
             var filmstripFolder = COPY.content[i]['filmstrip_folder']
             var filmstripLength = parseInt(COPY.content[i]['filmstrip_length']);
 
-            if (loopId === $currentSlide.attr('id') && filmstripFolder && filmstripLength) {
-                _loadImages(filmstripFolder, filmstripLength);
+            if (loopId === $slide.attr('id') && filmstripFolder && filmstripLength) {
+                _loadImages(filmstripFolder, filmstripLength, $slide);
             }
         }
     }
 
-    var _loadImages = function(folder, length) {
+    var _loadImages = function(folder, length, $slide) {
         var imageSlug = 'assets/sequences/' + folder + '/' + folder;
+        var $filmstripContainer = $slide.find('.imgLiquid');
         var $frames = $filmstripContainer.find('.frame');
 
         if ($frames.length !== length) {
@@ -38,24 +34,25 @@ var FILMSTRIP = (function() {
                 $filmstripContainer.append('<img class="frame" src="' + fullImagePath + '">');
             }
         }
-
-        $filmstripContainer.imagesLoaded(_animateFilmstrip);
     }
 
-    var _animateFilmstrip = function() {
-        if (!animating) {
-            var imageCounter = 0;
-            var $frames = $filmstripContainer.find('.frame');
-            animating = true;
-            animation = setInterval(function() {
-                $frames.eq(imageCounter).css('opacity', 1);
-                imageCounter = imageCounter + 1;
-                if (imageCounter === $frames.length) {
-                    clearInterval(animation);
-                    animating = false;
-                }
-            }, 200);
-        }
+    var animateFilmstrip = function(index) {
+        $filmstripContainer = $slides.eq(index).find('.imgLiquid');
+        $filmstripContainer.imagesLoaded(function() {
+            if (!animating) {
+                var imageCounter = 0;
+                var $frames = $filmstripContainer.find('.frame');
+                animating = true;
+                animation = setInterval(function() {
+                    $frames.eq(imageCounter).css('opacity', 1);
+                    imageCounter = imageCounter + 1;
+                    if (imageCounter === $frames.length) {
+                        clearInterval(animation);
+                        animating = false;
+                    }
+                }, 200);
+            }
+        });
     }
 
     var clearFilmstrip = function(index) {
@@ -66,6 +63,7 @@ var FILMSTRIP = (function() {
 
     return {
         'initFilmstrip': initFilmstrip,
+        'animateFilmstrip': animateFilmstrip,
         'clearFilmstrip': clearFilmstrip
     }
 }());

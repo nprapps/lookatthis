@@ -97,6 +97,7 @@ var lazyLoad = function(slideIndex) {
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
+        FILMSTRIP.initFilmstrip(slides[i])
     };
 
 }
@@ -161,7 +162,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     AUDIO.checkForAudio(toIndex);
     VIDEO.checkForVideo(toIndex);
     FILMSTRIP.clearFilmstrip(fromIndex);
-    FILMSTRIP.initFilmstrip(toIndex);
+    FILMSTRIP.animateFilmstrip(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
