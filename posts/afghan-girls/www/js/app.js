@@ -9,14 +9,10 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
-var $audioControlBtn
 var $videoControlBtn;
 var $thisPlayerProgress;
 var $playedBar;
-var $subtitleWrapper;
-var $subtitles;
 var $ambientPlayer;
-var $narrativePlayer;
 var $skipIntroBtn;
 
 var mobileSuffix;
@@ -391,7 +387,6 @@ $(document).ready(function() {
     $upNext = $('.up-next');
     $audioControlBtn = $('.narrative-audio .control-btn');
     $videoControlBtn = $('.video .control-btn');
-    $narrativePlayer = $('#narrative-player');
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
     $skipIntroBtn = $('.skip-intro');
@@ -432,7 +427,6 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
-    AUDIO.setupNarrativePlayer();
     AUDIO.setupAmbientPlayer();
     VIDEO.setupVideo();
 
