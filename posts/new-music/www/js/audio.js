@@ -15,6 +15,8 @@ var AUDIO = (function() {
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
 
+                $thisPlayerProgress.on('click', onSeekBarClick);
+
                 _playAudio();
                 break;
             } else {
@@ -80,6 +82,14 @@ var AUDIO = (function() {
         } else {
             _pauseAudio();
         }
+    }
+
+    var onSeekBarClick = function(e) {
+        var totalTime = $audioPlayer.data().jPlayer.status.duration;
+        var percentage = e.offsetX / $(this).width();
+        var clickedPosition = totalTime * percentage;
+        $audioPlayer.jPlayer('play', clickedPosition);
+        ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
     return {
