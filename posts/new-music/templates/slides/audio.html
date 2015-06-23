@@ -1,16 +1,38 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
-<p class="artist">{{ row.text1 }}</p>
-<p class="song">{{ row.text2 }}</p>
-<div class="player">
-    <div class="controls">
-        <div class="control-group">
-            <a href="#" class="play control-btn"></a>
-            <div class="player-progress">
-                <div class="total"></div>
-                <div class="played"></div>
+
+<div class="side-by-side-wrapper">
+    <div class="first-side">
+        
+        <div class="track-description">
+                {{ row.text1|smarty }}
+            </div>
+        
+        <div class="player">
+            
+            
+            <div class="controls">
+                <div class="control-group">
+                    <a href="#" class="play control-btn"></a>
+                    <div class="player-progress">
+                        <div class="total"></div>
+                        <div class="played"></div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        
+    </div>
+
+    <div class="second-side">
+        
+        <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="">
+        
     </div>
 </div>
+
+
+
+
 {% endblock %}

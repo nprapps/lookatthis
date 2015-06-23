@@ -73,22 +73,20 @@
 
                     }
 
-                    p {
+                    p, h6 {
+                        font-family: "Gotham SSm", helvetica, arial, sans-serif;
                         text-shadow: none;
-                        font-size: @small-type;
+                        font-size: 10px;
                         line-height: 1.5;
                         padding-bottom: 5px;
+                        text-align: center;
 
                         @media @screen-small-above {
-                            font-size: 16px;
+                            font-size: 12px;
                         }
 
                         @media @screen-medium-above {
-                            //margin-right: 40px;
-                        }
-
-                        @media @screen-mega-above {
-                            font-size: 20px;
+                            text-align: left;
                         }
 
 
@@ -96,9 +94,20 @@
 
                     img {
                         display: block;
-                        width: 100%;
+                        max-width: 200px;
                         height: auto;
                         box-shadow: 7px 7px 10px #eee;
+                        display: block;
+                        margin: 0 auto;
+                        
+                        @media @screen-small-above {
+                            font-size: 16px;
+                            max-width: 400px;
+                        }
+                        
+                        @media @screen-medium-above {
+                            max-width: 100%;
+                        }
                     }
                 }
             }

@@ -9,7 +9,8 @@
         
         <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="{{ row.caption|smarty }}">
         
-        <h6>caption information</h6>
+        {{ row.text3|smarty }}
+        
     </div>
 </div>
 {% endblock %}

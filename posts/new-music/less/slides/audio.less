@@ -1,133 +1,235 @@
-.player {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    min-height: 100px;
-    overflow: hidden;
-    @media @screen-tiny-above {
-       bottom: 30px;
-       min-height: 95px;
+.slide.audio {
+    
+    .side-by-side-wrapper {
+                display: table;
+                margin: 0 auto;
+                
+                
+                
+
+                .first-side {
+                    position: relative;
+                    vertical-align: middle;
+                    margin-bottom: 10px;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    min-height: 100px;
+
+                    @media @screen-medium-above {
+                        padding-right: 20px;
+                        margin-bottom: 20px;
+                    }
+
+/*
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        max-width: 600px;
+                    }
+*/
+
+                    @media @screen-medium-above {
+                        display: table-cell;
+                        width: 50%;
+
+                        /*
+                        img {
+                            position: relative;
+                            left: -20px;
+                        }*/
+                    }
+
+                    p {
+                        text-shadow: none;
+                        line-height: 1.5;
+                        font-size: @small-type;
+                        @media @screen-small-above {
+                            font-size: 16px;
+                        }
+
+                    }
+                }
+
+                .second-side {
+                    //padding: 20px;
+                    max-width: 600px;
+
+                    @media @screen-small-above {
+                        margin-bottom: 20px;
+                    }
+
+                    @media @screen-medium-above {
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 50%;
+
+                    }
+
+                    p, h6 {
+                        font-family: "Gotham SSm", helvetica, arial, sans-serif;
+                        text-shadow: none;
+                        font-size: 10px;
+                        line-height: 1.5;
+                        padding-bottom: 5px;
+                        text-align: center;
+
+                        @media @screen-small-above {
+                            font-size: 12px;
+                        }
+
+                        @media @screen-medium-above {
+                            text-align: left;
+                        }
+
+
+                    }
+
+                    img {
+                        display: block;
+                        max-width: 200px;
+                        height: auto;
+                        box-shadow: 7px 7px 10px #eee;
+                        display: block;
+                        margin: 0 auto;
+                        
+                        @media @screen-small-above {
+                            font-size: 16px;
+                            max-width: 400px;
+                        }
+                        
+                        @media @screen-medium-above {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+    .track-description {
+        color: #fff;
+        width: 60%;
+        margin: 0 auto;
     }
-    @media @screen-small-above {
-        min-height: 150px;
-       bottom: 70px;
-    }
 
-    .controls {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-
-        .control-group {
+    .player {
+        position: relative;
+        width: 60%;
+        height: 35px;
+        margin: 0 auto;
+    
+        .controls {
+            position: absolute;
+            left: 0;
+            bottom: 0;
             width: 100%;
-            max-width: 470px;
-            margin: 0 auto;
-            position: relative;
-            @media @screen-small-above {
-                max-width: 600px;
-            }
-        }
-
-        .control-btn {
-            position: relative;
-            z-index: 2;
-            width: 55px;
-            height: 55px;
-            .transition(opacity 1s linear);
-            @media @screen-tiny-above {
-                width: 35px;
-                height: 35px;
-            }
-            color: #fff;
-            display: block;
-
-            text-decoration: none;
-
-            @media @screen-tiny-above {
-                background-color: #fff;
-                color: #000;
-            }
-
-            &.play{
-                opacity: 1;
-                padding: 15px 0 0 25px;
-                @media @screen-tiny-above {
-                    padding: 6px 0 0 13px;
-                }
-            }
-
-            &.pause{
-                padding: 15px 0 0 24px;
-                opacity: .4;
-                @media @screen-tiny-above {
-                    padding: 6px 0 0 12px;
-                }
-            }
-
-            &.pause:before {
-                font-family: "FontAwesome";
-                content: "\f04c";
-                font-size: 20px;
-                @media @screen-tiny-above {
-                    font-size: 14px;
-                }
-            }
-            &.play:before {
-                font-family: "FontAwesome";
-                content: "\f04b";
-                font-size: 20px;
-                @media @screen-tiny-above {
-                    font-size: 14px;
-                }
-            }
-        }
-
-        .player-progress {
-            width: 100%;
-            @media @screen-tiny-above {
-                position: absolute;
-                bottom: 15px;
-                left: 50px;
-                height: 4px;
-                max-width: 420px;
-            }
-            @media @screen-small-above {
-                max-width: 530px;
-            }
-
-            .total, .played {
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            .total {
-                background-color: rgba(80, 83, 98, 0.4);
+    
+            .control-group {
                 width: 100%;
-                height: 100%;
-                z-index: 0;
-                @media @screen-tiny-above {
-                    background-color: rgba(0, 0, 0, 0.3);
+                max-width: 470px;
+                margin: 0 auto;
+                position: relative;
+                @media @screen-small-above {
+                    max-width: 600px;
                 }
             }
-            .played {
-                background-color: #505362;
-                width: 0;
-                height: 100%;
-                z-index: 1;
-                .transition(width 0.5s linear);
-
+    
+            .control-btn {
+                position: relative;
+                z-index: 2;
+                width: 55px;
+                height: 55px;
+                .transition(opacity 1s linear);
                 @media @screen-tiny-above {
-                   background-color: #e0e0e0;
-                   border: none;
+                    width: 35px;
+                    height: 35px;
                 }
-
-                &.no-transition {
-                    .transition(none);
+                color: #fff;
+                display: block;
+    
+                text-decoration: none;
+    
+                @media @screen-tiny-above {
+                    background-color: #fff;
+                    color: #000;
+                }
+    
+                &.play{
+                    opacity: 1;
+                    padding: 15px 0 0 25px;
+                    @media @screen-tiny-above {
+                        padding: 6px 0 0 13px;
+                    }
+                }
+    
+                &.pause{
+                    padding: 15px 0 0 24px;
+                    @media @screen-tiny-above {
+                        padding: 6px 0 0 12px;
+                    }
+                }
+    
+                &.pause:before {
+                    font-family: "FontAwesome";
+                    content: "\f04c";
+                    font-size: 20px;
+                    @media @screen-tiny-above {
+                        font-size: 14px;
+                    }
+                }
+                &.play:before {
+                    font-family: "FontAwesome";
+                    content: "\f04b";
+                    font-size: 20px;
+                    @media @screen-tiny-above {
+                        font-size: 14px;
+                    }
+                }
+            }
+    
+            .player-progress {
+                width: 100%;
+                @media @screen-tiny-above {
+                    position: absolute;
+                    bottom: 15px;
+                    left: 50px;
+                    height: 4px;
+                    max-width: 420px;
+                }
+                @media @screen-small-above {
+                    max-width: 530px;
+                }
+    
+                .total, .played {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+    
+                .total {
+                    background-color: rgba(80, 83, 98, 0.4);
+                    width: 100%;
+                    height: 100%;
+                    z-index: 0;
+                    @media @screen-tiny-above {
+                        background-color: rgba(0, 0, 0, 0.3);
+                    }
+                }
+                .played {
+                    background-color: #505362;
+                    width: 0;
+                    height: 100%;
+                    z-index: 1;
+                    .transition(width 0.5s linear);
+    
+                    @media @screen-tiny-above {
+                       background-color: #e0e0e0;
+                       border: none;
+                    }
+    
+                    &.no-transition {
+                        .transition(none);
+                    }
                 }
             }
         }
     }
 }
+
