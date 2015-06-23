@@ -2,11 +2,14 @@
 {% block slide_content %}
 <div class="side-by-side-wrapper">
     <div class="first-side">
-        <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="{{ row.caption|smarty }}">
+        {{ row.text1|smarty }}
     </div>
 
     <div class="second-side">
-        {{ row.text1|smarty }}
+        
+        <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="{{ row.caption|smarty }}">
+        
+        <h6>caption information</h6>
     </div>
 </div>
 {% endblock %}

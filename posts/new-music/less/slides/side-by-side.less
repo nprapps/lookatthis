@@ -8,18 +8,9 @@
 
         .full-block-content {
             margin: 0 auto;
-            max-width: 100%;
-
-            @media @screen-small-above {
-                max-width: 80%;
-            }
+            max-width: 800px;
 
             @media @screen-medium-above {
-                max-width: 900px;
-                margin: 0 auto;
-            }
-
-            @media @screen-large-above {
                 max-width: 1100px;
             }
 
@@ -32,24 +23,28 @@
                     margin-bottom: 10px;
 
                     @media @screen-medium-above {
+                        padding-right: 20px;
                         margin-bottom: 20px;
                     }
 
+/*
                     img {
                         display: block;
                         width: 100%;
                         height: auto;
-                        max-width: 450px;
+                        max-width: 600px;
                     }
+*/
 
                     @media @screen-medium-above {
                         display: table-cell;
                         width: 50%;
 
+                        /*
                         img {
                             position: relative;
                             left: -20px;
-                        }
+                        }*/
                     }
 
                     p {
@@ -59,17 +54,13 @@
                         @media @screen-small-above {
                             font-size: 16px;
                         }
-                        @media @screen-mega-above {
-                            font-size: 20px;
-                        }
 
                     }
                 }
 
                 .second-side {
-                    padding: 20px;
-                    background: @side-by-side-screen;
-                    max-width: 450px;
+                    //padding: 20px;
+                    max-width: 600px;
 
                     @media @screen-small-above {
                         margin-bottom: 20px;
@@ -100,10 +91,6 @@
                             font-size: 20px;
                         }
 
-                        &.number {
-                            font-family: "Gotham", Helvetica, Arial, sans-serif;
-                        }
-
 
                     }
 
@@ -111,10 +98,7 @@
                         display: block;
                         width: 100%;
                         height: auto;
-
-                        @media @screen-medium-above {
-                            margin-left: 20px;
-                        }
+                        box-shadow: 7px 7px 10px #eee;
                     }
                 }
             }

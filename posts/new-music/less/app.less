@@ -80,7 +80,6 @@ html, body {
 }
 
 .slide {
-    background-color: #000;
     visibility: hidden;
     position: absolute;
     top: 0;
@@ -120,15 +119,15 @@ html, body {
 }
 
 body {
-    color: #fff;
-    font-family: "Gotham SSm", helvetica, arial, sans-serif;
-    font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
+    color: #222;
+    font: 16px/1.5em georgia, serif;
     -webkit-font-smoothing: antialiased;
-    background-color: #111;
+    background-color: #fff;
 }
 
 h1,h2,h3,h4,h5,h6,p,ul,ol,li {
-    font-family: "Gotham", helvetica, arial, sans-serif;
+    //font-family: "Gotham SSm", helvetica, arial, sans-serif;
+    font-family: georgia, serif;
 }
 
 .animated {
@@ -187,8 +186,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         font-weight: bold;
         text-align: center;
         line-height: 47px;
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
+        //background: rgba(0, 0, 0, 0.5);
+        color: #999;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -197,26 +196,26 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
         user-select: none;
         display: none;
         cursor: pointer;
-        opacity: .3;
+        //opacity: .3;
 
         @media @screen-small-above {
             top: 40%;
 
             height: 100px;
             font-size: 30px;
-            border: 3px solid #fff;
+            //border: 3px solid #fff;
 
             &:hover {
-                background-color: #fff;
+                //background-color: #fff;
                 color: #000;
-                opacity: .9;
+                //opacity: .9;
             }
         }
 
         @media @screen-small {
             &:active {
-                background-color: #000;
-                color: #fff;
+                ///background-color: #000;
+                color: #444;
             }
         }
     }
