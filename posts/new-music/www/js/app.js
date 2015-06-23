@@ -10,6 +10,14 @@ var $previousArrow;
 var $startCardButton;
 var $audioPlayer;
 var isTouch = Modernizr.touch;
+var $likeStory;
+var $likeStoryButtons;
+var $facebook;
+var $facebookBtn;
+var $emailStory;
+var $emailBtn;
+var $didNotLike;
+var $dislikeEmail;
 
 var mobileSuffix;
 var w;
@@ -327,6 +335,63 @@ var onControlBtnClick = function(e) {
     e.stopPropagation();
 }
 
+var determineTests = function() {
+    var possibleCallToActionTests = ['facebook', 'email'];
+
+    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var onLikeStoryButtonsClick = function(e) {
+    e.preventDefault();
+
+    $likeStory.hide();
+
+    if ($(this).hasClass('yes')) {
+        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
+
+        if (callToActionTest === 'facebook') {
+            $facebook.show();
+        } else {
+            $emailStory.show();
+        }
+    } else {
+        ANALYTICS.trackEvent('like-story-no');
+        $didNotLike.show();
+    }
+}
+
+var onFacebookBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('facebook-share');
+
+    window.top.location = link
+    return true;
+}
+
+var onEmailBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('email-story-btn-click');
+
+    window.top.location = link
+    return true;
+}
+
+var onDislikeEmailClick = function() {
+    ANALYTICS.trackEvent('email-btn-click');
+}
+
 $(document).ready(function() {
     $document = $(document);
     $body = $('body');
@@ -342,9 +407,21 @@ $(document).ready(function() {
     $progressIndicator = $('.progress-indicator');
     $currentProgress = $('.current-progress');
     $controlBtn = $('.control-btn');
+    $likeStory = $('.like-story');
+    $likeStoryButtons = $('.btn-like-story');
+    $facebook = $('.facebook');
+    $facebookBtn = $('.btn-facebook');
+    $emailStory = $('.email-story');
+    $emailBtn = $('.btn-email');
+    $didNotLike = $('.did-not-like');
+    $dislikeEmail = $('.dislike-email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $facebookBtn.on('click', onFacebookBtnClick);
+    $emailBtn.on('click', onEmailBtnClick);
+    $dislikeEmail.on('click', onDislikeEmailClick);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
@@ -379,6 +456,7 @@ $(document).ready(function() {
     onPageLoad();
     resize();
     AUDIO.setupAudio();
+    determineTests();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
