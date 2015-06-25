@@ -204,35 +204,36 @@
             }
     
             .control-btn {
-                position: relative;
+                position: absolute;
+                bottom: 0;
+                left: 0;
                 z-index: 2;
                 width: 55px;
                 height: 55px;
                 .transition(opacity 1s linear);
+                color: #fff;
+                background-color: #000;
+                display: block;
+                text-decoration: none;
+                
                 @media @screen-small-above {
+                    position: relative;
                     width: 35px;
                     height: 35px;
-                }
-                color: #fff;
-                display: block;
-    
-                text-decoration: none;
-    
-                @media @screen-small-above {
                     background-color: #fff;
                     color: #000;
                 }
     
                 &.play{
                     opacity: 1;
-                    padding: 15px 0 0 25px;
+                    padding: 15px 0 0 22px;
                     @media @screen-small-above {
                         padding: 6px 0 0 13px;
                     }
                 }
     
                 &.pause{
-                    padding: 15px 0 0 24px;
+                    padding: 15px 0 0 20px;
                     @media @screen-small-above {
                         padding: 6px 0 0 12px;
                     }
@@ -257,13 +258,21 @@
             }
     
             .player-progress {
-                width: 82%;
+                
                 cursor: pointer;
+                position: relative;
+                bottom: 0;
+                left: 55px;
+                height: 55px;
+                padding-right: 55px;
+                
                 @media @screen-small-above {
                     position: absolute;
                     bottom: 15px;
                     left: 50px;
+                    width: 85%;
                     height: 4px; 
+                    padding-right: 0;
                 }
                 
                 
@@ -275,14 +284,14 @@
                 }
     
                 .total {
-                    background-color: #404040;
+                    background-color: rgba(0, 0, 0, 0.5);
                     width: 100%;
                     height: 100%;
                     z-index: 0;
                    
                 }
                 .played {
-                    background-color: rgba(0, 0, 0, 0.5);
+                    background-color: rgba(255, 255, 255, 0.3);
                     width: 0;
                     height: 100%;
                     z-index: 1;
