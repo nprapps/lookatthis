@@ -3,6 +3,10 @@
 
 <div class="side-by-side-wrapper">
     <div class="first-side">
+        <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="">
+    </div>
+
+    <div class="second-side">
         
         <div class="track-description">
                 {{ row.text1|smarty }}
@@ -31,12 +35,6 @@
             
             <p class="support-notice">Your purchase helps support NPR Programming. <a href="#">How?</a></p>
         </div>
-        
-    </div>
-
-    <div class="second-side">
-        
-        <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="">
         
     </div>
 </div>

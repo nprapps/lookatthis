@@ -1,5 +1,19 @@
 .slide.audio {
     
+    .full-block-cell {
+        padding: 40px;
+        background: rgba(0,0,0,0.8);
+        
+        @media @screen-medium-above {
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .full-block-content {
+            padding: 0;
+            @media @screen-small-above {padding: 20px 100px;}
+        }
+    }
+    
     /* blurred background
     .imgLiquid {
         -webkit-filter: blur(8px); filter: blur(8px);
@@ -7,56 +21,70 @@
     */
     
     .side-by-side-wrapper {
-                display: table;
+        display: table;
+        margin: 0 auto;
+                
+                
+                
+
+        .first-side {
+            max-width: 600px;
+    
+            @media @screen-medium-above {
+                display: table-cell;
+                width: 50%;
+    
+                /*
+                img {
+                    position: relative;
+                    left: -20px;
+                }*/
+            }
+    
+             img {
+                display: block;
+                height: auto;
+                display: block;
                 margin: 0 auto;
                 
+                @media @screen-small-above {
+                    font-size: 16px;
+                    max-width: 400px;
+                }
                 
-                
+                @media @screen-medium-above {
+                    max-width: 100%;
+                }
+            }
 
-                .first-side {
-                    position: relative;
+        }
+
+        .second-side {
                     vertical-align: middle;
                     padding: 20px;
-                    background-color: rgba(0, 0, 0, 0.8);
                     min-height: 100px;
 
-
-/*
-                    img {
-                        display: block;
-                        width: 100%;
-                        height: auto;
-                        max-width: 600px;
+                    @media @screen-small-above {
+                        margin-bottom: 20px;
                     }
-*/
 
                     @media @screen-medium-above {
+                        background-color: rgba(0, 0, 0, 0.8);
                         display: table-cell;
+                        vertical-align: middle;
                         width: 50%;
 
-                        /*
-                        img {
-                            position: relative;
-                            left: -20px;
-                        }*/
                     }
 
-                    p {
-                        text-shadow: none;
-                        line-height: 1.5;
-                        font-size: @small-type;
-                        @media @screen-small-above {
-                            font-size: 16px;
-                        }
-
-                    }
-                    
                     .purchase {
-                        width: 60%;
                         margin: 0 auto;
                         font-family: "Gotham SSm", helvetica, arial, sans-serif;
                         color: #ccc;
                         margin-top: 20px;
+                        
+                        @media @screen-medium-above {
+                            width: 60%;
+                        }
                         
                         
                         a {
@@ -89,85 +117,63 @@
                             font-family: "Gotham SSm", helvetica, arial, sans-serif;
                             font-size: 11px;
                             font-style: italic;
+                            line-height: 1;
                         }
                     }
+
+                   
                 }
-
-                .second-side {
-                    //padding: 20px;
-                    max-width: 600px;
-
-                    @media @screen-small-above {
-                        margin-bottom: 20px;
-                    }
-
-                    @media @screen-medium-above {
-                        display: table-cell;
-                        vertical-align: middle;
-                        width: 50%;
-
-                    }
-
-                    p, h6 {
-                        font-family: "Gotham SSm", helvetica, arial, sans-serif;
-                        text-shadow: none;
-                        font-size: 10px;
-                        line-height: 1.5;
-                        padding-bottom: 5px;
-                        text-align: center;
-
-                        @media @screen-small-above {
-                            font-size: 12px;
-                        }
-
-                        @media @screen-medium-above {
-                            text-align: left;
-                        }
-
-
-                    }
-
-                    img {
-                        display: block;
-                        max-width: 200px;
-                        height: auto;
-                        display: block;
-                        margin: 0 auto;
-                        
-                        @media @screen-small-above {
-                            font-size: 16px;
-                            max-width: 400px;
-                        }
-                        
-                        @media @screen-medium-above {
-                            max-width: 100%;
-                        }
-                    }
-                }
-            }
+    }
+            
     .track-description {
         color: #fff;
-        width: 60%;
         margin: 0 auto;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #555;
+        
+        @media @screen-small-above {
+            border: none;
+        }
+        
+        @media @screen-medium-above {
+            width: 60%;
+        }
         
         h4 {
-            font-size: 32px;
+            font-size: 20px;
+            @media @screen-small-above {
+              font-size: 32px;  
+            }
         }
         
         h5 {
             font-size: 16px;
-            line-height: 1.5;
+            
+            @media @screen-small-above {
+              line-height: 1.5;
+            }
         }
     }
     
     
 
     .player {
-        position: relative;
-        width: 60%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         height: 35px;
+        width: 100%;
         margin: 0 auto;
+        
+        @media @screen-tiny-above {
+            position: relative;
+            bottom: auto;
+            left: auto;
+        }
+        
+        @media @screen-medium-above {
+            width: 60%;
+        }
     
         .controls {
             position: absolute;
@@ -268,7 +274,7 @@
                     }
                 }
                 .played {
-                    background-color: #505362;
+                    background-color: rgba(0, 0, 0, 0.5);
                     width: 0;
                     height: 100%;
                     z-index: 1;
