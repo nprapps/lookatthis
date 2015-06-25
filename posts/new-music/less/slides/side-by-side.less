@@ -3,18 +3,21 @@
         // background: @darker-overlay;
 
         .full-block-cell {
+            padding: 20px 60px 10px 60px;
             @media @screen-small-above {
                 vertical-align: middle;
+            }
+            
+            @media @screen-medium-above {
+                padding: 0;
             }
         }
 
         .full-block-content {
+            padding: 0;
             margin: 0 auto;
-            max-width: 800px;
+            @media @screen-small-above {padding: 20px 100px;}
 
-            @media @screen-medium-above {
-                max-width: 1100px;
-            }
 
             .side-by-side-wrapper {
                 display: table;
@@ -48,6 +51,10 @@
                             left: -20px;
                         }*/
                     }
+                    
+                    h3 {
+                        margin: 0 0 10px 0;
+                    }
 
                     p {
                         text-shadow: none;
@@ -62,23 +69,25 @@
 
                 .second-side {
                     //padding: 20px;
-                    max-width: 600px;
+                    max-width: 200px;
+                    margin: 20px auto 0 auto;
 
                     @media @screen-small-above {
-                        margin-bottom: 20px;
+                        max-width: 600px;
                     }
 
                     @media @screen-medium-above {
+                        margin: 0;
                         display: table-cell;
                         vertical-align: middle;
                         width: 50%;
 
                     }
-
                     p, h6 {
                         font-family: "Gotham SSm", helvetica, arial, sans-serif;
                         text-shadow: none;
                         font-size: 10px;
+                        margin: 15px 0 0 0;
                         line-height: 1.5;
                         padding-bottom: 5px;
                         text-align: center;
@@ -96,7 +105,6 @@
 
                     img {
                         display: block;
-                        max-width: 200px;
                         height: auto;
                         box-shadow: 7px 7px 10px #eee;
                         display: block;
