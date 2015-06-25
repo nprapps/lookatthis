@@ -204,6 +204,7 @@ that use the API provided by core.
     $document.delegate(editables, 'keydown.deck', stopPropagation);
   };
 
+
   var bindTouchEvents = function() {
     var startTouch;
     var direction = options.touch.swipeDirection;
@@ -256,6 +257,7 @@ that use the API provided by core.
       });
     });
   };
+
 
   var indexInBounds = function(index) {
     return typeof index === 'number' && index >=0 && index < slides.length;
@@ -399,7 +401,7 @@ that use the API provided by core.
         initSlidesArray(options.selectors.slides);
         setupHashBehaviors();
         bindKeyEvents();
-        bindTouchEvents();
+        //bindTouchEvents();
         $container.scrollLeft(0).scrollTop(0);
 
         if (slides.length) {

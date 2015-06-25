@@ -421,7 +421,7 @@ $(document).ready(function() {
     $dislikeEmail = $('.dislike-email');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
+    //$slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
     $emailBtn.on('click', onEmailBtnClick);
@@ -437,9 +437,9 @@ $(document).ready(function() {
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);
         $arrows.on('touchend', rmFakeMobileHover);
-        $body.on('touchstart', onTouchStart);
-        $body.on('touchmove', onTouchMove);
-        $body.on('touchend', onTouchEnd);
+        //$body.on('touchstart', onTouchStart);
+        //$body.on('touchmove', onTouchMove);
+        //$body.on('touchend', onTouchEnd);
     }
 
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
