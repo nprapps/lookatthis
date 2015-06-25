@@ -1,7 +1,7 @@
 .slide.audio {
     
     .full-block-cell {
-        padding: 40px;
+        padding: 20px 60px 50px 60px;
         background: rgba(0,0,0,0.8);
         
         @media @screen-medium-above {
@@ -46,11 +46,8 @@
                 height: auto;
                 display: block;
                 margin: 0 auto;
-                
-                @media @screen-small-above {
-                    font-size: 16px;
-                    max-width: 400px;
-                }
+                width: 100%;
+                max-width: 300px;
                 
                 @media @screen-medium-above {
                     max-width: 100%;
@@ -61,14 +58,15 @@
 
         .second-side {
                     vertical-align: middle;
-                    padding: 20px;
                     min-height: 100px;
 
                     @media @screen-small-above {
+                        padding: 10px 0;
                         margin-bottom: 20px;
                     }
 
                     @media @screen-medium-above {
+                        padding: 20px;
                         background-color: rgba(0, 0, 0, 0.8);
                         display: table-cell;
                         vertical-align: middle;
@@ -158,14 +156,15 @@
     
 
     .player {
-        position: absolute;
+        position: fixed;
+        z-index: 2;
         bottom: 0;
         left: 0;
         height: 35px;
         width: 100%;
         margin: 0 auto;
         
-        @media @screen-tiny-above {
+        @media @screen-small-above {
             position: relative;
             bottom: auto;
             left: auto;
@@ -183,10 +182,9 @@
     
             .control-group {
                 width: 100%;
-                max-width: 470px;
                 margin: 0 auto;
                 position: relative;
-                @media @screen-small-above {
+                @media @screen-medium-above {
                     max-width: 600px;
                 }
             }
@@ -197,7 +195,7 @@
                 width: 55px;
                 height: 55px;
                 .transition(opacity 1s linear);
-                @media @screen-tiny-above {
+                @media @screen-small-above {
                     width: 35px;
                     height: 35px;
                 }
@@ -206,7 +204,7 @@
     
                 text-decoration: none;
     
-                @media @screen-tiny-above {
+                @media @screen-small-above {
                     background-color: #fff;
                     color: #000;
                 }
@@ -214,14 +212,14 @@
                 &.play{
                     opacity: 1;
                     padding: 15px 0 0 25px;
-                    @media @screen-tiny-above {
+                    @media @screen-small-above {
                         padding: 6px 0 0 13px;
                     }
                 }
     
                 &.pause{
                     padding: 15px 0 0 24px;
-                    @media @screen-tiny-above {
+                    @media @screen-small-above {
                         padding: 6px 0 0 12px;
                     }
                 }
@@ -230,7 +228,7 @@
                     font-family: "FontAwesome";
                     content: "\f04c";
                     font-size: 20px;
-                    @media @screen-tiny-above {
+                    @media @screen-small-above {
                         font-size: 14px;
                     }
                 }
@@ -238,7 +236,7 @@
                     font-family: "FontAwesome";
                     content: "\f04b";
                     font-size: 20px;
-                    @media @screen-tiny-above {
+                    @media @screen-small-above {
                         font-size: 14px;
                     }
                 }
@@ -247,16 +245,14 @@
             .player-progress {
                 width: 82%;
                 cursor: pointer;
-                @media @screen-tiny-above {
+                @media @screen-small-above {
                     position: absolute;
                     bottom: 15px;
                     left: 50px;
-                    height: 4px;
-                    max-width: 420px;
+                    height: 4px; 
                 }
-                @media @screen-small-above {
-                    max-width: 530px;
-                }
+                
+                
     
                 .total, .played {
                     position: absolute;
@@ -269,9 +265,7 @@
                     width: 100%;
                     height: 100%;
                     z-index: 0;
-                    @media @screen-tiny-above {
-                        
-                    }
+                   
                 }
                 .played {
                     background-color: rgba(0, 0, 0, 0.5);
@@ -280,7 +274,7 @@
                     z-index: 1;
                     .transition(width 0.5s linear);
     
-                    @media @screen-tiny-above {
+                    @media @screen-small-above {
                        background-color: #e0e0e0;
                        border: none;
                     }
