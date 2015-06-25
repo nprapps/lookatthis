@@ -5,6 +5,7 @@
         background: rgba(0,0,0,0.8);
         
         @media @screen-medium-above {
+            padding: 0;
             background: rgba(0,0,0,0.5);
         }
         
@@ -49,6 +50,10 @@
                 width: 100%;
                 max-width: 300px;
                 
+                @media @screen-small-above {
+                    max-width: 600px;
+                }
+                
                 @media @screen-medium-above {
                     max-width: 100%;
                 }
@@ -59,6 +64,15 @@
         .second-side {
                     vertical-align: middle;
                     min-height: 100px;
+                    max-width: 300px;
+                
+                    @media @screen-small-above {
+                        max-width: 600px;
+                    }
+                    
+                    @media @screen-medium-above {
+                        max-width: 100%;
+                    }
 
                     @media @screen-small-above {
                         padding: 10px 0;
