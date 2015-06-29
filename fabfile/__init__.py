@@ -94,7 +94,6 @@ def update():
 
     text.update()
     assets.sync()
-    # data.update()
 
 @task
 def deploy(slug=''):
@@ -294,4 +293,3 @@ def shiva_the_destroyer():
 
         for bucket in app_config.S3_BUCKETS:
             local(sync % ('s3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
-

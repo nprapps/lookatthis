@@ -7,6 +7,7 @@ import csv
 import imp
 import json
 import oauth
+import os
 import static
 import static_post
 import static_theme
@@ -78,8 +79,9 @@ def _post(slug):
     except IOError:
         pass
 
-    with open('%s/featured.json' % post_path) as f:
-        context['featured'] = json.load(f)
+    if os.path.exists('%s/featured.json' % post_path):
+        with open('%s/featured.json' % post_path) as f:
+            context['featured'] = json.load(f)
 
     with open('%s/templates/index.html' % post_path) as f:
         template = f.read().decode('utf-8')
