@@ -423,12 +423,6 @@ $(document).ready(function() {
         $body.on('touchend', onTouchEnd);
     }
 
-    ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
-    var clippy = new ZeroClipboard($(".clippy"));
-    clippy.on('ready', function(readyEvent) {
-        clippy.on('aftercopy', onClippyCopy);
-    });
-
     // Turn off Modernizr history when deploying
     if (APP_CONFIG.DEPLOYMENT_TARGET) {
         Modernizr.history = null;
