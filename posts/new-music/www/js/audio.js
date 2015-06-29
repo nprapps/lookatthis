@@ -89,6 +89,7 @@ var AUDIO = (function() {
         var percentage = e.offsetX / $(this).width();
         var clickedPosition = totalTime * percentage;
         $audioPlayer.jPlayer('play', clickedPosition);
+        $controlBtn.removeClass('play').addClass('pause');
         ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
