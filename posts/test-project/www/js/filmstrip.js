@@ -17,7 +17,7 @@ var FILMSTRIP = (function() {
     }
 
     var _loadImages = function(folder, length, $slide) {
-        var imageSlug = 'assets/sequences/' + folder + '/' + folder;
+        var imageSlug = 'assets/filmstrips/' + folder + '/' + folder;
         var $filmstripContainer = $slide.find('.imgLiquid');
         var $frames = $filmstripContainer.find('.frame');
 

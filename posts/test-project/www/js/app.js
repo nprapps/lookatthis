@@ -87,6 +87,9 @@ var lazyLoad = function(slideIndex) {
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
+        if (APP_CONFIG.FILMSTRIP) {
+            FILMSTRIP.initFilmstrip(slides[i])
+        }
     };
 
 }

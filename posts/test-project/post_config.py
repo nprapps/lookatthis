@@ -4,5 +4,5 @@ NUM_SLIDES_AFTER_CONTENT = 2
 
 # Feature configuration
 AUDIO = True
-FILMSTRIP = False
+FILMSTRIP = True
 VIDEO = True

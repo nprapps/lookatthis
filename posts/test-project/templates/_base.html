@@ -58,6 +58,7 @@
     {% endif %}
 
     {% if FILMSTRIP %}
+    {{ JS.push('js/lib/imagesloaded.pkgd.js') }}
     {{ JS.push('js/filmstrip.js') }}
     {% endif %}
 
