@@ -3,22 +3,28 @@ var VIDEO = (function() {
     var video;
     var $videoPlayerProgress;
     var $videoPlayedBar;
+    var $videoControlBtn;
 
     var setupVideo = function() {
         $video = $('video');
-        video = $('video').get(0);
         $videoPlayerProgress = $('.video .player-progress');
-        $videoPlayedBar = $('.video .played');
+        $videoControlBtn = $('.video .control-btn');
 
         $video.on('ended', VIDEO.onVideoEnded);
         $video.on('timeupdate', VIDEO.onVideoTimeupdate);
         $videoPlayerProgress.on('click', onSeekBarClick);
+        $videoControlBtn.on('click', onVideoControlBtnClick);
     }
 
     var checkForVideo = function(index) {
-        var $thisSlideVideo = $slides.eq(index).find('video');
+        var $currentSlide = $slides.eq(index);
+        var $thisSlideVideo = $currentSlide.find('video');
+        $videoPlayedBar = $currentSlide.find('.played');
+
         if ($thisSlideVideo.length > 0) {
+            video = $thisSlideVideo.get(0);
             if (!isTouch) {
+                video.currentTime = 0;
                 video.play();
                 $videoControlBtn.removeClass('play').addClass('pause');
 
@@ -27,8 +33,7 @@ var VIDEO = (function() {
                 }
             }
         } else if ($thisSlideVideo.length <= 0 && !isTouch) {
-            $videos.each(function() {
-                $(this).get(0).currentTime = 0;
+            $video.each(function() {
                 $(this).get(0).pause();
             });
         }
@@ -76,6 +81,13 @@ var VIDEO = (function() {
         ANALYTICS.trackEvent('video-seek');
     }
 
+    var onVideoControlBtnClick = function(e) {
+        var $this = $(this);
+        e.preventDefault();
+        VIDEO.toggleVideo($this);
+        e.stopPropagation();
+    }
+
     return {
         'setupVideo': setupVideo,
         'checkForVideo': checkForVideo,
@@ -84,3 +96,7 @@ var VIDEO = (function() {
         'onVideoTimeupdate': onVideoTimeupdate
     }
 }());
+
+$(document).ready(function() {
+    VIDEO.setupVideo();
+});
