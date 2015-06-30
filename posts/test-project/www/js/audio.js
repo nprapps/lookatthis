@@ -1,5 +1,10 @@
+var $audioPlayer = null;
+
 var AUDIO = (function() {
     var audioURL = null;
+    var $thisPlayerProgrress = null;
+    var $playedBar = null;
+    var $controlBtn = null;
 
     var checkForAudio = function(slideIndex) {
         for (var i = 0; i < COPY.content.length; i++) {
@@ -16,11 +21,12 @@ var AUDIO = (function() {
                 $controlBtn = $currentSlide.find('.control-btn');
 
                 $thisPlayerProgress.on('click', onSeekBarClick);
+                $controlBtn.on('click', onControlBtnClick);
 
                 _playAudio();
                 break;
             } else {
-                _pauseAudio();
+                // _pauseAudio();
             }
         }
     }
@@ -93,9 +99,20 @@ var AUDIO = (function() {
         ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
+    var onControlBtnClick = function(e) {
+        e.preventDefault();
+        toggleAudio();
+        ANALYTICS.trackEvent('audio-pause-button');
+        e.stopPropagation();
+    }
+
     return {
         'checkForAudio': checkForAudio,
         'setupAudio': setupAudio,
-        'toggleAudio': toggleAudio
     }
 }());
+
+$(document).ready(function() {
+    $audioPlayer = $('#audio-player');
+    AUDIO.setupAudio();
+});
