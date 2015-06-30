@@ -15,6 +15,8 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -149,6 +151,18 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+
+    if (APP_CONFIG.AUDIO) {
+        AUDIO.checkForAudio(toIndex);
+    }
+    if (APP_CONFIG.VIDEO) {
+        VIDEO.checkForVideo(toIndex);
+    }
+    if (APP_CONFIG.FILMSTRIP) {
+        FILMSTRIP.clearFilmstrip(fromIndex);
+        FILMSTRIP.animateFilmstrip(toIndex);
+    }
+
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
 }
@@ -310,7 +324,6 @@ var resetArrows = function() {
         'left': 0
     });
 }
-
 
 $(document).ready(function() {
     $document = $(document);

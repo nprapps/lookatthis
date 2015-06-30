@@ -1,5 +1,10 @@
+var $audioPlayer = null;
+
 var AUDIO = (function() {
     var audioURL = null;
+    var $thisPlayerProgrress = null;
+    var $playedBar = null;
+    var $controlBtn = null;
 
     var checkForAudio = function(slideIndex) {
         for (var i = 0; i < COPY.content.length; i++) {
@@ -8,19 +13,21 @@ var AUDIO = (function() {
 
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
-
             if (loopId === $currentSlide.attr('id') && filename !== null) {
-                audioURL = ASSETS_PATH + 'audio/' + filename;
+                audioURL = ASSETS_PATH + filename;
                 $thisPlayerProgress = $currentSlide.find('.player-progress');
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
 
                 $thisPlayerProgress.on('click', onSeekBarClick);
+                $controlBtn.on('click', onControlBtnClick);
 
                 _playAudio();
                 break;
             } else {
-                _pauseAudio();
+                if ($audioPlayer.data().jPlayer.status.paused === false) {
+                    _pauseAudio();
+                }
             }
         }
     }
@@ -39,6 +46,7 @@ var AUDIO = (function() {
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
         }).jPlayer('play');
+        console.log($audioPlayer);
         $controlBtn.removeClass('play').addClass('pause');
     }
 
@@ -93,9 +101,20 @@ var AUDIO = (function() {
         ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
+    var onControlBtnClick = function(e) {
+        e.preventDefault();
+        toggleAudio();
+        ANALYTICS.trackEvent('audio-pause-button');
+        e.stopPropagation();
+    }
+
     return {
         'checkForAudio': checkForAudio,
         'setupAudio': setupAudio,
-        'toggleAudio': toggleAudio
     }
 }());
+
+$(document).ready(function() {
+    $audioPlayer = $('#audio-player');
+    AUDIO.setupAudio();
+});

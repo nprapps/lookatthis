@@ -13,15 +13,15 @@
     <!-- CSS -->
     {{ CSS.push('less/app.less') }}
 
-    {% if COPY.config.audio[1] == 'on' %}
+    {% if AUDIO %}
     {{ CSS.push('less/audio.less') }}
     {% endif %}
 
-    {% if COPY.config.video[1] == 'on' %}
+    {% if VIDEO %}
     {{ CSS.push('less/video.less') }}
     {% endif %}
 
-    {% if COPY.config.filmstrip[1] == 'on' %}
+    {% if FILMSTRIP %}
     {{ CSS.push('less/filmstrip.less') }}
     {% endif %}
 
@@ -52,16 +52,16 @@
     {{ JS.push('js/lib/imgLiquid.js') }}
     {{ JS.push('js/lib/deck.core.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
-    {% if COPY.config.audio[1] == 'on' %}
+    {% if AUDIO %}
     {{ JS.push('js/lib/jquery.jplayer.min.js') }}
     {{ JS.push('js/audio.js') }}
     {% endif %}
 
-    {% if COPY.config.filmstrip[1] == 'on' %}
+    {% if FILMSTRIP %}
     {{ JS.push('js/filmstrip.js') }}
     {% endif %}
 
-    {% if COPY.config.video[1] == 'on' %}
+    {% if VIDEO %}
     {{ JS.push('js/video.js') }}
     {% endif %}
 
