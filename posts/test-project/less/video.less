@@ -1,0 +1,89 @@
+@import "./lib/prefixer";
+.video-bg > video {
+    width: 100%;
+    height: auto;
+}
+.no-touch .video-bg > video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // z-index: -1;
+}
+
+/* 1. No object-fit support: */
+@media (min-aspect-ratio: 16/9) {
+    .no-touch .video-bg > video { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .no-touch .video-bg > video { width: 300%; left: -100%; }
+}
+.no-touch .video-bg > video {
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.touch .video-bg {
+    padding: 5px 5px 0 5px;
+    background-color: #fff;
+
+    .controls {display: none;}
+
+}
+
+.video-bg .controls {
+    bottom: 50px;
+
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        background-color: #fff;
+        color: #000;
+
+        &.play{padding: 6px 0 0 13px;}
+        &.pause{padding: 6px 0 0 12px;}
+        &.pause:before {font-size: 14px;}
+        &.play:before {font-size: 14px;}
+    }
+
+    .player-progress {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 50px;
+        height: 35px;
+        max-width: 530px;
+        cursor: pointer;
+
+        &:hover {
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .total {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .total {
+            background-color: transparent;
+        }
+        .played {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            background-color: #e0e0e0;
+            width: 0;
+            height: 4px;
+            z-index: 1;
+            .transition(width 0.5s linear);
+
+            &.no-transition {
+                .transition(none);
+            }
+        }
+    }
+}

@@ -12,6 +12,19 @@
 
     <!-- CSS -->
     {{ CSS.push('less/app.less') }}
+
+    {% if COPY.config.audio[1] == 'on' %}
+    {{ CSS.push('less/audio.less') }}
+    {% endif %}
+
+    {% if COPY.config.video[1] == 'on' %}
+    {{ CSS.push('less/video.less') }}
+    {% endif %}
+
+    {% if COPY.config.filmstrip[1] == 'on' %}
+    {{ CSS.push('less/filmstrip.less') }}
+    {% endif %}
+
     {% block extra_css %}{% endblock extra_css %}
     {{ CSS.render('css/app.min.css') }}
 
@@ -22,7 +35,6 @@
 </head>
 <body class="deck-container">
     <a class="sr-only" href="#content">Skip To Content</a>
-
     {% block outer_content %}
 
     {% block header_content %}
@@ -40,6 +52,19 @@
     {{ JS.push('js/lib/imgLiquid.js') }}
     {{ JS.push('js/lib/deck.core.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
+    {% if COPY.config.audio[1] == 'on' %}
+    {{ JS.push('js/lib/jquery.jplayer.min.js') }}
+    {{ JS.push('js/audio.js') }}
+    {% endif %}
+
+    {% if COPY.config.filmstrip[1] == 'on' %}
+    {{ JS.push('js/filmstrip.js') }}
+    {% endif %}
+
+    {% if COPY.config.video[1] == 'on' %}
+    {{ JS.push('js/video.js') }}
+    {% endif %}
+
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
