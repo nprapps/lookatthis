@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'lookatthis';
-  src: url('../css/font/lookatthis.eot?61298112');
-  src: url('../css/font/lookatthis.eot?61298112#iefix') format('embedded-opentype'),
-       url('../css/font/lookatthis.woff?61298112') format('woff'),
-       url('../css/font/lookatthis.ttf?61298112') format('truetype'),
-       url('../css/font/lookatthis.svg?61298112#lookatthis') format('svg');
+  src: url('../font/lookatthis.eot?40863372');
+  src: url('../font/lookatthis.eot?40863372#iefix') format('embedded-opentype'),
+       url('../font/lookatthis.woff?40863372') format('woff'),
+       url('../font/lookatthis.ttf?40863372') format('truetype'),
+       url('../font/lookatthis.svg?40863372#lookatthis') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,46 +14,53 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'lookatthis';
-    src: url('../font/lookatthis.svg?61298112#lookatthis') format('svg');
+    src: url('../font/lookatthis.svg?40863372#lookatthis') format('svg');
   }
 }
 */
- 
+
  [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "lookatthis";
   font-style: normal;
   font-weight: normal;
   speak: none;
- 
+
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
   margin-right: .2em;
   text-align: center;
   /* opacity: .8; */
- 
+
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
-     
+
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
- 
+
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
   margin-left: .2em;
- 
+
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
- 
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
- 
-.icon-angle-right:before { content: '\e800'; } 
-.icon-angle-left:before { content: '\e801'; } 
-.icon-twitter:before { content: '\e802'; } 
-.icon-facebook:before { content: '\e803'; } 
-.icon-mail-alt:before { content: '\e804'; } 
-.icon-forward:before { content: '\e805'; } 
-.icon-home:before { content: '\e806'; } 
+
+.icon-angle-right:before { content: '\e800'; } /* '' */
+.icon-angle-left:before { content: '\e801'; } /* '' */
+.icon-twitter:before { content: '\e802'; } /* '' */
+.icon-facebook:before { content: '\e803'; } /* '' */
+.icon-mail-alt:before { content: '\e804'; } /* '' */
+.icon-forward:before { content: '\e805'; } /* '' */
+.icon-home:before { content: '\e806'; } /* '' */
+.icon-play:before { content: '\e807'; } /* '' */
+.icon-pause:before { content: '\e808'; } /* '' */
+.icon-replay:before { content: '\e809'; } /* '' */

@@ -13,9 +13,8 @@ var AUDIO = (function() {
 
             var $currentSlide = $slides.eq(slideIndex);
             var loopId = 'slide-' + rowAnchor;
-
             if (loopId === $currentSlide.attr('id') && filename !== null) {
-                audioURL = ASSETS_PATH + 'audio/' + filename;
+                audioURL = ASSETS_PATH + filename;
                 $thisPlayerProgress = $currentSlide.find('.player-progress');
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
@@ -26,7 +25,9 @@ var AUDIO = (function() {
                 _playAudio();
                 break;
             } else {
-                // _pauseAudio();
+                if ($audioPlayer.data().jPlayer.status.paused === false) {
+                    _pauseAudio();
+                }
             }
         }
     }
@@ -45,6 +46,7 @@ var AUDIO = (function() {
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
         }).jPlayer('play');
+        console.log($audioPlayer);
         $controlBtn.removeClass('play').addClass('pause');
     }
 
