@@ -229,6 +229,10 @@ Note that `myimage.jpg` is relative to the assets directory.
 
 The default new post template only includes commonly used icon fonts for performance. To use all of FontAwesome, uncomment the `@import` statement in `app.less` and comment out the custom font. You'll also need to comment out and uncomment the next and previous control arrow button rules later in `app.less`. 
 
+### Turning on extra features
+
+Each post template comes with the code necessary to handle audio, video and filmstrips, but it is not turned on by default. To enable these features, set the appropriate variables to `True` in `post_config.py`.
+
 ### Deploying a post
 
 When deploying a post, make sure the deploy slug is what you want it to be. The slug defaults to the name of the folder, but can be overridden in `posts/$SLUG/post_config.py`. Define the variable `DEPLOY_SLUG` to what you want the published slug to be.
