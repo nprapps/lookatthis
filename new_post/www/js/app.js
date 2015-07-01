@@ -25,6 +25,7 @@ var startTouch;
 var lastSlideExitEvent;
 var callToActionTest;
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -95,6 +96,9 @@ var lazyLoad = function(slideIndex) {
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
+        if (APP_CONFIG.FILMSTRIP) {
+            FILMSTRIP.initFilmstrip(slides[i])
+        }
     };
 
 }
@@ -159,6 +163,18 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+
+    if (APP_CONFIG.AUDIO) {
+        AUDIO.checkForAudio(toIndex);
+    }
+    if (APP_CONFIG.VIDEO) {
+        VIDEO.checkForVideo(toIndex);
+    }
+    if (APP_CONFIG.FILMSTRIP) {
+        FILMSTRIP.clearFilmstrip(fromIndex);
+        FILMSTRIP.animateFilmstrip(toIndex);
+    }
+
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     if (toIndex === $slides.length - 1) {
@@ -243,15 +259,6 @@ var onPreviousArrowClick = function() {
      */
     lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
-}
-
-
-var onClippyCopy = function(e) {
-    /*
-     * Text copied to clipboard.
-     */
-    alert('Copied to your clipboard!');
-    ANALYTICS.copySummary();
 }
 
 var onTouchStart = function(e) {
@@ -380,7 +387,6 @@ var onSupportBtnClick = function(e) {
 var onDislikeEmailClick = function() {
     ANALYTICS.trackEvent('email-btn-click');
 }
-
 
 $(document).ready(function() {
     $document = $(document);
