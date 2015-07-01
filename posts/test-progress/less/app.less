@@ -1,0 +1,391 @@
+@import "./lib/bootstrap/bootstrap";
+
+/*
+* Fonts: To use FontAwesome, uncomment font-awesome, comment out the custom font,
+* and tweak the controlArrow CSS rules later in this file.
+*/
+@import "./lib/lookatthis-font.less";
+//@import "./lib/font-awesome/font-awesome";
+
+@import "./lib/prefixer";
+@import "./share-modal.less";
+@import "./slides/conclusion.less";
+@import "./slides/framed-text.less";
+@import "./slides/full-bleed.less";
+@import "./slides/next-post.less";
+@import "./slides/side-by-side.less";
+@import "./slides/start.less";
+@import "./slides/titlecard.less";
+@import "./nudges.less";
+
+// Global variables
+@img-root: "../assets";
+
+@darker-overlay: rgba(0,0,0,0.7);
+@black-screen: rgba(0,0,0,0.8);
+@look-pink: #F60062;
+@side-by-side-screen: rgba(295, 37, 115, 0.6);
+@caption-screen-dark: rgba(175, 0, 71, 0.7);
+@pink: rgba(200, 66, 119, 1);
+@caption-screen-light: rgba(153, 9, 71, 0.7);
+
+@small-type: 13px;
+
+// Breakpoints
+@screen-mega-above: ~"screen and (min-width: 1440px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.deck-container {
+    position: relative;
+    min-height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.js .deck-container {
+    visibility: hidden;
+}
+.ready .deck-container {
+    visibility: visible;
+}
+.touch .deck-container {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+}
+
+.deck-loading {
+    display: none;
+}
+
+.slide {
+    background-color: #000;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    opacity: 0;
+    /*min-height: 0;*/
+    &.deck-current {
+        opacity: 1;
+    }
+    &.fade {
+        .transition(opacity 1s ease-in);
+    }
+}
+
+.imgLiquid {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: -1;
+}
+
+.deck-current {
+    z-index: 99;
+}
+
+.deck-child-current .slide {
+    visibility: hidden;
+}
+.deck-child-current .deck-previous, .deck-child-current .deck-before, .deck-child-current .deck-current {
+    visibility: visible;
+}
+
+body {
+    color: #fff;
+    font-family: "Gotham SSm", helvetica, arial, sans-serif;
+    font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #111;
+}
+
+h1,h2,h3,h4,h5,h6,p,ul,ol,li {
+    font-family: "Gotham", helvetica, arial, sans-serif;
+}
+
+.animated {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+          animation-name: shake;
+}
+
+.primary-navigation {
+    .controlArrow {
+        z-index: 100;
+        position: fixed;
+        top: 40%;
+        width: 50px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 47px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: none;
+        cursor: pointer;
+        opacity: .3;
+
+        @media @screen-small-above {
+            top: 40%;
+
+            height: 100px;
+            font-size: 30px;
+            border: 3px solid #fff;
+
+            &:hover {
+                background-color: #fff;
+                color: #000;
+                opacity: .9;
+            }
+        }
+
+        @media @screen-small {
+            &:active {
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    .controlArrow.prev {
+        left: 0;
+
+        &:before {
+            font-family: "lookatthis";
+            content: '\e801';
+            display: block;
+        }
+
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
+            font-family: "FontAwesome";
+            content: '\f104';
+            display: block;
+        }
+        */
+
+        @media @screen-small-above {
+            margin-left: 10px;
+            padding-top: 25px;
+        }
+    }
+    .controlArrow.next {
+        right: 0;
+        padding: 0 0 0 5px;
+
+        &:before {
+            font-family: "lookatthis";
+            content: "\e800";
+            display: block;
+        }
+
+        /* Uncomment to use FontAwesome */
+        /*
+        &:before {
+            font-family: "FontAwesome";
+            content: "\f105";
+            display: block;
+        }
+        */
+
+        @media @screen-small-above {
+            margin-right: 10px;
+            padding-top: 25px;
+        }
+    }
+}
+
+.primary-navigation .controlArrow.titlecard-nav {
+    opacity: .7;
+    @media @screen-small-above {
+        opacity: 1;
+    }
+}
+
+// default slide styles
+#superContainer {
+    height: 100%;
+    position: relative;
+    /* Touch detection for Windows 8 */
+    -ms-touch-action: none;
+}
+.section {
+    visibility: hidden;
+    opacity: 0;
+    .transition(opacity 3s ease);
+
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+
+    .slides {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+
+        //transition between slides
+        .instant {
+            .transition(all 0 ease-in);
+        }
+    }
+
+    /*.slide {*/
+        /*float: left;*/
+        /*height: 100%;*/
+        /*display: block;*/
+        /*overflow: auto;*/
+        /*opacity: 0;*/
+        /*&.deck-current {*/
+            /*opacity: 1;*/
+        /*}*/
+        /*&.fade {*/
+            /*.transition(opacity 1s ease-in);*/
+        /*}*/
+    /*}*/
+}
+
+//full-bleed background images on sections and slides
+.section, .slide {
+    .background-size(cover);
+    background-position: center center;
+}
+
+// full width container within a section or slide
+.full-block {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+
+    .full-block-cell {
+        display: table-cell;
+        position: relative;
+        vertical-align: top;
+        padding-top: 20px;
+        @media @screen-small-above {
+            padding-top: 0;
+            vertical-align: middle;
+        }
+        width: 100%;
+    }
+
+
+    .full-block-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        @media @screen-small-above {
+             padding: 20px 100px;
+        }
+    }
+}
+
+img {
+    max-width: 100%;
+}
+
+.dark-overlay .full-block {
+    &:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        height: 100%;
+        z-index: -1;
+    }
+}
+
+.credit {
+    font-family: helvetica, arial, sans-serif;
+    padding-right: 20px;
+    text-align: right;
+    font-size: 10px;
+    color: #fff;
+    line-height: 14px;
+    @media @screen-small-above {
+         position: absolute;
+         bottom: 10px;
+         right: 25px;
+         font-size: 12px;
+         max-width: 1000px;
+    }
+}

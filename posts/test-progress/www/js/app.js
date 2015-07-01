@@ -177,7 +177,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     if (APP_CONFIG.PROGRESS_BAR) {
         PROGRESS_BAR.animateProgress(toIndex);
     }
-
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     if (toIndex === $slides.length - 1) {
