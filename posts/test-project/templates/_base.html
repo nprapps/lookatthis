@@ -25,6 +25,10 @@
     {{ CSS.push('less/filmstrip.less') }}
     {% endif %}
 
+    {% if PROGRESS_BAR %}
+    {{ CSS.push('less/progress-bar.less') }}
+    {% endif %}
+
     {% block extra_css %}{% endblock extra_css %}
     {{ CSS.render('css/app.min.css') }}
 

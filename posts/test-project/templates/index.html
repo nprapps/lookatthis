@@ -19,6 +19,12 @@
 <div id="audio-player"></div>
 {% endif %}
 
+{% if PROGRESS_BAR %}
+<div class="progress-indicator">
+    <div class="current-progress"></div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block wide_content %}
