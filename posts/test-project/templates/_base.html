@@ -70,6 +70,10 @@
     {{ JS.push('js/video.js') }}
     {% endif %}
 
+    {% if PROGRESS_BAR %}
+    {{ JS.push('js/progress-bar.js') }}
+    {% endif %}
+
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}

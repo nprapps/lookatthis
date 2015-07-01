@@ -151,18 +151,6 @@ var showNavigation = function(index) {
     }
 }
 
-var animateProgress = function(index) {
-    var totalSlides = $slides.length;
-    var percentage = (index + 1) / totalSlides;
-    $currentProgress.css('width', percentage * 100 + '%');
-
-    if (index === 0) {
-        $progressIndicator.width(0);
-    } else {
-        $progressIndicator.width('100%');
-    }
-}
-
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called transitioning between slides.
@@ -183,7 +171,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         FILMSTRIP.animateFilmstrip(toIndex);
     }
     if (APP_CONFIG.PROGRESS_BAR) {
-        animateProgress(toIndex);
+        PROGRESS_BAR.animateProgress(toIndex);
     }
 
     ANALYTICS.exitSlide(fromIndex.toString());
@@ -359,8 +347,6 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
-    $progressIndicator = $('.progress-indicator');
-    $currentProgress = $('.current-progress');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
