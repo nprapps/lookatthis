@@ -14,14 +14,6 @@ var $thisPlayerProgress;
 var $playedBar;
 var $ambientPlayer;
 var $skipIntroBtn;
-var $likeStory;
-var $likeStoryButtons;
-var $facebook;
-var $facebookBtn;
-var $support;
-var $supportBtn;
-var $didNotLike;
-var $dislikeEmail;
 
 
 var mobileSuffix;
@@ -386,64 +378,6 @@ var onSkipIntroBtnClick = function(e) {
     e.stopPropagation();
 }
 
-var determineTests = function() {
-    var possibleCallToActionTests = ['facebook', 'support'];
-
-    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
-}
-
-var getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-var onLikeStoryButtonsClick = function(e) {
-    e.preventDefault();
-
-    $likeStory.hide();
-
-    if ($(this).hasClass('yes')) {
-        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
-
-        if (callToActionTest === 'facebook') {
-            $facebook.show();
-        } else {
-            $emailStory.show();
-        }
-    } else {
-        ANALYTICS.trackEvent('like-story-no');
-        $didNotLike.show();
-    }
-}
-
-var onFacebookBtnClick = function(e) {
-    e.preventDefault();
-
-    var $this = $(this);
-    var link = $this.attr('href');
-
-    ANALYTICS.trackEvent('facebook-share');
-
-    window.top.location = link
-    return true;
-}
-
-var onSupportBtnClick = function(e) {
-    e.preventDefault();
-
-    var $this = $(this);
-    var link = $this.attr('href');
-
-    ANALYTICS.trackEvent('support-btn-click');
-
-    window.top.location = link
-    return true;
-}
-
-var onDislikeEmailClick = function() {
-    ANALYTICS.trackEvent('email-btn-click');
-}
-
-
 
 $(document).ready(function() {
     $document = $(document);
@@ -461,14 +395,6 @@ $(document).ready(function() {
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
     $skipIntroBtn = $('.skip-intro');
-    $likeStory = $('.like-story');
-    $likeStoryButtons = $('.btn-like-story');
-    $facebook = $('.facebook');
-    $facebookBtn = $('.btn-facebook');
-    $support = $('.support');
-    $supportBtn = $('.btn-support');
-    $didNotLike = $('.did-not-like');
-    $dislikeEmail = $('.dislike-email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -477,11 +403,6 @@ $(document).ready(function() {
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
     $skipIntroBtn.on('click', onSkipIntroBtnClick);
-    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
-    $facebookBtn.on('click', onFacebookBtnClick);
-    $supportBtn.on('click', onSupportBtnClick);
-    $dislikeEmail.on('click', onDislikeEmailClick);
-
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
 
@@ -510,7 +431,6 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
-    determineTests();
     AUDIO.setupAmbientPlayer();
     VIDEO.setupVideo();
 
