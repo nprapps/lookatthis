@@ -443,6 +443,7 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
+    determineTests();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);

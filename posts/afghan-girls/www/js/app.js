@@ -14,12 +14,22 @@ var $thisPlayerProgress;
 var $playedBar;
 var $ambientPlayer;
 var $skipIntroBtn;
+var $likeStory;
+var $likeStoryButtons;
+var $facebook;
+var $facebookBtn;
+var $support;
+var $supportBtn;
+var $didNotLike;
+var $dislikeEmail;
+
 
 var mobileSuffix;
 var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var callToActionTest;
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var SKIP_INTRO = (window.location.search.indexOf('skipintro') >= 0);
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
@@ -164,6 +174,9 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     document.activeElement.blur();
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    if (toIndex === $slides.length - 1) {
+        ANALYTICS.trackEvent('tests-run', callToActionTest);
+    }
 }
 
 var onStartCardButtonClick = function() {
@@ -373,6 +386,64 @@ var onSkipIntroBtnClick = function(e) {
     e.stopPropagation();
 }
 
+var determineTests = function() {
+    var possibleCallToActionTests = ['facebook', 'support'];
+
+    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
+}
+
+var getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var onLikeStoryButtonsClick = function(e) {
+    e.preventDefault();
+
+    $likeStory.hide();
+
+    if ($(this).hasClass('yes')) {
+        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
+
+        if (callToActionTest === 'facebook') {
+            $facebook.show();
+        } else {
+            $emailStory.show();
+        }
+    } else {
+        ANALYTICS.trackEvent('like-story-no');
+        $didNotLike.show();
+    }
+}
+
+var onFacebookBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('facebook-share');
+
+    window.top.location = link
+    return true;
+}
+
+var onSupportBtnClick = function(e) {
+    e.preventDefault();
+
+    var $this = $(this);
+    var link = $this.attr('href');
+
+    ANALYTICS.trackEvent('support-btn-click');
+
+    window.top.location = link
+    return true;
+}
+
+var onDislikeEmailClick = function() {
+    ANALYTICS.trackEvent('email-btn-click');
+}
+
+
 
 $(document).ready(function() {
     $document = $(document);
@@ -390,6 +461,14 @@ $(document).ready(function() {
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
     $skipIntroBtn = $('.skip-intro');
+    $likeStory = $('.like-story');
+    $likeStoryButtons = $('.btn-like-story');
+    $facebook = $('.facebook');
+    $facebookBtn = $('.btn-facebook');
+    $support = $('.support');
+    $supportBtn = $('.btn-support');
+    $didNotLike = $('.did-not-like');
+    $dislikeEmail = $('.dislike-email');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -398,6 +477,10 @@ $(document).ready(function() {
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
     $skipIntroBtn.on('click', onSkipIntroBtnClick);
+    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
+    $facebookBtn.on('click', onFacebookBtnClick);
+    $supportBtn.on('click', onSupportBtnClick);
+    $dislikeEmail.on('click', onDislikeEmailClick);
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
@@ -427,6 +510,7 @@ $(document).ready(function() {
 
     onPageLoad();
     resize();
+    determineTests();
     AUDIO.setupAmbientPlayer();
     VIDEO.setupVideo();
 
