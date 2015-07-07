@@ -157,7 +157,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     * Called transitioning between slides.
     */
     lazyLoad(toIndex);
-    AUDIO.checkForAudio(toIndex);
     VIDEO.checkForVideo(toIndex);
     FILMSTRIP.clearFilmstrip(fromIndex);
     FILMSTRIP.animateFilmstrip(toIndex);
@@ -352,13 +351,6 @@ var resetArrows = function() {
     });
 }
 
-var onAudioControlBtnClick = function(e) {
-    e.preventDefault();
-    AUDIO.toggleNarrativeAudio();
-    ANALYTICS.trackEvent('audio-pause-button');
-    e.stopPropagation();
-}
-
 var onVideoControlBtnClick = function(e) {
     var $this = $(this);
     e.preventDefault();
@@ -384,7 +376,6 @@ $(document).ready(function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next');
-    $audioControlBtn = $('.narrative-audio .control-btn');
     $videoControlBtn = $('.video .control-btn');
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
@@ -392,7 +383,6 @@ $(document).ready(function() {
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $audioControlBtn.on('click', onAudioControlBtnClick);
     $videoControlBtn.on('click', onVideoControlBtnClick);
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
