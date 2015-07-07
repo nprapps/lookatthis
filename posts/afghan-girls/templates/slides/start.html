@@ -6,8 +6,8 @@
     </div>
     <h1>{{ row.text1|smarty }}</h1>
     <h2>{{ row.text2|smarty }}</h2>
-    <h3>{{ COPY.post_metadata.author|smarty }}</h3>
-    <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
+    {% if COPY.post_metadata.author %} <h3>{{ COPY.post_metadata.author|smarty }}</h3> {% endif %}
+    {% if COPY.post_metadata.publish_date %} <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4> {% endif %}
 
     <button class="btn btn-go">{{ row.text3 }}</button>
 
