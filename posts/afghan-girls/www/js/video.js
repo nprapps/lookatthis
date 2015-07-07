@@ -13,6 +13,12 @@ var VIDEO = (function() {
         $video.on('ended', VIDEO.onVideoEnded);
         $video.on('timeupdate', VIDEO.onVideoTimeupdate);
         $videoPlayerProgress.on('click', onSeekBarClick);
+
+        // fix for IE11
+        if (!isTouch) {
+            $video.parents('.full-block-content').width(w);
+            $video.parents('.full-block-content').height(h);
+        }
     }
 
     var checkForVideo = function(index) {
