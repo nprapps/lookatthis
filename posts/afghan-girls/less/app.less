@@ -86,7 +86,9 @@ html, body {
         opacity: 1;
     }
     &.fade {
-        .transition(opacity 1s ease-in);
+        .no-touch & {
+            .transition(opacity 1s ease-in);
+        }
     }
 }
 
