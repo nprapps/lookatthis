@@ -69,9 +69,16 @@ var VIDEO = (function() {
 
     var onSeekBarClick = function(e) {
         var duration = video.duration;
-        var percentage = e.offsetX / $(this).width();
+
+        var x;
+        if (e.offsetX) {
+            x = e.offsetX
+        } else {
+            x = e.pageX - $(this).offset().left;
+        }
+        var percentage = x / $(this).width();
         var clickedPosition = duration * percentage;
-        video.currentTime = clickedPosition;
+        video.currentTime = parseFloat(clickedPosition);
         ANALYTICS.trackEvent('video-seek');
     }
 
