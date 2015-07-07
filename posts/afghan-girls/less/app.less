@@ -512,8 +512,11 @@ img {
 
 .imgLiquid .frame {
     opacity: 0;
-    object-fit: cover;
-    height: 100%;
+    height: auto;
+    .object-fit & {
+        object-fit: cover;
+        height: 100%;
+    }
     width: 100%;
     position: absolute;
     top: 0;
