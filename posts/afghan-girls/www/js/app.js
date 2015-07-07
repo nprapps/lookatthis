@@ -86,13 +86,6 @@ var lazyLoad = function(slideIndex) {
         $slides.eq(slideIndex + 2)
     ];
 
-    // Mobile suffix should be blank by default.
-    mobileSuffix = '';
-
-    if (w < 769) {
-        // mobileSuffix = '-sq';
-    }
-
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
         FILMSTRIP.initFilmstrip(slides[i])
@@ -106,6 +99,13 @@ var loadImages = function($slide) {
     */
     var $container = $slide.find('.imgLiquid');
     var bgimg = $container.children('img.liquid');
+
+    // Mobile suffix should be blank by default.
+    mobileSuffix = '';
+
+    if (w < 769 && $slide.hasClass('mobile-crop')) {
+        mobileSuffix = '-sq';
+    }
 
     if (bgimg.data('bgimage')) {
         var image_filename = bgimg.data('bgimage').split('.')[0];
@@ -176,13 +176,7 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
-    if (SKIP_INTRO) {
-        $.deck('go', 2);
-        var newURL = removeURLParameter(window.location.href, 'skipintro');
-        window.history.pushState('', '', newURL);
-    } else {
-        $.deck('next');
-    }
+    $.deck('next');
 }
 
 var removeURLParameter = function(url, parameter) {
@@ -428,6 +422,12 @@ $(document).ready(function() {
     $.deck($slides, {
         touch: { swipeTolerance: swipeTolerance }
     });
+
+    if (SKIP_INTRO) {
+        $.deck('go', 2);
+        var newURL = removeURLParameter(window.location.href, 'skipintro');
+        window.history.pushState('', '', newURL);
+    }
 
     onPageLoad();
     resize();
