@@ -413,16 +413,16 @@ $(document).ready(function() {
         touch: { swipeTolerance: swipeTolerance }
     });
 
+    onPageLoad();
+    resize();
+    VIDEO.setupVideo();
+
     if (SKIP_INTRO) {
+        $slides.removeClass('fade');
         $.deck('go', 2);
         var newURL = removeURLParameter(window.location.href, 'skipintro');
         window.history.pushState('', '', newURL);
     }
-
-    onPageLoad();
-    resize();
-    AUDIO.setupAmbientPlayer();
-    VIDEO.setupVideo();
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
