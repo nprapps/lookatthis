@@ -23,6 +23,8 @@ var VIDEO = (function() {
         if (!isTouch) {
             $video.parents('.full-block-content').width(w);
             $video.parents('.full-block-content').height(h);
+        } else {
+            $video.attr('controls', true);
         }
     }
 
