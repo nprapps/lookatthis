@@ -3,6 +3,11 @@ var VIDEO = (function() {
     var video;
     var $videoPlayerProgress;
     var $videoPlayedBar;
+    var fourFiveSeconds = false;
+    var twentyFiveComplete = false;
+    var fiftyComplete = false;
+    var seventyFiveComplete = false;
+    var completed = false;
 
     var setupVideo = function() {
         $video = $('video');
@@ -57,7 +62,7 @@ var VIDEO = (function() {
         if (isTouch) {
             video.webkitExitFullscreen();
         }
-        ANALYTICS.trackEvent('video-ended');
+        ANALYTICS.trackEvent('video-completion', '1');
     }
 
     var onVideoTimeupdate = function() {
@@ -70,6 +75,28 @@ var VIDEO = (function() {
             if (percentage === 1) {
                 $videoControlBtn.removeClass('pause').addClass('play');
             }
+        }
+
+        _trackCompletion(position, duration);
+    }
+
+    var _trackCompletion = function(position, duration) {
+        var completion = position / duration;
+
+        if (position > 5 && !fourFiveSeconds) {
+            ANALYTICS.trackEvent('video-five-seconds');
+            fourFiveSeconds = true;
+        }
+
+        if (completion >= 0.25 && !twentyFiveComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.25');
+            twentyFiveComplete = true;
+        } else if (completion >= 0.5 && !fiftyComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.50');
+            fiftyComplete = true;
+        } else if (completion >= 0.75 && !seventyFiveComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.75');
+            seventyFiveComplete = true;
         }
     }
 
