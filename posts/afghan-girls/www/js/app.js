@@ -361,6 +361,7 @@ var onVideoControlBtnClick = function(e) {
 var onSkipIntroBtnClick = function(e) {
     e.preventDefault();
     $.deck('next');
+    ANALYTICS.trackEvent('skip-video');
     e.stopPropagation();
 }
 
