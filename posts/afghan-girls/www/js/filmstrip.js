@@ -44,11 +44,14 @@ var FILMSTRIP = (function() {
                 var $frames = $filmstripContainer.find('.frame');
                 animating = true;
                 animation = setInterval(function() {
-                    $frames.eq(imageCounter).css('opacity', 1);
-                    imageCounter = imageCounter + 1;
-                    if (imageCounter === $frames.length) {
-                        clearInterval(animation);
-                        animating = false;
+                    console.log($slides.eq(index).css('opacity'));
+                    if ($slides.eq(index).css('opacity') === '1') {
+                        $frames.eq(imageCounter).css('opacity', 1);
+                        imageCounter = imageCounter + 1;
+                        if (imageCounter === $frames.length) {
+                            clearInterval(animation);
+                            animating = false;
+                        }
                     }
                 }, 200);
             }
