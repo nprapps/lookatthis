@@ -355,7 +355,7 @@ var onLikeStoryButtonsClick = function(e) {
         if (callToActionTest === 'facebook') {
             $facebook.show();
         } else {
-            $emailStory.show();
+            $support.show();
         }
     } else {
         ANALYTICS.trackEvent('like-story-no');
