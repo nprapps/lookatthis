@@ -14,6 +14,14 @@ var VIDEO = (function() {
         $video.on('timeupdate', VIDEO.onVideoTimeupdate);
         $videoPlayerProgress.on('click', onSeekBarClick);
         $videoControlBtn.on('click', onVideoControlBtnClick);
+
+        // fix for IE11
+        if (!isTouch) {
+            $video.parents('.full-block-content').width(w);
+            $video.parents('.full-block-content').height(h);
+        } else {
+            $video.attr('controls', true);
+        }
     }
 
     var checkForVideo = function(index) {
@@ -71,13 +79,43 @@ var VIDEO = (function() {
                 $videoControlBtn.removeClass('pause').addClass('play');
             }
         }
+
+        _trackCompletion(position, duration);
+    }
+
+    var _trackCompletion = function(position, duration) {
+        var completion = position / duration;
+
+        if (position > 5 && !fourFiveSeconds) {
+            ANALYTICS.trackEvent('video-five-seconds');
+            fourFiveSeconds = true;
+        }
+
+        if (completion >= 0.25 && !twentyFiveComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.25');
+            twentyFiveComplete = true;
+        } else if (completion >= 0.5 && !fiftyComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.50');
+            fiftyComplete = true;
+        } else if (completion >= 0.75 && !seventyFiveComplete) {
+            ANALYTICS.trackEvent('video-completion', '0.75');
+            seventyFiveComplete = true;
+        }
     }
 
     var onSeekBarClick = function(e) {
         var duration = video.duration;
-        var percentage = e.offsetX / $(this).width();
+
+        var x;
+        if (e.offsetX) {
+            x = e.offsetX
+        } else {
+            x = e.pageX - $(this).offset().left;
+        }
+
+        var percentage = x / $(this).width();
         var clickedPosition = duration * percentage;
-        video.currentTime = clickedPosition;
+        video.currentTime = parseFloat(clickedPosition);
         ANALYTICS.trackEvent('video-seek');
     }
 
