@@ -180,28 +180,6 @@ var onStartCardButtonClick = function() {
     $.deck('next');
 }
 
-var removeURLParameter = function(url, parameter) {
-    var urlParts= url.split('?');
-    if (urlParts.length >= 2) {
-        var prefix = encodeURIComponent(parameter);
-        var params = urlParts[1].split(/[&;]/g);
-
-        for (var i = params.length; i-- > 0;) {
-            if (params[i].lastIndexOf(prefix, 0) !== -1) {
-                params.splice(i, 1);
-            }
-        }
-
-        url = urlParts[0];
-        if (params.length > 0) {
-            url = url + '?' + params.join('&');
-        }
-        return url;
-    } else {
-        return url;
-    }
-}
-
 var onDocumentKeyDown = function(e) {
     /*
     * Called when key is pressed
@@ -212,6 +190,10 @@ var onDocumentKeyDown = function(e) {
         lastSlideExitEvent = 'exit-keyboard';
         ANALYTICS.useKeyboardNavigation();
     }
+    if (e.keyCode === 32 && $slides.filter('.deck-current').hasClass('video')) {
+        VIDEO.toggleVideo($videoControlBtn);
+    }
+
     return true;
 }
 
@@ -428,7 +410,14 @@ $(document).ready(function() {
         Modernizr.history = null;
     }
 
-    $.deck($slides);
+    $.deck($slides, {
+        keys: {
+           // enter, space, page down, right arrow, down arrow
+           next: [13, 34, 39, 40],
+           // backspace, page up, left arrow, up arrow
+           previous: [8, 33, 37, 38]
+        },
+    });
 
     onPageLoad();
     resize();
