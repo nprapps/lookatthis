@@ -24,7 +24,6 @@ var startTouch;
 var lastSlideExitEvent;
 var callToActionTest;
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
-var SKIP_INTRO = (window.location.search.indexOf('skipintro') >= 0);
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var remove;
 var videoElevenSeconds = false;
@@ -434,13 +433,6 @@ $(document).ready(function() {
     onPageLoad();
     resize();
     VIDEO.setupVideo();
-
-    if (SKIP_INTRO) {
-        $slides.removeClass('fade');
-        $.deck('go', 2);
-        var newURL = removeURLParameter(window.location.href, 'skipintro');
-        window.history.pushState('', '', newURL);
-    }
 
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
