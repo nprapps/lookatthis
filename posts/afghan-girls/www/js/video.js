@@ -76,6 +76,8 @@ var VIDEO = (function() {
         if (isTouch) {
             video.webkitExitFullscreen();
         }
+        $arrows.css('opacity', 0.3)
+
         ANALYTICS.trackEvent('video-completion', '1');
     }
 

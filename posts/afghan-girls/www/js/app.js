@@ -220,7 +220,7 @@ var onSlideClick = function(e) {
     /*
     * Advance on slide tap on touch devices
     */
-    if (isTouch && !$(e.target).is('button') && !$('.deck-current').hasClass('video')) {
+    if (isTouch && !$(e.target).is('button')) {
         lastSlideExitEvent = 'exit-tap';
         $.deck('next');
     }
@@ -296,10 +296,6 @@ var onTouchMove = function(e) {
     /*
      * Track finger swipe
      */
-    if ($('.deck-current').hasClass('video')) {
-        return false;
-    }
-
     $.each(e.originalEvent.changedTouches, function(i, touch) {
         if (!startTouch || touch.identifier !== startTouch.identifier) {
             return true;
