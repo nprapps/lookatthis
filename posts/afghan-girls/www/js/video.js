@@ -34,11 +34,15 @@ var VIDEO = (function() {
             if (!isTouch) {
                 video.play();
                 $videoControlBtn.removeClass('play').addClass('pause');
-
                 if (NO_AUDIO) {
                     video.volume = 0;
                 }
 
+                // ensure controls are visible to start
+                clearInterval(remove);
+                videoElevenSeconds = false;
+                $videoControls.css('opacity', 1);
+                $arrows.css('opacity', 0.3);
                 setTimeout(function() {
                     $videoControls.css('opacity', 0);
                     if ($slides.filter('.deck-current').hasClass('video')) {
