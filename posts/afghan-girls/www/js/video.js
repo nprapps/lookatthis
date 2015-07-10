@@ -40,9 +40,12 @@ var VIDEO = (function() {
                 }
 
                 setTimeout(function() {
-                    $arrows.css('opacity', 0);
                     $videoControls.css('opacity', 0);
-                }, 6000)
+                    if ($slides.filter('.deck-current').hasClass('video')) {
+                        $arrows.css('opacity', 0);
+                    }
+                    videoElevenSeconds = true;
+                }, 11100)
             }
         } else if ($thisSlideVideo.length <= 0 && !isTouch) {
             $videos.each(function() {

@@ -27,6 +27,7 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var SKIP_INTRO = (window.location.search.indexOf('skipintro') >= 0);
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var remove;
+var videoElevenSeconds = false;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -373,10 +374,15 @@ var onVideoSlideMove = function(e) {
     if (remove) {
         clearInterval(remove);
     }
-    remove = setInterval(function() {
-        $videoControls.css('opacity', 0);
-        $arrows.css('opacity', 0);
-    }, 3000)
+
+    if (videoElevenSeconds) {
+        remove = setInterval(function() {
+            $videoControls.css('opacity', 0);
+            if ($slides.filter('.deck-current').hasClass('video')) {
+                $arrows.css('opacity', 0);
+            }
+        }, 3000)
+    }
 }
 
 
