@@ -38,6 +38,11 @@ var VIDEO = (function() {
                 if (NO_AUDIO) {
                     video.volume = 0;
                 }
+
+                setTimeout(function() {
+                    $arrows.css('opacity', 0);
+                    $videoControls.css('opacity', 0);
+                }, 6000)
             }
         } else if ($thisSlideVideo.length <= 0 && !isTouch) {
             $videos.each(function() {

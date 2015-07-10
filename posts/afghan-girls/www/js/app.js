@@ -14,7 +14,8 @@ var $thisPlayerProgress;
 var $playedBar;
 var $ambientPlayer;
 var $skipIntroBtn;
-
+var $videoSlide;
+var $videoControls;
 
 var mobileSuffix;
 var w;
@@ -25,6 +26,7 @@ var callToActionTest;
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var SKIP_INTRO = (window.location.search.indexOf('skipintro') >= 0);
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
+var remove;
 
 var completion = 0;
 var swipeTolerance = 40;
@@ -365,6 +367,18 @@ var onSkipIntroBtnClick = function(e) {
     e.stopPropagation();
 }
 
+var onVideoSlideMove = function(e) {
+    $videoControls.css('opacity', 1);
+    $arrows.css('opacity', 0.3);
+    if (remove) {
+        clearInterval(remove);
+    }
+    remove = setInterval(function() {
+        $videoControls.css('opacity', 0);
+        $arrows.css('opacity', 0);
+    }, 3000)
+}
+
 
 $(document).ready(function() {
     $document = $(document);
@@ -381,6 +395,8 @@ $(document).ready(function() {
     $ambientPlayer = $('#ambient-player');
     $videos = $('video');
     $skipIntroBtn = $('.skip-intro');
+    $videoSlide = $('.slide.video');
+    $videoControls = $('.video .controls');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -390,6 +406,7 @@ $(document).ready(function() {
     $skipIntroBtn.on('click', onSkipIntroBtnClick);
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+    $videoSlide.on('mousemove', onVideoSlideMove);
 
     if (isTouch) {
         $arrows.on('touchstart', fakeMobileHover);
