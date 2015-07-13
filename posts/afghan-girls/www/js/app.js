@@ -145,8 +145,13 @@ var showNavigation = function(index) {
     } else if ($slides.last().index() === index) {
         $arrows.show();
         $nextArrow.hide().css('right', 0);
+    } else if (index === 2) {
+        $arrows.show();
+        $previousArrow.css('opacity', 0.3);
+        $nextArrow.css('opacity', 1);
     } else {
         $arrows.show();
+        $arrows.css('opacity', 0.3);
     }
 
     if (isTouch) {
