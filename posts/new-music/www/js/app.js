@@ -152,6 +152,19 @@ var showNavigation = function(index) {
     }
 }
 
+var checkOverflow = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var slideHeight = $thisSlide.height();
+    var blockHeight = $thisSlide.find('.full-block').height();
+
+    if (blockHeight > slideHeight) {
+        $thisSlide.parents('.section').height(blockHeight);
+    } else {
+        $thisSlide.parents('.section').height(h);
+    }
+
+}
+
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called transitioning between slides.
@@ -159,6 +172,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    checkOverflow(toIndex);
     AUDIO.checkForAudio(toIndex);
     document.activeElement.blur();
     ANALYTICS.exitSlide(fromIndex.toString());
