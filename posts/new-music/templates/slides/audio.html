@@ -1,6 +1,7 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
 
+<!--
 <div class="side-by-side-wrapper">
     <div class="first-side">
         <img class="lazy-load" data-src="{{ row.foreground_media }}" alt="">
@@ -9,38 +10,32 @@
     <div class="second-side">
         
         <div class="track-description">
-                {{ row.text1|smarty }}
-            </div>
-        
-        <div class="player">
-            
-            
-            <div class="controls">
-                <div class="control-group">
-                    <a href="#" class="play control-btn"></a>
-                    <div class="player-progress">
-                        <div class="total"></div>
-                        <div class="played"></div>
-                    </div>
-                </div>
-            </div>
+            {{ row.text1|smarty }}
         </div>
-
-
-       <!-- <div class="purchase">
-            <h5>purchase album</h5>
-            <ul>
-                <li><a href="#"><i class="fa fa-external-link"></i> Amazon</a></li>
-                <li><a href="#"><i class="fa fa-external-link"></i> iTunes</a></li>
-            </ul>
-            
-            <p class="support-notice">Your purchase helps support NPR Programming. <a href="#">How?</a></p>
-        </div> -->
+        
+        
         
     </div>
 </div>
+-->
 
-
+<div class="player-wrapper">
+    <div class="track-description">
+        {{ row.text1|smarty }}
+    </div>
+    
+    <div class="player">      
+        <div class="controls">
+            <div class="control-group">
+                <a href="#" class="play control-btn"></a>
+                <div class="player-progress">
+                    <div class="total"></div>
+                    <div class="played"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}
