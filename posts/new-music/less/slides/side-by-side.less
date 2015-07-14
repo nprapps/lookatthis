@@ -1,6 +1,14 @@
 .slide.side-by-side {
+    
+    .imgLiquid {
+       -webkit-filter: blur(4px); 
+       filter: blur(4px); 
+        
+    }
+    
     .full-block {
-        // background: @darker-overlay;
+        background: rgba(0, 0, 0, 0.7);
+        color: #eee;
 
         .full-block-cell {
             padding: 20px 60px 10px 60px;
@@ -22,6 +30,7 @@
             .side-by-side-wrapper {
                 display: table;
                 margin: 0 auto;
+                
 
                 .first-side {
                     vertical-align: middle;
@@ -57,8 +66,8 @@
                     }
 
                     p {
-                        text-shadow: none;
-                        line-height: 1.5;
+                        .text-shadow(2px 2px 2px #333);
+                        line-height: 1.7;
                         font-size: @small-type;
                         @media @screen-small-above {
                             font-size: 16px;
@@ -106,7 +115,7 @@
                     img {
                         display: block;
                         height: auto;
-                        box-shadow: 7px 7px 10px #eee;
+                        //box-shadow: 7px 7px 10px #222;
                         display: block;
                         margin: 0 auto;
                         
