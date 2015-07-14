@@ -45,7 +45,7 @@ var FILMSTRIP = (function() {
                 animating = true;
                 animation = setInterval(function() {
                     if ($slides.eq(index).css('opacity') === '1') {
-                        $frames.eq(imageCounter).css('opacity', 1);
+                        $frames.eq(imageCounter).css('visibility', 'visible');
                         imageCounter = imageCounter + 1;
                         if (imageCounter === $frames.length) {
                             clearInterval(animation);
@@ -60,7 +60,7 @@ var FILMSTRIP = (function() {
     var clearFilmstrip = function(index) {
         clearInterval(animation);
         animating = false;
-        $slides.eq(index).find('.imgLiquid .frame').css('opacity', 0);
+        $slides.eq(index).find('.imgLiquid .frame').css('visibility', 'hidden');
     }
 
     return {
