@@ -1,5 +1,10 @@
 var AUDIO = (function() {
     var audioURL = null;
+    var slug = null;
+    var fourFiveSeconds = false;
+    var twentyFiveComplete = false;
+    var fiftyComplete = false;
+    var seventyFiveComplete = false;
 
     var checkForAudio = function(slideIndex) {
         for (var i = 0; i < COPY.content.length; i++) {
@@ -11,6 +16,7 @@ var AUDIO = (function() {
 
             if (loopId === $currentSlide.attr('id') && filename !== null) {
                 audioURL = ASSETS_PATH + 'audio/' + filename;
+                slug = filename;
                 $thisPlayerProgress = $currentSlide.find('.player-progress');
                 $playedBar = $currentSlide.find('.player-progress .played');
                 $controlBtn = $currentSlide.find('.control-btn');
@@ -28,6 +34,7 @@ var AUDIO = (function() {
     var setupAudio = function() {
         $audioPlayer.jPlayer({
             swfPath: 'js/lib',
+            ended: onEnded,
             loop: false,
             supplied: 'mp3',
             timeupdate: onTimeupdate,
@@ -40,6 +47,7 @@ var AUDIO = (function() {
             mp3: audioURL
         }).jPlayer('play');
         $controlBtn.removeClass('play').addClass('pause');
+        ANALYTICS.trackEvent('audio-started', slug);
     }
 
     var _pauseAudio = function() {
@@ -54,11 +62,11 @@ var AUDIO = (function() {
 
 
     var onTimeupdate = function(e) {
-        var totalTime = e.jPlayer.status.duration;
+        var duration = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
 
         // animate progress bar
-        var percentage = position / totalTime;
+        var percentage = position / duration;
 
         if (position > 0) {
             // if we're resetting the bar. ugh.
@@ -74,13 +82,44 @@ var AUDIO = (function() {
                 }
             }
         }
+        _trackCompletion(position, duration);
+    }
+
+    var _trackCompletion = function(position, duration) {
+        var completion = position / duration;
+
+        if (position > 5 && !fourFiveSeconds) {
+            ANALYTICS.trackEvent('audio-five-seconds', slug);
+            fourFiveSeconds = true;
+        }
+        if (completion >= 0.25 && !twentyFiveComplete) {
+            ANALYTICS.trackEvent('audio-completion-0.25', slug);
+            twentyFiveComplete = true;
+        } else if (completion >= 0.5 && !fiftyComplete) {
+            ANALYTICS.trackEvent('audio-completion-0.50', slug);
+            fiftyComplete = true;
+        } else if (completion >= 0.75 && !seventyFiveComplete) {
+            ANALYTICS.trackEvent('audio-completion-0.75', slug);
+            seventyFiveComplete = true;
+        }
+    }
+
+    var onEnded = function() {
+        ANALYTICS.trackEvent('audio-completion-1', slug);
+
+        fourFiveSeconds = false;
+        twentyFiveComplete = false;
+        fiftyComplete = false;
+        seventyFiveComplete = false;
     }
 
     var toggleAudio = function() {
         if ($audioPlayer.data().jPlayer.status.paused) {
             _resumeAudio();
+            ANALYTICS.trackEvent('resume-audio');
         } else {
             _pauseAudio();
+            ANALYTICS.trackEvent('pause-audio');
         }
     }
 
@@ -90,7 +129,7 @@ var AUDIO = (function() {
         var clickedPosition = totalTime * percentage;
         $audioPlayer.jPlayer('play', clickedPosition);
         $controlBtn.removeClass('play').addClass('pause');
-        ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
+        ANALYTICS.trackEvent('seek', slug);
     }
 
     return {
