@@ -349,7 +349,6 @@ var resetArrows = function() {
 var onControlBtnClick = function(e) {
     e.preventDefault();
     AUDIO.toggleAudio();
-    ANALYTICS.trackEvent('pause-button');
     e.stopPropagation();
 }
 
