@@ -1,6 +1,16 @@
 .slide.next-post {
-    .full-block-content {
-        max-width: 1200px;    }
+    
+    .imgLiquid {
+       -webkit-filter: blur(4px); 
+       filter: blur(4px); 
+        
+    }
+    
+    .full-block-cell {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .full-block-content {max-width: 1200px;}
 }
 
 .next-post-wrapper {
@@ -40,7 +50,7 @@
             font-family: "Gotham Ssm", Helvetica, Arial, sans-serif;
             font-weight: bold;
             text-align: left;
-            color: #222;
+            color: #eee;
             @media @screen-small-above {
                 font-size: 20px;
             }
@@ -81,7 +91,7 @@
 
                     &:hover,
                     &:focus {
-                        background-color: @pink;
+                        background-color: #000;
                         color: #fff;
                         b {
                             text-decoration: none;
@@ -143,7 +153,7 @@
 
     .up-next {
         position: relative;
-        background-color: #f60062;
+        background-color: #000;
         height: 150px;
         overflow: hidden;
         text-align: center;
@@ -248,7 +258,7 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                background-color: #f60062;
+                background-color: #000;
                 padding: 13px 15px 10px 15px;
                 height: 150px;
 
@@ -284,7 +294,7 @@
         &:hover,
         &:focus {
             .no-touch & {
-                background-color: @pink;
+                background-color: #000;
                 color: #fff;
                 cursor: pointer;
             }
@@ -301,13 +311,13 @@
             margin: 15px 0;
             font-weight: bold;
             text-transform: uppercase;
-            color: #222;
+            color: #eee;
             text-align: left;
         }
         p {
             font-family: gotham, helvetica, sans-serif;
             font-size: 11px;
-            color: #222;
+            color: #eee;
             text-shadow: none;
             text-align: left;
             line-height: 1.2;
