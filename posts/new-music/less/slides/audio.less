@@ -197,7 +197,13 @@
             p {
                 font-family: "Gotham SSm", helvetica, arial, sans-serif;
                 font-weight: bold;
+                visibility: hidden;
+                
+                @media @screen-small-above {
+                    visibility: visible;
                 }
+            }
+            
         }
         
         
@@ -211,8 +217,12 @@
             .controls {
                 position: absolute;
                 left: 0;
-                bottom: 10px;
+                bottom: 0;
                 width: 100%;
+                
+                @media @screen-small-above {
+                    bottom: 10px;   
+                }
         
                 .control-group {
                     width: 100%;
