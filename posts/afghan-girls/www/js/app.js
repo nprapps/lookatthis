@@ -171,7 +171,9 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     trackCompletion(toIndex);
     document.activeElement.blur();
     ANALYTICS.exitSlide(fromIndex.toString());
-    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    if (lastSlideExitEvent) {
+        ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    }
     if (toIndex === $slides.length - 1) {
         ANALYTICS.trackEvent('tests-run', callToActionTest);
     }
