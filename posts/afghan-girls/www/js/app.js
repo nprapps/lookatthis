@@ -90,7 +90,7 @@ var lazyLoad = function(slideIndex) {
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
-        if (window.devicePixelRatio < 2 && !isTouch) {
+        if ((window.devicePixelRatio < 2 && !isTouch) || isTouch) {
             FILMSTRIP.initFilmstrip(slides[i]);
         }
     };
@@ -167,7 +167,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     */
     lazyLoad(toIndex);
     VIDEO.checkForVideo(toIndex);
-    if (window.devicePixelRatio < 2 && !isTouch) {
+    if ((window.devicePixelRatio < 2 && !isTouch) || isTouch) {
         FILMSTRIP.clearFilmstrip(fromIndex);
         FILMSTRIP.animateFilmstrip(toIndex);
     }
