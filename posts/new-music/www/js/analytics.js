@@ -139,7 +139,7 @@ var ANALYTICS = (function () {
     var trackEvent = function(eventName, label, value) {
         var eventData = {
             'hitType': 'event',
-            'eventCategory': APP_CONFIG.PROJECT_SLUG,
+            'eventCategory': APP_CONFIG.DEPLOY_SLUG,
             'eventAction': eventName
         }
 

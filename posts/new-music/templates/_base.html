@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+    <!-- CHARTBEAT -->
+    <script type="text/javascript">
+        var _sf_startpt=(new Date()).getTime();
+    </script>
     <title>{{ COPY.post_metadata.title }}</title>
 
     <!-- META TAGS -->
@@ -21,6 +25,11 @@
     {% endblock extra_head %}
 </head>
 <body class="deck-container">
+    <!-- ANALYTICS JAVASCRIPT -->
+    {{ JS.push('js/app_config.js') }}
+    {{ JS.push('js/analytics.js') }}
+    {{ JS.render('js/app-header.min.js') }}
+
     <a class="sr-only" href="#content">Skip To Content</a>
 
     {% block outer_content %}
@@ -41,16 +50,19 @@
     {{ JS.push('js/lib/imgLiquid.js') }}
     {{ JS.push('js/lib/deck.core.js') }}
     {{ JS.push('js/lib/ZeroClipboard.js') }}
-    {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
     {{ JS.push('js/audio.js') }}
     {{ JS.push('js/app.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}
-    {{ JS.push('js/analytics.js') }}
     {{ JS.render('js/app-footer.min.js') }}
 
     {% block extra_foot %}
     {% endblock extra_foot %}
+
+    {# Setup Chartbeat last! #}
+    <script type="text/javascript">
+        $(ANALYTICS.setupChartbeat);
+    </script>
 </body>
 </html>
