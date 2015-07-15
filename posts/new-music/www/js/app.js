@@ -38,7 +38,9 @@ var resize = function() {
      */
     w = $(window).width();
     h = $(window).height();
-    $section.height(h);
+    if ($section.height() < h) {
+        $section.height(h);
+    }
     $slides.width(w);
 };
 
