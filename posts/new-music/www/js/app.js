@@ -355,7 +355,7 @@ var onControlBtnClick = function(e) {
 }
 
 var determineTests = function() {
-    var possibleCallToActionTests = ['facebook', 'email'];
+    var possibleCallToActionTests = ['facebook', 'support'];
 
     callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
 }
@@ -375,7 +375,7 @@ var onLikeStoryButtonsClick = function(e) {
         if (callToActionTest === 'facebook') {
             $facebook.show();
         } else {
-            $emailStory.show();
+            $support.show();
         }
     } else {
         ANALYTICS.trackEvent('like-story-no');
@@ -395,13 +395,13 @@ var onFacebookBtnClick = function(e) {
     return true;
 }
 
-var onEmailBtnClick = function(e) {
+var onSupportBtnClick = function(e) {
     e.preventDefault();
 
     var $this = $(this);
     var link = $this.attr('href');
 
-    ANALYTICS.trackEvent('email-story-btn-click');
+    ANALYTICS.trackEvent('support-btn-click');
 
     window.top.location = link
     return true;
@@ -430,7 +430,8 @@ $(document).ready(function() {
     $likeStoryButtons = $('.btn-like-story');
     $facebook = $('.facebook');
     $facebookBtn = $('.btn-facebook');
-    $emailStory = $('.email-story');
+    $support = $('.support');
+    $supportBtn = $('.btn-support');
     $emailBtn = $('.btn-email');
     $didNotLike = $('.did-not-like');
     $dislikeEmail = $('.dislike-email');
@@ -439,7 +440,7 @@ $(document).ready(function() {
     $slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
-    $emailBtn.on('click', onEmailBtnClick);
+    $supportBtn.on('click', onSupportBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
 
     $upNext.on('click', onNextPostClick);

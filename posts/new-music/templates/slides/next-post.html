@@ -7,14 +7,14 @@
                 <div class="facebook">
                 <h3>{{ COPY.sharing.fb_share_prompt }}</h3>
                 <p class="button-wrapper">
-                    <a class="btn-facebook" href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.facebook_share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.facebook_share_url|urlencode }}" target="_blank"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.fb_share_call }} </b></a>
+                    <a class="btn-facebook" href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.share_url|urlencode }}" target="_blank"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.fb_share_call }} </b></a>
                 </p>
             </div>
 
-            <div class="email-story">
-                <h3>{{ COPY.sharing.email_prompt }}</h3>
+            <div class="support">
+                <h3>{{ COPY.sharing.support_prompt }}</h3>
                 <p class="button-wrapper">
-                    <a class="btn-email" href="mailto:?body={{COPY.sharing.email_body}}%0D%0A%0D%0A{{ EMAIL_SHARE_URL|urlencode }}&subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope"></i> <b> {{ COPY.sharing.email_call }} </b></a>
+                    <a class="btn-support" href="http://www.npr.org/donate"><i class="fa fa-heart"></i> <b> {{ COPY.sharing.support_call }} </b></a>
                 </p>
             </div>
 
