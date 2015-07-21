@@ -48,6 +48,11 @@ var AUDIO = (function() {
         }).jPlayer('play');
         $controlBtn.removeClass('play').addClass('pause');
         ANALYTICS.trackEvent('audio-started', slug);
+        // reset global vars
+        fourFiveSeconds = false;
+        twentyFiveComplete = false;
+        fiftyComplete = false;
+        seventyFiveComplete = false;
     }
 
     var _pauseAudio = function() {
