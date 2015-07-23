@@ -1,0 +1,181 @@
+.slide.faded-image {
+    
+    .imgLiquid {
+       -webkit-filter: blur(4px); 
+       filter: blur(4px); 
+        
+    }
+    
+    
+    
+    h3 {
+        margin: 0 0 10px 0;
+        font-family: "Gotham", helvetica, arial, sans-serif;
+        text-transform: uppercase;
+        font-size: 16px;
+        @media @screen-small-above {
+            font-size: 21px;
+        }
+        
+        
+    }
+
+    p {
+        .text-shadow(2px 2px 2px #333);
+        line-height: 1.7;
+        font-size: @small-type;
+        
+        
+        @media @screen-small-above {
+            font-size: 17px;
+        }
+        
+        b {
+            font-family: "Gotham SSm", helvetica, arial, sans-serif;
+            text-transform: uppercase;
+        }
+    }
+    
+    .section-intro& {
+    
+        p {
+            font-size: 13px;
+                @media @screen-small-above {
+                    font-size: 21px;
+                } 
+            }  
+        }
+    
+    .full-block {
+        background: rgba(0, 0, 0, 0.7);
+        color: #eee;
+
+        .full-block-cell {
+            padding: 20px 60px 10px 60px;
+            @media @screen-small-above {
+                vertical-align: middle;
+            }
+            
+            @media @screen-medium-above {
+                padding: 0;
+            }
+        }
+
+        .full-block-content {
+            padding: 0;
+            margin: 0 auto;
+            @media @screen-small-above {padding: 20px 100px;}
+
+
+            .side-by-side-wrapper {
+                display: table;
+                margin: 0 auto;
+                
+
+                .first-side {
+                    vertical-align: middle;
+                    margin-bottom: 10px;
+
+                    @media @screen-medium-above {
+                        padding-right: 30px;
+                        margin-bottom: 20px;
+                    }
+
+/*
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        max-width: 600px;
+                    }
+*/
+
+                    @media @screen-medium-above {
+                        display: table-cell;
+                        width: 50%;
+
+                        /*
+                        img {
+                            position: relative;
+                            left: -20px;
+                        }*/
+                    }
+                    
+                    
+                }
+
+                .second-side {
+                    //padding: 20px;
+                    max-width: 200px;
+                    margin: 20px auto 0 auto;
+                    position: relative;
+                    
+                    @-webkit-keyframes fadeMedia {
+                        0%   { opacity: 0; }
+                        100% { opacity: 1; }
+                    }
+                    
+                    @keyframes fadeMedia {
+                      0%   { opacity: 0; }
+                      100% { opacity: 1; }
+                    }
+                    
+                    .first-fade {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        .animation(fadeMedia 7s infinite alternate);
+                    }
+
+                    @media @screen-small-above {
+                        max-width: 600px;
+                    }
+
+                    @media @screen-medium-above {
+                        margin: 0;
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 50%;
+
+                    }
+                    p, h6 {
+                        font-family: "Gotham SSm", helvetica, arial, sans-serif;
+                        text-shadow: none;
+                        font-size: 10px;
+                        margin: 15px 0 0 0;
+                        line-height: 1.5;
+                        padding-bottom: 5px;
+                        text-align: center;
+
+                        @media @screen-small-above {
+                            font-size: 12px;
+                        }
+
+                        @media @screen-medium-above {
+                            text-align: left;
+                        }
+
+
+                    }
+
+                    img {
+                        display: block;
+                        height: auto;
+                        //box-shadow: 7px 7px 10px #222;
+                        display: block;
+                        margin: 0 auto;
+                        
+                        @media @screen-small-above {
+                            font-size: 16px;
+                            max-width: 400px;
+                        }
+                        
+                        @media @screen-medium-above {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
