@@ -1,0 +1,66 @@
+{% extends '%s/templates/_slide.html' % slug %}
+
+{% block slide_content %}
+<div class="next-post-wrapper">
+    <div class="primary-column">
+        <div class="share-panel share-panel-section clearfix">
+                <div class="facebook">
+                <h3>{{ COPY.sharing.fb_share_prompt }}</h3>
+                <p class="button-wrapper">
+                    <a class="btn-facebook" href="https://www.facebook.com/dialog/feed?app_id={{ COPY.sharing.facebook_app_id }}&amp;link={{ COPY.sharing.facebook_share_url|urlencode }}&amp;name={{ COPY.sharing.facebook_title|urlencode }}&amp;picture={{ COPY.sharing.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.sharing.facebook_share_url|urlencode }}" target="_blank"><i class="fa fa-facebook"></i> <b> {{ COPY.sharing.fb_share_call }} </b></a>
+                </p>
+            </div>
+
+            <div class="support">
+                <h3>{{ COPY.sharing.support_prompt }}</h3>
+                <p class="button-wrapper">
+                    <a class="btn-support" href="http://www.npr.org/donate"><i class="fa fa-heart"></i> <b> {{ COPY.sharing.support_call }} </b></a>
+                </p>
+            </div>
+
+            <div class="like-story">
+                <h3>{{ COPY.sharing.like_prompt }}</h3>
+
+                <button class="btn btn-go btn-lg btn-like-story yes">Yes</button>
+                <button class="btn btn-go btn-lg btn-like-story no">No</button>
+            </div>
+
+            <div class="did-not-like">
+                <h3>{{ COPY.sharing.did_not_like_prompt }}</h3>
+
+                <p class="button-wrapper">
+                    <a class="dislike-email" href="mailto:nprlook@gmail.com?subject={{ COPY.sharing.email_subject }}"><i class="fa fa-envelope em"></i> <b> Email us your thoughts </b></a>
+                </p>
+            </div>
+
+        </div><!-- / share-panel-section -->
+
+        <div class="project-credits">
+            <h6>Project Credits</h6>
+            {{ row.media_credit|smarty }}
+        </div>
+    </div>
+
+    <div class="secondary-column">
+        <div class="up-next">
+            <img src="{{ row.foreground_media }}">
+            <div class="up-next-caption-wrapper">
+                <div class="up-next-caption">
+                    <p><em>Up Next</em></p>
+                    <h2 class="next-post-title">{{ row.text1|smarty }}</h2>
+                    <h3>{{ row.text2|smarty }}</h3>
+                </div>
+
+                <div class="next-button-wrapper">
+                    <div class="next-button">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div><!-- /next-button-wrapper -->
+        </div>
+    </div>
+
+<script type="text/javascript">
+    window.NEXT_POST_URL = "{{ row.text3 }}";
+</script>
+{% endblock %}

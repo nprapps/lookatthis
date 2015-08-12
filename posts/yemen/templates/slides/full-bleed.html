@@ -1,0 +1,18 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_body %}
+<div class="text full-block">
+    <div class="full-block-cell">
+        <div class="bleed-box">
+            <div class="full-block-content">
+                {{ row.text1|smarty }}
+            </div><!--full-block-content-->
+
+            {% if row.caption_and_credit %}
+            <div class="credit">
+                {{ row.caption_and_credit|smarty }}
+            </div>
+            {% endif %}
+        </div>
+    </div><!--full-block-cell-->
+</div><!--full-block-->
+{% endblock %}

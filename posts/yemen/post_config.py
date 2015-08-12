@@ -1,0 +1,9 @@
+COPY_GOOGLE_DOC_KEY = '1a1OYp0U1Pq_cMLlRvwdi9sQCzem64IoDugVuDeQu9Io'
+DEPLOY_SLUG = 'yemen'
+NUM_SLIDES_AFTER_CONTENT = 2
+
+# Configuration
+AUDIO = False
+VIDEO = False
+FILMSTRIP = False
+PROGRESS_BAR = True
