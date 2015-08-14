@@ -100,10 +100,20 @@ html, body {
     z-index: -1;
 
     &.diptych-container {
-        width: 50%;
+        height: 50%;
+        @media @screen-medium-above {
+            width: 50%;
+            height: 100%;
+        }
         &:last-child {
-            left: 50%;
-            right: 50%;
+            top: 50%;
+            bottom: 50%;
+            @media @screen-medium-above {
+                top: 0;
+                left: 50%;
+                right: 50%;
+                bottom: 0;
+            }
         }
     }
 }
