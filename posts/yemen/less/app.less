@@ -98,6 +98,14 @@ html, body {
     bottom: 0;
     height: 100%;
     z-index: -1;
+
+    &.diptych-container {
+        width: 50%;
+        &:last-child {
+            left: 50%;
+            right: 50%;
+        }
+    }
 }
 
 .deck-current {

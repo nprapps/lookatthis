@@ -1,9 +1,9 @@
-.slide.full-bleed {
-    
+.slide.full-bleed, .slide.diptych {
+
     .full-block {
         background: linear-gradient(to bottom,rgba(0, 0, 0, 0)  50%,rgba(0, 0, 0, 0.8));
     }
-    
+
     .full-block-cell {
         vertical-align: bottom;
     }
@@ -32,7 +32,7 @@
             margin: 15px auto;
             text-align: left;
             font-family: georgia, serif;
-            max-width: 500px; 
+            max-width: 500px;
             text-shadow: 2px 2px 4px #000;
             @media @screen-small-above {
                 max-width: 700px;
@@ -43,29 +43,29 @@
             @media @screen-mega-above {
                 font-size: 24px;
             }
-            
+
             .left-align& {
                 @media @screen-tiny-above {
                     text-align: left;
                 }
             }
-            
+
             .center-align& {
                 @media @screen-tiny-above {
                     text-align: center;
                 }
             }
-            
+
             b {
                 //color: #E4968C;
                 font-weight: normal;
                 //display: inline-block;
-                
+
                 &:first-letter {
                     //font-size: 30px;
-                } 
+                }
             }
-            
+
         }
     }
 }

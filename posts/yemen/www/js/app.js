@@ -108,23 +108,26 @@ var loadImages = function($slide) {
     * Sets the background image on a div for our fancy slides.
     */
     var $container = $slide.find('.imgLiquid');
-    var bgimg = $container.children('img');
 
-    if (bgimg.data('bgimage')) {
-        var image_filename = bgimg.data('bgimage').split('.')[0];
-        var image_extension = '.' + bgimg.data('bgimage').split('.')[1];
-        var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
+    $container.each(function(key, value) {
+        var bgimg = $(value).children('img');
 
-        bgimg.attr('src', image_path);
-    }
+        if (bgimg.data('bgimage')) {
+            var image_filename = bgimg.data('bgimage').split('.')[0];
+            var image_extension = '.' + bgimg.data('bgimage').split('.')[1];
+            var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
 
-    if (bgimg.attr('src')) {
-        $container.imgLiquid({
-            fill: true,
-            horizontalAlign: "center",
-            verticalAlign: "center",
-        });
-    }
+            bgimg.attr('src', image_path);
+        }
+
+        if (bgimg.attr('src')) {
+            $(value).imgLiquid({
+                fill: true,
+                horizontalAlign: "center",
+                verticalAlign: "center",
+            });
+        }
+    });
 
     var $images = $slide.find('img.lazy-load');
     if ($images.length > 0) {
