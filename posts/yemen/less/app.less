@@ -101,19 +101,29 @@ html, body {
 
     &.diptych-container {
         height: 50%;
-        @media @screen-medium-above {
-            width: 50%;
-            height: 100%;
+        &:first-child {
+            border-bottom: 10px solid black;
+            @media @screen-medium-above {
+                border-bottom: none;
+                border-right: 10px solid black;
+            }
         }
         &:last-child {
+            border-top: 10px solid black;
             top: 50%;
             bottom: 50%;
             @media @screen-medium-above {
+                border-top: none;
+                border-left: 10px solid black;
                 top: 0;
                 left: 50%;
                 right: 50%;
                 bottom: 0;
             }
+        }
+        @media @screen-medium-above {
+            width: 50%;
+            height: 100%;
         }
     }
 }
