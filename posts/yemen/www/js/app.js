@@ -187,6 +187,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     if ($slides.eq(toIndex).hasClass('fade-text')) {
         $slides.eq(toIndex).find('h3').css({
             'opacity': 1,
+            '-webkit-transform': 'scaleX(1)',
             'transform': 'scaleX(1)'
         });
     }
