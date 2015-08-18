@@ -113,6 +113,10 @@ var loadImages = function($slide) {
     * Sets the background image on a div for our fancy slides.
     */
     var $container = $slide.find('.imgLiquid');
+    mobileSuffix = '';
+    if (w < 769 && $slide.hasClass('mobile-crop')) {
+        mobileSuffix = '-sq';
+    }
 
     $container.each(function(key, value) {
         var bgimg = $(value).children('img');
