@@ -37,7 +37,9 @@ var resize = function() {
      */
     w = $(window).width();
     h = $(window).height();
-    $section.height(h);
+    if ($section.height() < h) {
+        $section.height(h);
+    }
     $slides.width(w);
 };
 
@@ -161,6 +163,20 @@ var showNavigation = function(index) {
     }
 }
 
+
+var checkOverflow = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var slideHeight = $thisSlide.height();
+    var blockHeight = $thisSlide.find('.full-block').height();
+
+    if (blockHeight > slideHeight) {
+        $thisSlide.parents('.section').height(blockHeight);
+    } else {
+        $thisSlide.parents('.section').height(h);
+    }
+
+}
+
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called transitioning between slides.
@@ -168,6 +184,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    checkOverflow(toIndex);
     document.activeElement.blur();
 
     if (APP_CONFIG.AUDIO) {
@@ -187,6 +204,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     if ($slides.eq(toIndex).hasClass('fade-text')) {
         $slides.eq(toIndex).find('h3').css({
             'opacity': 1,
+            '-webkit-transform': 'scaleX(1)',
             'transform': 'scaleX(1)'
         });
     }
@@ -204,6 +222,8 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
+    $('.slide.start').find('.first').css('opacity', 1);
+    $('.slide.start').find('.second').css('opacity', 0);
 }
 
 var onDocumentKeyDown = function(e) {
