@@ -1,5 +1,5 @@
 .start {
-    
+
     .full-block {
             .full-block-cell {
             text-align: center;
@@ -7,18 +7,18 @@
             text-shadow: 2px 2px 2px #000;
             padding-top: 200px;
             background: rgba(0,0,0,0.2);
-    
+
             .look-branding {
                 img {
                     max-width: 50px;
                     display: block;
                     margin: 0 auto;
-    
+
                     @media @screen-small-above {
                         max-width: 80px;
                     }
                 }
-    
+
                 h5 {
                     text-transform: uppercase;
                     font-weight: bold;
@@ -26,13 +26,13 @@
                     padding: 5px 0 10px 0;
                     border-bottom: 3px solid #f60062;
                     display: inline-block;
-    
+
                     @media @screen-small-above {
                         font-size: 16px;
                     }
                 }
             }
-    
+
              h1 {
                  font-size: 30px;
                  text-transform: uppercase;
@@ -42,23 +42,23 @@
                      font-size: 55px;
                 }
              }
-    
+
              h2 {
                 font-size: 13px;
                 font-family: georgia, serif;
                 font-weight: normal;
                 margin: 5px 0;
-    
+
                 p:first-child {
                     margin: 20px 0;
                 }
-    
+
                 @media @screen-small-above {
                     margin: 5px 0 30px 0;
                     font-size: 24px;
                 }
             }
-    
+
             h3 {
                 font-size: 11px;
                 font-weight: bold;
@@ -67,7 +67,7 @@
                     font-size: 16px;
                 }
             }
-    
+
             h4 {
                 font-size: 11px;
                 font-family: georgia, serif;
@@ -78,7 +78,7 @@
                     margin: 10px 0 0 0;
                 }
             }
-    
+
             .btn.btn-go {
                 border-radius: 0;
                 background-color: #fff;
@@ -89,8 +89,8 @@
                  font-size: 18px;
                 padding: 0 22px;
                 line-height: 44px;
-    
-    
+
+
                 &:hover {
                     .no-touch & {
                         background-color: #000;
@@ -98,9 +98,17 @@
                         cursor: pointer;
                     }
                 }
-    
+
             }
         }
     }
-    
+    .imgLiquid {
+        .transition(opacity 8s cubic-bezier(0.39, 0.575, 0.565, 1));
+        &.first {
+            opacity: 1;
+        }
+        &.second {
+            opacity: 0;
+        }
+    }
 }
