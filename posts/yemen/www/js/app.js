@@ -37,7 +37,9 @@ var resize = function() {
      */
     w = $(window).width();
     h = $(window).height();
-    $section.height(h);
+    if ($section.height() < h) {
+        $section.height(h);
+    }
     $slides.width(w);
 };
 
@@ -161,6 +163,20 @@ var showNavigation = function(index) {
     }
 }
 
+
+var checkOverflow = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var slideHeight = $thisSlide.height();
+    var blockHeight = $thisSlide.find('.full-block').height();
+
+    if (blockHeight > slideHeight) {
+        $thisSlide.parents('.section').height(blockHeight);
+    } else {
+        $thisSlide.parents('.section').height(h);
+    }
+
+}
+
 var onSlideChange = function(e, fromIndex, toIndex) {
     /*
     * Called transitioning between slides.
@@ -168,6 +184,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    checkOverflow(toIndex);
     document.activeElement.blur();
 
     if (APP_CONFIG.AUDIO) {
