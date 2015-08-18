@@ -46,6 +46,9 @@ var onPageLoad = function() {
     * Set up page on load.
     */
     lazyLoad(0);
+    $('.section').on('transitionend', function() {
+        $('.slide.deck-current').find('.imgLiquid.second').css('opacity', 1);
+    });
     $('.section').css({
         'opacity': 1,
         'visibility': 'visible',

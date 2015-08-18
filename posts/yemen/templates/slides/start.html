@@ -1,13 +1,38 @@
-{% extends '%s/templates/_slide.html' % slug %}
-{% block slide_content %}
-    <div class="look-branding">
-        <img src="assets/npr-logo.png">
-        <h5>Look At This</h5>
-    </div>
-    <h1>{{ row.text1|smarty }}</h1>
-    <h2>{{ row.text2|smarty }}</h2>
-    <h3>{{ COPY.post_metadata.author|smarty }}</h3>
-    <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
+{% block slide_wrapper %}
+<div class="slide {% if row.template != 'slide' %} {{ row.template }}{% endif %}{% if row.extra_class %} {{ row.extra_class }}{% endif %}" id="slide-{{ row.id }}">
+    {% block slide_body %}
+    <div class="text full-block">
+        <div class="full-block-cell">
+            <div class="full-block-content">
+                {% block slide_content %}
+                    <div class="look-branding">
+                        <img src="assets/npr-logo.png">
+                        <h5>Look At This</h5>
+                    </div>
+                    <h1>{{ row.text1|smarty }}</h1>
+                    <h2>{{ row.text2|smarty }}</h2>
+                    <h3>{{ COPY.post_metadata.author|smarty }}</h3>
+                    <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
 
-    <button class="btn btn-go">{{ row.text3 }}</button>
-{% endblock %}
+                    <button class="btn btn-go">{{ row.text3 }}</button>
+                {% endblock %}
+            </div><!--full-block-content-->
+
+            {% if row.caption_and_credit %}
+            <div class="credit">
+                {{ row.caption_and_credit|smarty }}
+            </div>
+            {% endif %}
+
+        </div><!--full-block-cell-->
+    </div><!--full-block-->
+    {% endblock slide_body %}
+    <div class="imgLiquid first">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
+    </div>
+    <div class="imgLiquid second">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.diptych }}" {% else %} data-bgimage="{{ row.diptych }}" {% endif %}>
+    </div>
+</div><!--slide-->
+
+{% endblock slide_wrapper %}
