@@ -1,0 +1,10 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+    <div class="intro-head">
+        {{ row.text1|smarty }}
+    </div>
+    
+    <div class="intro-text">
+        {{ row.text2|smarty }}
+    </div>
+{% endblock %}
