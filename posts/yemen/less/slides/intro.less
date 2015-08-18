@@ -12,12 +12,17 @@
             text-transform: uppercase;
             .text-shadow(2px 2px 5px #222);
             line-height: 1.4;
-            letter-spacing: 4px;
             @media @screen-small-above {
-                    
+
+            }
+            .fade-text& {
+                .transition(all 4s ease-out);
+                opacity: 0;
+                // letter-spacing: 3px;
+                transform: scaleX(0.95);
             }
         }
-        
+
         h4 {
             font-size: 24px;
             font-weight: bold;
@@ -26,11 +31,11 @@
             line-height: 1.5;
             letter-spacing: 2px;
             @media @screen-small-above {
-                    
+
             }
         }
     }
-    
+
     .intro-head {
         max-width: 850px;
         margin: 0 auto;

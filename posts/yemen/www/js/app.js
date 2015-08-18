@@ -184,6 +184,13 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         PROGRESS_BAR.animateProgress(toIndex);
     }
 
+    if ($slides.eq(toIndex).hasClass('fade-text')) {
+        $slides.eq(toIndex).find('h3').css({
+            'opacity': 1,
+            'transform': 'scaleX(1)'
+        });
+    }
+
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     if (toIndex === $slides.length - 1) {
