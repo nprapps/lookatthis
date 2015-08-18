@@ -6,6 +6,7 @@
 
     .full-block-cell {
         vertical-align: bottom;
+        padding-bottom: 40px;
     }
 
     .full-block-content {
@@ -41,7 +42,7 @@
                 text-align: justify;
             }
             @media @screen-mega-above {
-                font-size: 24px;
+
             }
 
             .left-align& {
@@ -64,6 +65,22 @@
                 &:first-letter {
                     //font-size: 30px;
                 }
+            }
+
+        }
+        
+        h4 {
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ddd;
+            line-height: 1.4;
+            margin: 15px auto;
+            text-align: left;
+            max-width: 500px;
+            text-shadow: 2px 2px 4px #000;
+            @media @screen-small-above {
+                max-width: 700px;
             }
 
         }
