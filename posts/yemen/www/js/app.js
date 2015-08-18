@@ -205,6 +205,8 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
+    $('.slide.start').find('.first').css('opacity', 1);
+    $('.slide.start').find('.second').css('opacity', 0);
 }
 
 var onDocumentKeyDown = function(e) {
