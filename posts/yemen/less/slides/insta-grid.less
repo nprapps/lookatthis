@@ -1,0 +1,61 @@
+//grid
+.insta-grid {
+    .full-block {
+        background-color: rgba(0,0,0,0.6);
+    }
+    .full-block-cell {
+        color: #fff;
+
+        .grid-content {
+            max-width: 800px;
+            margin: 0 auto;
+                
+            p {
+                margin: 10px;
+                font-family: georgia, serif;
+                font-size: 18px;
+            }
+            
+            .grid-row {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -webkit-flex-direction: row;
+                -ms-flex-direction: row;
+                flex-direction: row;
+            }
+            
+            .grid-item {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                padding: 12px;
+                border: solid 5px #fff;
+                margin: 10px;
+                .background-size(cover);
+                background-position: center center;
+            }
+            
+            .grid-item:before {
+                content: "";
+                display: block;
+                padding-top: 100%;
+                float: left;
+            }
+            
+            
+            @media all and (max-width: 768px) {
+              .grid-sm {
+                display: none;
+              }
+            }
+            
+        }
+
+    }
+
+}
