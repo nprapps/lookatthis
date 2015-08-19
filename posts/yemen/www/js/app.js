@@ -114,7 +114,7 @@ var loadImages = function($slide) {
     */
     var $container = $slide.find('.imgLiquid');
     mobileSuffix = '';
-    if (w < 769 && $slide.hasClass('mobile-crop')) {
+    if (w < 769 && !$slide.hasClass('no-crop')) {
         mobileSuffix = '-sq';
     }
 
