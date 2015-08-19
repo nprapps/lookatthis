@@ -22,7 +22,7 @@ jmespath==0.2.1
 nose==1.2.1
 oauth2==1.5.211
 odict==1.5.1
-openpyxl==1.8.5
+openpyxl==2.2.2
 ply==3.4
 pyasn1==0.1.7
 pycrypto==2.6
