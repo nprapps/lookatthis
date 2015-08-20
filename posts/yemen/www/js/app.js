@@ -48,13 +48,11 @@ var onPageLoad = function() {
     * Set up page on load.
     */
     lazyLoad(0);
-    $('.section').on('transitionend', function() {
-        $('.slide.deck-current').find('.imgLiquid.second').css('opacity', 1);
-    });
     $('.section').css({
         'opacity': 1,
         'visibility': 'visible',
     });
+    $('.slide.deck-current').find('.imgLiquid.second').css('opacity', 1);
     showNavigation(0);
 };
 
@@ -205,12 +203,15 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         PROGRESS_BAR.animateProgress(toIndex);
     }
 
-    if ($slides.eq(toIndex).hasClass('fade-text')) {
-        $slides.eq(toIndex).find('h3').css({
-            'opacity': 1,
-            '-webkit-transform': 'scaleX(1)',
-            'transform': 'scaleX(1)'
-        });
+
+    if (fromIndex === 0 && toIndex === 1) {
+        $('.slide.start').find('.imgLiquid').addClass('no-transition');
+        $('.slide.start').find('.first').css('opacity', 1);
+        $('.slide.start').find('.second').css('opacity', 0);
+        $('.slide.start').find('.imgLiquid').removeClass('no-transition');
+    }
+    if (toIndex === 0) {
+        $('.slide.start').find('.imgLiquid.second').css('opacity', 1);
     }
 
     ANALYTICS.exitSlide(fromIndex.toString());
@@ -226,8 +227,6 @@ var onStartCardButtonClick = function() {
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
     $.deck('next');
-    $('.slide.start').find('.first').css('opacity', 1);
-    $('.slide.start').find('.second').css('opacity', 0);
 }
 
 var onDocumentKeyDown = function(e) {
