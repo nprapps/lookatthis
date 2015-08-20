@@ -7,14 +7,14 @@
         color: #fff;
 
          h2 {
-            font-size: 60px;
+            font-size: 24px;
             font-weight: bold;
             .text-shadow(5px 5px 25px #000);
             line-height: 1.2;
-            //text-align: center;
             @media @screen-small-above {
-
+                font-size: 60px;
             }
+            
             .fade-text& {
                 .transition(all 4s ease-out);
                 opacity: 0;
@@ -25,13 +25,12 @@
         }
         
         h3 {
-            font-size: 40px;
+            font-size: 16px;
             font-weight: bold;
             .text-shadow(5px 5px 25px #000);
             line-height: 1.2;
-            //text-align: center;
             @media @screen-small-above {
-
+                font-size: 40px;
             }
             .fade-text& {
                 .transition(all 4s ease-out);
@@ -43,19 +42,22 @@
         }
 
         h4 {
-            font-size: 24px;
+            font-size: 15px;
             font-weight: bold;
             //text-transform: uppercase;
             .text-shadow(2px 2px 5px #222);
             line-height: 1.5;
             @media @screen-small-above {
-
+                font-size: 24px;
             }
         }
     }
 
     .intro-head {
-        max-width: 750px;
+        max-width: 200px;
         margin: 0 auto;
+        @media @screen-small-above {
+            max-width: 750px;
+        }
     }
 }
