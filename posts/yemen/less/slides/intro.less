@@ -1,17 +1,35 @@
 //intro
 .intro {
     .full-block {
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0,0,0,0.2);
     }
     .full-block-cell {
         color: #fff;
 
-         h3 {
-            font-size: 36px;
+         h2 {
+            font-size: 60px;
             font-weight: bold;
-            text-transform: uppercase;
-            .text-shadow(2px 2px 5px #222);
-            line-height: 1.4;
+            .text-shadow(5px 5px 25px #000);
+            line-height: 1.2;
+            text-align: center;
+            @media @screen-small-above {
+
+            }
+            .fade-text& {
+                .transition(all 4s ease-out);
+                opacity: 0;
+                // letter-spacing: 3px;
+                -webkit-transform: scaleX(0.95);
+                transform: scaleX(0.95);
+            }
+        }
+        
+        h3 {
+            font-size: 40px;
+            font-weight: bold;
+            .text-shadow(5px 5px 25px #000);
+            line-height: 1.2;
+            text-align: center;
             @media @screen-small-above {
 
             }
@@ -27,10 +45,9 @@
         h4 {
             font-size: 24px;
             font-weight: bold;
-            text-transform: uppercase;
+            //text-transform: uppercase;
             .text-shadow(2px 2px 5px #222);
             line-height: 1.5;
-            letter-spacing: 2px;
             @media @screen-small-above {
 
             }
@@ -38,7 +55,7 @@
     }
 
     .intro-head {
-        max-width: 750px;
+        max-width: 700px;
         margin: 0 auto;
     }
 }
