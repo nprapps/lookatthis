@@ -1071,7 +1071,7 @@ nav {
             &:before,&:after {display: none;}
         }
         
-        .post:nth-child(2n) {
+        #posts > .post:nth-child(2n) {
             .clearfix();
         }
         
@@ -1091,7 +1091,9 @@ nav {
                     .make-sm-column(10);
                     .make-sm-column-offset(1);
                     .make-md-column(6);
-                    .make-md-column-offset(0);
+                    .make-md-column-offset(3);
+                    
+                    margin-bottom: 20px;
                     
                     .text-wrapper {
                         img {
