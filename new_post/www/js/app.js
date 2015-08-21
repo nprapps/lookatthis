@@ -87,13 +87,6 @@ var lazyLoad = function(slideIndex) {
         $slides.eq(slideIndex + 2)
     ];
 
-    // Mobile suffix should be blank by default.
-    mobileSuffix = '';
-
-    if (w < 769) {
-        mobileSuffix = '-sq';
-    }
-
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
         if (APP_CONFIG.FILMSTRIP) {
@@ -109,6 +102,13 @@ var loadImages = function($slide) {
     */
     var $container = $slide.find('.imgLiquid');
     var bgimg = $container.children('img');
+
+    // Mobile suffix should be blank by default.
+    mobileSuffix = '';
+
+    if (w < 769 && $slide.hasClass('mobile-crop')) {
+        mobileSuffix = '-sq';
+    }
 
     if (bgimg.data('bgimage')) {
         var image_filename = bgimg.data('bgimage').split('.')[0];
