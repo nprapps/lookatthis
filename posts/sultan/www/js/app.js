@@ -17,11 +17,19 @@ var $support;
 var $supportBtn;
 var $didNotLike;
 var $dislikeEmail;
+var $audioPlayer;
+var $playerWrapper;
+var $play;
+var $pause;
+var $replay;
+var $playerButton;
+var $animatedElements;
 
 var mobileSuffix;
 var w;
 var h;
 var startTouch;
+var currentIndex;
 var lastSlideExitEvent;
 var callToActionTest;
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
@@ -94,6 +102,8 @@ var lazyLoad = function(slideIndex) {
         mobileSuffix = '-sq';
     }
 
+    $animatedElements = $slides.eq(slideIndex).find('.animated');
+
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
         if (APP_CONFIG.FILMSTRIP) {
@@ -163,10 +173,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     showNavigation(toIndex);
     trackCompletion(toIndex);
     document.activeElement.blur();
+    currentIndex = toIndex;
 
-    if (APP_CONFIG.AUDIO) {
-        AUDIO.checkForAudio(toIndex);
-    }
     if (APP_CONFIG.VIDEO) {
         VIDEO.checkForVideo(toIndex);
     }
@@ -190,7 +198,13 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
+
     $.deck('next');
+    $playerWrapper.css({
+        'opacity': 1,
+        'visibility': 'visible'
+    });
+    AUDIO.playAudio();
 }
 
 var onDocumentKeyDown = function(e) {
@@ -410,32 +424,36 @@ $(document).ready(function() {
     $supportBtn = $('.btn-support');
     $didNotLike = $('.did-not-like');
     $dislikeEmail = $('.dislike-email');
+    $playerWrapper = $('.player-wrapper');
+    $play = $('.play');
+    $pause = $('.pause');
+    $replay = $('.replay');
+    $playerButton = $('.player-button')
 
     $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
+    // $slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
     $supportBtn.on('click', onSupportBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
+    $playerButton.on('click', AUDIO.toggleAudio);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
 
-    $previousArrow.on('click', onPreviousArrowClick);
-    $nextArrow.on('click', onNextArrowClick);
+    // $previousArrow.on('click', onPreviousArrowClick);
+    // $nextArrow.on('click', onNextArrowClick);
 
-    if (isTouch) {
-        $arrows.on('touchstart', fakeMobileHover);
-        $arrows.on('touchend', rmFakeMobileHover);
-        $body.on('touchstart', onTouchStart);
-        $body.on('touchmove', onTouchMove);
-        $body.on('touchend', onTouchEnd);
-    }
+    // if (isTouch) {
+    //     $arrows.on('touchstart', fakeMobileHover);
+    //     $arrows.on('touchend', rmFakeMobileHover);
+    //     $body.on('touchstart', onTouchStart);
+    //     $body.on('touchmove', onTouchMove);
+    //     $body.on('touchend', onTouchEnd);
+    // }
 
     // Turn off Modernizr history when deploying
-    if (APP_CONFIG.DEPLOYMENT_TARGET) {
-        Modernizr.history = null;
-    }
+    Modernizr.history = null;
 
     $.deck($slides, {
         touch: { swipeTolerance: swipeTolerance }

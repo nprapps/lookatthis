@@ -1,36 +1,8 @@
 var $audioPlayer = null;
 
 var AUDIO = (function() {
-    var audioURL = null;
-    var $thisPlayerProgrress = null;
-    var $playedBar = null;
-    var $controlBtn = null;
-
-    var checkForAudio = function(slideIndex) {
-        for (var i = 0; i < COPY.content.length; i++) {
-            var rowAnchor = COPY.content[i]['id'];
-            var filename = COPY.content[i]['audio'];
-
-            var $currentSlide = $slides.eq(slideIndex);
-            var loopId = 'slide-' + rowAnchor;
-            if (loopId === $currentSlide.attr('id') && filename !== null) {
-                audioURL = ASSETS_PATH + filename;
-                $thisPlayerProgress = $currentSlide.find('.player-progress');
-                $playedBar = $currentSlide.find('.player-progress .played');
-                $controlBtn = $currentSlide.find('.control-btn');
-
-                $thisPlayerProgress.on('click', onSeekBarClick);
-                $controlBtn.on('click', onControlBtnClick);
-
-                _playAudio();
-                break;
-            } else {
-                if ($audioPlayer.data().jPlayer.status.paused === false) {
-                    _pauseAudio();
-                }
-            }
-        }
-    }
+    var audioURL = 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
+    var isAnimating = false;
 
     var setupAudio = function() {
         $audioPlayer.jPlayer({
@@ -38,57 +10,142 @@ var AUDIO = (function() {
             loop: false,
             supplied: 'mp3',
             timeupdate: onTimeupdate,
+            ended: onEnded,
             volume: NO_AUDIO ? 0 : 1
         });
     }
 
-    var _playAudio = function() {
+    var onEnded = function() {
+        $play.hide();
+        $pause.hide();
+        $replay.show();
+        console.log('ended');
+    }
+
+    var playAudio = function() {
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
         }).jPlayer('play');
-        console.log($audioPlayer);
-        $controlBtn.removeClass('play').addClass('pause');
+        $play.hide();
+        $pause.show();
+        $replay.hide();
     }
 
     var _pauseAudio = function() {
         $audioPlayer.jPlayer('pause');
-        $controlBtn.removeClass('pause').addClass('play');
+        $play.show();
+        $pause.hide();
+        $replay.hide();
     }
 
     var _resumeAudio = function() {
         $audioPlayer.jPlayer('play');
-        $controlBtn.removeClass('play').addClass('pause');
+        $play.hide();
+        $pause.show();
+        $replay.hide();
     }
 
-
-    var onTimeupdate = function(e) {
-        var totalTime = e.jPlayer.status.duration;
-        var position = e.jPlayer.status.currentTime;
-
-        // animate progress bar
-        var percentage = position / totalTime;
-
-        if (position > 0) {
-            // if we're resetting the bar. ugh.
-            if ($playedBar.width() == $thisPlayerProgress.width()) {
-                $playedBar.addClass('no-transition');
-                $playedBar.css('width', 0);
-            } else {
-                $playedBar.removeClass('no-transition');
-                $playedBar.css('width', $thisPlayerProgress.width() * percentage + 'px');
-
-                if (percentage === 1) {
-                    $controlBtn.removeClass('pause').addClass('play');
-                }
-            }
-        }
-    }
-
-    var toggleAudio = function() {
+    var toggleAudio = function(e) {
+        e.preventDefault();
         if ($audioPlayer.data().jPlayer.status.paused) {
             _resumeAudio();
         } else {
             _pauseAudio();
+        }
+    }
+
+    var reset = function(e) {
+        e.preventDefault();
+        $.deck('go', 0);
+        $audioPlayer.jPlayer('playHead', 0);
+        $audioPlayer.jPlayer('play');
+    }
+
+
+    var onTimeupdate = function(e) {
+        var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
+        $('.current-time').text(timeText);
+
+        var duration = e.jPlayer.status.duration;
+        var position = e.jPlayer.status.currentTime;
+
+        // implementing my own ended event everything is terrible
+        // if (position >= duration - 0.5) {
+        //     onEnded();
+        // }
+
+        for (var i = 0; i < $slides.length; i++) {
+            var endTime = $slides.eq(i).data('slide-end-time');
+
+            // if the position is less than the end time of the slide of this loop
+            if (position < endTime && currentIndex > 0) {
+                // if we're reached this slide, don't do anything
+                if (i === currentIndex) {
+                    break;
+                }
+                // once we've managed to loop past the current slide, move to that slide
+                else {
+                    $.deck('next');
+                    break;
+                }
+            }
+        }
+
+        if ($animatedElements) {
+            for (var i = 0; i < $animatedElements.length; i++) {
+                var $el = $animatedElements.eq(i);
+
+                var entranceTime = $el.data('entrance') || null;
+                var exitTime = $el.data('exit') || slideEndTime - 2;
+                if ($el.hasClass('fast')) {
+                    var speed = 1000;
+                } else {
+                    var speed = 2000;
+                }
+                if (
+                    (position > entranceTime) &&
+                    (position < exitTime) &&
+                    ($el.css('opacity') < 1) &&
+                    (!isAnimating)
+                ) {
+                    $el.velocity({
+                        opacity: 1
+                    }, {
+                        duration: speed,
+                        easing: "ease-in",
+                        begin: function() {
+                            isAnimating = true;
+                        },
+                        complete: function() {
+                            isAnimating = false;
+                        }
+                    });
+                }
+                if (position > exitTime && $el.css('opacity') !== 0 && !isAnimating) {
+                    $el.velocity({
+                        opacity: 0
+                    }, {
+                        duration: speed,
+                        easing: "ease-in",
+                        begin: function() {
+                            isAnimating = true;
+                        },
+                        complete: function(){
+                            isAnimating = false;
+                        }
+                    });
+                }
+            }
+        }
+
+        if (position > endTime - 2 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
+            $slides.eq(currentIndex).velocity({
+                'opacity': 0
+            },
+            {
+                duration: 2000,
+                easing: "ease-in"
+            });
         }
     }
 
@@ -101,20 +158,14 @@ var AUDIO = (function() {
         ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
-    var onControlBtnClick = function(e) {
-        e.preventDefault();
-        toggleAudio();
-        ANALYTICS.trackEvent('audio-pause-button');
-        e.stopPropagation();
-    }
-
     return {
-        'checkForAudio': checkForAudio,
         'setupAudio': setupAudio,
+        'playAudio': playAudio,
+        'toggleAudio': toggleAudio
     }
 }());
 
 $(document).ready(function() {
-    $audioPlayer = $('#audio-player');
+    $audioPlayer = $('#player');
     AUDIO.setupAudio();
 });

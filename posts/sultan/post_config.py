@@ -3,7 +3,7 @@ DEPLOY_SLUG = 'sultan'
 NUM_SLIDES_AFTER_CONTENT = 2
 
 # Configuration
-AUDIO = False
+AUDIO = True
 VIDEO = False
 FILMSTRIP = False
-PROGRESS_BAR = True
+PROGRESS_BAR = False
