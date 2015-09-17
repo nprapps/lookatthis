@@ -1,7 +1,7 @@
 var $audioPlayer = null;
 
 var AUDIO = (function() {
-    var audioURL = 'http://assets.apps.npr.org/lookatthis/astroreid-loves/wiseman2.mp3';
+    var audioURL = 'http://assets.apps.npr.org/lookatthis/sultan/sultan.mp3';
     var isAnimating = false;
 
     var setupAudio = function() {
