@@ -69,11 +69,6 @@ var AUDIO = (function() {
         var duration = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
 
-        // implementing my own ended event everything is terrible
-        // if (position >= duration - 0.5) {
-        //     onEnded();
-        // }
-
         for (var i = 0; i < $slides.length; i++) {
             var endTime = $slides.eq(i).data('slide-end-time');
 
@@ -154,7 +149,6 @@ var AUDIO = (function() {
         var percentage = e.offsetX / $(this).width();
         var clickedPosition = totalTime * percentage;
         $audioPlayer.jPlayer('play', clickedPosition);
-        $controlBtn.removeClass('play').addClass('pause');
         ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
     }
 
