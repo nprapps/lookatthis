@@ -473,35 +473,23 @@ $(document).ready(function() {
     $playerUI = $('.jp-audio');
 
     $startCardButton.on('click', onStartCardButtonClick);
-    // $slides.on('click', onSlideClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
     $facebookBtn.on('click', onFacebookBtnClick);
     $supportBtn.on('click', onSupportBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
     $startAudio.on('click', onStartAudioClick);
     $playerButton.on('click', AUDIO.toggleAudio);
+    $upNext.on('click', onNextPostClick);
     $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
 
-
-    $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
-
-    // $previousArrow.on('click', onPreviousArrowClick);
-    // $nextArrow.on('click', onNextArrowClick);
-
-    // if (isTouch) {
-    //     $arrows.on('touchstart', fakeMobileHover);
-    //     $arrows.on('touchend', rmFakeMobileHover);
-    //     $body.on('touchstart', onTouchStart);
-    //     $body.on('touchmove', onTouchMove);
-    //     $body.on('touchend', onTouchEnd);
-    // }
-
-    // Turn off Modernizr history when deploying
     Modernizr.history = null;
 
     $.deck($slides, {
-        touch: { swipeTolerance: swipeTolerance }
+        keys: {
+            next: ['nope'],
+            previous: ['nope']
+        },
     });
 
     onPageLoad();
@@ -511,5 +499,5 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
     $(window).resize(resize);
-    $document.keydown(onDocumentKeyDown);
+    // $document.keydown(onDocumentKeyDown);
 });

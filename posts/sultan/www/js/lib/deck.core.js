@@ -398,7 +398,7 @@ that use the API provided by core.
         slides = [];
         initSlidesArray(options.selectors.slides);
         setupHashBehaviors();
-        bindKeyEvents();
+        // bindKeyEvents();
         bindTouchEvents();
         $container.scrollLeft(0).scrollTop(0);
 
