@@ -115,7 +115,7 @@ var AUDIO = (function() {
                     $el.velocity({
                         opacity: 0
                     }, {
-                        duration: speed,
+                        duration: 1000,
                         easing: "ease-in",
                         begin: function() {
                             isAnimating = true;
