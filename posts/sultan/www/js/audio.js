@@ -133,12 +133,12 @@ var AUDIO = (function() {
             }
         }
 
-        if (position > endTime - 2 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
+        if (position > endTime - 1 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
             $slides.eq(currentIndex).velocity({
                 'opacity': 0
             },
             {
-                duration: 2000,
+                duration: 1000,
                 easing: "ease-in"
             });
         }

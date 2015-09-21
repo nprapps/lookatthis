@@ -103,7 +103,17 @@ var lazyLoad = function(slideIndex) {
         mobileSuffix = '-sq';
     }
 
-    $animatedElements = $slides.eq(slideIndex).find('.animated');
+    var $thisSlide = $slides.eq(slideIndex);
+    $animatedElements = $thisSlide.find('.animated');
+    if ($thisSlide.hasClass('fade-in-bg')) {
+            $thisSlide.velocity({
+                'opacity': 1
+            },
+            {
+                duration: 1000,
+                easing: 'ease-in'
+            });
+        }
 
     for (var i = 0; i < slides.length; i++) {
         loadImages(slides[i]);
