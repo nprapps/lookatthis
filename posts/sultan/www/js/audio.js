@@ -128,7 +128,7 @@ var AUDIO = (function() {
             }
         }
 
-        if (position > endTime - 1 && $slides.eq(currentIndex).hasClass('fade-out-bg')) {
+        if (position > endTime - 1 && $slides.eq(currentIndex).hasClass('fade-out-bg') && !$audioPlayer.data().jPlayer.status.paused) {
             $slides.eq(currentIndex).velocity({
                 'opacity': 0
             },
