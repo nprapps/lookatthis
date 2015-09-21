@@ -485,12 +485,7 @@ $(document).ready(function() {
     $document.on('deck.change', onSlideChange);
     Modernizr.history = null;
 
-    $.deck($slides, {
-        keys: {
-            next: ['nope'],
-            previous: ['nope']
-        },
-    });
+    $.deck($slides);
 
     onPageLoad();
     resize();
@@ -499,5 +494,4 @@ $(document).ready(function() {
     // Redraw slides if the window resizes
     $(window).on("orientationchange", resize);
     $(window).resize(resize);
-    // $document.keydown(onDocumentKeyDown);
 });
