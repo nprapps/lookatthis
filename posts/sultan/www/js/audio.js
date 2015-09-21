@@ -80,7 +80,7 @@ var AUDIO = (function() {
                 }
                 // once we've managed to loop past the current slide, move to that slide
                 else {
-                    $.deck('next');
+                    $.deck('go', i);
                     break;
                 }
             }
