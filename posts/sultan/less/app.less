@@ -407,84 +407,132 @@ img {
 .player-wrapper {
     position: fixed;
     bottom: 0;
-    height: 5rem;
-    background: rgba(255,255,255,0.2);
-    line-height: 5rem;
+    left: 0;
     width: 100%;
+    z-index: 20;
     opacity: 0;
     visibility: hidden;
-    .transition(opacity 1s ease-in);
     z-index: 100;
+    .transition(opacity 1s ease-in);
 
-    .controls {
-        vertical-align: middle;
-        margin-right: @grid-gutter-width / 2;
+    @media @screen-tiny-above {
+       bottom: 40px;
+    }
+
+    #jp_container_1 {
+        width: 100%;
+        height: 60px;
+        margin: 0 auto;
+        position: relative;
+        background: rgba(255,255,255,0.1);
+        text-shadow: 2px 2px 2px #333;
+        .box-shadow(2px 2px 2px rgba(0,0,0,.2));
+
+        @media @screen-tiny-above {
+           width: 370px;
+           height: 60px;
+        }
+    }
+
+    .jp-controls{
         position: absolute;
+        top: 5px;
         left: 0;
-        top: 0;
-    }
+        width: 20px;
+        height: 30px;
+        z-index: 20;
 
-    .player-progress {
-        cursor: pointer;
-        position: absolute;
-        left: 5rem;
-        top: 0;
-        bottom: 0;
-        right: 0;
-
-        .jp-seek-bar {
-            height: 100%;
-        }
-
-        .bar {
+        a {
+            font-size: 14px;
+            color: #fff;
             position: absolute;
-            height: 5rem;
-            top: 0;
-            bottom: 0;
+            top: 10px;
             left: 0;
-            background-color: #373737;
-            opacity: 0.75;
+            padding-left: 10px;
+            outline-style: none;
+
+            .touch & {
+                width: 60px;
+                height: 45px;
+            }
+
+            @media @screen-tiny-above {
+                width: 60px;
+                padding-left: 15px;
+            }
         }
     }
-    .playback-info {
-        right: 1rem;
-        text-align: right;
-        line-height: 1;
-        .vertical-center;
+
+    .jp-progress-container {
         position: absolute;
-    }
-}
+        top: 0;
+        left: 0;
+        width: 100%;
 
-.player-button,
-.player-button:focus,
-.player-button:visited,
-.player-button:hover {
-    display: block;
-    .square(5rem);
-    background: #373737;
-    color: #fff;
-    line-height: 5rem;
-    text-align: center;
-    font-size: @font-size-base * 2;
-    opacity: 0.75;
+        @media @screen-tiny-above {
+           position: absolute;
+           top: 15px;
+           left: auto;
+           right: 60px;
+           width: 270px;
+        }
 
 
-    .no-touch & {
-        &:hover {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
+
+        .player-progress {
+            cursor: pointer;
+
+            .jp-seek-bar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 20px;
+
+                @media @screen-tiny-above {
+                   position: absolute;
+                   top: 3px;
+                   left: 0;
+                   height: 22px;
+                   padding-top: 10px;
+                   padding-right: 2px;
+                   border-left: 1px solid rgba(255, 255, 255, 0);
+                   border-right: 1px solid rgba(255, 255, 255, 0);
+
+                   .no-touch & {
+                    .transition(opacity 3s ease);
+
+                        &:hover {
+                            border-left: 1px solid rgba(255, 255, 255, 0.3);
+                            border-right: 1px solid rgba(255, 255, 255, 0.3);
+                        }
+                    }
+
+                }
+            }
+
+            .bar {
+                position: relative;
+                height: 3px;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                background-color: #eee;
+                opacity: 1;
+                .box-shadow(0 2px 2px rgba(0,0,0,.5));
+                width: 100%;
+            }
+        }
+
+        .current-time {
+            position: absolute;
+            top: 0;
+            right: -50px;
+            font-size: 11px;
         }
     }
 
-    .touch & {
-        &:active {
-            color: #fff;
-            background: lighten(#373737, 10%);
-            text-decoration: none;
-        }
-    }
 }
+
 
 .animated {
     opacity: 0;
