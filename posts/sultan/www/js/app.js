@@ -23,6 +23,7 @@ var $play;
 var $pause;
 var $replay;
 var $playerButton;
+var $playerUI;
 var $animatedElements;
 
 var mobileSuffix;
@@ -200,11 +201,31 @@ var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'exit-start-card-button-click';
 
     $.deck('next');
-    $playerWrapper.css({
-        'opacity': 1,
-        'visibility': 'visible'
-    });
+       $playerWrapper.css({
+           'visibility': 'visible'
+       });
+       $playerWrapper.velocity({
+           'opacity': 0.5,
+       }, {
+           duration: 2000
+       });
     AUDIO.playAudio();
+}
+
+var onPlayerUIEnter = function() {
+    $playerWrapper.velocity({
+        opacity: 1
+    }, {
+        duration: 500,
+    });
+}
+
+var onPlayerUIExit = function() {
+    $playerWrapper.velocity({
+        opacity: 0.5
+    }, {
+        duration: 500,
+    });
 }
 
 var onDocumentKeyDown = function(e) {
@@ -428,7 +449,8 @@ $(document).ready(function() {
     $play = $('.play');
     $pause = $('.pause');
     $replay = $('.replay');
-    $playerButton = $('.player-button')
+    $playerButton = $('.player-button');
+    $playerUI = $('.jp-audio');
 
     $startCardButton.on('click', onStartCardButtonClick);
     // $slides.on('click', onSlideClick);
@@ -437,6 +459,7 @@ $(document).ready(function() {
     $supportBtn.on('click', onSupportBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
     $playerButton.on('click', AUDIO.toggleAudio);
+    $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
