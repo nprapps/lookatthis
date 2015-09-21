@@ -544,3 +544,25 @@ img {
     -webkit-transform-style: preserve-3d;
     -webkit-transform: translateZ(0);
 }
+
+.btn.btn-go, .btn.btn-audio {
+    border-radius: 0;
+    background-color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 35px auto 0 auto;
+    text-align: center;
+     font-size: 18px;
+    padding: 0 22px;
+    line-height: 44px;
+
+
+    &:hover {
+        .no-touch & {
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+}

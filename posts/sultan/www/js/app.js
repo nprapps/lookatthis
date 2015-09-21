@@ -17,6 +17,7 @@ var $support;
 var $supportBtn;
 var $didNotLike;
 var $dislikeEmail;
+var $startAudio;
 var $audioPlayer;
 var $playerWrapper;
 var $play;
@@ -211,14 +212,18 @@ var onStartCardButtonClick = function() {
     lastSlideExitEvent = 'exit-start-card-button-click';
 
     $.deck('next');
-       $playerWrapper.css({
-           'visibility': 'visible'
-       });
-       $playerWrapper.velocity({
-           'opacity': 0.5,
-       }, {
-           duration: 2000
-       });
+}
+
+var onStartAudioClick = function() {
+    $.deck('next');
+    $playerWrapper.css({
+       'visibility': 'visible'
+    });
+    $playerWrapper.velocity({
+       'opacity': 0.5,
+    }, {
+       duration: 2000
+    });
     AUDIO.playAudio();
 }
 
@@ -455,6 +460,7 @@ $(document).ready(function() {
     $supportBtn = $('.btn-support');
     $didNotLike = $('.did-not-like');
     $dislikeEmail = $('.dislike-email');
+    $startAudio = $('.btn-audio');
     $playerWrapper = $('.player-wrapper');
     $play = $('.play');
     $pause = $('.pause');
@@ -468,8 +474,10 @@ $(document).ready(function() {
     $facebookBtn.on('click', onFacebookBtnClick);
     $supportBtn.on('click', onSupportBtnClick);
     $dislikeEmail.on('click', onDislikeEmailClick);
+    $startAudio.on('click', onStartAudioClick);
     $playerButton.on('click', AUDIO.toggleAudio);
     $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
+
 
     $upNext.on('click', onNextPostClick);
     $document.on('deck.change', onSlideChange);
