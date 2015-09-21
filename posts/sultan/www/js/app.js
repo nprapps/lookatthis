@@ -101,7 +101,7 @@ var lazyLoad = function(slideIndex) {
     mobileSuffix = '';
 
     if (w < 769) {
-        mobileSuffix = '-sq';
+        // mobileSuffix = '-sq';
     }
 
     var $thisSlide = $slides.eq(slideIndex);
