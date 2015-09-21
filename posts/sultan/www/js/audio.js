@@ -92,11 +92,6 @@ var AUDIO = (function() {
 
                 var entranceTime = $el.data('entrance') || null;
                 var exitTime = $el.data('exit') || slideEndTime - 2;
-                if ($el.hasClass('fast')) {
-                    var speed = 1000;
-                } else {
-                    var speed = 2000;
-                }
                 if (
                     (position > entranceTime) &&
                     (position < exitTime) &&
@@ -106,7 +101,7 @@ var AUDIO = (function() {
                     $el.velocity({
                         opacity: 1
                     }, {
-                        duration: speed,
+                        duration: 1000,
                         easing: "ease-in",
                         begin: function() {
                             isAnimating = true;
