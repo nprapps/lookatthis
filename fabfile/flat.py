@@ -29,7 +29,7 @@ def deploy_file(connection, src, dst, max_age):
     If warn_threshold is a positive integer N, we warn if the file is bigger
     is larger than N bytes.
     """
-    bucket = connection.get_bucket(app_config.S3_BUCKET['bucket_name'])
+    bucket = utils.get_bucket(app_config.S3_BUCKET['bucket_name'])
 
     k = bucket.get_key(dst)
     s3_md5 = None
@@ -111,8 +111,6 @@ def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[], warn_
 
             to_deploy.append((src_path, dst_path))
 
-    s3 = boto.connect_s3()
-
     for src, dst in to_deploy:
         deploy_file(s3, src, dst, max_age)
 
@@ -129,7 +127,7 @@ def delete_folder(dst):
     """
     s3 = boto.connect_s3()
 
-    bucket = s3.get_bucket(app_config.S3_BUCKET['bucket_name'])
+    bucket = utils.get_bucket(app_config.S3_BUCKET['bucket_name'])
 
     for key in bucket.list(prefix='%s/' % dst):
         print 'Deleting %s' % (key.key)
