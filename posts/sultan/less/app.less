@@ -136,6 +136,18 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li {
     font-family: "Gotham", helvetica, arial, sans-serif;
 }
 
+h2 {
+    font-size: 36px;
+    line-height: 48px;
+    font-weight: bold;
+    text-align: center;
+
+    @media @screen-tiny-above {
+        font-size: 48px;
+        line-height: 64px;
+    }
+}
+
 .animated {
   -webkit-animation-duration: 2s;
           animation-duration: 2s;
