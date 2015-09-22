@@ -1,7 +1,7 @@
 var $audioPlayer = null;
 
 var AUDIO = (function() {
-    var audioURL = 'http://assets.apps.npr.org/lookatthis/sultan/sultanwmusic4.mp3';
+    var audioURL = 'http://assets.apps.npr.org/lookatthis/sultan/sultanwmusic5.mp3';
     var isAnimating = false;
 
     var setupAudio = function() {
@@ -19,7 +19,7 @@ var AUDIO = (function() {
         $play.hide();
         $pause.hide();
         $replay.show();
-        console.log('ended');
+        $.deck('next');
     }
 
     var playAudio = function() {
