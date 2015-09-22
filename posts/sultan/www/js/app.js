@@ -485,7 +485,11 @@ $(document).ready(function() {
     $document.on('deck.change', onSlideChange);
     Modernizr.history = null;
 
-    $.deck($slides);
+    $.deck($slides, {
+        touch: {
+            swipeDirection: false
+        }
+    });
 
     onPageLoad();
     resize();
