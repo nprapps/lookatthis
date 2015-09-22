@@ -11,6 +11,7 @@ import boto
 from boto.s3.key import Key
 
 import app_config
+import utils
 
 GZIP_FILE_TYPES = ['.html', '.js', '.json', '.css', '.xml']
 
@@ -22,7 +23,7 @@ class FakeTime:
 # See: http://stackoverflow.com/questions/264224/setting-the-gzip-timestamp-from-python
 gzip.time = FakeTime()
 
-def deploy_file(connection, src, dst, max_age):
+def deploy_file(src, dst, max_age):
     """
     Deploy a single file to S3, if the local version is different.
 
@@ -112,7 +113,7 @@ def deploy_folder(src, dst, max_age=app_config.DEFAULT_MAX_AGE, ignore=[], warn_
             to_deploy.append((src_path, dst_path))
 
     for src, dst in to_deploy:
-        deploy_file(s3, src, dst, max_age)
+        deploy_file(src, dst, max_age)
 
     if warn_threshold > 0:
         print "\n"
