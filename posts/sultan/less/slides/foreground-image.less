@@ -9,8 +9,12 @@
         text-align: center;
 
         img {
-            max-height: 550px;
+            max-height: 320px;
             width: auto;
+
+            @media @screen-tiny-above {
+                max-height: 550px;
+            }
         }
     }
 
