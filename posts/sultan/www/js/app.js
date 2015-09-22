@@ -47,7 +47,9 @@ var resize = function() {
      */
     w = $(window).width();
     h = $(window).height();
-    $section.height(h);
+    if ($section.height() < h) {
+        $section.height(h);
+    }
     $slides.width(w);
 };
 
@@ -188,6 +190,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     trackCompletion(toIndex);
+    checkOverflow(toIndex);
     document.activeElement.blur();
     currentIndex = toIndex;
 
@@ -207,6 +210,19 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     if (toIndex === $slides.length - 1) {
         ANALYTICS.trackEvent('tests-run', callToActionTest);
     }
+}
+
+var checkOverflow = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var slideHeight = $thisSlide.height();
+    var blockHeight = $thisSlide.find('.full-block').height();
+
+    if (blockHeight > slideHeight) {
+        $thisSlide.parents('.section').height(blockHeight);
+    } else {
+        $thisSlide.parents('.section').height(h);
+    }
+
 }
 
 var onStartCardButtonClick = function() {
