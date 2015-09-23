@@ -189,7 +189,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     */
     lazyLoad(toIndex);
     showNavigation(toIndex);
-    trackCompletion(toIndex);
+    // trackCompletion(toIndex);
     checkOverflow(toIndex);
     document.activeElement.blur();
     currentIndex = toIndex;
@@ -230,11 +230,11 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
-
     $.deck('next');
 }
 
 var onStartAudioClick = function() {
+    lastSlideExitEvent = 'exit-audio-start-button-click';
     $.deck('next');
     $playerWrapper.css({
        'visibility': 'visible'
@@ -245,6 +245,7 @@ var onStartAudioClick = function() {
        duration: 2000
     });
     AUDIO.playAudio();
+    ANALYTICS.trackEvent('audio-started');
 }
 
 var onPlayerUIEnter = function() {
@@ -495,6 +496,7 @@ $(document).ready(function() {
     $dislikeEmail.on('click', onDislikeEmailClick);
     $startAudio.on('click', onStartAudioClick);
     $playerButton.on('click', AUDIO.toggleAudio);
+    $replay.on('click', AUDIO.reset);
     $upNext.on('click', onNextPostClick);
     $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
 

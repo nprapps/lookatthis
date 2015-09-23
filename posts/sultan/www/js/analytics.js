@@ -202,6 +202,10 @@ var ANALYTICS = (function () {
         }
     }
 
+    var fiveSecondsComplete =  function() {
+        trackEvent('audio-five-seconds');
+    }
+
     var completeTwentyFivePercent =  function() {
         trackEvent('completion', '0.25');
     }
@@ -268,6 +272,7 @@ var ANALYTICS = (function () {
         'actOnFeaturedFacebook': actOnFeaturedFacebook,
         'copySummary': copySummary,
         'useKeyboardNavigation': useKeyboardNavigation,
+        'fiveSecondsComplete': fiveSecondsComplete,
         'completeTwentyFivePercent': completeTwentyFivePercent,
         'completeFiftyPercent': completeFiftyPercent,
         'completeSeventyFivePercent': completeSeventyFivePercent,

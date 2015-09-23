@@ -2,6 +2,11 @@ var $audioPlayer = null;
 
 var AUDIO = (function() {
     var isAnimating = false;
+    var fourFiveSeconds = false;
+    var twentyFiveComplete = false;
+    var fiftyComplete = false;
+    var seventyFiveComplete = false;
+    var completed = false;
 
     var setupAudio = function() {
         $audioPlayer.jPlayer({
@@ -18,7 +23,11 @@ var AUDIO = (function() {
         $play.hide();
         $pause.hide();
         $replay.show();
-        $.deck('next');
+        $.deck('go', $slides.length - 1);
+        if (!completed) {
+            ANALYTICS.completeOneHundredPercent();
+            completed = true;
+        }
     }
 
     var playAudio = function() {
@@ -26,7 +35,9 @@ var AUDIO = (function() {
 
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
-        }).jPlayer('play');
+        });
+        $audioPlayer.jPlayer('playHead', 0);
+        $audioPlayer.jPlayer('play');
         $play.hide();
         $pause.show();
         $replay.hide();
@@ -47,21 +58,31 @@ var AUDIO = (function() {
     }
 
     var toggleAudio = function(e) {
-        e.preventDefault();
-        if ($audioPlayer.data().jPlayer.status.paused) {
-            _resumeAudio();
-        } else {
-            _pauseAudio();
+        if (!$(this).hasClass('replay')) {
+            e.preventDefault();
+            if ($audioPlayer.data().jPlayer.status.paused) {
+                _resumeAudio();
+            } else {
+                _pauseAudio();
+            }
         }
     }
 
     var reset = function(e) {
         e.preventDefault();
-        $.deck('go', 0);
-        $audioPlayer.jPlayer('playHead', 0);
-        $audioPlayer.jPlayer('play');
-    }
+        lastSlideExitEvent = 'reset-button-click';
+        $.deck('go', 1);
+        $playerWrapper.css({
+            'visibility': 'hidden',
+            'opacity': '0'
+        });
 
+        fourFiveSeconds = false;
+        twentyFiveComplete = false;
+        fiftyComplete = false;
+        seventyFiveComplete = false;
+        completed = false;
+    }
 
     var onTimeupdate = function(e) {
         var timeText = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
@@ -81,6 +102,7 @@ var AUDIO = (function() {
                 }
                 // once we've managed to loop past the current slide, move to that slide
                 else {
+                    lastSlideExitEvent = 'audio-timeupdate';
                     $.deck('go', i);
                     break;
                 }
@@ -138,6 +160,28 @@ var AUDIO = (function() {
                 easing: "ease-in"
             });
         }
+
+        _trackCompletion(position, duration);
+    }
+
+    var _trackCompletion = function(position, duration) {
+        var completion = position / duration;
+
+        if (position > 5 && !fourFiveSeconds) {
+            ANALYTICS.fiveSecondsComplete();
+            fourFiveSeconds = true;
+        }
+
+        if (completion >= 0.25 && !twentyFiveComplete) {
+            ANALYTICS.completeTwentyFivePercent();
+            twentyFiveComplete = true;
+        } else if (completion >= 0.5 && !fiftyComplete) {
+            ANALYTICS.completeFiftyPercent();
+            fiftyComplete = true;
+        } else if (completion >= 0.75 && !seventyFiveComplete) {
+            ANALYTICS.completeSeventyFivePercent();
+            seventyFiveComplete = true;
+        }
     }
 
     var onSeekBarClick = function(e) {
@@ -151,7 +195,8 @@ var AUDIO = (function() {
     return {
         'setupAudio': setupAudio,
         'playAudio': playAudio,
-        'toggleAudio': toggleAudio
+        'toggleAudio': toggleAudio,
+        'reset': reset
     }
 }());
 
