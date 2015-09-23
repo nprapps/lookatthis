@@ -32,7 +32,7 @@ var AUDIO = (function() {
     }
 
     var playAudio = function() {
-        var audioURL = ASSETS_PATH + 'sultanwmusic5.mp3';
+        var audioURL = ASSETS_PATH + 'audio.mp3';
 
         $audioPlayer.jPlayer('setMedia', {
             mp3: audioURL
