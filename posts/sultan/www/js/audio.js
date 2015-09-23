@@ -95,76 +95,76 @@ var AUDIO = (function() {
         var duration = e.jPlayer.status.duration;
         var position = e.jPlayer.status.currentTime;
 
-        for (var i = 0; i < $slides.length; i++) {
-            var endTime = $slides.eq(i).data('slide-end-time');
+        if (position > 0) {
+            for (var i = 0; i < $slides.length; i++) {
+                var endTime = $slides.eq(i).data('slide-end-time');
 
-            // if the position is less than the end time of the slide of this loop
-            if (position < endTime && currentIndex > 0 && position > 0) {
-                // if we're reached this slide, don't do anything
-                if (i === currentIndex) {
-                    break;
-                }
-                // once we've managed to loop past the current slide, move to that slide
-                else {
-                    lastSlideExitEvent = 'audio-timeupdate';
-                    $.deck('go', i);
-                    break;
-                }
-            }
-        }
-
-        if ($animatedElements) {
-            for (var i = 0; i < $animatedElements.length; i++) {
-                var $el = $animatedElements.eq(i);
-
-                var entranceTime = $el.data('entrance') || null;
-                var exitTime = $el.data('exit') || slideEndTime - 2;
-                if (
-                    (position > entranceTime) &&
-                    (position < exitTime) &&
-                    ($el.css('opacity') < 1) &&
-                    (!isAnimating)
-                ) {
-                    $el.velocity({
-                        opacity: 1
-                    }, {
-                        duration: 1000,
-                        easing: "ease-in",
-                        begin: function() {
-                            isAnimating = true;
-                        },
-                        complete: function() {
-                            isAnimating = false;
-                        }
-                    });
-                }
-                if (position > exitTime && $el.css('opacity') !== 0 && !isAnimating) {
-                    $el.velocity({
-                        opacity: 0
-                    }, {
-                        duration: 1000,
-                        easing: "ease-in",
-                        begin: function() {
-                            isAnimating = true;
-                        },
-                        complete: function(){
-                            isAnimating = false;
-                        }
-                    });
+                // if the position is less than the end time of the slide of this loop
+                if (position < endTime && currentIndex > 0) {
+                    // if we're reached this slide, don't do anything
+                    if (i === currentIndex) {
+                        break;
+                    }
+                    // once we've managed to loop past the current slide, move to that slide
+                    else {
+                        lastSlideExitEvent = 'audio-timeupdate';
+                        $.deck('go', i);
+                        break;
+                    }
                 }
             }
-        }
+            if ($animatedElements) {
+                for (var i = 0; i < $animatedElements.length; i++) {
+                    var $el = $animatedElements.eq(i);
 
-        if (position > endTime - 1 && $slides.eq(currentIndex).hasClass('fade-out-bg') && !$audioPlayer.data().jPlayer.status.paused) {
-            $slides.eq(currentIndex).velocity({
-                'opacity': 0
-            },
-            {
-                duration: 1000,
-                easing: "ease-in"
-            });
-        }
+                    var entranceTime = $el.data('entrance') || null;
+                    var exitTime = $el.data('exit') || slideEndTime - 2;
+                    if (
+                        (position > entranceTime) &&
+                        (position < exitTime) &&
+                        ($el.css('opacity') < 1) &&
+                        (!isAnimating)
+                    ) {
+                        $el.velocity({
+                            opacity: 1
+                        }, {
+                            duration: 1000,
+                            easing: "ease-in",
+                            begin: function() {
+                                isAnimating = true;
+                            },
+                            complete: function() {
+                                isAnimating = false;
+                            }
+                        });
+                    }
+                    if (position > exitTime && $el.css('opacity') !== 0 && !isAnimating) {
+                        $el.velocity({
+                            opacity: 0
+                        }, {
+                            duration: 1000,
+                            easing: "ease-in",
+                            begin: function() {
+                                isAnimating = true;
+                            },
+                            complete: function(){
+                                isAnimating = false;
+                            }
+                        });
+                    }
+                }
+            }
 
+            if (position > endTime - 1 && $slides.eq(currentIndex).hasClass('fade-out-bg') && !$audioPlayer.data().jPlayer.status.paused) {
+                $slides.eq(currentIndex).velocity({
+                    'opacity': 0
+                },
+                {
+                    duration: 1000,
+                    easing: "ease-in"
+                });
+            }
+        }
         _trackCompletion(position, duration);
     }
 

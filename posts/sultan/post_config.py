@@ -1,5 +1,5 @@
 COPY_GOOGLE_DOC_KEY = '1CdafeVmmtNa_PMV99TapPHvLUVzYz0xkvHcpINQtQ6c'
-DEPLOY_SLUG = 'sultan'
+DEPLOY_SLUG = 'al-qassemi'
 NUM_SLIDES_AFTER_CONTENT = 2
 
 # Configuration
