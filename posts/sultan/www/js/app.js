@@ -26,6 +26,7 @@ var $replay;
 var $playerButton;
 var $playerUI;
 var $animatedElements;
+var $seekBar;
 
 var mobileSuffix;
 var w;
@@ -488,6 +489,7 @@ $(document).ready(function() {
     $replay = $('.replay');
     $playerButton = $('.player-button');
     $playerUI = $('.jp-audio');
+    $seekBar = $('.jp-seek-bar');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $likeStoryButtons.on('click', onLikeStoryButtonsClick);
@@ -499,6 +501,7 @@ $(document).ready(function() {
     $replay.on('click', AUDIO.reset);
     $upNext.on('click', onNextPostClick);
     $playerUI.hover(onPlayerUIEnter, onPlayerUIExit);
+    $seekBar.on('click', AUDIO.onSeekBarClick);
 
     $document.on('deck.change', onSlideChange);
     Modernizr.history = null;

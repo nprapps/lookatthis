@@ -48,6 +48,7 @@ var AUDIO = (function() {
         $play.show();
         $pause.hide();
         $replay.hide();
+        ANALYTICS.trackEvent('pause-audio');
     }
 
     var _resumeAudio = function() {
@@ -55,6 +56,7 @@ var AUDIO = (function() {
         $play.hide();
         $pause.show();
         $replay.hide();
+        ANALYTICS.trackEvent('resume-audio')
     }
 
     var toggleAudio = function(e) {
@@ -71,6 +73,7 @@ var AUDIO = (function() {
     var reset = function(e) {
         e.preventDefault();
         lastSlideExitEvent = 'reset-button-click';
+        ANALYTICS.trackEvent('reset');
         $.deck('go', 1);
         $playerWrapper.css({
             'visibility': 'hidden',
@@ -185,18 +188,15 @@ var AUDIO = (function() {
     }
 
     var onSeekBarClick = function(e) {
-        var totalTime = $audioPlayer.data().jPlayer.status.duration;
-        var percentage = e.offsetX / $(this).width();
-        var clickedPosition = totalTime * percentage;
-        $audioPlayer.jPlayer('play', clickedPosition);
-        ANALYTICS.trackEvent('seek', $audioPlayer.data().jPlayer.status.src);
+        ANALYTICS.trackEvent('seek-audio');
     }
 
     return {
         'setupAudio': setupAudio,
         'playAudio': playAudio,
         'toggleAudio': toggleAudio,
-        'reset': reset
+        'reset': reset,
+        'onSeekBarClick': onSeekBarClick
     }
 }());
 
