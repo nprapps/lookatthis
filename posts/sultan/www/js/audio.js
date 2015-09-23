@@ -23,7 +23,8 @@ var AUDIO = (function() {
         $play.hide();
         $pause.hide();
         $replay.show();
-        $.deck('go', $slides.length - 1);
+        var lastSlide = $slides.length - 1;
+        $.deck('go', lastSlide);
         if (!completed) {
             ANALYTICS.completeOneHundredPercent();
             completed = true;
@@ -98,7 +99,7 @@ var AUDIO = (function() {
             var endTime = $slides.eq(i).data('slide-end-time');
 
             // if the position is less than the end time of the slide of this loop
-            if (position < endTime && currentIndex > 0) {
+            if (position < endTime && currentIndex > 0 && position > 0) {
                 // if we're reached this slide, don't do anything
                 if (i === currentIndex) {
                     break;
