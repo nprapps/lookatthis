@@ -5,10 +5,14 @@
     left: 0;
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     background-color: #eee;
     color: #444;
+
+    .swiper-slide-active & {
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 
     .titlecard-wrapper {
         overflow: hidden;
