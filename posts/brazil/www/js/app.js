@@ -1,76 +1,47 @@
-// Global state
+// jQuery vars
 var $container;
-var $titlecard;
-var $titlecard_wrapper;
-var $w = $(window);
-var aspect_width = 16;
-var aspect_height = 9;
-$modalClose = $('.close-modal');
+var $w;
+var $modalClose
+var $overlay;
+var $slides
+var $deepLinkNotice;
+var $thisSlide;
+var $inDepthButton;
+var $inDepthArrow;
+var $hamburger;
+var $slideLinks;
+
+// constants
+var aspectWidth = 16;
+var aspectHeight = 9;
+
+// global objects
+var transEndEventNames;
+var transEndEventName;
+var transitionSupport;
 var swiper;
 
-// When modal closes, make sure it's not clickable
-var onModalCloseClick = function() {
-    $('.deep-link-notice').css('visibility', 'hidden');
-    $.cookie('npr_deeplink_status', '1', { expires: 1});
-}
+var onDocumentReady = function() {
+    $container = $('.swiper-container');
+    $w = $(window);
+    $modalClose = $('.close-modal');
+    $overlay = $('.overlay-menu');
+    $slides = $('.swiper-slide');
+    $deepLinkNotice = $('.deep-link-notice');
+    $hamburger = $('.hamburger');
+    $slideLinks = $('a[data-slide]');
 
-// If modal status is 1, hide the content warning on page load.
-var checkModalStatus = function() {
-    if ($.cookie('npr_deeplink_status') != '1' && swiper.activeIndex !== 0) {
-        $('.deep-link-notice').css('visibility', 'visible');
-        //console.log('this is not the index');
-    }
-}
+    transEndEventNames = {
+        'WebkitTransition': 'webkitTransitionEnd',
+        'MozTransition': 'transitionend',
+        'OTransition': 'oTransitionEnd',
+        'msTransition': 'MSTransitionEnd',
+        'transition': 'transitionend'
+    };
+    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
+    transitionSupport = { transitions : Modernizr.csstransitions };
 
-$modalClose.on('click', onModalCloseClick);
-
-//nav menu
-var overlay = document.querySelector( 'div.overlay-menu' );
-    var transEndEventNames = {
-            'WebkitTransition': 'webkitTransitionEnd',
-            'MozTransition': 'transitionend',
-            'OTransition': 'oTransitionEnd',
-            'msTransition': 'MSTransitionEnd',
-            'transition': 'transitionend'
-        };
-var transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
-var support = { transitions : Modernizr.csstransitions };
-
-//sizing titlecard to match viewport
-var on_window_resize = function() {
-    /*
-    * Handles resizing our full-width images.
-    * Makes decisions based on the window size.
-    */
-
-    // Calculate optimal width if height is constrained to window height.
-    w_optimal = ($w.height() * aspect_width) / aspect_height;
-
-    // Calculate optimal height if width is constrained to window width.
-    h_optimal = ($w.width() * aspect_height) / aspect_width;
-
-    // Decide whether to go with optimal height or width.
-    w = $w.width();
-    h = h_optimal;
-
-    if (w_optimal > $w.width()) {
-        w = w_optimal;
-        h = $w.height();
-    }
-
-    //$titlecard.width(w + 'px').height(h + 'px');
-    //$opener.height($w.height() + 'px');
-
-    $titlecard_wrapper.height($w.height() + 'px');
-    $container.css('marginTop', $w.height() + 'px');
-};
-
-$(document).ready(function() {
-    //swiper parameters
-    swiper = new Swiper('.swiper-container', {
-        //initialSlide: '4',
-        //autoplay: 5000,
-        //speed: 0,
+    swiper = new Swiper($container, {
         effect: 'fade',
         speed: 1000,
         parallax: true,
@@ -91,117 +62,123 @@ $(document).ready(function() {
         prevButton: '.swiper-button-prev',
 
     });
-    $('a[data-slide]').on('click', function () {
-        swiper.slideTo($(this).data('slide'));
-    });
+
+    $thisSlide = $slides.eq(swiper.activeIndex);
 
     checkModalStatus();
 
-    //sizing the title card
-    $container = $('.in-depth');
-    $titlecard = $('.titlecard');
-    $titlecard_wrapper = $('.titlecard-wrapper, .after-before');
+    $slideLinks.on('click', onSlideLinkClick);
+    swiper.on('slideChangeStart', onSlideChange);
+    $hamburger.on('click', toggleOverlay);
+}
 
-    $w.on('resize', on_window_resize);
-    on_window_resize();
+var onSlideChange = function() {
+    //update this slide to be the current active slide
+    $thisSlide = $slides.eq(swiper.activeIndex);
 
-    //////////// Targeting the current slide ///////////////
-    //console.log(this);
+    checkForInDepth();
+}
 
-    //each slide gets a class of swiper-slide. Let's make these a jquery object, which is an array of the matched DOM elements.
-    $slides = $('.swiper-slide');
+var checkForInDepth = function() {
+    //update the smooth scroll button
+    $inDepthButton = $thisSlide.find('.scroll-button');
 
-    //thisSlide is equal to the current slide
-    var $thisSlide = $slides.eq(swiper.activeIndex);
+     //update the active arrow
+    $inDepthArrow = $thisSlide.find('.scroll-button i');
 
-    //find the smooth scroll button within the current slide
-    var $inDepthButton = $thisSlide.find('.scroll-button');
-
-    //find the down arrow inside the smooth scroll button within the current slide
-    var $inDepthArrow = $thisSlide.find('.scroll-button i');
-
-    //find the in depth text container
-    var $inDepthTextContainer = $thisSlide.find('.inner-text');
+    //update in depth text
+    $inDepthTextContainer = $thisSlide.find('.inner-text');
 
     //find the in depth text for the current slide
-    var $inDepthText = $thisSlide.find('.in-depth');
+    $inDepthText = $thisSlide.find('.in-depth');
 
-    //smooth scroll to the text of the current slide
-    $inDepthButton.click(function() {
-            $inDepthTextContainer.animate({
-                scrollTop: $inDepthText.offset().top
-            }, 1000, 'swing');
-        });
+    //remove animation classes from all other instances of the smooth scroll arrow
+    $('.in-depth-scroll i').removeClass('animated fadeInUp');
 
-    //add a class to the arrow in the current slide to animate it.
+    // and lastly add animation to the current arrow
     $inDepthArrow.addClass('animated fadeInUp');
 
-    //this is a swiper function that will fire each time you enter a frame
-    swiper.on('slideChangeStart', function() {
-
-        //update this slide to be the current active slide
-        $thisSlide = $slides.eq(swiper.activeIndex);
-
-        //update the smooth scroll button
-        $inDepthButton = $thisSlide.find('.scroll-button');
-
-         //update the active arrow
-        $inDepthArrow = $thisSlide.find('.scroll-button i');
-
-        //update in depth text
-        $inDepthTextContainer = $thisSlide.find('.inner-text');
-
-        //find the in depth text for the current slide
-        $inDepthText = $thisSlide.find('.in-depth');
-
-        //remove animation classes from all other instances of the smooth scroll arrow
-        $('.in-depth-scroll i').removeClass('animated fadeInUp');
-
-        // and lastly add animation to the current arrow
-        $inDepthArrow.addClass('animated fadeInUp');
-
-        $inDepthButton.click(function() {
-            $inDepthTextContainer.animate({
-                scrollTop: $inDepthText.offset().top
-            }, 1000, 'swing');
-        });
-
-    });
-
-    //before after jump
-    $( ".after-jump" ).click(function() {
+    $inDepthButton.click(function() {
         $inDepthTextContainer.animate({
             scrollTop: $inDepthText.offset().top
-        }, 0);
+        }, 1000, 'swing');
     });
 
+    // $( ".after-jump" ).click(function() {
+    //     $inDepthTextContainer.animate({
+    //         scrollTop: $inDepthText.offset().top
+    //     }, 0);
+    // });
+}
 
-    //nav menu
-    function toggleOverlay() {
-        if( classie.has( overlay, 'open' ) ) {
-            classie.remove( overlay, 'open' );
-            classie.add( overlay, 'close' );
-            var onEndTransitionFn = function( ev ) {
-                if( support.transitions ) {
-                    if( ev.propertyName !== 'visibility' ) return;
-                    this.removeEventListener( transEndEventName, onEndTransitionFn );
-                }
-                classie.remove( overlay, 'close' );
-            };
+var onSlideLinkClick = function() {
+    swiper.slideTo($(this).data('slide'));
+}
+
+var toggleOverlay = function() {
+    if ($overlay.hasClass('open')) {
+        $overlay.removeClass('open');
+        $overlay.addClass('close');
+
+        var onEndTransitionFn = function(ev) {
             if( support.transitions ) {
-                overlay.addEventListener( transEndEventName, onEndTransitionFn );
+                if( ev.propertyName !== 'visibility' ) return;
+                this.removeEventListener( transEndEventName, onEndTransitionFn );
             }
-            else {
-                onEndTransitionFn();
-            }
+            $overlay.removeClass('open');
+        };
+        if( support.transitions ) {
+            overlay.addEventListener( transEndEventName, onEndTransitionFn );
         }
-        else if( !classie.has( overlay, 'close' ) ) {
-            classie.add( overlay, 'open' );
+        else {
+            onEndTransitionFn();
         }
-    };
+    }
+    else if (!$overlay.hasClass('close')) {
+        $overlay.addClass('open');
+    }
+}
 
-    $(".hamburger, .menu-toggle li, .overlay-menu-close").click(function() {
-      toggleOverlay();
-    });
+// When modal closes, make sure it's not clickable
+var onModalCloseClick = function() {
+    $deepLinkNotice.css('visibility', 'hidden');
+    $.cookie('npr_deeplink_status', '1', { expires: 1});
+}
 
-});
+// If modal status is 1, hide the content warning on page load.
+var checkModalStatus = function() {
+    if ($.cookie('npr_deeplink_status') != '1' && swiper.activeIndex !== 0) {
+        $deepLinkNotice.css('visibility', 'visible');
+    }
+}
+
+//sizing titlecard to match viewport
+var onWindowResize = function() {
+    /*
+    * Handles resizing our full-width images.
+    * Makes decisions based on the window size.
+    */
+
+    // Calculate optimal width if height is constrained to window height.
+    var wOptimal = ($w.height() * aspectWidth) / aspectHeight;
+
+    // Calculate optimal height if width is constrained to window width.
+    var hOptimal = ($w.width() * aspectHeight) / aspectWidth;
+
+    // Decide whether to go with optimal height or width.
+    var w = $w.width();
+    var h = h_optimal;
+
+    if (w_optimal > $w.width()) {
+        var w = w_optimal;
+        var h = $w.height();
+    }
+
+    //$titlecard.width(w + 'px').height(h + 'px');
+    //$opener.height($w.height() + 'px');
+
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
+};
+
+$(onDocumentReady);
