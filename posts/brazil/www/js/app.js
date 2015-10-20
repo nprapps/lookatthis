@@ -145,24 +145,13 @@ var checkForInDepth = function() {
 
     if ($inDepthContainer.length > 0) {
         $titlecardWrapper.height($w.height() + 'px');
-        $inDepthContainer.css('marginTop', $w.height() + 'px');
-
-        //update the smooth scroll button
+        $inDepthContainer.css('top', $w.height() + 'px');
         $inDepthButton = $thisSlide.find('.scroll-button');
-
-         //update the active arrow
         $inDepthArrow = $thisSlide.find('.scroll-button i');
-
-        //update in depth text
         $inDepthTextContainer = $thisSlide.find('.inner-text');
-
-        //find the in depth text for the current slide
         $inDepthText = $thisSlide.find('.in-depth');
 
-        //remove animation classes from all other instances of the smooth scroll arrow
         $('.in-depth-scroll i').removeClass('animated fadeInUp');
-
-        // and lastly add animation to the current arrow
         $inDepthArrow.addClass('animated fadeInUp');
 
         $inDepthButton.click(function() {
