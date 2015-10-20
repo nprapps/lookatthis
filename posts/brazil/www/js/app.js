@@ -30,6 +30,8 @@ var onDocumentReady = function() {
     $deepLinkNotice = $('.deep-link-notice');
     $hamburger = $('.hamburger');
     $slideLinks = $('a[data-slide]');
+    $prevButton = $('.swiper-button-prev');
+    $nextButton = $('.swiper-button-next')
 
     transEndEventNames = {
         'WebkitTransition': 'webkitTransitionEnd',
@@ -56,8 +58,8 @@ var onDocumentReady = function() {
        // mousewheelReleaseOnEdges: true,
         keyboardControl: true,
         simulateTouch: false,
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
+        nextButton: $nextButton,
+        prevButton: $prevButton,
         preloadImages: false,
     });
 
@@ -138,35 +140,43 @@ var loadImages = function($slide) {
 };
 
 var checkForInDepth = function() {
-    //update the smooth scroll button
-    $inDepthButton = $thisSlide.find('.scroll-button');
+    var $titlecardWrapper = $thisSlide.find('.slide-content');
+    var $inDepthContainer = $thisSlide.find('.in-depth');
 
-     //update the active arrow
-    $inDepthArrow = $thisSlide.find('.scroll-button i');
+    if ($inDepthContainer.length > 0) {
+        $titlecardWrapper.height($w.height() + 'px');
+        $inDepthContainer.css('marginTop', $w.height() + 'px');
 
-    //update in depth text
-    $inDepthTextContainer = $thisSlide.find('.inner-text');
+        //update the smooth scroll button
+        $inDepthButton = $thisSlide.find('.scroll-button');
 
-    //find the in depth text for the current slide
-    $inDepthText = $thisSlide.find('.in-depth');
+         //update the active arrow
+        $inDepthArrow = $thisSlide.find('.scroll-button i');
 
-    //remove animation classes from all other instances of the smooth scroll arrow
-    $('.in-depth-scroll i').removeClass('animated fadeInUp');
+        //update in depth text
+        $inDepthTextContainer = $thisSlide.find('.inner-text');
 
-    // and lastly add animation to the current arrow
-    $inDepthArrow.addClass('animated fadeInUp');
+        //find the in depth text for the current slide
+        $inDepthText = $thisSlide.find('.in-depth');
 
-    $inDepthButton.click(function() {
-        $inDepthTextContainer.animate({
-            scrollTop: $inDepthText.offset().top
-        }, 1000, 'swing');
-    });
+        //remove animation classes from all other instances of the smooth scroll arrow
+        $('.in-depth-scroll i').removeClass('animated fadeInUp');
 
-    // $( ".after-jump" ).click(function() {
-    //     $inDepthTextContainer.animate({
-    //         scrollTop: $inDepthText.offset().top
-    //     }, 0);
-    // });
+        // and lastly add animation to the current arrow
+        $inDepthArrow.addClass('animated fadeInUp');
+
+        $inDepthButton.click(function() {
+            $inDepthTextContainer.animate({
+                scrollTop: $inDepthText.offset().top
+            }, 1000, 'swing');
+        });
+
+        // $( ".after-jump" ).click(function() {
+        //     $inDepthTextContainer.animate({
+        //         scrollTop: $inDepthText.offset().top
+        //     }, 0);
+        // });
+    }
 }
 
 var onSlideLinkClick = function() {

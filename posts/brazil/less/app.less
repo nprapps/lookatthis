@@ -4,6 +4,8 @@
 @import "./lib/swiper/swiper.less";
 @import "./lib/font-awesome/font-awesome.less";
 
+@import "./slides/deep-dive.less";
+
 // Breakpoints
 @screen-mega-above: ~"screen and (min-width: 1440px)";
 @screen-large-above: ~"screen and (min-width: 1201px)";
@@ -23,11 +25,9 @@
 
 }
 
-
 .animated.infinite {
   animation-iteration-count: infinite;
 }
-
 
 .animated.hinge {
   animation-duration: 2s;
@@ -67,6 +67,42 @@
 }
 
 .fadeInUp {animation-name: fadeInUp;}
+
+// alignment mixins
+
+
+//center vertically and horizontally
+.position-middle {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-direction: column;
+   flex-direction: column;
+}
+
+//vertically aling
+.v-align {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-flex-direction: column;
+   flex-direction: column;
+}
 
 //global styles
 
@@ -122,31 +158,6 @@ p {
         text-shadow: 2px 2px 2px #111;
     }
 }
-
-
-
-
-
-
-
-@-webkit-keyframes emptyBottom {
-    to {
-        height: 100%;
-    }
-}
-
-@-moz-keyframes emptyBottom {
-    to {
-        height: 100%;
-    }
-}
-
-@keyframes emptyBottom {
-    to {
-        height: 100%;
-    }
-}
-
 
 //swiper specific styles
 .swiper-container {
@@ -225,39 +236,6 @@ p {
     padding: 5px 20px 8px 23px;
 }
 
-//center vertically and horizontally
-.position-middle {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-flex-direction: column;
-   flex-direction: column;
-}
-
-//vertically aling
-.v-align {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-flex-direction: column;
-   flex-direction: column;
-}
-
 //title-screen
 .title-screen {
 
@@ -266,118 +244,6 @@ p {
         margin: 0 auto;
         color: #fff;
         text-shadow: 1px 1px 2px #111;
-    }
-}
-
-//in-depth
-.inner-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    background-color: #eee;
-    color: #444;
-
-    .titlecard-wrapper {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-    }
-
-    .titlecard {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        .background-size(cover);
-        background-position: center center;
-        color: #fff;
-
-        .titlecard-intro {
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-
-            h1, p, li {
-                max-width: 800px;
-                margin: 0 auto;
-            }
-        }
-    }
-
-    .in-depth {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding-top: 50px;
-    }
-
-    //Before/After
-    .before-after {
-        background-image: url("../assets/google-rf.jpg");
-
-    }
-
-    .after-before {
-        background:#eee url("../assets/google-13.jpg");
-        .background-size(cover);
-        background-position: center center;
-        color: #fff;
-        text-shadow: 1px 1px 2px #111;
-        max-width: none;
-
-        h2, p {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-    }
-    //jump button
-    p {
-        .btn {
-            color: #fff;
-            border: 3px solid #fff;
-            text-transform: uppercase;
-            background: none;
-            outline: none;
-            font-size: 1rem;
-            margin-top: 20px;
-            padding: .5rem .7rem;
-
-            &:hover {
-                background: rgba(0,0,0,0.6);
-            }
-        }
-    }
-
-}
-
-//button to trigger smooth scroll
-.in-depth-scroll {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    width: 100%;
-    text-shadow: none;
-
-    i {
-        cursor: pointer;
-        display: block;
-        margin: 0 auto;
-        width: 2.2rem;
-        font-size: 2.0rem;
-        color: #fff;
-        padding: .5rem 0 .5rem .9rem;
-        background-color: #222;
-
-        &:hover {
-            background-color: #000;
-        }
     }
 }
 
