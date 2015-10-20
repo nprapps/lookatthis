@@ -47,8 +47,6 @@ var onDocumentReady = function() {
         parallax: true,
         watchSlidesProgress: true,
         watchSlidesVisibility: true,
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
         direction: 'horizontal',
         hashnav: true,
         //freeMode: true,
@@ -60,7 +58,7 @@ var onDocumentReady = function() {
         simulateTouch: false,
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
-
+        preloadImages: false,
     });
 
     $thisSlide = $slides.eq(swiper.activeIndex);
