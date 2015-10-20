@@ -14,6 +14,7 @@
 
     <!-- FONTS -->
     {% include '%s/templates/_fonts.html' % slug %}
+    <style>body {overflow-y: hidden;}</style>
 
     <!-- CSS -->
     {{ CSS.push('less/app.less') }}
@@ -48,8 +49,6 @@
     {{ JS.push('js/analytics.js') }}
     {{ JS.render('js/app-header.min.js') }}
 
-    <a class="sr-only" href="#content">Skip To Content</a>
-
     {% block outer_content %}
 
     {% block header_content %}
@@ -64,26 +63,9 @@
 
     {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.js') }}
-    {{ JS.push('js/lib/imgLiquid.js') }}
-    {{ JS.push('js/lib/deck.core.js') }}
-
-    {% if AUDIO %}
-    {{ JS.push('js/lib/jquery.jplayer.min.js') }}
-    {{ JS.push('js/audio.js') }}
-    {% endif %}
-
-    {% if FILMSTRIP %}
-    {{ JS.push('js/lib/imagesloaded.pkgd.js') }}
-    {{ JS.push('js/filmstrip.js') }}
-    {% endif %}
-
-    {% if VIDEO %}
-    {{ JS.push('js/video.js') }}
-    {% endif %}
-
-    {% if PROGRESS_BAR %}
-    {{ JS.push('js/progress-bar.js') }}
-    {% endif %}
+    {{ JS.push('js/lib/swiper.js')}}
+    {{ JS.push('js/lib/classie.js')}}
+    {{ JS.push('js/lib/jquery.cookie.js')}}
 
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/app.js') }}

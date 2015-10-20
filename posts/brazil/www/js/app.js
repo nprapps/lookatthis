@@ -1,467 +1,210 @@
 // Global state
-var $upNext = null;
-var $document;
-var $body;
-var $section;
-var $slides;
-var $arrows;
-var $nextArrow;
-var $previousArrow;
-var $startCardButton;
-var isTouch = Modernizr.touch;
-var $likeStory;
-var $likeStoryButtons;
-var $facebook;
-var $facebookBtn;
-var $support;
-var $supportBtn;
-var $didNotLike;
-var $dislikeEmail;
+var $container;
+var $titlecard;
+var $titlecard_wrapper;
+var $w = $(window);
+var aspect_width = 16;
+var aspect_height = 9;
+$modalClose = $('.close-modal');
+var swiper;
 
-var mobileSuffix;
-var w;
-var h;
-var startTouch;
-var lastSlideExitEvent;
-var callToActionTest;
-var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
-var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+// When modal closes, make sure it's not clickable
+var onModalCloseClick = function() {
+    $('.deep-link-notice').css('visibility', 'hidden');
+    $.cookie('npr_deeplink_status', '1', { expires: 1});
+}
 
-var completion = 0;
-var swipeTolerance = 40;
-var touchFactor = 1;
-
-var resize = function() {
-    /*
-     * Resize the content
-     */
-    w = $(window).width();
-    h = $(window).height();
-    if ($section.height() < h) {
-        $section.height(h);
-    }
-    $slides.width(w);
-};
-
-var onPageLoad = function() {
-    /*
-    * Set up page on load.
-    */
-    lazyLoad(0);
-    $('.section').css({
-        'opacity': 1,
-        'visibility': 'visible',
-    });
-    showNavigation(0);
-};
-
-var trackCompletion = function(index) {
-    /*
-    * Track completion based on slide index.
-    */
-    how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
-
-    if (how_far >= completion + 0.25) {
-        completion = how_far - (how_far % 0.25);
-
-        if (completion === 0.25) {
-            ANALYTICS.completeTwentyFivePercent();
-        }
-        else if (completion === 0.5) {
-            ANALYTICS.completeFiftyPercent();
-        }
-        else if (completion === 0.75) {
-            ANALYTICS.completeSeventyFivePercent();
-        }
-        else if (completion === 1) {
-            ANALYTICS.completeOneHundredPercent();
-        }
+// If modal status is 1, hide the content warning on page load.
+var checkModalStatus = function() {
+    if ($.cookie('npr_deeplink_status') != '1' && swiper.activeIndex !== 0) {
+        $('.deep-link-notice').css('visibility', 'visible');
+        //console.log('this is not the index');
     }
 }
 
-var lazyLoad = function(slideIndex) {
-    /*
-    * Lazy-load images in current and future slides.
-    */
-    var slides = [
-        $slides.eq(slideIndex),
-        $slides.eq(slideIndex + 1),
-        $slides.eq(slideIndex + 2)
-    ];
+$modalClose.on('click', onModalCloseClick);
 
-    for (var i = 0; i < slides.length; i++) {
-        loadImages(slides[i]);
-        if (APP_CONFIG.FILMSTRIP) {
-            FILMSTRIP.initFilmstrip(slides[i])
+//nav menu
+var overlay = document.querySelector( 'div.overlay-menu' );
+    var transEndEventNames = {
+            'WebkitTransition': 'webkitTransitionEnd',
+            'MozTransition': 'transitionend',
+            'OTransition': 'oTransitionEnd',
+            'msTransition': 'MSTransitionEnd',
+            'transition': 'transitionend'
+        };
+var transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
+var support = { transitions : Modernizr.csstransitions };
+
+//sizing titlecard to match viewport
+var on_window_resize = function() {
+    /*
+    * Handles resizing our full-width images.
+    * Makes decisions based on the window size.
+    */
+
+    // Calculate optimal width if height is constrained to window height.
+    w_optimal = ($w.height() * aspect_width) / aspect_height;
+
+    // Calculate optimal height if width is constrained to window width.
+    h_optimal = ($w.width() * aspect_height) / aspect_width;
+
+    // Decide whether to go with optimal height or width.
+    w = $w.width();
+    h = h_optimal;
+
+    if (w_optimal > $w.width()) {
+        w = w_optimal;
+        h = $w.height();
+    }
+
+    //$titlecard.width(w + 'px').height(h + 'px');
+    //$opener.height($w.height() + 'px');
+
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
+};
+
+$(document).ready(function() {
+    //swiper parameters
+    swiper = new Swiper('.swiper-container', {
+        //initialSlide: '4',
+        //autoplay: 5000,
+        //speed: 0,
+        effect: 'fade',
+        speed: 1000,
+        parallax: true,
+        watchSlidesProgress: true,
+        watchSlidesVisibility: true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        direction: 'horizontal',
+        hashnav: true,
+        //freeMode: true,
+        //freeModeSticky: true,
+        mousewheelControl: true,
+        mousewheelForceToAxis: true,
+       // mousewheelReleaseOnEdges: true,
+        keyboardControl: true,
+        simulateTouch: false,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+
+    });
+    $('a[data-slide]').on('click', function () {
+        swiper.slideTo($(this).data('slide'));
+    });
+
+    checkModalStatus();
+
+    //sizing the title card
+    $container = $('.in-depth');
+    $titlecard = $('.titlecard');
+    $titlecard_wrapper = $('.titlecard-wrapper, .after-before');
+
+    $w.on('resize', on_window_resize);
+    on_window_resize();
+
+    //////////// Targeting the current slide ///////////////
+    //console.log(this);
+
+    //each slide gets a class of swiper-slide. Let's make these a jquery object, which is an array of the matched DOM elements.
+    $slides = $('.swiper-slide');
+
+    //thisSlide is equal to the current slide
+    var $thisSlide = $slides.eq(swiper.activeIndex);
+
+    //find the smooth scroll button within the current slide
+    var $inDepthButton = $thisSlide.find('.scroll-button');
+
+    //find the down arrow inside the smooth scroll button within the current slide
+    var $inDepthArrow = $thisSlide.find('.scroll-button i');
+
+    //find the in depth text container
+    var $inDepthTextContainer = $thisSlide.find('.inner-text');
+
+    //find the in depth text for the current slide
+    var $inDepthText = $thisSlide.find('.in-depth');
+
+    //smooth scroll to the text of the current slide
+    $inDepthButton.click(function() {
+            $inDepthTextContainer.animate({
+                scrollTop: $inDepthText.offset().top
+            }, 1000, 'swing');
+        });
+
+
+
+    //add a class to the arrow in the current slide to animate it.
+    $inDepthArrow.addClass('animated fadeInUp');
+
+    //this is a swiper function that will fire each time you enter a frame
+    swiper.on('slideChangeStart', function() {
+
+        //update this slide to be the current active slide
+        $thisSlide = $slides.eq(swiper.activeIndex);
+
+        //update the smooth scroll button
+        $inDepthButton = $thisSlide.find('.scroll-button');
+
+         //update the active arrow
+        $inDepthArrow = $thisSlide.find('.scroll-button i');
+
+        //update in depth text
+        $inDepthTextContainer = $thisSlide.find('.inner-text');
+
+        //find the in depth text for the current slide
+        $inDepthText = $thisSlide.find('.in-depth');
+
+        //remove animation classes from all other instances of the smooth scroll arrow
+        $('.in-depth-scroll i').removeClass('animated fadeInUp');
+
+        // and lastly add animation to the current arrow
+        $inDepthArrow.addClass('animated fadeInUp');
+
+        $inDepthButton.click(function() {
+            $inDepthTextContainer.animate({
+                scrollTop: $inDepthText.offset().top
+            }, 1000, 'swing');
+        });
+
+    });
+
+    //before after jump
+    $( ".after-jump" ).click(function() {
+        $inDepthTextContainer.animate({
+            scrollTop: $inDepthText.offset().top
+        }, 0);
+    });
+
+
+    //nav menu
+    function toggleOverlay() {
+        if( classie.has( overlay, 'open' ) ) {
+            classie.remove( overlay, 'open' );
+            classie.add( overlay, 'close' );
+            var onEndTransitionFn = function( ev ) {
+                if( support.transitions ) {
+                    if( ev.propertyName !== 'visibility' ) return;
+                    this.removeEventListener( transEndEventName, onEndTransitionFn );
+                }
+                classie.remove( overlay, 'close' );
+            };
+            if( support.transitions ) {
+                overlay.addEventListener( transEndEventName, onEndTransitionFn );
+            }
+            else {
+                onEndTransitionFn();
+            }
+        }
+        else if( !classie.has( overlay, 'close' ) ) {
+            classie.add( overlay, 'open' );
         }
     };
 
-}
-
-var loadImages = function($slide) {
-    /*
-    * Sets the background image on a div for our fancy slides.
-    */
-    var $container = $slide.find('.imgLiquid');
-    var bgimg = $container.children('img');
-
-    // Mobile suffix should be blank by default.
-    mobileSuffix = '';
-
-    if (w < 769 && $slide.hasClass('mobile-crop')) {
-        mobileSuffix = '-sq';
-    }
-
-    if (bgimg.data('bgimage')) {
-        var image_filename = bgimg.data('bgimage').split('.')[0];
-        var image_extension = '.' + bgimg.data('bgimage').split('.')[1];
-        var image_path = 'assets/' + image_filename + mobileSuffix + image_extension;
-
-        bgimg.attr('src', image_path);
-    }
-
-    if (bgimg.attr('src')) {
-        $container.imgLiquid({
-            fill: true,
-            horizontalAlign: "center",
-            verticalAlign: "center",
-        });
-    }
-
-    var $images = $slide.find('img.lazy-load');
-    if ($images.length > 0) {
-        for (var i = 0; i < $images.length; i++) {
-            var image = $images.eq(i).data('src');
-            $images.eq(i).attr('src', 'assets/' + image);
-        }
-    }
-};
-
-var showNavigation = function(index) {
-    /*
-    * Hide and show arrows based on slide index
-    */
-    if (index === 0) {
-        $arrows.hide();
-        $previousArrow.css('left', 0);
-        $nextArrow.css('right', 0);
-    } else if ($slides.last().index() === index) {
-        $arrows.show();
-        $nextArrow.hide().css('right', 0);
-    } else {
-        $arrows.show();
-    }
-
-    if (isTouch) {
-        resetArrows();
-    }
-}
-
-var checkOverflow = function(index) {
-    var $thisSlide = $slides.eq(index);
-    var slideHeight = $thisSlide.height();
-    var blockHeight = $thisSlide.find('.full-block').height();
-
-    if (blockHeight > slideHeight) {
-        $thisSlide.parents('.section').height(blockHeight);
-    } else {
-        $thisSlide.parents('.section').height(h);
-    }
-}
-
-var onSlideChange = function(e, fromIndex, toIndex) {
-    /*
-    * Called transitioning between slides.
-    */
-    lazyLoad(toIndex);
-    showNavigation(toIndex);
-    trackCompletion(toIndex);
-    checkOverflow(toIndex);
-    document.activeElement.blur();
-
-    if (APP_CONFIG.AUDIO) {
-        AUDIO.checkForAudio(toIndex);
-    }
-    if (APP_CONFIG.VIDEO) {
-        VIDEO.checkForVideo(toIndex);
-    }
-    if (APP_CONFIG.FILMSTRIP) {
-        FILMSTRIP.clearFilmstrip(fromIndex);
-        FILMSTRIP.animateFilmstrip(toIndex);
-    }
-    if (APP_CONFIG.PROGRESS_BAR) {
-        PROGRESS_BAR.animateProgress(toIndex);
-    }
-
-    ANALYTICS.exitSlide(fromIndex.toString());
-    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
-    if (toIndex === $slides.length - 1) {
-        ANALYTICS.trackEvent('tests-run', callToActionTest);
-    }
-}
-
-var onStartCardButtonClick = function() {
-    /*
-    * Called when clicking the "go" button.
-    */
-    lastSlideExitEvent = 'exit-start-card-button-click';
-    $.deck('next');
-}
-
-var onDocumentKeyDown = function(e) {
-    /*
-    * Called when key is pressed
-    */
-    var keyOptions = $.deck('getOptions').keys;
-    var keys = keyOptions.next.concat(keyOptions.previous);
-    if (keys.indexOf(e.which) > -1) {
-        lastSlideExitEvent = 'exit-keyboard';
-        ANALYTICS.useKeyboardNavigation();
-    }
-    return true;
-}
-
-var onSlideClick = function(e) {
-    /*
-    * Advance on slide tap on touch devices
-    */
-    if (isTouch && !$(e.target).is('button')) {
-        lastSlideExitEvent = 'exit-tap';
-        $.deck('next');
-    }
-}
-
-var onNextPostClick = function(e) {
-    /*
-     * Click next post
-     */
-    e.preventDefault();
-    ANALYTICS.trackEvent('next-post');
-    window.top.location = NEXT_POST_URL;
-    return true;
-}
-
-var fakeMobileHover = function() {
-    /*
-     * Fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
-}
-
-var rmFakeMobileHover = function() {
-    /*
-     * Remove fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
-}
-
-var onNextArrowClick = function() {
-    /*
-     * Next arrow click
-     */
-    lastSlideExitEvent = 'exit-next-button-click';
-    $.deck('next');
-}
-
-var onPreviousArrowClick = function() {
-    /*
-     * Previous arrow click
-     */
-    lastSlideExitEvent = 'exit-previous-button-click';
-    $.deck('prev');
-}
-
-var onTouchStart = function(e) {
-    /*
-     * Capture start position when swipe initiated
-     */
-    if (!startTouch) {
-        startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
-    }
-}
-
-var onTouchMove = function(e) {
-    /*
-     * Track finger swipe
-     */
-
-
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (!startTouch || touch.identifier !== startTouch.identifier) {
-            return true;
-        }
-
-
-        var yDistance = touch.screenY - startTouch.screenY;
-        var xDistance = touch.screenX - startTouch.screenX;
-        var direction = (xDistance > 0) ? 'right' : 'left';
-
-        if (Math.abs(yDistance) < Math.abs(xDistance)) {
-            e.preventDefault();
-        }
-
-        if (direction == 'right' && xDistance > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-right';
-        } else if (direction == 'right' && xDistance < swipeTolerance) {
-            $previousArrow.filter(':visible').css({
-                'left': (xDistance * touchFactor) + 'px'
-            });
-        }
-
-        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-left';
-        } else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
-            $nextArrow.filter(':visible').css({
-                'right': (Math.abs(xDistance) * touchFactor) + 'px'
-            });
-        }
-    });
-}
-
-var onTouchEnd = function(e) {
-    /*
-     * Clear swipe start position when swipe ends
-     */
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (startTouch && touch.identifier === startTouch.identifier) {
-            startTouch = undefined;
-        }
-    });
-}
-
-var resetArrows = function() {
-    /*
-     * Reset arrows when advancing slides
-     */
-    $nextArrow.animate({
-        'right': 0
-    });
-    $previousArrow.animate({
-        'left': 0
-    });
-}
-
-var determineTests = function() {
-    var possibleCallToActionTests = ['facebook', 'support'];
-
-    callToActionTest = possibleCallToActionTests[getRandomInt(0, possibleCallToActionTests.length)];
-}
-
-var getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-var onLikeStoryButtonsClick = function(e) {
-    e.preventDefault();
-
-    $likeStory.hide();
-
-    if ($(this).hasClass('yes')) {
-        ANALYTICS.trackEvent('like-story-yes', callToActionTest);
-
-        if (callToActionTest === 'facebook') {
-            $facebook.show();
-        } else {
-            $support.show();
-        }
-    } else {
-        ANALYTICS.trackEvent('like-story-no');
-        $didNotLike.show();
-    }
-}
-
-var onFacebookBtnClick = function(e) {
-    e.preventDefault();
-
-    var $this = $(this);
-    var link = $this.attr('href');
-
-    ANALYTICS.trackEvent('facebook-share');
-
-    window.top.location = link
-    return true;
-}
-
-var onSupportBtnClick = function(e) {
-    e.preventDefault();
-
-    var $this = $(this);
-    var link = $this.attr('href');
-
-    ANALYTICS.trackEvent('support-btn-click');
-
-    window.top.location = link
-    return true;
-}
-
-var onDislikeEmailClick = function() {
-    ANALYTICS.trackEvent('email-btn-click');
-}
-
-$(document).ready(function() {
-    $document = $(document);
-    $body = $('body');
-    $section = $('.section');
-    $slides = $('.slide');
-    $navButton = $('.primary-navigation-btn');
-    $startCardButton = $('.btn-go');
-    $arrows = $('.controlArrow');
-    $previousArrow = $arrows.filter('.prev');
-    $nextArrow = $arrows.filter('.next');
-    $upNext = $('.up-next');
-    $likeStory = $('.like-story');
-    $likeStoryButtons = $('.btn-like-story');
-    $facebook = $('.facebook');
-    $facebookBtn = $('.btn-facebook');
-    $support = $('.support');
-    $supportBtn = $('.btn-support');
-    $didNotLike = $('.did-not-like');
-    $dislikeEmail = $('.dislike-email');
-
-    $startCardButton.on('click', onStartCardButtonClick);
-    $slides.on('click', onSlideClick);
-    $likeStoryButtons.on('click', onLikeStoryButtonsClick);
-    $facebookBtn.on('click', onFacebookBtnClick);
-    $supportBtn.on('click', onSupportBtnClick);
-    $dislikeEmail.on('click', onDislikeEmailClick);
-
-    $upNext.on('click', onNextPostClick);
-    $document.on('deck.change', onSlideChange);
-
-    $previousArrow.on('click', onPreviousArrowClick);
-    $nextArrow.on('click', onNextArrowClick);
-
-    if (isTouch) {
-        $arrows.on('touchstart', fakeMobileHover);
-        $arrows.on('touchend', rmFakeMobileHover);
-        $body.on('touchstart', onTouchStart);
-        $body.on('touchmove', onTouchMove);
-        $body.on('touchend', onTouchEnd);
-    }
-
-    // Turn off Modernizr history when deploying
-    if (APP_CONFIG.DEPLOYMENT_TARGET) {
-        Modernizr.history = null;
-    }
-
-    $.deck($slides, {
-        touch: { swipeTolerance: swipeTolerance }
+    $(".hamburger, .menu-toggle li, .overlay-menu-close").click(function() {
+      toggleOverlay();
     });
 
-    onPageLoad();
-    resize();
-    determineTests();
 
-    // Redraw slides if the window resizes
-    $(window).on("orientationchange", resize);
-    $(window).resize(resize);
-    $document.keydown(onDocumentKeyDown);
 });
