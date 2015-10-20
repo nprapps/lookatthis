@@ -1,11 +1,11 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_wrapper %}
-<div class="swiper-slide {{ row.template }} position-middle {{ row.extra_class }} title-screen" data-hash="{{ row.id }}">
+<div class="swiper-slide {{ row.template }} {{ row.extra_class }} title-screen" data-hash="{{ row.id }}">
     <div class="slide-content">
         <div class="inner-text">
             <div class="titlecard-wrapper">
                 <div class="titlecard">
-                    <div class="titlecard-intro v-align">
+                    <div class="titlecard-intro">
                         {% block slide_content %}
                         {{ row.text1|smarty }}
                         {% endblock %}
