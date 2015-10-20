@@ -48,6 +48,7 @@
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/analytics.js') }}
     {{ JS.render('js/app-header.min.js') }}
+    <script src="js/lib/modernizr.js"></script>
 
     {% block outer_content %}
 
@@ -61,7 +62,6 @@
 
     {% endblock outer_content %}
 
-    {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.js') }}
     {{ JS.push('js/lib/swiper.js')}}
     {{ JS.push('js/lib/classie.js')}}

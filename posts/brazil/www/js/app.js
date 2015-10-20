@@ -133,8 +133,6 @@ $(document).ready(function() {
             }, 1000, 'swing');
         });
 
-
-
     //add a class to the arrow in the current slide to animate it.
     $inDepthArrow.addClass('animated fadeInUp');
 
@@ -205,6 +203,5 @@ $(document).ready(function() {
     $(".hamburger, .menu-toggle li, .overlay-menu-close").click(function() {
       toggleOverlay();
     });
-
 
 });
