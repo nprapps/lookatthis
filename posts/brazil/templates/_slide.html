@@ -1,9 +1,13 @@
 {% block slide_wrapper %}
-<div class="swiper-slide {{ row.template }} position-middle {{ row.extra_class }} title-screen burn dark-overlay" data-hash="{{ row.id }}" style="background-image: url('assets/{{ row.background_media }}');">
+<div class="swiper-slide {{ row.template }} position-middle {{ row.extra_class }} title-screen burn dark-overlay" data-hash="{{ row.id }}">
 
     <div class="slide-content" data-swiper-parallax="-6">
         {% block slide_content %}
         {% endblock slide_content %}
+    </div>
+
+    <div class="imgLiquid">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
     </div>
 </div><!-- /slide -->
 {% endblock slide_wrapper %}

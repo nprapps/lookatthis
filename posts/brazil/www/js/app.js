@@ -64,20 +64,80 @@ var onDocumentReady = function() {
     });
 
     $thisSlide = $slides.eq(swiper.activeIndex);
-
-    checkModalStatus();
-
     $slideLinks.on('click', onSlideLinkClick);
     swiper.on('slideChangeStart', onSlideChange);
     $hamburger.on('click', toggleOverlay);
+
+    onPageLoad();
+}
+
+var onPageLoad = function() {
+    checkModalStatus();
+    onSlideChange();
 }
 
 var onSlideChange = function() {
     //update this slide to be the current active slide
     $thisSlide = $slides.eq(swiper.activeIndex);
 
+    lazyLoad();
     checkForInDepth();
 }
+
+var lazyLoad = function() {
+    /*
+    * Lazy-load images in current and future slides.
+    */
+    var slides = [
+        $thisSlide,
+        $slides.eq(swiper.activeIndex + 1),
+        $slides.eq(swiper.activeIndex + 2)
+    ];
+
+    for (var i = 0; i < slides.length; i++) {
+        loadImages(slides[i]);
+    };
+
+}
+
+var loadImages = function($slide) {
+    /*
+    * Sets the background image on a div for our fancy slides.
+    */
+    var $container = $slide.find('.imgLiquid');
+    var bgimg = $container.children('img');
+
+    // Mobile suffix should be blank by default.
+    mobileSuffix = '';
+
+    if ($w.width() < 769 && $slide.hasClass('mobile-crop')) {
+        mobileSuffix = '-sq';
+    }
+
+    if (bgimg.data('bgimage')) {
+        var imageFilename = bgimg.data('bgimage').split('.')[0];
+        var imageExtension = '.' + bgimg.data('bgimage').split('.')[1];
+        var imagePath = 'assets/' + imageFilename + mobileSuffix + imageExtension;
+
+        bgimg.attr('src', imagePath);
+    }
+
+    if (bgimg.attr('src')) {
+        $container.imgLiquid({
+            fill: true,
+            horizontalAlign: "center",
+            verticalAlign: "center",
+        });
+    }
+
+    var $images = $slide.find('img.lazy-load');
+    if ($images.length > 0) {
+        for (var i = 0; i < $images.length; i++) {
+            var image = $images.eq(i).data('src');
+            $images.eq(i).attr('src', 'assets/' + image);
+        }
+    }
+};
 
 var checkForInDepth = function() {
     //update the smooth scroll button
