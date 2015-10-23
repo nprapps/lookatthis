@@ -78,7 +78,8 @@ var GRAPHICS = (function() {
         renderLineChart({
             container: '#graphic-' + graphicID,
             width: containerWidth,
-            data: graphicData
+            data: graphicData,
+            config: GRAPHICS_CONFIG[graphicID]
         });
     }
 
@@ -218,7 +219,7 @@ var GRAPHICS = (function() {
             .orient('left')
             .ticks(ticksY)
             .tickFormat(function(d) {
-                return commaFormatter(d) + ' sq. km'
+                return commaFormatter(d) + config.config.unit
             });
 
         /*
@@ -390,14 +391,23 @@ var GRAPHICS = (function() {
             'data': COPY['deforestation-annual'],
             'format': formatLineChart,
             'render': renderLine,
-            'formatted': false
+            'formatted': false,
+            'unit': ' sq. km'
         },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
             'format': formatLineChart,
             'render': renderLine,
-            'formatted': false
-        }
+            'formatted': false,
+            'unit': ' sq. km'
+        },
+        'gdp': {
+            'data': COPY['gdp'],
+            'format': formatLineChart,
+            'render': renderLine,
+            'formatted': false,
+            'unit': '%'
+        },
     }
 
     return {
