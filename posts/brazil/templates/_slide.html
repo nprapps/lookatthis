@@ -1,5 +1,5 @@
 {% block slide_wrapper %}
-<div class="swiper-slide {{ row.template }} {{ row.extra_class }} title-screen dark-overlay" data-hash="{{ row.id }}">
+<div class="swiper-slide {{ row.template }} {{ row.extra_class }} title-screen dark-overlay" data-hash="{{ row.id }}" id="{{ row.id }}">
     <div class="slide-content" data-swiper-parallax="-6">
         {% block slide_content %}
         {% endblock slide_content %}

@@ -81,7 +81,15 @@ var onSlideChange = function() {
     $thisSlide = $slides.eq(swiper.activeIndex);
 
     lazyLoad();
-    checkForInDepth();
+
+    if ($thisSlide.hasClass('deep-dive')) {
+        checkForInDepth();
+    }
+
+    if ($thisSlide.hasClass('graphic')) {
+        var graphicID = $thisSlide.attr('id');
+        GRAPHICS.loadGraphic(graphicID);
+    }
 }
 
 var lazyLoad = function() {
@@ -166,6 +174,10 @@ var checkForInDepth = function() {
         //     }, 0);
         // });
     }
+}
+
+var checkforGraphic = function() {
+
 }
 
 var onSlideLinkClick = function() {
