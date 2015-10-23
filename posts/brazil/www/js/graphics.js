@@ -35,6 +35,7 @@ var GRAPHICS = (function() {
     // D3 formatters
     var fmtYearAbbrev = d3.time.format('%y');
     var fmtYearFull = d3.time.format('%Y');
+    var commaFormatter = d3.format(',');
 
     var loadGraphic = function(graphicID) {
         graphicData = GRAPHICS_CONFIG[graphicID]['data'];
@@ -49,7 +50,7 @@ var GRAPHICS = (function() {
         });
     }
 
-    var formatCumulative = function() {
+    var formatLineChart = function() {
         graphicData.forEach(function(d) {
             d['date'] = d3.time.format('%Y').parse(d['date']);
 
@@ -61,7 +62,7 @@ var GRAPHICS = (function() {
         });
     }
 
-    var renderCumulative = function(graphicID) {
+    var renderLine = function(graphicID) {
         var containerWidth = $(window).width() * 0.8;
 
         if (containerWidth <= MOBILE_THRESHOLD) {
@@ -95,7 +96,7 @@ var GRAPHICS = (function() {
             top: 5,
             right: 20,
             bottom: 20,
-            left: 90
+            left: 100
         };
 
         var ticksX = 10;
@@ -217,7 +218,7 @@ var GRAPHICS = (function() {
             .orient('left')
             .ticks(ticksY)
             .tickFormat(function(d) {
-                return d + ' sq. km'
+                return commaFormatter(d) + ' sq. km'
             });
 
         /*
@@ -387,14 +388,14 @@ var GRAPHICS = (function() {
     var GRAPHICS_CONFIG = {
         'deforestation-annual': {
             'data': COPY['deforestation-annual'],
-            'format': formatCumulative,
-            'render': renderCumulative,
+            'format': formatLineChart,
+            'render': renderLine,
             'formatted': false
         },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
-            'format': formatCumulative,
-            'render': renderCumulative,
+            'format': formatLineChart,
+            'render': renderLine,
             'formatted': false
         }
     }
