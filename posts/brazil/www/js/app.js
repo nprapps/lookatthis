@@ -67,6 +67,7 @@ var onDocumentReady = function() {
     $slideLinks.on('click', onSlideLinkClick);
     swiper.on('slideChangeStart', onSlideChange);
     $hamburger.on('click', toggleOverlay);
+    $modalClose.on('click', onModalCloseClick);
 
     onPageLoad();
 }
