@@ -44,7 +44,7 @@ var GRAPHICS = (function() {
             GRAPHICS_CONFIG[graphicID]['formatted'] = true;
         }
 
-        if (GRAPHICS_CONFIG[graphicID].render) {
+        if (!GRAPHICS_CONFIG[graphicID]['skipRender']) {
             GRAPHICS_CONFIG[graphicID].render(graphicID);
         }
 
@@ -554,7 +554,7 @@ var GRAPHICS = (function() {
         /*
          * Setup
          */
-        var aspectWidth = 2.1;
+        var aspectWidth = 1;
         var aspectHeight = 1.6;
 
         var bbox = config['data']['bbox'];
@@ -879,8 +879,9 @@ var GRAPHICS = (function() {
         'locator-map': {
             'data': 'data/geodata.json',
             'format': formatMapData,
-            'render': null,
-            'formatted': false
+            'render': renderMap,
+            'formatted': false,
+            'skipRender': true
         }
     }
 
