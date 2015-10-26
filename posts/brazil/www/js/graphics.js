@@ -534,9 +534,7 @@ var GRAPHICS = (function() {
         }
 
         var container = '#graphic-' + graphicID;
-        $(container).empty();
 
-        console.log(container);
         // Render the chart!
         renderLocatorMap({
             container: container,
