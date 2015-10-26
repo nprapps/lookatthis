@@ -168,28 +168,6 @@ var GRAPHICS = (function() {
             .range([ COLORS['blue5'], COLORS['yellow3'], COLORS['blue3'], COLORS['orange3'], COLORS['teal3'] ]);
 
         /*
-         * Render the HTML legend.
-         */
-        var legend = containerElement.append('ul')
-            .attr('class', 'key')
-            .selectAll('g')
-                .data(d3.entries(formattedData))
-            .enter().append('li')
-                .attr('class', function(d, i) {
-                    return 'key-item key-' + i + ' ' + classify(d['key']);
-                });
-
-        legend.append('b')
-            .style('background-color', function(d) {
-                return colorScale(d['key']);
-            });
-
-        legend.append('label')
-            .text(function(d) {
-                return d['key'];
-            });
-
-        /*
          * Create the root SVG element.
          */
         var chartWrapper = containerElement.append('div')
