@@ -104,7 +104,7 @@ var GRAPHICS = (function() {
 
         var ticksX = 10;
         var ticksY = 10;
-        var roundTicksFactor = 5;
+        var roundTicksFactor = 10000;
 
         // Mobile
         if (isMobile) {
@@ -152,11 +152,10 @@ var GRAPHICS = (function() {
 
         var yScale = d3.scale.linear()
             .domain([ 0, d3.max(d3.entries(formattedData), function(c) {
-                    var value = d3.max(c['value'], function(v) {
+                    return d3.max(c['value'], function(v) {
                         var n = v[valueColumn];
                         return Math.ceil(n / roundTicksFactor) * roundTicksFactor;
                     });
-                    return Math.ceil(value/10000) * 10000;
                 })
             ])
             .range([ chartHeight, 0 ]);
