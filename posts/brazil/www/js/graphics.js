@@ -525,18 +525,17 @@ var GRAPHICS = (function() {
     }
 
     var renderMap = function(graphicID) {
-        var containerWidth = $(window).width() * 0.8;
+        var containerWidth = $(window).width() * 0.4;
 
-        if (containerWidth <= MOBILE_THRESHOLD) {
+        if ($(window).width() <= MOBILE_THRESHOLD) {
             isMobile = true;
+            containerWidth = $(window).width();
         } else {
             isMobile = false;
         }
 
         var container = '#graphic-' + graphicID;
-        $(container).empty();
 
-        console.log(container);
         // Render the chart!
         renderLocatorMap({
             container: container,
@@ -550,11 +549,11 @@ var GRAPHICS = (function() {
         /*
          * Setup
          */
-        var aspectWidth = 1;
-        var aspectHeight = 1.6;
+        var aspectWidth = isMobile ? 1 : 1;
+        var aspectHeight = isMobile ? 1.5 : 1;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = 480;
+        var defaultScale = 350;
         var cityDotRadius = 3;
 
         // Calculate actual map dimensions
@@ -809,15 +808,6 @@ var GRAPHICS = (function() {
 
         d3.selectAll('.shadow')
             .attr('filter', 'url(#textshadow)');
-
-        var legend = containerElement.append('ul')
-            .attr('class', 'key')
-
-        legend.append('b')
-            .style('background-color', '#EAAA61');
-
-        legend.append('label')
-            .text('Amazon Basin');
 
         /*
          * Render a scale bar.
