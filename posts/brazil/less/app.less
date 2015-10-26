@@ -180,7 +180,7 @@ p {
     @media @screen-small-above {
         font-size: 1.2rem;
         line-height: 1.4;
-        text-shadow: 2px 2px 2px #111;
+        //text-shadow: 2px 2px 2px #111;
     }
 }
 
@@ -222,6 +222,7 @@ p {
         bottom: 0;
         left: 0;
         width: 100%;
+        padding-bottom: 3rem;
 
         .slide-content-bottom-item {
             max-width: 300px;
@@ -270,47 +271,6 @@ p {
 .swiper-button-next {
     right: 20px;
     padding: 5px 20px 8px 23px;
-}
-
-//quiz
-.quiz {
-
-    .titlecard {
-
-
-        ol {
-            li {
-                line-height: 2;
-                span {
-                   cursor: pointer;
-                    &:hover {
-                        .no-touchevents & {
-                            color: #000;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .quiz-content {
-        padding: 100px;
-        background:#eee url("../assets/amazon-snake.jpg");
-        .background-size(cover);
-        background-position: center center;
-        color: #fff;
-        text-shadow: 1px 1px 2px #111;
-        max-width: none;
-
-        h2, p {
-            margin-top: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-            color: #fff;
-            text-shadow: 1px 1px 2px #111;
-        }
-    }
-
 }
 
 .hamburger {
