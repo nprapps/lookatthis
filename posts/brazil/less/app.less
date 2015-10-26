@@ -181,7 +181,7 @@ p {
     @media @screen-small-above {
         font-size: 1.2rem;
         line-height: 1.4;
-        //text-shadow: 2px 2px 2px #111;
+        text-shadow: 2px 2px 2px #111;
     }
 }
 
@@ -215,7 +215,30 @@ p {
     }
 
     .slide-content-middle {
-        max-width: 500px;
+        padding: 0 80px;
+
+        @media @screen-small-above {
+            max-width: 1200px;
+            padding: 0 3rem;
+        }
+
+        h2 {
+            text-shadow: 2px 2px 2px #111;
+            text-transform: uppercase;
+            font-size: 22px;
+            @media @screen-small-above {
+                font-size: 3rem;
+            }
+        }
+
+        h3 {
+            text-shadow: 2px 2px 2px #111;
+            text-transform: uppercase;
+            font-size: 18px;
+            @media @screen-small-above {
+                font-size: 2rem;
+            }
+        }
     }
 
     .slide-content-bottom {
