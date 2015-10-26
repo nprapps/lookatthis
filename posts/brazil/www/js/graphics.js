@@ -96,9 +96,9 @@ var GRAPHICS = (function() {
         var aspectHeight = isMobile ? 3 : 9;
 
         var margins = {
-            top: 5,
+            top: 20,
             right: 20,
-            bottom: 20,
+            bottom: 100,
             left: 100
         };
 
