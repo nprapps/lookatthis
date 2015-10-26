@@ -40,17 +40,20 @@ var GRAPHICS = (function() {
     var loadGraphic = function(graphicID) {
         graphicData = GRAPHICS_CONFIG[graphicID]['data'];
         if (!GRAPHICS_CONFIG[graphicID]['formatted']) {
-            GRAPHICS_CONFIG[graphicID].format();
+            GRAPHICS_CONFIG[graphicID].format(graphicID);
             GRAPHICS_CONFIG[graphicID]['formatted'] = true;
         }
-        GRAPHICS_CONFIG[graphicID].render(graphicID);
+
+        if (GRAPHICS_CONFIG[graphicID].render) {
+            GRAPHICS_CONFIG[graphicID].render(graphicID);
+        }
 
         $(window).resize(function() {
             GRAPHICS_CONFIG[graphicID].render(graphicID);
         });
     }
 
-    var formatLineChart = function() {
+    var formatLineChart = function(graphicID) {
         graphicData.forEach(function(d) {
             d['date'] = d3.time.format('%Y').parse(d['date']);
 
@@ -386,6 +389,508 @@ var GRAPHICS = (function() {
             );
     }
 
+    /*
+     * MAP MAP MAP
+     */
+
+    var EARTH_RADIUS = 6371000;
+
+    /*
+     * Convert degreest to radians.
+     */
+    var degToRad = function(degrees) {
+        return degrees * Math.PI / 180;
+    }
+
+    /*
+     * Convert radians to degrees.
+     */
+    var radToDeg = function(radians) {
+        return radians * 180 / Math.PI;
+    }
+
+    /*
+     * Convert kilometers to miles.
+     */
+    var kmToMiles = function(km) {
+        return km * 0.621371;
+    }
+
+    /*
+     * Convert miles to kilometers.
+     */
+    var milesToKm = function(miles) {
+        return miles * 1.60934;
+    }
+
+    /*
+     * Calculate the distance between two points.
+     */
+    var distance = function(a, b) {
+         var lat1Rad = degToRad(a[1]), lng1Rad = degToRad(a[0]);
+         var lat2Rad = degToRad(b[1]), lng2Rad = degToRad(b[0]);
+         var latDelta = lat2Rad - lat1Rad;
+         var lngDelta = lng2Rad - lng1Rad;
+
+         var a = Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
+                 Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+                 Math.sin(lngDelta / 2) * Math.sin(lngDelta / 2);
+         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+         var d = EARTH_RADIUS * c;
+
+         return kmToMiles(d / 1000);
+     };
+
+    /*
+     * Calculate an end point given a starting point, bearing and distance.
+     * Adapted from http://www.movable-type.co.uk/scripts/latlong.html
+     */
+    var calculateDestinationPoint = function(lat, lon, distance, bearing) {
+        var distanceFraction = distance / EARTH_RADIUS;
+        var bearingRad = degToRad(bearing);
+
+        var lat1Rad = degToRad(lat);
+        var lng1Rad = degToRad(lon);
+
+        var lat2Rad = Math.asin(
+            Math.sin(lat1Rad) * Math.cos(distanceFraction) +
+            Math.cos(lat1Rad) * Math.sin(distanceFraction) * Math.cos(bearingRad)
+        );
+
+        var lng2Rad = lng1Rad + Math.atan2(
+            Math.sin(bearingRad) * Math.sin(distanceFraction) * Math.cos(lat1Rad),
+            Math.cos(distanceFraction) - Math.sin(lat1Rad) * Math.sin(lat2Rad)
+        );
+
+        lng2Rad = (lng2Rad + 3 * Math.PI) % (2 * Math.PI) - Math.PI; // normalise to -180..+180°
+
+        return [radToDeg(lng2Rad), radToDeg(lat2Rad)];
+    };
+
+    /*
+     * Calculate a scale bar, as follows:
+     * - Select a starting pixel coordinate
+     * - Convert coordinate to map space
+     * - Calculate a fixed distance end coordinate *east* of the start coordinate
+     * - Convert end coordinate back to pixel space
+     * - Calculate geometric distance between start and end pixel coordinates.
+     * - Set end coordinate's x value to start coordinate + distance. Y coords hold constant.
+     */
+    var calculateScaleBarEndPoint = function(projection, start, miles) {
+        var startGeo = projection.invert(start);
+
+        var meters = milesToKm(miles) * 1000;
+
+        var endGeo = calculateDestinationPoint(startGeo[1], startGeo[0], meters, 90);
+        var end = projection([endGeo[0], endGeo[1]])
+
+        var distance = Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
+
+        return [start[0] + distance, start[1]];
+    }
+
+    /*
+     * Calculate an optimal scale bar length by taking a fraction of the distance
+     * covered by the map.
+     */
+    var calculateOptimalScaleBarDistance = function(bbox, divisor) {
+        var mapDistance = distance([bbox[0], bbox[1]], [bbox[2], bbox[3]]);
+        var fraction = mapDistance / divisor;
+        var factor = Math.pow(10, Math.floor(Math.log10(fraction)));
+
+        return scaleLength = Math.round(fraction / factor) * factor;
+    }
+
+    var LABEL_DEFAULTS = {
+        'text-anchor': 'start',
+        'dx': '6',
+        'dy': '4'
+    }
+
+    var CITY_LABEL_ADJUSTMENTS = {
+        'Porto Velho': { 'text-anchor': 'end', 'dx': -10 }
+    }
+
+    var COUNTRY_LABEL_ADJUSTMENTS = {
+        'Guyana': { 'text-anchor': 'end', 'dy': -20 },
+        'Suriname': { 'text-anchor': 'end', 'dy': -10 },
+        'Colombia': { 'dy': -5 },
+        'Ecuador': { 'dx': 20 }
+    }
+
+    var geoData = null;
+
+    var formatMapData = function(graphicID) {
+        console.log(graphicData)
+        d3.json(graphicData, function(error, data) {
+            geoData = data;
+            renderMap(graphicID);
+        });
+    }
+
+    var renderMap = function(graphicID) {
+        var containerWidth = $(window).width() * 0.8;
+
+        if (containerWidth <= MOBILE_THRESHOLD) {
+            isMobile = true;
+        } else {
+            isMobile = false;
+        }
+
+        var container = '#graphic-' + graphicID;
+        $(container).empty();
+
+        console.log(container);
+        // Render the chart!
+        renderLocatorMap({
+            container: container,
+            width: containerWidth,
+            data: geoData,
+            primaryCountry: 'Brazil'
+        });
+    }
+
+    var renderLocatorMap = function(config) {
+        /*
+         * Setup
+         */
+        var aspectWidth = 2.1;
+        var aspectHeight = 1.6;
+
+        var bbox = config['data']['bbox'];
+        var defaultScale = 1200;
+        var cityDotRadius = 3;
+
+        // Calculate actual map dimensions
+        var mapWidth = config['width'];
+        var mapHeight = Math.ceil((config['width'] * aspectHeight) / aspectWidth);
+
+        // Clear existing graphic (for redraw)
+        var containerElement = d3.select(config['container']);
+        containerElement.html('');
+
+        var mapProjection = null;
+        var path = null;
+        var chartWrapper = null;
+        var chartElement = null;
+
+        /*
+         * Extract topo data.
+         */
+        var mapData = {};
+
+        for (var key in config['data']['objects']) {
+            mapData[key] = topojson.feature(config['data'], config['data']['objects'][key]);
+        }
+
+        /*
+         * Create the map projection.
+         */
+        var centroid = [((bbox[0] + bbox[2]) / 2), ((bbox[1] + bbox[3]) / 2)];
+        var mapScale = (mapWidth / config.width) * defaultScale;
+        var scaleFactor = mapWidth / config.width;
+
+        projection = d3.geo.mercator()
+            .center(centroid)
+            .scale(mapScale)
+            .translate([ mapWidth/2, mapHeight/2 ]);
+
+        path = d3.geo.path()
+            .projection(projection)
+            .pointRadius(cityDotRadius * scaleFactor);
+
+        /*
+         * Create the root SVG element.
+         */
+        chartWrapper = containerElement.append('div')
+            .attr('class', 'graphic-wrapper');
+
+        chartElement = chartWrapper.append('svg')
+            .attr('width', mapWidth)
+            .attr('height', mapHeight)
+            .append('g')
+
+        /*
+         * Create SVG filters.
+         */
+        var filters = chartElement.append('filters');
+
+        var textFilter = filters.append('filter')
+            .attr('id', 'textshadow');
+
+        textFilter.append('feGaussianBlur')
+            .attr('in', 'SourceGraphic')
+            .attr('result', 'blurOut')
+            .attr('stdDeviation', '.25');
+
+        var landFilter = filters.append('filter')
+            .attr('id', 'landshadow');
+
+        landFilter.append('feGaussianBlur')
+            .attr('in', 'SourceGraphic')
+            .attr('result', 'blurOut')
+            .attr('stdDeviation', '10');
+
+
+        /*
+         * Render countries.
+         */
+        // Land shadow
+        chartElement.append('path')
+            .attr('class', 'landmass')
+            .datum(mapData['countries'])
+            .attr('filter', 'url(#landshadow)')
+            .attr('d', path);
+
+        // Land outlines
+        chartElement.append('g')
+            .attr('class', 'countries')
+            .selectAll('path')
+                .data(mapData['countries']['features'])
+            .enter().append('path')
+                .attr('class', function(d) {
+                    return classify(d['id']);
+                })
+                .attr('d', path);
+
+        /*
+         * Render amazon.
+         */
+        chartElement.append('g')
+            .attr('class', 'amazon')
+            .selectAll('path')
+                .data(mapData['amazon']['features'])
+            .enter().append('path')
+                .attr('d', path);
+
+
+        // Highlight primary country
+        var primaryCountryClass = classify(config['primaryCountry']);
+
+        d3.select('.countries path.' + primaryCountryClass)
+            .moveToFront()
+            .classed('primary ' + primaryCountryClass, true);
+
+        /*
+         * Render rivers.
+         */
+        chartElement.append('g')
+            .attr('class', 'rivers')
+            .selectAll('path')
+                .data(mapData['rivers']['features'])
+            .enter().append('path')
+                .attr('d', path);
+
+        chartElement.append('g')
+            .attr('class', 'states')
+            .selectAll('path')
+                .data(mapData['states']['features'])
+            .enter().append('path')
+                .attr('d', path)
+                .attr('class', function(d) {
+                    var c = 'state';
+                    c += ' ' + classify(d['properties']['name']);
+                    return c;
+                });
+
+
+        /*
+         * Render rivers.
+         */
+        // chartElement.append('g')
+        //     .attr('class', 'degradation')
+        //     .selectAll('path')
+        //         .data(mapData['degradation']['features'])
+        //     .enter().append('path')
+        //         .attr('d', path);
+
+        // chartElement.append('g')
+        //     .attr('class', 'deforestation')
+        //     .selectAll('path')
+        //         .data(mapData['deforestation']['features'])
+        //     .enter().append('path')
+        //         .attr('d', path);
+
+        /*
+         * Render primary cities.
+         */
+        chartElement.append('g')
+            .attr('class', 'cities primary')
+            .selectAll('path')
+                .data(mapData['cities']['features'])
+            .enter().append('path')
+                .attr('d', path)
+                .attr('class', function(d) {
+                    var c = 'place';
+
+                    c += ' ' + classify(d['properties']['city']);
+                    c += ' ' + classify(d['properties']['featurecla']);
+                    c += ' scalerank-' + d['properties']['scalerank'];
+
+                    return c;
+                });
+
+        /*
+         * Render neighboring cities.
+         */
+        // chartElement.append('g')
+        //     .attr('class', 'cities neighbors')
+        //     .selectAll('path')
+        //         .data(mapData['neighbors']['features'])
+        //     .enter().append('path')
+        //         .attr('d', path)
+        //         .attr('class', function(d) {
+        //             var c = 'place';
+
+        //             c += ' ' + classify(d['properties']['city']);
+        //             c += ' ' + classify(d['properties']['featurecla']);
+        //             c += ' scalerank-' + d['properties']['scalerank'];
+
+        //             return c;
+        //         });
+
+        /*
+         * Apply adjustments to label positioning.
+         */
+        var positionLabel = function(adjustments, id, attribute) {
+            if (adjustments[id]) {
+                if (adjustments[id][attribute]) {
+                    return adjustments[id][attribute];
+                } else {
+                    return LABEL_DEFAULTS[attribute];
+                }
+            } else {
+                return LABEL_DEFAULTS[attribute];
+            }
+        }
+
+        /*
+         * Render country labels.
+         */
+        chartElement.append('g')
+            .attr('class', 'country-labels')
+            .selectAll('.label')
+                .data(mapData['countries']['features'])
+            .enter().append('text')
+                .attr('class', function(d) {
+                    return 'label ' + classify(d['id']);
+                })
+                .attr('transform', function(d) {
+                    return 'translate(' + path.centroid(d) + ')';
+                })
+                .attr('text-anchor', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                })
+                .attr('dx', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                })
+                .attr('dy', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                })
+                .text(function(d) {
+                    return d['properties']['country'];
+                });
+
+        // Highlight primary country
+        var primaryCountryClass = classify(config['primaryCountry']);
+
+        d3.select('.country-labels text.' + primaryCountryClass)
+            .classed('label primary ' + primaryCountryClass, true);
+
+        /*
+         * Render city labels.
+         */
+        var layers = [
+            'city-labels shadow',
+            'city-labels',
+            'city-labels shadow primary',
+            'city-labels primary'
+        ];
+
+        layers.forEach(function(layer) {
+            var data = [];
+
+            if (layer == 'city-labels shadow' || layer == 'city-labels') {
+                // data = mapData['neighbors']['features'];
+            } else {
+                data = mapData['cities']['features'];
+            }
+
+            chartElement.append('g')
+                .attr('class', layer)
+                .selectAll('.label')
+                    .data(data)
+                .enter().append('text')
+                    .attr('class', function(d) {
+                        var c = 'label';
+
+                        c += ' ' + classify(d['properties']['city']);
+                        c += ' ' + classify(d['properties']['featurecla']);
+                        c += ' scalerank-' + d['properties']['scalerank'];
+
+                        return c;
+                    })
+                    .attr('transform', function(d) {
+                        return 'translate(' + projection(d['geometry']['coordinates']) + ')';
+                    })
+                    .attr('style', function(d) {
+                        return 'text-anchor: ' + positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'text-anchor');
+                    })
+                    .attr('dx', function(d) {
+                        return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dx');
+                    })
+                    .attr('dy', function(d) {
+                        return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dy');
+                    })
+                    .text(function(d) {
+                        return d['properties']['city'];
+                    });
+        });
+
+        d3.selectAll('.shadow')
+            .attr('filter', 'url(#textshadow)');
+
+        var legend = containerElement.append('ul')
+            .attr('class', 'key')
+
+        legend.append('b')
+            .style('background-color', '#EAAA61');
+
+        legend.append('label')
+            .text('Amazon Basin');
+
+        /*
+         * Render a scale bar.
+         */
+        var scaleBarDistance = calculateOptimalScaleBarDistance(bbox, 10);
+        var scaleBarStart = [10, mapHeight - 20];
+        var scaleBarEnd = calculateScaleBarEndPoint(projection, scaleBarStart, scaleBarDistance);
+
+        chartElement.append('g')
+            .attr('class', 'scale-bar')
+            .append('line')
+            .attr('x1', scaleBarStart[0])
+            .attr('y1', scaleBarStart[1])
+            .attr('x2', scaleBarEnd[0])
+            .attr('y2', scaleBarEnd[1]);
+
+        d3.select('.scale-bar')
+            .append('text')
+            .attr('x', scaleBarEnd[0] + 5)
+            .attr('y', scaleBarEnd[1] + 3)
+            .text(scaleBarDistance + ' miles');
+    }
+
+    /*
+     * Move a set of D3 elements to the front of the canvas.
+     */
+    d3.selection.prototype.moveToFront = function() {
+        return this.each(function(){
+            this.parentNode.appendChild(this);
+        });
+    };
+
+
     var GRAPHICS_CONFIG = {
         'deforestation-annual': {
             'data': COPY['deforestation-annual'],
@@ -408,6 +913,12 @@ var GRAPHICS = (function() {
             'formatted': false,
             'unit': '%'
         },
+        'locator-map': {
+            'data': 'data/geodata.json',
+            'format': formatMapData,
+            'render': null,
+            'formatted': false
+        }
     }
 
     return {

@@ -232,4 +232,128 @@
         }
     }
 
+    // map
+
+    svg {
+        font-size: 20px;
+        background-color: black;
+    }
+
+    .countries path {
+        fill: #ddd;
+        stroke: #ccc;
+        stroke-width: 2.5px;
+
+        &.primary {
+            stroke: #999;
+        }
+    }
+
+    .amazon path {
+        fill: @orange3;
+        fill-opacity: 0.75;
+    }
+
+    .states path {
+        fill: transparent;
+        stroke: transparent;
+    }
+
+    .states .rondnia {
+        fill: @orange2;
+        stroke: black;
+    }
+
+    path.landmass { fill: #a8d5ef; }
+
+    .rivers path {
+        fill: none;
+        stroke: #a8d5ef;
+        stroke-width: 1px;
+    }
+
+    .degradation path {
+        fill: white;
+        stroke: white;
+        stroke-width: 0.5px;
+    }
+
+    .deforestation path {
+        fill: #f60062;
+        stroke: #f60062;
+        stroke-width: 0.5px;
+    }
+
+    .cities path {
+        fill: white;
+    }
+
+    .city-labels text {
+        fill: white;
+        font-size: 65%;
+        text-anchor: start;
+        font-family: 'Gotham SSm', Helvetica, Arial,sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .city-labels.shadow text {
+        fill: #fff;
+        stroke: #fff;
+        stroke-width: 2px;
+        opacity: .7;
+    }
+
+    .country-labels text {
+        fill: #787878;
+        font-size: 70%;
+        text-transform: uppercase;
+        text-anchor: middle;
+        font-family: 'Knockout 31 4r', Helvetica, Arial,sans-serif;
+        font-weight: normal;
+        -webkit-font-smoothing: antialiased;
+
+        &.primary {
+            fill: white;
+            font-weight: 700;
+            font-size: 110%;
+        }
+        &.costa-rica, &.chile, &.paraguay, &.panama { display: none; }
+        &.peru, &.bolivia, &.ecuador { fill: #ddd; }
+    }
+
+    .scale-bar {
+        line {
+            stroke: #ccc;
+            stroke-width: 5px;
+        }
+        text {
+            font-family: Helvetica, Arial,sans-serif;
+            fill: #ccc;
+            font-size: 60%;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    // responsive styles
+    @media screen and (max-width: 500px) {
+        svg { font-size: 14px; }
+        .countries path { stroke-width: 2px; }
+        .country-labels text {
+            &.bangladesh,
+            &.bhutan {
+                display: none;
+            }
+        }
+        // .city-labels text { letter-spacing: .5px; }
+        .city-labels.shadow { display: none; }
+        .city-labels text,
+        .cities path {
+            &.scalerank-5,
+            &.scalerank-6,
+            &.scalerank-7,
+            &.scalerank-8 {
+                display: none;
+            }
+        }
+    }
 }
