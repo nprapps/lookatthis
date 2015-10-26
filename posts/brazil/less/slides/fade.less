@@ -1,0 +1,16 @@
+.swiper-slide.fade {
+    .imgLiquid {
+        .transition(opacity 6s cubic-bezier(0.445, 0.05, 0.55, 0.95));
+
+        &.no-transition {
+            .transition(none);
+        }
+
+        &.first {
+            opacity: 1;
+        }
+        &.second {
+            opacity: 0;
+        }
+    }
+}

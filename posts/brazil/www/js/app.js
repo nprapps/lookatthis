@@ -91,6 +91,10 @@ var onSlideChange = function() {
         var graphicID = $thisSlide.attr('id');
         GRAPHICS.loadGraphic(graphicID);
     }
+
+    if ($thisSlide.hasClass('fade')) {
+        $thisSlide.find('.imgLiquid.second').css('opacity', 1);
+    }
 }
 
 var lazyLoad = function() {
@@ -114,7 +118,6 @@ var loadImages = function($slide) {
     * Sets the background image on a div for our fancy slides.
     */
     var $container = $slide.find('.imgLiquid');
-    var bgimg = $container.children('img');
 
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
@@ -123,21 +126,25 @@ var loadImages = function($slide) {
         mobileSuffix = '-sq';
     }
 
-    if (bgimg.data('bgimage')) {
-        var imageFilename = bgimg.data('bgimage').split('.')[0];
-        var imageExtension = '.' + bgimg.data('bgimage').split('.')[1];
-        var imagePath = 'assets/' + imageFilename + mobileSuffix + imageExtension;
+    $container.each(function(key, value) {
+        var bgimg = $(value).children('img');
 
-        bgimg.attr('src', imagePath);
-    }
+        if (bgimg.data('bgimage')) {
+            var imageFilename = bgimg.data('bgimage').split('.')[0];
+            var imageExtension = '.' + bgimg.data('bgimage').split('.')[1];
+            var imagePath = 'assets/' + imageFilename + mobileSuffix + imageExtension;
 
-    if (bgimg.attr('src')) {
-        $container.imgLiquid({
-            fill: true,
-            horizontalAlign: "center",
-            verticalAlign: "center",
-        });
-    }
+            bgimg.attr('src', imagePath);
+        }
+
+        if (bgimg.attr('src')) {
+            $container.imgLiquid({
+                fill: true,
+                horizontalAlign: "center",
+                verticalAlign: "center",
+            });
+        }
+    });
 
     var $images = $slide.find('img.lazy-load');
     if ($images.length > 0) {

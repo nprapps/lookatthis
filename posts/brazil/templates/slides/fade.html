@@ -1,0 +1,16 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_wrapper %}
+<div class="swiper-slide {{ row.template }} {{ row.extra_class }}" data-hash="{{ row.id }}" id="{{ row.id }}">
+        {% block slide_content %}
+        {% endblock slide_content %}
+
+    {% if row.background_media %}
+    <div class="imgLiquid first">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.foreground_media }}" {% else %} data-bgimage="{{ row.foreground_media }}" {% endif %}>
+    </div>
+    <div class="imgLiquid second">
+        <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
+    </div>
+    {% endif %}
+</div><!-- /slide -->
+{% endblock slide_wrapper %}
