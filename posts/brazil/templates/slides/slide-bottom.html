@@ -1,0 +1,8 @@
+{% extends '%s/templates/_slide.html' % slug %}
+{% block slide_content %}
+<div class="slide-content-bottom" data-swiper-parallax="-6">
+    <div class="slide-content-bottom-item">
+        {{ row.text1|smarty }}
+    </div>
+</div>
+{% endblock %}

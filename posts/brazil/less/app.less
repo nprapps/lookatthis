@@ -1,4 +1,3 @@
-@import "./lib/swiper/swipe-styles.less";
 @import "./lib/bootstrap/normalize.less";
 @import "./lib/prefixer.less";
 @import "./lib/swiper/swiper.less";
@@ -23,7 +22,6 @@
 .animated {
   animation-duration: 3s;
   animation-fill-mode: both;
-
 }
 
 .animated.infinite {
@@ -78,14 +76,38 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
     -webkit-box-align: center;
+
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+
+    -webkit-flex-direction: column;
+   flex-direction: column;
+}
+
+
+.position-bottom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    -webkit-justify-content: end;
+    justify-content: end;
+    -webkit-box-align: end;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+
     -webkit-flex-direction: column;
    flex-direction: column;
 }
@@ -96,11 +118,13 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
     -webkit-box-align: center;
+
     -webkit-flex-direction: column;
    flex-direction: column;
 }
@@ -138,7 +162,7 @@ html, body {
 
 body {
     background: #111;
-    font-family: Gotham,Helvetica, Arial, sans-serif;
+    font-family: 'Knockout 31 4r', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color:#eee;
     margin: 0;
@@ -189,10 +213,21 @@ p {
         }
     }
 
-    .slide-content {
+    .slide-content-middle {
         max-width: 500px;
-        margin: 0 auto;
+    }
+
+    .slide-content-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
         padding: 0 50px;
+
+        .slide-content-bottom-item {
+            margin: 0 auto;
+            max-width: 500px;
+        }
 
         @media @screen-small-above {
             padding: 0;
@@ -236,17 +271,6 @@ p {
 .swiper-button-next {
     right: 20px;
     padding: 5px 20px 8px 23px;
-}
-
-//title-screen
-.title-screen {
-
-    .slide-content {
-        max-width: 500px;
-        margin: 0 auto;
-        color: #fff;
-        text-shadow: 1px 1px 2px #111;
-    }
 }
 
 //quiz
@@ -344,7 +368,6 @@ p {
     z-index: 100;
     font-size: 14px;
     cursor: pointer;
-    font-family: gotham, helvetica, sans-serif;
 
     i {
         padding-right: 5px;
