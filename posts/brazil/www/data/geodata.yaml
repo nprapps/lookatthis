@@ -8,7 +8,7 @@ layers:
             - 'country=admin'
     cities:
         type: 'shp'
-        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_populated_places_simple.zip'
+        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_populated_places_simple.zip'
         id-property: 'name'
         properties:
             - 'featurecla'
@@ -18,7 +18,7 @@ layers:
 
     states:
         type: 'shp'
-        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip'
+        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_1_states_provinces_lakes.zip'
         id-property: 'name'
         properties:
             - 'name'
@@ -26,7 +26,7 @@ layers:
 
     rivers:
         type: 'shp'
-        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/ne_10m_rivers_lake_centerlines.zip'
+        path: 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/physical/ne_110m_rivers_lake_centerlines.zip'
         where: featurecla = 'River' AND scalerank <= 2
 
     amazon:
