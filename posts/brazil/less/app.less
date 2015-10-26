@@ -222,15 +222,14 @@ p {
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 0 50px;
 
         .slide-content-bottom-item {
+            max-width: 300px;
             margin: 0 auto;
-            max-width: 500px;
-        }
 
-        @media @screen-small-above {
-            padding: 0;
+            @media @screen-small-above {
+                max-width: 30rem;
+            }
         }
     }
 }
