@@ -554,7 +554,7 @@ var GRAPHICS = (function() {
         var aspectHeight = 0.5;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = 480;
+        var defaultScale = 350;
         var cityDotRadius = 3;
 
         // Calculate actual map dimensions
