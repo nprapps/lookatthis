@@ -25,10 +25,10 @@ var onDocumentReady = function() {
     $container = $('.swiper-container');
     $w = $(window);
     $modalClose = $('.close-modal');
-    $overlay = $('.overlay-menu');
+    // $overlay = $('.overlay-menu');
     $slides = $('.swiper-slide');
     $deepLinkNotice = $('.deep-link-notice');
-    $hamburger = $('.hamburger');
+    // $hamburger = $('.hamburger');
     $slideLinks = $('a[data-slide]');
     $prevButton = $('.swiper-button-prev');
     $nextButton = $('.swiper-button-next')
@@ -66,7 +66,7 @@ var onDocumentReady = function() {
     $thisSlide = $slides.eq(swiper.activeIndex);
     $slideLinks.on('click', onSlideLinkClick);
     swiper.on('slideChangeStart', onSlideChange);
-    $hamburger.on('click', toggleOverlay);
+    // $hamburger.on('click', toggleOverlay);
     $modalClose.on('click', onModalCloseClick);
 
     onPageLoad();
@@ -192,29 +192,29 @@ var onSlideLinkClick = function() {
     swiper.slideTo($(this).data('slide'));
 }
 
-var toggleOverlay = function() {
-    if ($overlay.hasClass('open')) {
-        $overlay.removeClass('open');
-        $overlay.addClass('close');
+// var toggleOverlay = function() {
+//     if ($overlay.hasClass('open')) {
+//         $overlay.removeClass('open');
+//         $overlay.addClass('close');
 
-        var onEndTransitionFn = function(ev) {
-            if( support.transitions ) {
-                if( ev.propertyName !== 'visibility' ) return;
-                this.removeEventListener( transEndEventName, onEndTransitionFn );
-            }
-            $overlay.removeClass('open');
-        };
-        if( support.transitions ) {
-            overlay.addEventListener( transEndEventName, onEndTransitionFn );
-        }
-        else {
-            onEndTransitionFn();
-        }
-    }
-    else if (!$overlay.hasClass('close')) {
-        $overlay.addClass('open');
-    }
-}
+//         var onEndTransitionFn = function(ev) {
+//             if( support.transitions ) {
+//                 if( ev.propertyName !== 'visibility' ) return;
+//                 this.removeEventListener( transEndEventName, onEndTransitionFn );
+//             }
+//             $overlay.removeClass('open');
+//         };
+//         if( support.transitions ) {
+//             overlay.addEventListener( transEndEventName, onEndTransitionFn );
+//         }
+//         else {
+//             onEndTransitionFn();
+//         }
+//     }
+//     else if (!$overlay.hasClass('close')) {
+//         $overlay.addClass('open');
+//     }
+// }
 
 // When modal closes, make sure it's not clickable
 var onModalCloseClick = function() {
