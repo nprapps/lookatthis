@@ -558,7 +558,7 @@ var GRAPHICS = (function() {
         var aspectHeight = 1.6;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = 1200;
+        var defaultScale = 480;
         var cityDotRadius = 3;
 
         // Calculate actual map dimensions
@@ -642,6 +642,16 @@ var GRAPHICS = (function() {
             .attr('filter', 'url(#landshadow)')
             .attr('d', path);
 
+        /*
+         * Render amazon.
+         */
+        chartElement.append('g')
+            .attr('class', 'amazon')
+            .selectAll('path')
+                .data(mapData['amazon']['features'])
+            .enter().append('path')
+                .attr('d', path);
+
         // Land outlines
         chartElement.append('g')
             .attr('class', 'countries')
@@ -651,16 +661,6 @@ var GRAPHICS = (function() {
                 .attr('class', function(d) {
                     return classify(d['id']);
                 })
-                .attr('d', path);
-
-        /*
-         * Render amazon.
-         */
-        chartElement.append('g')
-            .attr('class', 'amazon')
-            .selectAll('path')
-                .data(mapData['amazon']['features'])
-            .enter().append('path')
                 .attr('d', path);
 
 
@@ -693,24 +693,6 @@ var GRAPHICS = (function() {
                     return c;
                 });
 
-
-        /*
-         * Render rivers.
-         */
-        // chartElement.append('g')
-        //     .attr('class', 'degradation')
-        //     .selectAll('path')
-        //         .data(mapData['degradation']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path);
-
-        // chartElement.append('g')
-        //     .attr('class', 'deforestation')
-        //     .selectAll('path')
-        //         .data(mapData['deforestation']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path);
-
         /*
          * Render primary cities.
          */
@@ -729,25 +711,6 @@ var GRAPHICS = (function() {
 
                     return c;
                 });
-
-        /*
-         * Render neighboring cities.
-         */
-        // chartElement.append('g')
-        //     .attr('class', 'cities neighbors')
-        //     .selectAll('path')
-        //         .data(mapData['neighbors']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path)
-        //         .attr('class', function(d) {
-        //             var c = 'place';
-
-        //             c += ' ' + classify(d['properties']['city']);
-        //             c += ' ' + classify(d['properties']['featurecla']);
-        //             c += ' scalerank-' + d['properties']['scalerank'];
-
-        //             return c;
-        //         });
 
         /*
          * Apply adjustments to label positioning.

@@ -240,13 +240,9 @@
     }
 
     .countries path {
-        fill: #ddd;
-        stroke: #ccc;
-        stroke-width: 2.5px;
-
-        &.primary {
-            stroke: #999;
-        }
+        fill: transparent;
+        stroke: white;
+        stroke-width: 1px;
     }
 
     .amazon path {
@@ -304,6 +300,7 @@
     }
 
     .country-labels text {
+        display: none;
         fill: #787878;
         font-size: 70%;
         text-transform: uppercase;
@@ -317,8 +314,7 @@
             font-weight: 700;
             font-size: 110%;
         }
-        &.costa-rica, &.chile, &.paraguay, &.panama { display: none; }
-        &.peru, &.bolivia, &.ecuador { fill: #ddd; }
+        &.brazil { display: block; }
     }
 
     .scale-bar {
