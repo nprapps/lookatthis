@@ -67,7 +67,6 @@ var GRAPHICS = (function() {
 
     var renderLine = function(graphicID) {
         var containerWidth = $(window).width() * 0.8;
-
         if (containerWidth <= MOBILE_THRESHOLD) {
             isMobile = true;
         } else {
@@ -335,7 +334,7 @@ var GRAPHICS = (function() {
             .attr('width', chartWidth)
             .attr('class', 'curtain')
             .attr('transform', 'rotate(180)')
-            .style('fill', '#000000')
+            .style('fill', '#111')
 
         var guideline = chartElement.append('line')
             .attr('stroke', '#333')
