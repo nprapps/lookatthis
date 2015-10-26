@@ -551,7 +551,7 @@ var GRAPHICS = (function() {
          * Setup
          */
         var aspectWidth = 1;
-        var aspectHeight = 1.6;
+        var aspectHeight = 0.5;
 
         var bbox = config['data']['bbox'];
         var defaultScale = 480;
