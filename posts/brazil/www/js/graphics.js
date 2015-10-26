@@ -508,16 +508,16 @@ var GRAPHICS = (function() {
     }
 
     var CITY_LABEL_ADJUSTMENTS = {
+        'Porto Velho': {'dx': 15 }
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Brazil': { 'dx': 10, 'dy': 10 }
+        'Brazil': { 'dx': 20, 'dy': 50 }
     }
 
     var geoData = null;
 
     var formatMapData = function(graphicID) {
-        console.log(graphicData)
         d3.json(graphicData, function(error, data) {
             geoData = data;
             renderMap(graphicID);
@@ -554,7 +554,7 @@ var GRAPHICS = (function() {
 
         var bbox = config['data']['bbox'];
         var defaultScale = 350;
-        var cityDotRadius = 3;
+        var cityDotRadius = 2.5;
 
         // Calculate actual map dimensions
         var mapWidth = config['width'];
