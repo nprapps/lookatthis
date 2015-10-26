@@ -44,7 +44,7 @@ var GRAPHICS = (function() {
             GRAPHICS_CONFIG[graphicID]['formatted'] = true;
         }
 
-        if (GRAPHICS_CONFIG[graphicID].render) {
+        if (!GRAPHICS_CONFIG[graphicID]['skipRender']) {
             GRAPHICS_CONFIG[graphicID].render(graphicID);
         }
 
@@ -508,14 +508,10 @@ var GRAPHICS = (function() {
     }
 
     var CITY_LABEL_ADJUSTMENTS = {
-        'Porto Velho': { 'text-anchor': 'end', 'dx': -10 }
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Guyana': { 'text-anchor': 'end', 'dy': -20 },
-        'Suriname': { 'text-anchor': 'end', 'dy': -10 },
-        'Colombia': { 'dy': -5 },
-        'Ecuador': { 'dx': 20 }
+        'Brazil': { 'dx': 10, 'dy': 10 }
     }
 
     var geoData = null;
@@ -554,11 +550,11 @@ var GRAPHICS = (function() {
         /*
          * Setup
          */
-        var aspectWidth = 2.1;
+        var aspectWidth = 1;
         var aspectHeight = 1.6;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = 1200;
+        var defaultScale = 480;
         var cityDotRadius = 3;
 
         // Calculate actual map dimensions
@@ -642,6 +638,29 @@ var GRAPHICS = (function() {
             .attr('filter', 'url(#landshadow)')
             .attr('d', path);
 
+        /*
+         * Render amazon.
+         */
+        chartElement.append('g')
+            .attr('class', 'amazon')
+            .selectAll('path')
+                .data(mapData['amazon']['features'])
+            .enter().append('path')
+                .attr('d', path);
+
+
+        chartElement.append('g')
+            .attr('class', 'states')
+            .selectAll('path')
+                .data(mapData['states']['features'])
+            .enter().append('path')
+                .attr('d', path)
+                .attr('class', function(d) {
+                    var c = 'state';
+                    c += ' ' + classify(d['properties']['name']);
+                    return c;
+                });
+
         // Land outlines
         chartElement.append('g')
             .attr('class', 'countries')
@@ -651,16 +670,6 @@ var GRAPHICS = (function() {
                 .attr('class', function(d) {
                     return classify(d['id']);
                 })
-                .attr('d', path);
-
-        /*
-         * Render amazon.
-         */
-        chartElement.append('g')
-            .attr('class', 'amazon')
-            .selectAll('path')
-                .data(mapData['amazon']['features'])
-            .enter().append('path')
                 .attr('d', path);
 
 
@@ -681,36 +690,6 @@ var GRAPHICS = (function() {
             .enter().append('path')
                 .attr('d', path);
 
-        chartElement.append('g')
-            .attr('class', 'states')
-            .selectAll('path')
-                .data(mapData['states']['features'])
-            .enter().append('path')
-                .attr('d', path)
-                .attr('class', function(d) {
-                    var c = 'state';
-                    c += ' ' + classify(d['properties']['name']);
-                    return c;
-                });
-
-
-        /*
-         * Render rivers.
-         */
-        // chartElement.append('g')
-        //     .attr('class', 'degradation')
-        //     .selectAll('path')
-        //         .data(mapData['degradation']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path);
-
-        // chartElement.append('g')
-        //     .attr('class', 'deforestation')
-        //     .selectAll('path')
-        //         .data(mapData['deforestation']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path);
-
         /*
          * Render primary cities.
          */
@@ -729,25 +708,6 @@ var GRAPHICS = (function() {
 
                     return c;
                 });
-
-        /*
-         * Render neighboring cities.
-         */
-        // chartElement.append('g')
-        //     .attr('class', 'cities neighbors')
-        //     .selectAll('path')
-        //         .data(mapData['neighbors']['features'])
-        //     .enter().append('path')
-        //         .attr('d', path)
-        //         .attr('class', function(d) {
-        //             var c = 'place';
-
-        //             c += ' ' + classify(d['properties']['city']);
-        //             c += ' ' + classify(d['properties']['featurecla']);
-        //             c += ' scalerank-' + d['properties']['scalerank'];
-
-        //             return c;
-        //         });
 
         /*
          * Apply adjustments to label positioning.
@@ -916,8 +876,9 @@ var GRAPHICS = (function() {
         'locator-map': {
             'data': 'data/geodata.json',
             'format': formatMapData,
-            'render': null,
-            'formatted': false
+            'render': renderMap,
+            'formatted': false,
+            'skipRender': true
         }
     }
 
