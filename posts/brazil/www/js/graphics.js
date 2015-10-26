@@ -104,7 +104,7 @@ var GRAPHICS = (function() {
 
         var ticksX = 10;
         var ticksY = 10;
-        var roundTicksFactor = 10000;
+        var roundTicksFactor = config.config.scale;
 
         // Mobile
         if (isMobile) {
@@ -823,21 +823,24 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km'
+            'unit': ' sq. km',
+            'scale': 1000
         },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km'
+            'unit': ' sq. km',
+            'scale': 10000
         },
         'gdp': {
             'data': COPY['gdp'],
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': '%'
+            'unit': '%',
+            'scale': 5,
         },
         'locator-map': {
             'data': 'data/geodata.json',
