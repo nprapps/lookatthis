@@ -110,7 +110,6 @@ var GRAPHICS = (function() {
         if (isMobile) {
             ticksX = 5;
             ticksY = 5;
-            margins['right'] = 25;
         }
 
         // Calculate actual chart dimensions
@@ -153,10 +152,11 @@ var GRAPHICS = (function() {
 
         var yScale = d3.scale.linear()
             .domain([ 0, d3.max(d3.entries(formattedData), function(c) {
-                    return d3.max(c['value'], function(v) {
+                    var value = d3.max(c['value'], function(v) {
                         var n = v[valueColumn];
                         return Math.ceil(n / roundTicksFactor) * roundTicksFactor;
                     });
+                    return Math.ceil(value/10000) * 10000;
                 })
             ])
             .range([ chartHeight, 0 ]);
