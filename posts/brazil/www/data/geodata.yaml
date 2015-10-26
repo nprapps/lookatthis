@@ -1,4 +1,4 @@
-bbox: '-85.4 -57.4 -29.3 13.5'
+bbox: '-85.4 -55.4 -29.3 13.0'
 layers:
     countries:
         type: 'shp'
