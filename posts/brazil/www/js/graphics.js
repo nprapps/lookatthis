@@ -110,7 +110,6 @@ var GRAPHICS = (function() {
         if (isMobile) {
             ticksX = 5;
             ticksY = 5;
-            margins['right'] = 25;
         }
 
         // Calculate actual chart dimensions
@@ -153,10 +152,11 @@ var GRAPHICS = (function() {
 
         var yScale = d3.scale.linear()
             .domain([ 0, d3.max(d3.entries(formattedData), function(c) {
-                    return d3.max(c['value'], function(v) {
+                    var value = d3.max(c['value'], function(v) {
                         var n = v[valueColumn];
                         return Math.ceil(n / roundTicksFactor) * roundTicksFactor;
                     });
+                    return Math.ceil(value/10000) * 10000;
                 })
             ])
             .range([ chartHeight, 0 ]);
@@ -166,28 +166,6 @@ var GRAPHICS = (function() {
                 return key !== dateColumn;
             }))
             .range([ COLORS['blue5'], COLORS['yellow3'], COLORS['blue3'], COLORS['orange3'], COLORS['teal3'] ]);
-
-        /*
-         * Render the HTML legend.
-         */
-        var legend = containerElement.append('ul')
-            .attr('class', 'key')
-            .selectAll('g')
-                .data(d3.entries(formattedData))
-            .enter().append('li')
-                .attr('class', function(d, i) {
-                    return 'key-item key-' + i + ' ' + classify(d['key']);
-                });
-
-        legend.append('b')
-            .style('background-color', function(d) {
-                return colorScale(d['key']);
-            });
-
-        legend.append('label')
-            .text(function(d) {
-                return d['key'];
-            });
 
         /*
          * Create the root SVG element.
