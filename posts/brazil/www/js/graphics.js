@@ -525,10 +525,11 @@ var GRAPHICS = (function() {
     }
 
     var renderMap = function(graphicID) {
-        var containerWidth = $(window).width() * 0.8;
+        var containerWidth = $(window).width() * 0.4;
 
-        if (containerWidth <= MOBILE_THRESHOLD) {
+        if ($(window).width() <= MOBILE_THRESHOLD) {
             isMobile = true;
+            containerWidth = $(window).width();
         } else {
             isMobile = false;
         }
@@ -548,8 +549,8 @@ var GRAPHICS = (function() {
         /*
          * Setup
          */
-        var aspectWidth = 1;
-        var aspectHeight = 0.5;
+        var aspectWidth = isMobile ? 1 : 1;
+        var aspectHeight = isMobile ? 1.5 : 1;
 
         var bbox = config['data']['bbox'];
         var defaultScale = 350;
@@ -807,15 +808,6 @@ var GRAPHICS = (function() {
 
         d3.selectAll('.shadow')
             .attr('filter', 'url(#textshadow)');
-
-        var legend = containerElement.append('ul')
-            .attr('class', 'key')
-
-        legend.append('b')
-            .style('background-color', '#EAAA61');
-
-        legend.append('label')
-            .text('Amazon Basin');
 
         /*
          * Render a scale bar.
