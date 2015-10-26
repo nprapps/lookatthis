@@ -508,14 +508,10 @@ var GRAPHICS = (function() {
     }
 
     var CITY_LABEL_ADJUSTMENTS = {
-        'Porto Velho': { 'text-anchor': 'end', 'dx': -10 }
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Guyana': { 'text-anchor': 'end', 'dy': -20 },
-        'Suriname': { 'text-anchor': 'end', 'dy': -10 },
-        'Colombia': { 'dy': -5 },
-        'Ecuador': { 'dx': 20 }
+        'Brazil': { 'dx': 10, 'dy': 10 }
     }
 
     var geoData = null;
@@ -652,6 +648,19 @@ var GRAPHICS = (function() {
             .enter().append('path')
                 .attr('d', path);
 
+
+        chartElement.append('g')
+            .attr('class', 'states')
+            .selectAll('path')
+                .data(mapData['states']['features'])
+            .enter().append('path')
+                .attr('d', path)
+                .attr('class', function(d) {
+                    var c = 'state';
+                    c += ' ' + classify(d['properties']['name']);
+                    return c;
+                });
+
         // Land outlines
         chartElement.append('g')
             .attr('class', 'countries')
@@ -680,18 +689,6 @@ var GRAPHICS = (function() {
                 .data(mapData['rivers']['features'])
             .enter().append('path')
                 .attr('d', path);
-
-        chartElement.append('g')
-            .attr('class', 'states')
-            .selectAll('path')
-                .data(mapData['states']['features'])
-            .enter().append('path')
-                .attr('d', path)
-                .attr('class', function(d) {
-                    var c = 'state';
-                    c += ' ' + classify(d['properties']['name']);
-                    return c;
-                });
 
         /*
          * Render primary cities.
