@@ -847,7 +847,7 @@ var GRAPHICS = (function() {
             'formatted': false,
             'unit': '$',
             'unitPosition': 'prefix',
-            'scale': 10,
+            'scale': 1000,
         },
         'locator-map': {
             'data': 'data/geodata.json',
