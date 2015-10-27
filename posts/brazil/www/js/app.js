@@ -102,11 +102,6 @@ var onSlideChange = function() {
         checkForInDepth();
     }
 
-    if ($thisSlide.hasClass('graphic')) {
-        var graphicID = $thisSlide.attr('id');
-        GRAPHICS.loadGraphic(graphicID);
-    }
-
     if ($thisSlide.hasClass('fade')) {
         $thisSlide.find('.imgLiquid.second').css('opacity', 1);
     }
@@ -167,6 +162,11 @@ var loadImages = function($slide) {
             var image = $images.eq(i).data('src');
             $images.eq(i).attr('src', 'assets/' + image);
         }
+    }
+
+    if ($slide.hasClass('graphic')) {
+        var graphicID = $slide.attr('id');
+        GRAPHICS.loadGraphic(graphicID);
     }
 };
 
