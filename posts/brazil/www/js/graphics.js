@@ -501,11 +501,11 @@ var GRAPHICS = (function() {
     }
 
     var renderMap = function(graphicID) {
-        var containerWidth = $(window).width() * 0.4;
+        var containerHeight = $(window).height() * 0.75;
+        var mapMobileThreshold = 500
 
-        if ($(window).width() <= MOBILE_THRESHOLD) {
+        if ($(window).width() <= mapMobileThreshold) {
             isMobile = true;
-            containerWidth = $(window).width();
         } else {
             isMobile = false;
         }
@@ -515,7 +515,7 @@ var GRAPHICS = (function() {
         // Render the chart!
         renderLocatorMap({
             container: container,
-            width: containerWidth,
+            height: containerHeight,
             data: geoData,
             primaryCountry: 'Brazil'
         });
@@ -525,16 +525,16 @@ var GRAPHICS = (function() {
         /*
          * Setup
          */
-        var aspectWidth = isMobile ? 1 : 1;
-        var aspectHeight = isMobile ? 1.5 : 1;
+        var aspectWidth = 1;
+        var aspectHeight = isMobile ? 1.4 : 1;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = 350;
+        var defaultScale = isMobile ? 250 : 350;
         var cityDotRadius = 2.5;
 
         // Calculate actual map dimensions
-        var mapWidth = config['width'];
-        var mapHeight = Math.ceil((config['width'] * aspectHeight) / aspectWidth);
+        var mapWidth = Math.ceil((config['height'] * aspectWidth) / aspectHeight);
+        var mapHeight = config['height'];
 
         // Clear existing graphic (for redraw)
         var containerElement = d3.select(config['container']);
@@ -558,8 +558,8 @@ var GRAPHICS = (function() {
          * Create the map projection.
          */
         var centroid = [((bbox[0] + bbox[2]) / 2), ((bbox[1] + bbox[3]) / 2)];
-        var mapScale = (mapWidth / config.width) * defaultScale;
-        var scaleFactor = mapWidth / config.width;
+        var mapScale = (mapHeight / config.height) * defaultScale;
+        var scaleFactor = mapHeight / config.height;
 
         projection = d3.geo.mercator()
             .center(centroid)
