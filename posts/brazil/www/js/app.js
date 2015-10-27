@@ -20,6 +20,8 @@ var transEndEventNames;
 var transEndEventName;
 var transitionSupport;
 var swiper;
+var slideTemplateTextLocation;
+var templateList;
 
 var onDocumentReady = function() {
     $container = $('.swiper-container');
@@ -62,6 +64,19 @@ var onDocumentReady = function() {
         prevButton: $prevButton,
         preloadImages: false,
     });
+
+    slideTemplateTextLocation = {
+        'slide': {
+            'text1': '.slide-content'
+        },
+        'slide-bottom': {
+            'text1': '.slide-content-bottom-item'
+        },
+        'graphic': {
+            'text1': '.slide-content h1',
+            'text2': '.slide-content h2'
+        }
+    }
 
     $thisSlide = $slides.eq(swiper.activeIndex);
     $slideLinks.on('click', onSlideLinkClick);
@@ -229,33 +244,25 @@ var checkModalStatus = function() {
     }
 }
 
-//sizing titlecard to match viewport
-var onWindowResize = function() {
-    /*
-    * Handles resizing our full-width images.
-    * Makes decisions based on the window size.
-    */
+var switchLanguage = function(language) {
+    for (var i = 0; i < $slides.length; i++) {
+        var $currentSlide = $slides.eq(i);
+        var template = $currentSlide.data('template');
+        var textLocations = slideTemplateTextLocation[template];
 
-    // Calculate optimal width if height is constrained to window height.
-    var wOptimal = ($w.height() * aspectWidth) / aspectHeight;
+        for (var column in textLocations) {
+            if (textLocations.hasOwnProperty(column)) {
+                var container = $currentSlide.find(textLocations[column]);
+                var languageColumn = language + '_' + column;
 
-    // Calculate optimal height if width is constrained to window width.
-    var hOptimal = ($w.width() * aspectHeight) / aspectWidth;
-
-    // Decide whether to go with optimal height or width.
-    var w = $w.width();
-    var h = h_optimal;
-
-    if (w_optimal > $w.width()) {
-        var w = w_optimal;
-        var h = $w.height();
+                for (var j = 0; j < COPY.content.length; j++) {
+                    if ($currentSlide.attr('id') === COPY.content[j].id) {
+                        container.text(COPY.content[j][languageColumn]);
+                    }
+                }
+            }
+        }
     }
-
-    //$titlecard.width(w + 'px').height(h + 'px');
-    //$opener.height($w.height() + 'px');
-
-    $titlecard_wrapper.height($w.height() + 'px');
-    $container.css('marginTop', $w.height() + 'px');
-};
+}
 
 $(onDocumentReady);
