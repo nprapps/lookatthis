@@ -332,6 +332,8 @@ var GRAPHICS = (function() {
             .duration(3000)
             .ease('linear')
             .each('end', function() {
+              d3.select('.lines')
+                .moveToFront()
               d3.select('line.guide')
                 .transition()
                 .style('opacity', 0)
