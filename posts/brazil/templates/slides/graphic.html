@@ -1,6 +1,6 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
+<div class="graphic-container" id="graphic-{{ row.id }}"></div>
 <h1>{{ row.text1 }}</h1>
 <h2>{{ row.text2 }}</h2>
-<div class="graphic-container" id="graphic-{{ row.id }}"></div>
 {% endblock %}
