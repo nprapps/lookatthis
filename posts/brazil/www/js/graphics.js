@@ -502,9 +502,9 @@ var GRAPHICS = (function() {
 
     var renderMap = function(graphicID) {
         var containerHeight = $(window).height() * 0.75;
-        var mapMobileThreshold = 500
+        var mapMobileThreshold = 690
 
-        if ($(window).width() <= mapMobileThreshold) {
+        if ($(window).height() <= mapMobileThreshold) {
             isMobile = true;
         } else {
             isMobile = false;
@@ -529,7 +529,7 @@ var GRAPHICS = (function() {
         var aspectHeight = isMobile ? 1.4 : 1;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = isMobile ? 250 : 350;
+        var defaultScale = isMobile ? 250 : 325;
         var cityDotRadius = 2.5;
 
         // Calculate actual map dimensions
