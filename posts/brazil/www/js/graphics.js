@@ -198,7 +198,11 @@ var GRAPHICS = (function() {
             .orient('left')
             .ticks(ticksY)
             .tickFormat(function(d) {
-                return commaFormatter(d) + config.config.unit
+                if (config.config.unitPosition === 'prefix') {
+                    return config.config.unit + commaFormatter(d)
+                } else {
+                    return commaFormatter(d) + config.config.unit
+                }
             });
 
         /*
@@ -824,6 +828,7 @@ var GRAPHICS = (function() {
             'render': renderLine,
             'formatted': false,
             'unit': ' sq. km',
+            'unitPosition': 'suffix',
             'scale': 1000
         },
         'deforestation-cumulative': {
@@ -832,6 +837,7 @@ var GRAPHICS = (function() {
             'render': renderLine,
             'formatted': false,
             'unit': ' sq. km',
+            'unitPosition': 'suffix',
             'scale': 10000
         },
         'gdp': {
@@ -839,8 +845,9 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': '%',
-            'scale': 5,
+            'unit': '$',
+            'unitPosition': 'prefix',
+            'scale': 10,
         },
         'locator-map': {
             'data': 'data/geodata.json',
