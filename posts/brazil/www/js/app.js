@@ -90,6 +90,7 @@ var onDocumentReady = function() {
 var onPageLoad = function() {
     checkModalStatus();
     onSlideChange();
+    GRAPHICS.loadGraphic('locator-map');
 }
 
 var onSlideChange = function() {
@@ -104,6 +105,11 @@ var onSlideChange = function() {
 
     if ($thisSlide.hasClass('fade')) {
         $thisSlide.find('.imgLiquid.second').css('opacity', 1);
+    }
+
+    if ($thisSlide.hasClass('graphic') && $thisSlide.attr('id') !== 'locator-map') {
+        var graphicID = $thisSlide.attr('id');
+        GRAPHICS.loadGraphic(graphicID);
     }
 }
 
@@ -162,11 +168,6 @@ var loadImages = function($slide) {
             var image = $images.eq(i).data('src');
             $images.eq(i).attr('src', 'assets/' + image);
         }
-    }
-
-    if ($slide.hasClass('graphic')) {
-        var graphicID = $slide.attr('id');
-        GRAPHICS.loadGraphic(graphicID);
     }
 };
 
