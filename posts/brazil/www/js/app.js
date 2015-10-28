@@ -107,9 +107,14 @@ var onSlideChange = function() {
         $thisSlide.find('.imgLiquid.second').css('opacity', 1);
     }
 
-    if ($thisSlide.hasClass('graphic') && $thisSlide.attr('id') !== 'locator-map') {
-        var graphicID = $thisSlide.attr('id');
+    // empty out the resize function
+    $(window).off('resize');
+
+    var graphicID = $thisSlide.attr('id');
+    if ($thisSlide.hasClass('graphic') && graphicID !== 'locator-map') {
         GRAPHICS.loadGraphic(graphicID);
+    } else {
+        GRAPHICS.attachMapResizeHandler(graphicID);
     }
 }
 

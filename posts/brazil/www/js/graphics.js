@@ -827,6 +827,12 @@ var GRAPHICS = (function() {
         });
     };
 
+    var attachMapResizeHandler = function(graphicID) {
+        $(window).resize(function() {
+            GRAPHICS_CONFIG[graphicID].render(graphicID);
+        });
+    }
+
 
     var GRAPHICS_CONFIG = {
         'deforestation-annual': {
@@ -879,6 +885,7 @@ var GRAPHICS = (function() {
     }
 
     return {
-        'loadGraphic': loadGraphic
+        'loadGraphic': loadGraphic,
+        'attachMapResizeHandler': attachMapResizeHandler
     }
 }());
