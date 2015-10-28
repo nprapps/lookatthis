@@ -494,7 +494,8 @@ var GRAPHICS = (function() {
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Brazil': { 'dx': 20, 'dy': 50 }
+        'Brazil': { 'dx': 20, 'dy': 25 },
+        'Rondônia': { 'dx': 12, 'dy': -5 }
     }
 
     var geoData = null;
@@ -666,12 +667,14 @@ var GRAPHICS = (function() {
         /*
          * Render rivers.
          */
-        chartElement.append('g')
-            .attr('class', 'rivers')
-            .selectAll('path')
-                .data(mapData['rivers']['features'])
-            .enter().append('path')
-                .attr('d', path);
+        if (mapData['rivers']) {
+            chartElement.append('g')
+                .attr('class', 'rivers')
+                .selectAll('path')
+                    .data(mapData['rivers']['features'])
+                .enter().append('path')
+                    .attr('d', path);
+        }
 
         /*
          * Render primary cities.
@@ -735,6 +738,30 @@ var GRAPHICS = (function() {
                 })
                 .text(function(d) {
                     return d['properties']['country'];
+                });
+
+        chartElement.append('g')
+            .attr('class', 'state-labels')
+            .selectAll('.label')
+                .data(mapData['states']['features'])
+            .enter().append('text')
+                .attr('class', function(d) {
+                    return 'label ' + classify(d['id']);
+                })
+                .attr('transform', function(d) {
+                    return 'translate(' + path.centroid(d) + ')';
+                })
+                .attr('text-anchor', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                })
+                .attr('dx', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                })
+                .attr('dy', function(d) {
+                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                })
+                .text(function(d) {
+                    return d['properties']['name'];
                 });
 
         // Highlight primary country
