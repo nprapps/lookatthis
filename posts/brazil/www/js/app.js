@@ -89,7 +89,8 @@ var onDocumentReady = function() {
 
 var onPageLoad = function() {
     checkModalStatus();
-    GRAPHICS.loadGraphic('locator-map');
+    GRAPHICS.loadGraphic('porto-velho');
+    GRAPHICS.loadGraphic('amazon');
     onSlideChange();
 }
 

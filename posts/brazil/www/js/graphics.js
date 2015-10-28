@@ -622,26 +622,28 @@ var GRAPHICS = (function() {
         /*
          * Render amazon.
          */
-        chartElement.append('g')
-            .attr('class', 'amazon')
-            .selectAll('path')
-                .data(mapData['amazon']['features'])
-            .enter().append('path')
-                .attr('d', path);
+        if (mapData['amazon']) {
+            chartElement.append('g')
+                .attr('class', 'amazon')
+                .selectAll('path')
+                    .data(mapData['amazon']['features'])
+                .enter().append('path')
+                    .attr('d', path);
+        }
 
-
-        chartElement.append('g')
-            .attr('class', 'states')
-            .selectAll('path')
-                .data(mapData['states']['features'])
-            .enter().append('path')
-                .attr('d', path)
-                .attr('class', function(d) {
-                    var c = 'state';
-                    c += ' ' + classify(d['properties']['name']);
-                    return c;
-                });
-
+        if (mapData['states']) {
+            chartElement.append('g')
+                .attr('class', 'states')
+                .selectAll('path')
+                    .data(mapData['states']['features'])
+                .enter().append('path')
+                    .attr('d', path)
+                    .attr('class', function(d) {
+                        var c = 'state';
+                        c += ' ' + classify(d['properties']['name']);
+                        return c;
+                    });
+        }
         // Land outlines
         chartElement.append('g')
             .attr('class', 'countries')
@@ -674,21 +676,24 @@ var GRAPHICS = (function() {
         /*
          * Render primary cities.
          */
-        chartElement.append('g')
-            .attr('class', 'cities primary')
-            .selectAll('path')
-                .data(mapData['cities']['features'])
-            .enter().append('path')
-                .attr('d', path)
-                .attr('class', function(d) {
-                    var c = 'place';
 
-                    c += ' ' + classify(d['properties']['city']);
-                    c += ' ' + classify(d['properties']['featurecla']);
-                    c += ' scalerank-' + d['properties']['scalerank'];
+        if (mapData['cities']) {
+            chartElement.append('g')
+                .attr('class', 'cities primary')
+                .selectAll('path')
+                    .data(mapData['cities']['features'])
+                .enter().append('path')
+                    .attr('d', path)
+                    .attr('class', function(d) {
+                        var c = 'place';
 
-                    return c;
-                });
+                        c += ' ' + classify(d['properties']['city']);
+                        c += ' ' + classify(d['properties']['featurecla']);
+                        c += ' scalerank-' + d['properties']['scalerank'];
+
+                        return c;
+                    });
+        }
 
         /*
          * Apply adjustments to label positioning.
@@ -741,55 +746,57 @@ var GRAPHICS = (function() {
         /*
          * Render city labels.
          */
-        var layers = [
-            'city-labels shadow',
-            'city-labels',
-            'city-labels shadow primary',
-            'city-labels primary'
-        ];
+        if (mapData['cities']) {
+            var layers = [
+                'city-labels shadow',
+                'city-labels',
+                'city-labels shadow primary',
+                'city-labels primary'
+            ];
 
-        layers.forEach(function(layer) {
-            var data = [];
+            layers.forEach(function(layer) {
+                var data = [];
 
-            if (layer == 'city-labels shadow' || layer == 'city-labels') {
-                // data = mapData['neighbors']['features'];
-            } else {
-                data = mapData['cities']['features'];
-            }
+                if (layer == 'city-labels shadow' || layer == 'city-labels') {
+                    // data = mapData['neighbors']['features'];
+                } else {
+                    data = mapData['cities']['features'];
+                }
 
-            chartElement.append('g')
-                .attr('class', layer)
-                .selectAll('.label')
-                    .data(data)
-                .enter().append('text')
-                    .attr('class', function(d) {
-                        var c = 'label';
+                chartElement.append('g')
+                    .attr('class', layer)
+                    .selectAll('.label')
+                        .data(data)
+                    .enter().append('text')
+                        .attr('class', function(d) {
+                            var c = 'label';
 
-                        c += ' ' + classify(d['properties']['city']);
-                        c += ' ' + classify(d['properties']['featurecla']);
-                        c += ' scalerank-' + d['properties']['scalerank'];
+                            c += ' ' + classify(d['properties']['city']);
+                            c += ' ' + classify(d['properties']['featurecla']);
+                            c += ' scalerank-' + d['properties']['scalerank'];
 
-                        return c;
-                    })
-                    .attr('transform', function(d) {
-                        return 'translate(' + projection(d['geometry']['coordinates']) + ')';
-                    })
-                    .attr('style', function(d) {
-                        return 'text-anchor: ' + positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'text-anchor');
-                    })
-                    .attr('dx', function(d) {
-                        return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dx');
-                    })
-                    .attr('dy', function(d) {
-                        return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dy');
-                    })
-                    .text(function(d) {
-                        return d['properties']['city'];
-                    });
-        });
+                            return c;
+                        })
+                        .attr('transform', function(d) {
+                            return 'translate(' + projection(d['geometry']['coordinates']) + ')';
+                        })
+                        .attr('style', function(d) {
+                            return 'text-anchor: ' + positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'text-anchor');
+                        })
+                        .attr('dx', function(d) {
+                            return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dx');
+                        })
+                        .attr('dy', function(d) {
+                            return positionLabel(CITY_LABEL_ADJUSTMENTS, d['properties']['city'], 'dy');
+                        })
+                        .text(function(d) {
+                            return d['properties']['city'];
+                        });
+            });
 
-        d3.selectAll('.shadow')
-            .attr('filter', 'url(#textshadow)');
+            d3.selectAll('.shadow')
+                .attr('filter', 'url(#textshadow)');
+        }
 
         // /*
         //  * Render a scale bar.
@@ -868,13 +875,20 @@ var GRAPHICS = (function() {
             'scale': 1000,
             'animate': true
         },
-        'locator-map': {
-            'data': 'data/geodata.json',
+        'porto-velho': {
+            'data': 'data/portovelho.json',
             'format': formatMapData,
             'render': renderMap,
             'formatted': false,
             'skipRender': true
-        }
+        },
+        'amazon': {
+            'data': 'data/amazon.json',
+            'format': formatMapData,
+            'render': renderMap,
+            'formatted': false,
+            'skipRender': true
+        },
     }
 
     return {
