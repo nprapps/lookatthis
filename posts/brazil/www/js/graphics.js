@@ -535,7 +535,7 @@ var GRAPHICS = (function() {
         var aspectHeight = isMobile ? 1.4 : 1;
 
         var bbox = config['data']['bbox'];
-        var defaultScale = isMobile ? 250 : 325;
+        var defaultScale = isMobile ? 250 : 425;
         var cityDotRadius = 2.5;
 
         // Calculate actual map dimensions
@@ -567,9 +567,9 @@ var GRAPHICS = (function() {
         var mapScale = (mapHeight / config.height) * defaultScale;
         var scaleFactor = mapHeight / config.height;
 
-        projection = d3.geo.mercator()
-            .center(centroid)
+        projection = d3.geo.orthographic()
             .scale(mapScale)
+            .rotate([-centroid[0], -centroid[1]])
             .translate([ mapWidth/2, mapHeight/2 ]);
 
         path = d3.geo.path()
