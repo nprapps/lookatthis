@@ -83,7 +83,7 @@ var onDocumentReady = function() {
     swiper.on('slideChangeStart', onSlideChange);
     // $hamburger.on('click', toggleOverlay);
     $modalClose.on('click', onModalCloseClick);
-
+    $(window).on('resize', onResize);
     onPageLoad();
 }
 
@@ -108,13 +108,9 @@ var onSlideChange = function() {
     }
 
     // empty out the resize function
-    $(window).off('resize');
-
     var graphicID = $thisSlide.attr('id');
     if ($thisSlide.hasClass('graphic') && graphicID !== 'locator-map') {
         GRAPHICS.loadGraphic(graphicID);
-    } else {
-        GRAPHICS.attachMapResizeHandler(graphicID);
     }
 }
 
@@ -205,8 +201,11 @@ var checkForInDepth = function() {
     }
 }
 
-var checkforGraphic = function() {
-
+var onResize = function() {
+    if ($thisSlide.hasClass('graphic')) {
+        var graphicID = $thisSlide.attr('id');
+        GRAPHICS.resizeGraphic(graphicID);
+    }
 }
 
 var onSlideLinkClick = function() {

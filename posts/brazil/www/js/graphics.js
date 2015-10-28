@@ -48,11 +48,6 @@ var GRAPHICS = (function() {
         if (!GRAPHICS_CONFIG[graphicID]['skipRender']) {
             GRAPHICS_CONFIG[graphicID].render(graphicID);
         }
-
-        $(window).resize(function() {
-            console.log(graphicID);
-            GRAPHICS_CONFIG[graphicID].render(graphicID);
-        });
     }
 
     var formatLineChart = function(graphicID) {
@@ -827,10 +822,8 @@ var GRAPHICS = (function() {
         });
     };
 
-    var attachMapResizeHandler = function(graphicID) {
-        $(window).resize(function() {
-            GRAPHICS_CONFIG[graphicID].render(graphicID);
-        });
+    var resizeGraphic = function(graphicID) {
+        GRAPHICS_CONFIG[graphicID].render(graphicID);
     }
 
 
@@ -886,6 +879,6 @@ var GRAPHICS = (function() {
 
     return {
         'loadGraphic': loadGraphic,
-        'attachMapResizeHandler': attachMapResizeHandler
+        'resizeGraphic': resizeGraphic
     }
 }());
