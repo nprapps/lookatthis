@@ -89,8 +89,8 @@ var onDocumentReady = function() {
 
 var onPageLoad = function() {
     checkModalStatus();
-    onSlideChange();
     GRAPHICS.loadGraphic('locator-map');
+    onSlideChange();
 }
 
 var onSlideChange = function() {

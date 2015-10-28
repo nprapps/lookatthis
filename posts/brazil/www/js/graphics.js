@@ -50,6 +50,7 @@ var GRAPHICS = (function() {
         }
 
         $(window).resize(function() {
+            console.log(graphicID);
             GRAPHICS_CONFIG[graphicID].render(graphicID);
         });
     }
@@ -102,7 +103,7 @@ var GRAPHICS = (function() {
             top: 20,
             right: 20,
             bottom: 20,
-            left: 100
+            left: 110
         };
 
         var ticksX = 10;
@@ -855,7 +856,7 @@ var GRAPHICS = (function() {
             'formatted': false,
             'unit': ' sq. km',
             'unitPosition': 'suffix',
-            'scale': 10000,
+            'scale': 100000,
             'animate': true
         },
         'gdp': {
