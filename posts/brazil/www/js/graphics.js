@@ -39,6 +39,7 @@ var GRAPHICS = (function() {
 
     var loadGraphic = function(graphicID) {
         graphicData = GRAPHICS_CONFIG[graphicID]['data'];
+
         if (!GRAPHICS_CONFIG[graphicID]['formatted']) {
             GRAPHICS_CONFIG[graphicID].format(graphicID);
             GRAPHICS_CONFIG[graphicID]['formatted'] = true;
@@ -55,7 +56,9 @@ var GRAPHICS = (function() {
 
     var formatLineChart = function(graphicID) {
         graphicData.forEach(function(d) {
-            d['date'] = d3.time.format('%Y').parse(d['date']);
+            if (typeof(d['date']) !== 'object') {
+                d['date'] = d3.time.format('%Y').parse(d['date']);
+            }
 
             for (var key in d) {
                 if (key != 'date') {
@@ -307,42 +310,43 @@ var GRAPHICS = (function() {
                     return line(d['value']);
                 });
 
-        /* Add 'curtain' rectangle to hide entire graph */
-          var curtain = chartElement.append('rect')
-            .attr('x', -1 * chartWidth)
-            .attr('y', -1 * chartHeight)
-            .attr('height', chartHeight)
-            .attr('width', chartWidth)
-            .attr('class', 'curtain')
-            .attr('transform', 'rotate(180)')
-            .style('fill', '#111')
+        if (config.config.animate) {
+            /* Add 'curtain' rectangle to hide entire graph */
+              var curtain = chartElement.append('rect')
+                .attr('x', -1 * chartWidth)
+                .attr('y', -1 * chartHeight)
+                .attr('height', chartHeight)
+                .attr('width', chartWidth)
+                .attr('class', 'curtain')
+                .attr('transform', 'rotate(180)')
+                .style('fill', '#111')
 
-        var guideline = chartElement.append('line')
-            .attr('stroke', '#333')
-            .attr('stroke-width', 0)
-            .attr('class', 'guide')
-            .attr('x1', 1)
-            .attr('y1', 1)
-            .attr('x2', 1)
-            .attr('y2', chartHeight)
+            var guideline = chartElement.append('line')
+                .attr('stroke', '#333')
+                .attr('stroke-width', 0)
+                .attr('class', 'guide')
+                .attr('x1', 1)
+                .attr('y1', 1)
+                .attr('x2', 1)
+                .attr('y2', chartHeight)
 
-          /* Create a shared transition for anything we're animating */
-          var t = chartElement.transition()
-            .delay(750)
-            .duration(3000)
-            .ease('linear')
-            .each('end', function() {
-              d3.select('.lines')
-                .moveToFront()
-              d3.select('line.guide')
-                .transition()
-                .style('opacity', 0)
-                .remove()
-            });
+              /* Create a shared transition for anything we're animating */
+              var t = chartElement.transition()
+                .delay(750)
+                .duration(3000)
+                .ease('linear')
+                .each('end', function() {
+                  d3.select('.lines')
+                    .moveToFront()
+                  d3.select('line.guide')
+                    .transition()
+                    .style('opacity', 0)
+                    .remove()
+                });
 
-          t.select('rect.curtain')
-            .attr('width', 0);
-
+              t.select('rect.curtain')
+                .attr('width', 0);
+        }
 
         /*
          * Render grid to chart.
@@ -831,7 +835,18 @@ var GRAPHICS = (function() {
             'formatted': false,
             'unit': ' sq. km',
             'unitPosition': 'suffix',
-            'scale': 1000
+            'scale': 1000,
+            'animate': true
+        },
+        'deforestation-annual-2': {
+            'data': COPY['deforestation-annual'],
+            'format': formatLineChart,
+            'render': renderLine,
+            'formatted': false,
+            'unit': ' sq. km',
+            'unitPosition': 'suffix',
+            'scale': 1000,
+            'animate': false
         },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
@@ -840,7 +855,8 @@ var GRAPHICS = (function() {
             'formatted': false,
             'unit': ' sq. km',
             'unitPosition': 'suffix',
-            'scale': 10000
+            'scale': 10000,
+            'animate': true
         },
         'gdp': {
             'data': COPY['gdp'],
@@ -850,6 +866,7 @@ var GRAPHICS = (function() {
             'unit': '$',
             'unitPosition': 'prefix',
             'scale': 1000,
+            'animate': true
         },
         'locator-map': {
             'data': 'data/geodata.json',
