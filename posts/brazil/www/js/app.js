@@ -50,7 +50,7 @@ var onDocumentReady = function() {
         fade: {
             crossFade: true
         },
-        speed: 1000,
+        speed: 0,
         parallax: true,
         watchSlidesProgress: true,
         watchSlidesVisibility: true,
