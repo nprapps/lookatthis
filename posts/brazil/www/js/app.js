@@ -48,7 +48,7 @@ var onDocumentReady = function() {
     swiper = new Swiper($container, {
         effect: 'fade',
         fade: {
-            crossFade: false
+            crossFade: true
         },
         speed: 1000,
         parallax: true,
