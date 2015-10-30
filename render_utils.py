@@ -113,7 +113,7 @@ class JavascriptIncluder(Includer):
 
             with codecs.open('%s/www/%s' % (self.static_path, src),'r','utf-8') as f:
                 print '- compressing %s' % src
-                output.append(minify(f.read().encode('utf-8')))
+                output.append(minify(f.read()))
 
         context = make_context()
         context['paths'] = src_paths
