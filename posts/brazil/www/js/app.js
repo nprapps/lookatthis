@@ -97,6 +97,7 @@ var onPageLoad = function() {
     GRAPHICS.loadGraphic('porto-velho');
     GRAPHICS.loadGraphic('amazon');
     onSlideChange();
+    $container.css('opacity', 1);
 }
 
 var onSlideChange = function() {
