@@ -306,41 +306,16 @@ var GRAPHICS = (function() {
                 });
 
         if (config.config.animate) {
-            /* Add 'curtain' rectangle to hide entire graph */
-              var curtain = chartElement.append('rect')
-                .attr('x', -1 * chartWidth)
-                .attr('y', -1 * chartHeight)
-                .attr('height', chartHeight)
-                .attr('width', chartWidth)
-                .attr('class', 'curtain')
-                .attr('transform', 'rotate(180)')
-                .style('fill', '#111')
+            var path = chartElement.select('.line');
+            var totalLength = path.node().getTotalLength();
 
-            var guideline = chartElement.append('line')
-                .attr('stroke', '#333')
-                .attr('stroke-width', 0)
-                .attr('class', 'guide')
-                .attr('x1', 1)
-                .attr('y1', 1)
-                .attr('x2', 1)
-                .attr('y2', chartHeight)
-
-              /* Create a shared transition for anything we're animating */
-              var t = chartElement.transition()
-                .delay(750)
-                .duration(3000)
-                .ease('linear')
-                .each('end', function() {
-                  d3.select('.lines')
-                    .moveToFront()
-                  d3.select('line.guide')
-                    .transition()
-                    .style('opacity', 0)
-                    .remove()
-                });
-
-              t.select('rect.curtain')
-                .attr('width', 0);
+                path
+                  .attr("stroke-dasharray", totalLength + " " + totalLength)
+                  .attr("stroke-dashoffset", totalLength)
+                  .transition()
+                    .duration(2500)
+                    .ease("linear")
+                    .attr("stroke-dashoffset", 0);
         }
 
         /*
