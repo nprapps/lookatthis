@@ -49,7 +49,7 @@ var onDocumentReady = function() {
         effect: 'fade',
         fade: {
             crossFade: false
-        }
+        },
         speed: 1000,
         parallax: true,
         watchSlidesProgress: true,
