@@ -128,15 +128,14 @@ var GRAPHICS = (function() {
             if (column == dateColumn) {
                 continue;
             }
-
             formattedData[column] = graphicData.map(function(d) {
                 return {
                     'date': d[dateColumn],
                     'amt': d[column]
                 };
     // filter out empty data. uncomment this if you have inconsistent data.
-    //        }).filter(function(d) {
-    //            return d['amt'].length > 0;
+           // }).filter(function(d) {
+               // return d['amt'].length > 0;
             });
         }
 
@@ -738,30 +737,31 @@ var GRAPHICS = (function() {
                 .text(function(d) {
                     return d['properties']['country'];
                 });
-
-        chartElement.append('g')
-            .attr('class', 'state-labels')
-            .selectAll('.label')
-                .data(mapData['states']['features'])
-            .enter().append('text')
-                .attr('class', function(d) {
-                    return 'label ' + classify(d['id']);
-                })
-                .attr('transform', function(d) {
-                    return 'translate(' + path.centroid(d) + ')';
-                })
-                .attr('text-anchor', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
-                })
-                .attr('dx', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
-                })
-                .attr('dy', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
-                })
-                .text(function(d) {
-                    return d['properties']['name'];
-                });
+        if (mapData['states']) {
+            chartElement.append('g')
+                .attr('class', 'state-labels')
+                .selectAll('.label')
+                    .data(mapData['states']['features'])
+                .enter().append('text')
+                    .attr('class', function(d) {
+                        return 'label ' + classify(d['id']);
+                    })
+                    .attr('transform', function(d) {
+                        return 'translate(' + path.centroid(d) + ')';
+                    })
+                    .attr('text-anchor', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                    })
+                    .attr('dx', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                    })
+                    .attr('dy', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                    })
+                    .text(function(d) {
+                        return d['properties']['name'];
+                    });
+        }
 
         // Highlight primary country
         var primaryCountryClass = classify(config['primaryCountry']);
@@ -914,6 +914,16 @@ var GRAPHICS = (function() {
             'render': renderMap,
             'formatted': false,
             'skipRender': true
+        },
+        'cattle': {
+            'data': COPY['cattle'],
+            'format': formatLineChart,
+            'render': renderLine,
+            'formatted': false,
+            'unit': '%',
+            'unitPosition': 'suffix',
+            'scale': 10,
+            'animate': true
         },
     }
 
