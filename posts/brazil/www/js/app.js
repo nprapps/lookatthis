@@ -46,7 +46,7 @@ var onDocumentReady = function() {
     transitionSupport = { transitions : Modernizr.csstransitions };
 
     swiper = new Swiper($container, {
-        effect: 'fade',
+        //effect: 'fade',
         speed: 1000,
         parallax: true,
         watchSlidesProgress: true,
