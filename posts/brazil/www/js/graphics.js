@@ -289,6 +289,33 @@ var GRAPHICS = (function() {
                 return yScale(d[valueColumn]);
             });
 
+
+        /*
+         * Render grid to chart.
+         */
+        var xAxisGrid = function() {
+            return xAxis;
+        }
+
+        var yAxisGrid = function() {
+            return yAxis;
+        }
+
+        chartElement.append('g')
+            .attr('class', 'x grid')
+            .attr('transform', makeTranslate(0, chartHeight))
+            .call(xAxisGrid()
+                .tickSize(-chartHeight, 0, 0)
+                .tickFormat('')
+            );
+
+        chartElement.append('g')
+            .attr('class', 'y grid')
+            .call(yAxisGrid()
+                .tickSize(-chartWidth, 0, 0)
+                .tickFormat('')
+            );
+
         chartElement.append('g')
             .attr('class', 'lines')
             .selectAll('path')
@@ -317,32 +344,6 @@ var GRAPHICS = (function() {
                     .ease("linear")
                     .attr("stroke-dashoffset", 0);
         }
-
-        /*
-         * Render grid to chart.
-         */
-        var xAxisGrid = function() {
-            return xAxis;
-        }
-
-        var yAxisGrid = function() {
-            return yAxis;
-        }
-
-        chartElement.append('g')
-            .attr('class', 'x grid')
-            .attr('transform', makeTranslate(0, chartHeight))
-            .call(xAxisGrid()
-                .tickSize(-chartHeight, 0, 0)
-                .tickFormat('')
-            );
-
-        chartElement.append('g')
-            .attr('class', 'y grid')
-            .call(yAxisGrid()
-                .tickSize(-chartWidth, 0, 0)
-                .tickFormat('')
-            );
     }
 
     /*
