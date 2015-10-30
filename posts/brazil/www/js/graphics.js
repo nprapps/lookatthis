@@ -495,7 +495,6 @@ var GRAPHICS = (function() {
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
         'Brazil': { 'dx': 20, 'dy': 25 },
-        'Rondônia': { 'dx': 12, 'dy': -5 }
     }
 
     var geoData = null;
