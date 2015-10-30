@@ -97,7 +97,7 @@ var GRAPHICS = (function() {
         var margins = {
             top: 20,
             right: 20,
-            bottom: 20,
+            bottom: 50,
             left: 110
         };
 
@@ -162,7 +162,7 @@ var GRAPHICS = (function() {
             .domain(d3.keys(config['data'][0]).filter(function(key) {
                 return key !== dateColumn;
             }))
-            .range([ COLORS['blue5'], COLORS['yellow3'], COLORS['blue3'], COLORS['orange3'], COLORS['teal3'] ]);
+            .range([ '#ffcc33', COLORS['yellow3'], COLORS['blue3'], COLORS['orange3'], COLORS['teal3'] ]);
 
         /*
          * Create the root SVG element.
@@ -469,7 +469,8 @@ var GRAPHICS = (function() {
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Brazil': { 'dx': 20, 'dy': 25 },
+        'Brazil': { 'dx': 23, 'dy': 35 },
+        'Rondônia': { 'dx': 13, 'dy': -5 }
     }
 
     var geoData = null;
@@ -606,6 +607,17 @@ var GRAPHICS = (function() {
                     .attr('d', path);
         }
 
+        // Land outlines
+        chartElement.append('g')
+            .attr('class', 'countries')
+            .selectAll('path')
+                .data(mapData['countries']['features'])
+            .enter().append('path')
+                .attr('class', function(d) {
+                    return classify(d['id']);
+                })
+                .attr('d', path);
+
         if (mapData['states']) {
             chartElement.append('g')
                 .attr('class', 'states')
@@ -619,16 +631,6 @@ var GRAPHICS = (function() {
                         return c;
                     });
         }
-        // Land outlines
-        chartElement.append('g')
-            .attr('class', 'countries')
-            .selectAll('path')
-                .data(mapData['countries']['features'])
-            .enter().append('path')
-                .attr('class', function(d) {
-                    return classify(d['id']);
-                })
-                .attr('d', path);
 
 
         // Highlight primary country
