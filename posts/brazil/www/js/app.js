@@ -11,6 +11,8 @@ var $inDepthArrow;
 var $hamburger;
 var $slideLinks;
 
+var isMobile = Modernizr.touch;
+
 // constants
 var aspectWidth = 16;
 var aspectHeight = 9;
@@ -50,7 +52,7 @@ var onDocumentReady = function() {
         fade: {
             crossFade: true
         },
-        speed: 2,
+        speed: isMobile ? 500 : 5,
         parallax: true,
         watchSlidesProgress: true,
         watchSlidesVisibility: true,

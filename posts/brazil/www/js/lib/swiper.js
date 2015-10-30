@@ -1772,7 +1772,7 @@
                 s.effects[s.params.effect].setTransition(duration);
             }
             if (s.params.parallax && s.parallax) {
-                s.parallax.setTransition(duration);
+                s.parallax.setTransition(1000);
             }
             if (s.params.scrollbar && s.scrollbar) {
                 s.scrollbar.setTransition(duration);
