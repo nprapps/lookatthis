@@ -65,7 +65,7 @@ var GRAPHICS = (function() {
     }
 
     var renderLine = function(graphicID) {
-        var containerWidth = $(window).width() * 0.8;
+        var containerWidth = $(window).width() * 0.7;
         if (containerWidth <= MOBILE_THRESHOLD) {
             isMobile = true;
         } else {
