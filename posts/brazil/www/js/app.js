@@ -125,6 +125,8 @@ var lazyLoad = function() {
     * Lazy-load images in current and future slides.
     */
     var slides = [
+        $slides.eq(swiper.activeIndex - 2),
+        $slides.eq(swiper.activeIndex - 1),
         $thisSlide,
         $slides.eq(swiper.activeIndex + 1),
         $slides.eq(swiper.activeIndex + 2)
