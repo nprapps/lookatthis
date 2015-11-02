@@ -126,7 +126,7 @@ var lazyLoad = function() {
     */
     var slides = [
         $slides.eq(swiper.activeIndex - 2),
-        $slides.eq(swiper.activeIndex - 1)
+        $slides.eq(swiper.activeIndex - 1),
         $thisSlide,
         $slides.eq(swiper.activeIndex + 1),
         $slides.eq(swiper.activeIndex + 2)
