@@ -257,7 +257,15 @@ p {
         width: 100%;
         padding-bottom: 3rem;
 
+        img {
+            display: block;
+            max-width: 300px;
+            margin: 0 auto;
 
+            @media @screen-small-above {
+                max-width: 30rem;
+            }
+        }
         .slide-content-bottom-item {
             max-width: 300px;
             margin: 0 auto;

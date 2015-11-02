@@ -1,6 +1,10 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
 <div class="slide-content-bottom">
+    {% if row.foreground_media %}
+        <img src="assets/{{ row.foreground_media }}">
+    {% endif %}
+
     <div class="slide-content-bottom-item" data-swiper-parallax="-6">
         {{ row.text1|smarty }}
     </div>
