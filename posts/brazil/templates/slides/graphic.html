@@ -1,5 +1,7 @@
 {% extends '%s/templates/_slide.html' % slug %}
 {% block slide_content %}
 <div class="graphic-container" id="graphic-{{ row.id }}"></div>
-{{ row.text1 }}
+<div class="graphic-text">
+    {{ row.text1 }}
+</div>
 {% endblock %}

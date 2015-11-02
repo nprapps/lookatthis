@@ -78,8 +78,7 @@ var onDocumentReady = function() {
             'text1': '.slide-content-bottom-item'
         },
         'graphic': {
-            'text1': '.slide-content h1',
-            'text2': '.slide-content h2'
+            'text1': '.graphic-text'
         }
     }
 
