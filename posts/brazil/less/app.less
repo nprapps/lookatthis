@@ -293,14 +293,23 @@ p {
 }
 
 /* Arrows */
+
+
 .swiper-button-prev, .swiper-button-next {
     position: absolute;
-    top: 46%;
+    bottom: 50%;
     z-index: 10;
-    background-color: rgba(0,0,0,0.4);
     cursor: pointer;
-    font-size: 32px;
-    padding: 10px;
+    color: rgba(255,255,255,.5);
+    font-size: 35px;
+
+    @media @screen-small-above {
+        bottom: 0;
+        background-color: rgba(0,0,0,.5);
+        color: #fff;
+        font-size: 3rem;
+        padding: 10px;
+    }
 
     &.swiper-button-disabled {
         opacity: 0.35;
@@ -310,13 +319,19 @@ p {
 }
 
 .swiper-button-prev {
-    left: 20px;
-    padding: 5px 23px 8px 20px;
+    left: 0;
+    padding-left: 5px;
+    @media @screen-small-above {
+        padding: 0 1.5rem .3rem 1.1rem;
+    }
 }
 
 .swiper-button-next {
-    right: 20px;
-    padding: 5px 20px 8px 23px;
+    right: 0;
+    padding-right: 5px;
+    @media @screen-small-above {
+        padding: 0 1.1rem .3rem 1.5rem;
+    }
 }
 
 .hamburger {
