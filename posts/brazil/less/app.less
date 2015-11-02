@@ -3,9 +3,12 @@
 @import "./lib/swiper/swiper.less";
 @import "./lib/font-awesome/font-awesome.less";
 
-@import "./slides/deep-dive.less";
+//@import "./slides/deep-dive.less";
+//@import "./slides/fade.less";
 @import "./graphics.less";
-@import "./slides/fade.less";
+@import "./slides/next-post.less";
+
+
 
 // Breakpoints
 @screen-mega-above: ~"screen and (min-width: 1440px)";
@@ -184,6 +187,12 @@ p {
         text-shadow: 2px 2px 2px #111;
     }
 }
+
+//clearfix
+.cf { zoom: 1; }
+.cf:before,
+.cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
 
 //swiper specific styles
 .swiper-container {
