@@ -869,6 +869,16 @@ var GRAPHICS = (function() {
             'scale': 100000,
             'animate': true
         },
+        'deforestation-cumulative-2': {
+            'data': COPY['deforestation-cumulative'],
+            'format': formatLineChart,
+            'render': renderLine,
+            'formatted': false,
+            'unit': ' sq. km',
+            'unitPosition': 'suffix',
+            'scale': 100000,
+            'animate': false
+        },
         'gdp': {
             'data': COPY['gdp'],
             'format': formatLineChart,
@@ -892,16 +902,6 @@ var GRAPHICS = (function() {
             'render': renderMap,
             'formatted': false,
             'skipRender': true
-        },
-        'cattle': {
-            'data': COPY['cattle'],
-            'format': formatLineChart,
-            'render': renderLine,
-            'formatted': false,
-            'unit': '%',
-            'unitPosition': 'suffix',
-            'scale': 10,
-            'animate': true
         },
     }
 
