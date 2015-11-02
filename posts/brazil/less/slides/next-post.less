@@ -1,11 +1,33 @@
+.next-post {
+    &:after {
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        height: 100%;
+        z-index: -1;
+    }
+}
+
 .next-post-content {
-    max-width: 1200px;
+    max-width: 400px;
     font-family: "Gotham SSm", helvetica, sans-serif;
     margin: 0 30px;
 
+    @media @screen-small-above {
+        max-width: 1200px;
+    }
+
     .up-next-wrapper {
         display: block;
-        background-color: #000;
+        background-color: rgba(0, 0, 0, .6);
+        &:hover {
+            background-color: rgba(246, 0, 98, .5);
+        }
 
         img {
             display: block;
@@ -27,40 +49,66 @@
 
             h3 {
                 margin: 0;
-                font-size: 1.6rem;
+                font-size: 13px;
                 text-transform: uppercase;
+
+                @media @screen-small-above {
+                    font-size: 1.6rem;
+                }
             }
 
             h5 {
                 margin: 0 0 .3rem 0;
-                font-size: .9rem;
+                font-size: 10px;
                 font-weight: normal;
                 font-family: georgia, serif;
                 font-style: italic;
+
+                @media @screen-small-above {
+                    font-size: .9rem;
+                }
+
             }
 
             p {
-                font-size: 1rem;
+                font-size: 11px;
                 font-weight: normal;
                 font-family: georgia, serif;
                 margin: .3rem 0 0 0;
+                text-shadow: none;
+
+                @media @screen-small-above {
+                    font-size: .9rem;
+                }
             }
         }
     }
 
     .project-credits {
-        border-top: 1px solid rgba(255, 255, 255, .7);;
+        border-top: 1px solid rgba(255, 255, 255, .4);
         margin-top: 20px;
         padding-top: 20px;
 
         h4 {
-            font-size: 16px;
+            font-size: 12px;
             text-transform: uppercase;
             margin: 0 0 5px 0;
+
+            @media @screen-small-above {
+                font-size: .9rem;
+            }
+        }
+
+        h6 {
+            font-size: 10px;
+            margin: 1rem 0 0 0;
+            text-transform: uppercase;
+
         }
 
         p {
             font-size: 11px;
+            color: #ccc;
         }
     }
 }
