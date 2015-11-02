@@ -82,6 +82,15 @@
     /* chart styles */
     .chart { position: relative; }
 
+    .graphic-text {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @media @screen-small-above {
+            max-width: 30rem;
+        }
+    }
+
     line,
     rect {
         shape-rendering: crispEdges;
