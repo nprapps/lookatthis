@@ -1,27 +1,38 @@
 .next-post-content {
-    max-width: 1000px;
+    max-width: 1200px;
+    font-family: "Gotham SSm", helvetica, sans-serif;
+    margin: 0 30px;
 
     .up-next-wrapper {
         display: block;
         background-color: #000;
 
         img {
-            width: 50%;
-            float: left;
+            display: block;
+            max-width: 100%;
+
+            @media @screen-small-above {
+                width: 50%;
+                float: left;
+            }
         }
         .up-next-description {
-            font-family: Gotham, helvetica, sans-serif;
-            float: left;
-            width: 45%;
             color: #fff;
-            padding-left: 5%;
+            padding: 5%;
+
+            @media @screen-small-above {
+                float: left;
+                width: 40%;
+            }
 
             h3 {
+                margin: 0;
                 font-size: 24px;
                 text-transform: uppercase;
             }
 
             h5 {
+                margin: 0;
                 font-size: 12px;
                 font-weight: normal;
                 font-family: georgia, serif;
@@ -37,6 +48,18 @@
     }
 
     .project-credits {
+        border-top: 1px solid rgba(255, 255, 255, .7);;
+        margin-top: 20px;
+        padding-top: 20px;
 
+        h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+
+        p {
+            font-size: 11px;
+        }
     }
 }
