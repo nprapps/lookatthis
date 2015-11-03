@@ -1,0 +1,38 @@
+.slide-content-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 3rem;
+
+    img {
+        display: block;
+        max-width: 300px;
+        margin: 0 auto;
+
+        @media @screen-small-above {
+            max-width: 30rem;
+        }
+    }
+    .slide-content-bottom-item {
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        @media @screen-small-above {
+            max-width: 30rem;
+            padding: 0;
+        }
+    }
+
+    .caption {
+        position: absolute;
+        bottom: 0;
+        right: 70px;
+
+        p {
+            font-size: .8rem;
+            font-family: "Gotham SSm", helvetica, sans-serif;
+        }
+    }
+}
