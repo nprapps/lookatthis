@@ -11,6 +11,7 @@ var isTouch = Modernizr.touch;
 var $modalClose
 var $deepLinkNotice;
 var $thisSlide;
+var $startOver;
 
 // constants
 var aspectWidth = 16;
@@ -46,10 +47,12 @@ var onDocumentReady = function() {
     $upNext = $('.up-next');
     $modalClose = $('.close-modal');
     $deepLinkNotice = $('.deep-link-notice');
+    $startOver = $('.start-over');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $modalClose.on('click', onModalCloseClick);
+    $startOver.on('click', onStartOverClick);
 
     $document.on('deck.change', onSlideChange);
 
@@ -83,14 +86,12 @@ var onDocumentReady = function() {
         }
     }
 
-    $thisSlide = $slides.eq(0);
     $(window).on("orientationchange", onResize);
     $(window).resize(onResize);
     $document.keydown(onDocumentKeyDown);
 }
 
 var onPageLoad = function() {
-    checkModalStatus();
     GRAPHICS.loadGraphic('porto-velho');
     GRAPHICS.loadGraphic('amazon');
     lazyLoad(0);
@@ -99,6 +100,8 @@ var onPageLoad = function() {
         'visibility': 'visible'
     });
     showNavigation(0);
+    $thisSlide = $.deck('getSlide');
+    checkModalStatus();
 }
 
 var trackCompletion = function(index) {
@@ -225,6 +228,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     trackCompletion(toIndex);
     checkOverflow(toIndex);
     document.activeElement.blur();
+
+    if (APP_CONFIG.PROGRESS_BAR) {
+        PROGRESS_BAR.animateProgress(toIndex);
+    }
 
     if ($thisSlide.hasClass('fade')) {
         $thisSlide.find('.imgLiquid.second').css('opacity', 1);
@@ -405,9 +412,15 @@ var onModalCloseClick = function() {
 
 // If modal status is 1, hide the content warning on page load.
 var checkModalStatus = function() {
-    if ($.cookie('npr_deeplink_status') != '1') {
-        $deepLinkNotice.css('visibility', 'visible');
+    if (window.location.hash && window.location.hash !== '#s25') {
+        if ($.cookie('npr_deeplink_status') !== '1')  {
+            $deepLinkNotice.css('visibility', 'visible');
+        }
     }
+}
+
+var onStartOverClick = function() {
+    $.deck('go', 0);
 }
 
 var switchLanguage = function(language) {

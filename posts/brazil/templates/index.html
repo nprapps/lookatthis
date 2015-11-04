@@ -13,6 +13,12 @@
 
  <!-- start from beginning -->
 <div class="deep-link-notice">
-    <p><a href="#" class="close-modal start-over" data-slide="0"><i class="fa fa-arrow-left"></i> <b>Start at the top.</b></a> Stories are better from the beginning.  <span class="close-modal"><i class="fa fa-times"></i></span></p>
+    <p><a href="#" class="close-modal start-over"><i class="fa fa-arrow-left"></i> <b>Start at the top.</b></a> Stories are better from the beginning.  <span class="close-modal"><i class="fa fa-times"></i></span></p>
 </div>
+
+{% if PROGRESS_BAR %}
+<div class="progress-indicator">
+    <div class="current-progress"></div>
+</div>
+{% endif %}
 {% endblock %}
