@@ -1,16 +1,28 @@
 {% block slide_wrapper %}
-<div class="swiper-slide {{ row.template }} {{ row.extra_class }}" data-hash="{{ row.id }}" id="{{ row.id }}" data-template="{{ row.template }}">
+<div class="slide {% if row.template != 'slide' %} {{ row.template }} {% endif %} {{ row.extra_class }}" id="{{ row.id }}" data-template="{{ row.template }}">
+    {% block slide_body %}
+    <div class="text full-block">
+       <div class="full-block-cell">
+           <div class="full-block-content">
+                {% block slide_content %}
+                {% endblock slide_content %}
+            </div>
 
-        {% block slide_content %}
-        {% endblock slide_content %}
+            {% if row.caption_and_credit %}
+            <div class="credit">
+                <p>{{ row.caption_and_credit|smarty }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% endblock slide_body %}
 
     {% if row.background_media %}
-
     <div class="imgLiquid">
         <img class="liquid" {% if row.preload_image == 'yes' %} src="assets/{{ row.background_media }}" {% else %} data-bgimage="{{ row.background_media }}" {% endif %}>
         <span class="slide-gradient"></span>
     </div>
-
     {% endif %}
 </div><!-- /slide -->
 {% endblock slide_wrapper %}

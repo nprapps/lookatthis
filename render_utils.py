@@ -111,9 +111,13 @@ class JavascriptIncluder(Includer):
         for src in self.includes:
             src_paths.append('www/%s' % src)
 
-            with codecs.open('%s/www/%s' % (self.static_path, src),'r','utf-8') as f:
-                print '- compressing %s' % src
-                output.append(minify(f.read()))
+            with codecs.open('%s/www/%s' % (self.static_path, src), encoding='utf-8') as f:
+                if not src.endswith('.min.js'):
+                    print '- compressing %s' % src
+                    output.append(minify(f.read()))
+                else:
+                    print '- appending already compressed %s' % src
+                    output.append(f.read())
 
         context = make_context()
         context['paths'] = src_paths

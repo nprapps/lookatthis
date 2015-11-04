@@ -1,38 +1,15 @@
 {% extends '%s/templates/_base.html' % slug %}
 {% block content %}
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-        {% for row in COPY.content %}
-        {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
-        {% endfor %}
-    </div><!-- /swiper-wrapper -->
-
-    <!-- Add Arrows -->
-    <div class="swiper-button-next">
-        <i class="fa fa-angle-right"></i>
-    </div>
-    <div class="swiper-button-prev">
-        <i class="fa fa-angle-left"></i>
-    </div>
-
-</div><!-- /swiper-container -->
-
-<!-- <div class="hamburger menu-toggle">
-    <h6><i class="fa fa-bars"></i></h6>
-</div> -->
- <!-- nav -->
-<!-- <div class="overlay-menu">
-    <p class="overlay-menu-close"><i class="fa fa-times"></i></p>
-    <nav>
-        <ul class="menu-toggle">
-            <li><a href="#" data-slide="0">home</a></li>
-            <li><a href="#" data-slide="8">Quiz example</a></li>
-            <li><a href="#" data-slide="7">In Depth example</a></li>
-            <li><a href="#" data-slide="10">Before after</a></li>
-            <li>Deep link notice</li>
-        </ul>
-    </nav>
-</div> -->
+<div class="section">
+    {% for row in COPY.content %}
+    {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
+    {% endfor %}
+</div>
+<!-- Add Arrows -->
+<div class="primary-navigation" style="opacity: 1;">
+    <div class="controlArrow prev"></div>
+    <div class="controlArrow next"></div>
+</div>
 
  <!-- start from beginning -->
 <div class="deep-link-notice">
