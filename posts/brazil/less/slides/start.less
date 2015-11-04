@@ -1,49 +1,76 @@
 .start {
 
+    .imgLiquid {
+        .slide-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            background: linear-gradient(to bottom,rgba(0, 0, 0, .6)  10%,rgba(0, 0, 0, 0));
+        }
+    }
+
     .look-branding {
 
         position: absolute;
-        top: 0;
+        top: 20px;
         left: 0;
         width: 100%;
         text-align: center;
         font-family: "Gotham SSm", helvetica, sans-serif;
+        text-shadow: 2px 2px 3px #444;
 
         img {
             max-width: 50px;
             display: block;
             margin: 0 auto;
+            //box-shadow: 1px 1px 8px #444;
 
             @media @screen-small-above {
-                max-width: 80px;
+                max-width: 4.5rem;
             }
         }
 
         h5 {
             text-transform: uppercase;
-            font-weight: bold;
             font-size: 12px;
-            padding: 5px 0 10px 0;
+            padding: 10px 0 5px 0;
+            margin: 0 0 10px 0;
             border-bottom: 3px solid #f60062;
             display: inline-block;
+            font-weight: normal;
 
             @media @screen-small-above {
-                font-size: 16px;
+                font-size: .8rem;
             }
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 11px;
             text-transform: uppercase;
-            font-weight: bold;
             margin: 0;
+            font-weight: bold;
             @media @screen-small-above {
-                font-size: .8rem;
+                font-size: .65rem;
            }
         }
     }
 
     .intro-text {
         text-align: center;
+        max-width: 30rem;
+        margin: 0 auto;
+
+        p {
+            font-size: 1.8rem;
+        }
+
+        .continue-story {
+            text-transform: uppercase;
+        }
     }
+
+
 }
