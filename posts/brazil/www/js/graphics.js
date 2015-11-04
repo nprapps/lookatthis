@@ -752,7 +752,7 @@ var GRAPHICS = (function() {
                         return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return d['properties']['state'] + ', Brazil';
+                        return d['properties']['state'];
                     });
         }
 
