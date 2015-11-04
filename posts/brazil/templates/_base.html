@@ -68,6 +68,11 @@
     {{ JS.push('js/lib/d3.geo.projection.min.js') }}
     {{ JS.push('js/lib/topojson.js') }}
     {{ JS.push('js/copy.js') }}
+
+    {% if PROGRESS_BAR %}
+    {{ JS.push('js/progress-bar.js') }}
+    {% endif %}
+
     {{ JS.push('js/graphics.js') }}
     {{ JS.push('js/app.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}
