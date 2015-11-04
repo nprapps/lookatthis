@@ -607,16 +607,28 @@ var GRAPHICS = (function() {
                     .attr('d', path);
         }
 
-        // Land outlines
-        chartElement.append('g')
-            .attr('class', 'countries')
-            .selectAll('path')
-                .data(mapData['countries']['features'])
-            .enter().append('path')
-                .attr('class', function(d) {
-                    return classify(d['id']);
-                })
-                .attr('d', path);
+        if (mapData['continents']) {
+            // Land outlines
+            chartElement.append('g')
+                .attr('class', 'continents')
+                .selectAll('path')
+                    .data(mapData['continents']['features'])
+                .enter().append('path')
+                    .attr('d', path);
+        }
+
+        if (mapData['countries']) {
+            // Land outlines
+            chartElement.append('g')
+                .attr('class', 'countries')
+                .selectAll('path')
+                    .data(mapData['countries']['features'])
+                .enter().append('path')
+                    .attr('class', function(d) {
+                        return classify(d['id']);
+                    })
+                    .attr('d', path);
+        }
 
         if (mapData['states']) {
             chartElement.append('g')
@@ -692,29 +704,32 @@ var GRAPHICS = (function() {
         /*
          * Render country labels.
          */
-        chartElement.append('g')
-            .attr('class', 'country-labels')
-            .selectAll('.label')
-                .data(mapData['countries']['features'])
-            .enter().append('text')
-                .attr('class', function(d) {
-                    return 'label ' + classify(d['id']);
-                })
-                .attr('transform', function(d) {
-                    return 'translate(' + path.centroid(d) + ')';
-                })
-                .attr('text-anchor', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
-                })
-                .attr('dx', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
-                })
-                .attr('dy', function(d) {
-                    return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
-                })
-                .text(function(d) {
-                    return d['properties']['country'];
-                });
+        if (mapData['cities']) {
+            chartElement.append('g')
+                .attr('class', 'country-labels')
+                .selectAll('.label')
+                    .data(mapData['countries']['features'])
+                .enter().append('text')
+                    .attr('class', function(d) {
+                        return 'label ' + classify(d['id']);
+                    })
+                    .attr('transform', function(d) {
+                        return 'translate(' + path.centroid(d) + ')';
+                    })
+                    .attr('text-anchor', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                    })
+                    .attr('dx', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                    })
+                    .attr('dy', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                    })
+                    .text(function(d) {
+                        return d['properties']['country'];
+                    });
+        }
+
         if (mapData['states']) {
             chartElement.append('g')
                 .attr('class', 'state-labels')
@@ -737,7 +752,7 @@ var GRAPHICS = (function() {
                         return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return d['properties']['state'];
+                        return d['properties']['state'] + ', Brazil';
                     });
         }
 
