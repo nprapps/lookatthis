@@ -48,8 +48,6 @@
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/analytics.js') }}
     {{ JS.render('js/app-header.min.js') }}
-    <script src="js/lib/modernizr.js"></script>
-
     {% block outer_content %}
 
     {% block header_content %}
@@ -61,13 +59,14 @@
     {% endblock wide_content %}
 
     {% endblock outer_content %}
-    <script src="js/lib/d3.min.js"></script>
-    <script src="js/lib/d3.geo.projection.v0.min.js"></script>
-    <script src="js/lib/topojson.v1.min.js"></script>
     {{ JS.push('js/lib/jquery.js') }}
+    {{ JS.push('js/lib/modernizr.js') }}
     {{ JS.push('js/lib/jquery.cookie.js')}}
-    {{ JS.push('js/lib/swiper.js')}}
+    {{ JS.push('js/lib/deck.core.js')}}
     {{ JS.push('js/lib/imgLiquid.js')}}
+    {{ JS.push('js/lib/d3.min.js') }}
+    {{ JS.push('js/lib/d3.geo.projection.min.js') }}
+    {{ JS.push('js/lib/topojson.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/graphics.js') }}
     {{ JS.push('js/app.js') }}

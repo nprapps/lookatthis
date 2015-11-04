@@ -1,74 +1,75 @@
 // jQuery vars
-var $container;
-var $w;
+var $document;
+var $body;
+var $section;
+var $slides;
+var $arrows;
+var $nextArrow;
+var $previousArrow;
+var $startCardButton;
+var isTouch = Modernizr.touch;
 var $modalClose
-var $overlay;
-var $slides
 var $deepLinkNotice;
 var $thisSlide;
-var $inDepthButton;
-var $inDepthArrow;
-var $hamburger;
-var $slideLinks;
-
-var isMobile = Modernizr.touch;
 
 // constants
 var aspectWidth = 16;
 var aspectHeight = 9;
+var mobileSuffix;
+var w;
+var h;
+var startTouch;
+var lastSlideExitEvent;
+
+var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
+var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
+
+var completion = 0;
+var swipeTolerance = 40;
+var touchFactor = 1;
 
 // global objects
-var transEndEventNames;
-var transEndEventName;
-var transitionSupport;
 var swiper;
 var slideTemplateTextLocation;
 var templateList;
 
 var onDocumentReady = function() {
-    $container = $('.swiper-container');
-    $w = $(window);
+    $document = $(document);
+    $body = $('body');
+    $section = $('.section');
+    $slides = $('.slide');
+    $navButton = $('.primary-navigation-btn');
+    $startCardButton = $('.btn-go');
+    $arrows = $('.controlArrow');
+    $previousArrow = $arrows.filter('.prev');
+    $nextArrow = $arrows.filter('.next');
+    $upNext = $('.up-next');
     $modalClose = $('.close-modal');
-    // $overlay = $('.overlay-menu');
-    $slides = $('.swiper-slide');
     $deepLinkNotice = $('.deep-link-notice');
-    // $hamburger = $('.hamburger');
-    $slideLinks = $('a[data-slide]');
-    $prevButton = $('.swiper-button-prev');
-    $nextButton = $('.swiper-button-next')
 
-    transEndEventNames = {
-        'WebkitTransition': 'webkitTransitionEnd',
-        'MozTransition': 'transitionend',
-        'OTransition': 'oTransitionEnd',
-        'msTransition': 'MSTransitionEnd',
-        'transition': 'transitionend'
-    };
-    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
-    transitionSupport = { transitions : Modernizr.csstransitions };
+    $startCardButton.on('click', onStartCardButtonClick);
+    $slides.on('click', onSlideClick);
+    $modalClose.on('click', onModalCloseClick);
 
-    swiper = new Swiper($container, {
-        effect: 'fade',
-        fade: {
-            crossFade: true
-        },
-        speed: isMobile ? 500 : 1,
-        parallax: true,
-        watchSlidesProgress: true,
-        watchSlidesVisibility: true,
-        direction: 'horizontal',
-        hashnav: true,
-        //freeMode: true,
-        //freeModeSticky: true,
-        // mousewheelControl: true,
-        // mousewheelForceToAxis: true,
-       // mousewheelReleaseOnEdges: true,
-        keyboardControl: true,
-        simulateTouch: false,
-        nextButton: $nextButton,
-        prevButton: $prevButton,
-        preloadImages: false,
+    $document.on('deck.change', onSlideChange);
+
+    $previousArrow.on('click', onPreviousArrowClick);
+    $nextArrow.on('click', onNextArrowClick);
+
+    if (isTouch) {
+        $arrows.on('touchstart', fakeMobileHover);
+        $arrows.on('touchend', rmFakeMobileHover);
+        $body.on('touchstart', onTouchStart);
+        $body.on('touchmove', onTouchMove);
+        $body.on('touchend', onTouchEnd);
+    }
+
+    $.deck($slides, {
+        touch: { swipeTolerance: swipeTolerance }
     });
+
+    onPageLoad();
+    onResize();
 
     slideTemplateTextLocation = {
         'slide': {
@@ -82,54 +83,58 @@ var onDocumentReady = function() {
         }
     }
 
-    $thisSlide = $slides.eq(swiper.activeIndex);
-    $slideLinks.on('click', onSlideLinkClick);
-    swiper.on('slideChangeStart', onSlideChange);
-    // $hamburger.on('click', toggleOverlay);
-    $modalClose.on('click', onModalCloseClick);
-    $(window).on('resize', onResize);
-    onPageLoad();
+    $thisSlide = $slides.eq(0);
+    $(window).on("orientationchange", onResize);
+    $(window).resize(onResize);
+    $document.keydown(onDocumentKeyDown);
 }
 
 var onPageLoad = function() {
     checkModalStatus();
     GRAPHICS.loadGraphic('porto-velho');
     GRAPHICS.loadGraphic('amazon');
-    onSlideChange();
-    $container.css('opacity', 1);
+    lazyLoad(0);
+    $section.css({
+        'opacity': 1,
+        'visibility': 'visible'
+    });
+    showNavigation(0);
 }
 
-var onSlideChange = function() {
-    //update this slide to be the current active slide
-    $thisSlide = $slides.eq(swiper.activeIndex);
+var trackCompletion = function(index) {
+    /*
+    * Track completion based on slide index.
+    */
+    how_far = (index + 1) / ($slides.length - APP_CONFIG.NUM_SLIDES_AFTER_CONTENT);
 
-    lazyLoad();
+    if (how_far >= completion + 0.25) {
+        completion = how_far - (how_far % 0.25);
 
-    if ($thisSlide.hasClass('deep-dive')) {
-        checkForInDepth();
-    }
-
-    if ($thisSlide.hasClass('fade')) {
-        $thisSlide.find('.imgLiquid.second').css('opacity', 1);
-    }
-
-    // empty out the resize function
-    var graphicID = $thisSlide.attr('id');
-    if ($thisSlide.hasClass('graphic') && graphicID !== 'locator-map') {
-        GRAPHICS.loadGraphic(graphicID);
+        if (completion === 0.25) {
+            ANALYTICS.completeTwentyFivePercent();
+        }
+        else if (completion === 0.5) {
+            ANALYTICS.completeFiftyPercent();
+        }
+        else if (completion === 0.75) {
+            ANALYTICS.completeSeventyFivePercent();
+        }
+        else if (completion === 1) {
+            ANALYTICS.completeOneHundredPercent();
+        }
     }
 }
 
-var lazyLoad = function() {
+var lazyLoad = function(index) {
     /*
     * Lazy-load images in current and future slides.
     */
     var slides = [
-        $slides.eq(swiper.activeIndex - 2),
-        $slides.eq(swiper.activeIndex - 1),
-        $thisSlide,
-        $slides.eq(swiper.activeIndex + 1),
-        $slides.eq(swiper.activeIndex + 2)
+        $slides.eq(index - 2),
+        $slides.eq(index - 1),
+        $slides.eq(index),
+        $slides.eq(index + 1),
+        $slides.eq(index + 2)
     ];
 
     for (var i = 0; i < slides.length; i++) {
@@ -147,7 +152,7 @@ var loadImages = function($slide) {
     // Mobile suffix should be blank by default.
     mobileSuffix = '';
 
-    if ($w.width() < 769 && $slide.hasClass('mobile-crop')) {
+    if (w < 769 && $slide.hasClass('mobile-crop')) {
         mobileSuffix = '-sq';
     }
 
@@ -180,69 +185,217 @@ var loadImages = function($slide) {
     }
 };
 
-var checkForInDepth = function() {
-    var $titlecardWrapper = $thisSlide.find('.slide-content');
-    var $inDepthContainer = $thisSlide.find('.in-depth');
-
-    if ($inDepthContainer.length > 0) {
-        $titlecardWrapper.height($w.height() + 'px');
-        $inDepthContainer.css('top', $w.height() + 'px');
-        $inDepthButton = $thisSlide.find('.scroll-button');
-        $inDepthArrow = $thisSlide.find('.scroll-button i');
-        $inDepthTextContainer = $thisSlide.find('.inner-text');
-        $inDepthText = $thisSlide.find('.in-depth');
-
-        $('.in-depth-scroll i').removeClass('animated fadeInUp');
-        $inDepthArrow.addClass('animated fadeInUp');
-
-        $inDepthButton.click(function() {
-            $inDepthTextContainer.animate({
-                scrollTop: $inDepthText.offset().top
-            }, 1000, 'swing');
-        });
-
-        // $( ".after-jump" ).click(function() {
-        //     $inDepthTextContainer.animate({
-        //         scrollTop: $inDepthText.offset().top
-        //     }, 0);
-        // });
+var showNavigation = function(index) {
+    /*
+    * Hide and show arrows based on slide index
+    */
+    if (index === 0) {
+        $arrows.hide();
+        $previousArrow.css('left', 0);
+        $nextArrow.css('right', 0);
+    } else if ($slides.last().index() === index) {
+        $arrows.show();
+        $nextArrow.hide().css('right', 0);
+    } else {
+        $arrows.show();
     }
+
+    if (isTouch) {
+        resetArrows();
+    }
+}
+
+var checkOverflow = function(index) {
+    var $thisSlide = $slides.eq(index);
+    var slideHeight = $thisSlide.height();
+    var blockHeight = $thisSlide.find('.full-block').height();
+
+    if (blockHeight > slideHeight) {
+        $thisSlide.parents('.section').height(blockHeight);
+    } else {
+        $thisSlide.parents('.section').height(h);
+    }
+}
+
+var onSlideChange = function(e, fromIndex, toIndex) {
+    //update this slide to be the current active slide
+    $thisSlide = $slides.eq(toIndex);
+    lazyLoad(toIndex);
+    showNavigation(toIndex);
+    trackCompletion(toIndex);
+    checkOverflow(toIndex);
+    document.activeElement.blur();
+
+    if ($thisSlide.hasClass('fade')) {
+        $thisSlide.find('.imgLiquid.second').css('opacity', 1);
+    }
+
+    // empty out the resize function
+    var graphicID = $thisSlide.attr('id');
+    if ($thisSlide.hasClass('graphic') && graphicID !== 'locator-map') {
+        GRAPHICS.loadGraphic(graphicID);
+    }
+
+    ANALYTICS.exitSlide(fromIndex.toString());
+    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+}
+
+var onStartCardButtonClick = function() {
+    /*
+    * Called when clicking the "go" button.
+    */
+    lastSlideExitEvent = 'exit-start-card-button-click';
+    $.deck('next');
+}
+
+var onDocumentKeyDown = function(e) {
+    /*
+    * Called when key is pressed
+    */
+    var keyOptions = $.deck('getOptions').keys;
+    var keys = keyOptions.next.concat(keyOptions.previous);
+    if (keys.indexOf(e.which) > -1) {
+        lastSlideExitEvent = 'exit-keyboard';
+        ANALYTICS.useKeyboardNavigation();
+    }
+    return true;
+}
+
+var onSlideClick = function(e) {
+    /*
+    * Advance on slide tap on touch devices
+    */
+    if (isTouch && !$(e.target).is('button')) {
+        lastSlideExitEvent = 'exit-tap';
+        $.deck('next');
+    }
+}
+
+var onNextPostClick = function(e) {
+    /*
+     * Click next post
+     */
+    e.preventDefault();
+    ANALYTICS.trackEvent('next-post');
+    window.top.location = NEXT_POST_URL;
+    return true;
+}
+
+var fakeMobileHover = function() {
+    /*
+     * Fake hover when tapping buttons
+     */
+    $(this).css({
+        'background-color': '#fff',
+        'color': '#000',
+        'opacity': .9
+    });
+}
+
+var rmFakeMobileHover = function() {
+    /*
+     * Remove fake hover when tapping buttons
+     */
+    $(this).css({
+        'background-color': 'rgba(0, 0, 0, 0.2)',
+        'color': '#fff',
+        'opacity': .3
+    });
+}
+
+var onNextArrowClick = function() {
+    /*
+     * Next arrow click
+     */
+    lastSlideExitEvent = 'exit-next-button-click';
+    $.deck('next');
+}
+
+var onPreviousArrowClick = function() {
+    /*
+     * Previous arrow click
+     */
+    lastSlideExitEvent = 'exit-previous-button-click';
+    $.deck('prev');
+}
+
+var onTouchStart = function(e) {
+    /*
+     * Capture start position when swipe initiated
+     */
+    if (!startTouch) {
+        startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
+    }
+}
+
+var onTouchMove = function(e) {
+    /*
+     * Track finger swipe
+     */
+    $.each(e.originalEvent.changedTouches, function(i, touch) {
+        if (!startTouch || touch.identifier !== startTouch.identifier) {
+            return true;
+        }
+        var yDistance = touch.screenY - startTouch.screenY;
+        var xDistance = touch.screenX - startTouch.screenX;
+        var direction = (xDistance > 0) ? 'right' : 'left';
+
+        if (Math.abs(yDistance) < Math.abs(xDistance)) {
+            e.preventDefault();
+        }
+
+        if (direction == 'right' && xDistance > swipeTolerance) {
+            lastSlideExitEvent = 'exit-swipe-right';
+        } else if (direction == 'right' && xDistance < swipeTolerance) {
+            $previousArrow.filter(':visible').css({
+                'left': (xDistance * touchFactor) + 'px'
+            });
+        }
+
+        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
+            lastSlideExitEvent = 'exit-swipe-left';
+        } else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
+            $nextArrow.filter(':visible').css({
+                'right': (Math.abs(xDistance) * touchFactor) + 'px'
+            });
+        }
+    });
+}
+
+var onTouchEnd = function(e) {
+    /*
+     * Clear swipe start position when swipe ends
+     */
+    $.each(e.originalEvent.changedTouches, function(i, touch) {
+        if (startTouch && touch.identifier === startTouch.identifier) {
+            startTouch = undefined;
+        }
+    });
+}
+
+var resetArrows = function() {
+    /*
+     * Reset arrows when advancing slides
+     */
+    $nextArrow.animate({
+        'right': 0
+    });
+    $previousArrow.animate({
+        'left': 0
+    });
 }
 
 var onResize = function() {
-    if ($thisSlide.hasClass('graphic')) {
-        var graphicID = $thisSlide.attr('id');
-        GRAPHICS.resizeGraphic(graphicID);
+    /*
+     * Resize the content
+     */
+    w = $(window).width();
+    h = $(window).height();
+    if ($section.height() < h) {
+        $section.height(h);
     }
-}
-
-var onSlideLinkClick = function() {
-    swiper.slideTo($(this).data('slide'));
-}
-
-// var toggleOverlay = function() {
-//     if ($overlay.hasClass('open')) {
-//         $overlay.removeClass('open');
-//         $overlay.addClass('close');
-
-//         var onEndTransitionFn = function(ev) {
-//             if( support.transitions ) {
-//                 if( ev.propertyName !== 'visibility' ) return;
-//                 this.removeEventListener( transEndEventName, onEndTransitionFn );
-//             }
-//             $overlay.removeClass('open');
-//         };
-//         if( support.transitions ) {
-//             overlay.addEventListener( transEndEventName, onEndTransitionFn );
-//         }
-//         else {
-//             onEndTransitionFn();
-//         }
-//     }
-//     else if (!$overlay.hasClass('close')) {
-//         $overlay.addClass('open');
-//     }
-// }
+    $slides.width(w);
+};
 
 // When modal closes, make sure it's not clickable
 var onModalCloseClick = function() {
@@ -252,7 +405,7 @@ var onModalCloseClick = function() {
 
 // If modal status is 1, hide the content warning on page load.
 var checkModalStatus = function() {
-    if ($.cookie('npr_deeplink_status') != '1' && swiper.activeIndex !== 0) {
+    if ($.cookie('npr_deeplink_status') != '1') {
         $deepLinkNotice.css('visibility', 'visible');
     }
 }
