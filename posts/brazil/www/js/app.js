@@ -226,6 +226,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     checkOverflow(toIndex);
     document.activeElement.blur();
 
+    if (APP_CONFIG.PROGRESS_BAR) {
+        PROGRESS_BAR.animateProgress(toIndex);
+    }
+
     if ($thisSlide.hasClass('fade')) {
         $thisSlide.find('.imgLiquid.second').css('opacity', 1);
     }
