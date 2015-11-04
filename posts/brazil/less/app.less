@@ -237,8 +237,29 @@ p {
     z-index: 0;
     opacity: 0;
     /*min-height: 0;*/
+
+    .slide-content-middle p, .slide-content-bottom p, .graphic-text p {
+        .transition(transform 0.5s ease-out);
+    }
+
+    &.deck-previous {
+        .slide-content-middle p, .slide-content-bottom p, .graphic-text p {
+            transform: translate3d(-6px, 0, 0);
+        }
+    }
+
     &.deck-current {
         opacity: 1;
+
+        .slide-content-middle p, .slide-content-bottom p, .graphic-text p {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &.deck-next {
+        .slide-content-middle p, .slide-content-bottom p, .graphic-text p {
+            transform: translate3d(6px, 0, 0);
+        }
     }
     &.fade {
         .transition(opacity 1s ease-in);
