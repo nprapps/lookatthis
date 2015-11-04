@@ -93,7 +93,6 @@ var onDocumentReady = function() {
 
 var onPageLoad = function() {
     GRAPHICS.loadGraphic('porto-velho');
-    GRAPHICS.loadGraphic('amazon');
     lazyLoad(0);
     $section.css({
         'opacity': 1,
