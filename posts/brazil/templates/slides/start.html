@@ -3,11 +3,10 @@
     <div class="look-branding">
         <img src="assets/npr-logo.png">
         <h5>Look At This</h5>
+        <h1>{{ row.text2|smarty }}</h1>
     </div>
-    <h1>{{ row.text1|smarty }}</h1>
-    <h2>{{ row.text2|smarty }}</h2>
-    <h3>{{ COPY.post_metadata.author|smarty }}</h3>
-    <h4>{{ COPY.post_metadata.publish_date|smarty }}</h4>
 
-    <button class="btn btn-go">{{ row.text3 }}</button>
+    <h2>{{ row.text1|smarty }}</h2>
+
+    <a href="#" class="continue-story">{{ row.text3 }}</a>
 {% endblock %}
