@@ -627,7 +627,7 @@ var GRAPHICS = (function() {
                     .attr('d', path)
                     .attr('class', function(d) {
                         var c = 'state';
-                        c += ' ' + classify(d['properties']['name']);
+                        c += ' ' + classify(d['properties']['state']);
                         return c;
                     });
         }
@@ -737,7 +737,7 @@ var GRAPHICS = (function() {
                         return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return d['properties']['name'];
+                        return d['properties']['state'];
                     });
         }
 
