@@ -349,9 +349,7 @@ p {
         z-index: 100;
         position: fixed;
         top: 40%;
-        width: 50px;
-        font-size: 35px;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.7);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -361,6 +359,7 @@ p {
         display: none;
         cursor: pointer;
         font-weight: normal;
+        font-size: 25px;
 
         @media @screen-small-above {
             top: inherit;
@@ -368,43 +367,36 @@ p {
             background: rgba(0, 0, 0, 0.5);
             color: #fff;
             font-size: 3rem;
-            padding: 10px;
         }
 
-        @media @screen-small {
-            &:active {
-                background-color: #000;
-                color: #fff;
-            }
-        }
     }
 
     .controlArrow.prev {
         left: 0;
-        padding-left: 5px;
+        padding: 0 0 0 10px;
 
         &:before {
             font-family: "FontAwesome";
             content: '\f104';
-            display: block;
+            //display: block;
         }
 
         @media @screen-small-above {
-            padding: 0 0 .3rem 1.1rem;
+            padding: .3rem 1.8rem .3rem 1.3rem;
         }
     }
     .controlArrow.next {
         right: 0;
-        padding: 0 0 0 5px;
+        padding: 0 10px 0 0;
 
         &:before {
             font-family: "FontAwesome";
             content: "\f105";
-            display: block;
+            //display: block;
         }
 
         @media @screen-small-above {
-            padding: 0 0 .3rem 1.5rem;
+            padding: .3rem 1.5rem .3rem 1.8rem;
         }
     }
 }
