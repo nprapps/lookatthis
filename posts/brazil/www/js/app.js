@@ -402,6 +402,11 @@ var onResize = function() {
         $section.height(h);
     }
     $slides.width(w);
+
+    if ($thisSlide.hasClass('graphic')) {
+        var graphicID = $thisSlide.attr('id');
+        GRAPHICS.resizeGraphic(graphicID);
+    }
 };
 
 // When modal closes, make sure it's not clickable
