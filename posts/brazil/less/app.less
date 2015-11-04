@@ -373,12 +373,19 @@ p {
 
     .controlArrow.prev {
         left: 0;
-        padding: 0 0 0 10px;
+        padding: 30px;
 
         &:before {
             font-family: "FontAwesome";
             content: '\f104';
-            //display: block;
+            position: absolute;
+            top: 15px;
+            left: 10px;
+
+            @media @screen-small-above {
+                position: static;
+            }
+
         }
 
         @media @screen-small-above {
@@ -387,12 +394,17 @@ p {
     }
     .controlArrow.next {
         right: 0;
-        padding: 0 10px 0 0;
+        padding: 30px;
 
         &:before {
             font-family: "FontAwesome";
             content: "\f105";
-            //display: block;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            @media @screen-small-above {
+                position: static;
+            }
         }
 
         @media @screen-small-above {
