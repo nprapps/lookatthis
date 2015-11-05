@@ -96,7 +96,7 @@ var GRAPHICS = (function() {
 
         var margins = {
             top: 20,
-            right: 20,
+            right: isMobile ? 0 : 20,
             bottom: 50,
             left: 110
         };
@@ -194,14 +194,14 @@ var GRAPHICS = (function() {
         var yAxis = d3.svg.axis()
             .scale(yScale)
             .orient('left')
-            .ticks(ticksY)
+            .ticks(ticksY, 's')
             .tickFormat(function(d) {
                 if (config.config.unitPosition === 'prefix') {
                     return config.config.unit + commaFormatter(d)
                 } else {
-                    return commaFormatter(d) + config.config.unit
+                    return d3.format('s')(d) + config.config.unit
                 }
-            });
+            })
 
         /*
          * Render axes to chart.
@@ -860,7 +860,7 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km',
+            'unit': ' km\u00B2',
             'unitPosition': 'suffix',
             'scale': 1000,
             'animate': true
@@ -870,7 +870,7 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km',
+            'unit': ' km\u00B2',
             'unitPosition': 'suffix',
             'scale': 1000,
             'animate': false
@@ -880,7 +880,7 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km',
+            'unit': ' km\u00B2',
             'unitPosition': 'suffix',
             'scale': 100000,
             'animate': true
@@ -890,7 +890,7 @@ var GRAPHICS = (function() {
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
-            'unit': ' sq. km',
+            'unit': ' km\u00B2',
             'unitPosition': 'suffix',
             'scale': 100000,
             'animate': false
