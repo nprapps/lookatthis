@@ -98,7 +98,7 @@ var GRAPHICS = (function() {
             top: 20,
             right: isMobile ? 0 : 20,
             bottom: 50,
-            left: 110
+            left: isMobile ? 70 : 110
         };
 
         var ticksX = 10;
