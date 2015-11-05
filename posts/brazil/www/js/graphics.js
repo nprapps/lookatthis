@@ -341,6 +341,7 @@ var GRAPHICS = (function() {
                   .attr("stroke-dashoffset", totalLength)
                   .transition()
                     .duration(2500)
+                    .delay(500)
                     .ease("linear")
                     .attr("stroke-dashoffset", 0);
         }
