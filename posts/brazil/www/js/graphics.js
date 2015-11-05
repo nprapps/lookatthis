@@ -199,7 +199,11 @@ var GRAPHICS = (function() {
                 if (config.config.unitPosition === 'prefix') {
                     return config.config.unit + commaFormatter(d)
                 } else {
-                    return d3.format('s')(d) + config.config.unit
+                    if (isMobile) {
+                        return d3.format('s')(d) + config.config.unit
+                    } else {
+                        return  commaFormatter(d) + config.config.unit
+                    }
                 }
             })
 
