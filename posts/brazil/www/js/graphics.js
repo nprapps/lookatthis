@@ -869,16 +869,6 @@ var GRAPHICS = (function() {
             'scale': 1000,
             'animate': true
         },
-        'deforestation-annual-2': {
-            'data': COPY['deforestation-annual'],
-            'format': formatLineChart,
-            'render': renderLine,
-            'formatted': false,
-            'unit': ' km\u00B2',
-            'unitPosition': 'suffix',
-            'scale': 1000,
-            'animate': false
-        },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
             'format': formatLineChart,
@@ -918,6 +908,13 @@ var GRAPHICS = (function() {
         },
         'amazon': {
             'data': 'data/amazon.json',
+            'format': formatMapData,
+            'render': renderMap,
+            'formatted': false,
+            'skipRender': true
+        },
+        'amazon-in-brazil': {
+            'data': 'data/amazon-in-brazil.json',
             'format': formatMapData,
             'render': renderMap,
             'formatted': false,
