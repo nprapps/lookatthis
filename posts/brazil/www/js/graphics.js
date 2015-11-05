@@ -488,7 +488,7 @@ var GRAPHICS = (function() {
     }
 
     var renderMap = function(graphicID) {
-        var containerHeight = $(window).height() * 0.75;
+        var containerHeight = $(window).height() * 0.7;
         var mapMobileThreshold = 690;
 
         if ($(window).height() <= mapMobileThreshold) {
