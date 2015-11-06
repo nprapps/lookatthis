@@ -217,6 +217,7 @@ var showNavigation = function(index) {
     if (index === 0) {
         $arrows.hide();
         $translatePersistent.hide();
+        $deepLinkNotice.hide();
         $previousArrow.css('left', 0);
         $nextArrow.css('right', 0);
 
