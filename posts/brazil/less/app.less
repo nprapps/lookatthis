@@ -303,7 +303,7 @@ p {
 
 .credit {
     position: absolute;
-    bottom: 10px;
+    bottom: 30px;
     right: 10px;
 
     p {
@@ -449,7 +449,7 @@ p {
     z-index: 100;
     font-size: 10px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, .8);
+    color: #fff;
     text-shadow: 2px 2px 2px #111;
 
     span {
@@ -493,18 +493,27 @@ p {
 //deep link notice
 .deep-link-notice {
     position: absolute;
-    top: 3px;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 23px;
     z-index: 99;
-    visibility: hidden;
+    display: none;
     background-color: #fff;
 
     @media @screen-small-above {
+        bottom: auto;
         top: 4px;
         width: auto;
         overflow: hidden;
+    }
+
+    b {
+        font-weight: normal;
+        visibility: hidden;
+        @media @screen-small-above {
+            visibility: visible;
+        }
     }
 
     p {
@@ -543,8 +552,11 @@ p {
         position: absolute;
         top: 0;
         right: 0;
-        padding: 3px 5px 5px 5px;
+        padding: 3px 10px 5px 10px;
         cursor: pointer;
+        @media @screen-small-above {
+            padding: 3px 5px 5px 5px;
+        }
     }
 }
 

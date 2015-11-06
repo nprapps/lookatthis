@@ -430,7 +430,7 @@ var onResize = function() {
 
 // When modal closes, make sure it's not clickable
 var onModalCloseClick = function() {
-    $deepLinkNotice.css('visibility', 'hidden');
+    $deepLinkNotice.css('display', 'none');
     $.cookie('npr_deeplink_status', '1', { expires: 1});
 }
 
@@ -438,7 +438,7 @@ var onModalCloseClick = function() {
 var checkModalStatus = function() {
     if (window.location.hash && window.location.hash !== '#s25') {
         if ($.cookie('npr_deeplink_status') !== '1')  {
-            $deepLinkNotice.css('visibility', 'visible');
+            $deepLinkNotice.css('display', 'block');
         }
     }
 }
