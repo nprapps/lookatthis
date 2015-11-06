@@ -225,10 +225,6 @@ var showNavigation = function(index) {
         $arrows.show();
         $translatePersistent.show();
     }
-
-    if (isTouch) {
-        resetArrows();
-    }
 }
 
 var checkOverflow = function(index) {
@@ -325,18 +321,6 @@ var onPreviousArrowClick = function() {
      */
     lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
-}
-
-var resetArrows = function() {
-    /*
-     * Reset arrows when advancing slides
-     */
-    $nextArrow.animate({
-        'right': 0
-    });
-    $previousArrow.animate({
-        'left': 0
-    });
 }
 
 var onResize = function() {
