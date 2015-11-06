@@ -252,6 +252,7 @@ p {
 
     &.deck-previous {
         opacity: 1;
+        position: fixed;
         .animate-text  {
             transform: translate3d(-12px, 0, 0);
         }
@@ -259,6 +260,7 @@ p {
 
     &.deck-current {
         opacity: 1;
+        position: fixed;
 
         .animate-text  {
             transform: translate3d(0, 0, 0);
@@ -266,6 +268,7 @@ p {
     }
 
     &.deck-next {
+        position: fixed;
         .animate-text  {
             transform: translate3d(12px, 0, 0);
         }
@@ -606,7 +609,6 @@ p {
 
 .slide {
     overflow: auto;
-    position: fixed;
 }
 
 // full width container within a section or slide
