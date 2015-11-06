@@ -476,8 +476,9 @@ var GRAPHICS = (function() {
     }
 
     var COUNTRY_LABEL_ADJUSTMENTS = {
-        'Brazil': { 'dx': 23, 'dy': 35 },
-        'Rondônia': { 'dx': 13, 'dy': -5 }
+        'Brazil': { 'dx': 15, 'dy': 15 },
+        'Rondônia': { 'dx': 6, 'dy': -20 },
+        'AMAZON BASIN': { 'dx': -22 }
     }
 
     var geoData = null;
@@ -533,6 +534,23 @@ var GRAPHICS = (function() {
         var path = null;
         var chartWrapper = null;
         var chartElement = null;
+
+
+        /*
+         * Apply adjustments to label positioning.
+         */
+        var positionLabel = function(adjustments, id, attribute) {
+            console.log(adjustments, id, attribute);
+            if (adjustments[id]) {
+                if (adjustments[id][attribute]) {
+                    return adjustments[id][attribute];
+                } else {
+                    return LABEL_DEFAULTS[attribute];
+                }
+            } else {
+                return LABEL_DEFAULTS[attribute];
+            }
+        }
 
         /*
          * Extract topo data.
@@ -590,18 +608,6 @@ var GRAPHICS = (function() {
             .attr('in', 'SourceGraphic')
             .attr('result', 'blurOut')
             .attr('stdDeviation', '10');
-
-
-        /*
-         * Render countries.
-         */
-        // Land shadow
-        chartElement.append('path')
-            .attr('class', 'landmass')
-            .datum(mapData['countries'])
-            .attr('filter', 'url(#landshadow)')
-            .attr('d', path);
-
         /*
          * Render amazon.
          */
@@ -613,6 +619,41 @@ var GRAPHICS = (function() {
                 .enter().append('path')
                     .attr('d', path);
         }
+        if (mapData['amazon']) {
+            chartElement.append('g')
+                .attr('class', 'amazon-label')
+                .selectAll('.label')
+                    .data(mapData['amazon']['features'])
+                .enter().append('text')
+                    .attr('class', function(d) {
+                        return 'label ' + classify(d['id']);
+                    })
+                    .attr('transform', function(d) {
+                        return 'translate(' + path.centroid(d) + ')';
+                    })
+                    .attr('text-anchor', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                    })
+                    .attr('dx', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                    })
+                    .attr('dy', function(d) {
+                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                    })
+                    .text(function(d) {
+                        return 'Amazon Basin';
+                    });
+        }
+
+        /*
+         * Render countries.
+         */
+        // Land shadow
+        chartElement.append('path')
+            .attr('class', 'landmass')
+            .datum(mapData['countries'])
+            .attr('filter', 'url(#landshadow)')
+            .attr('d', path);
 
         if (mapData['continents']) {
             // Land outlines
@@ -694,24 +735,10 @@ var GRAPHICS = (function() {
         }
 
         /*
-         * Apply adjustments to label positioning.
-         */
-        var positionLabel = function(adjustments, id, attribute) {
-            if (adjustments[id]) {
-                if (adjustments[id][attribute]) {
-                    return adjustments[id][attribute];
-                } else {
-                    return LABEL_DEFAULTS[attribute];
-                }
-            } else {
-                return LABEL_DEFAULTS[attribute];
-            }
-        }
-
-        /*
          * Render country labels.
          */
-        if (mapData['cities']) {
+
+        if (mapData['countries']) {
             chartElement.append('g')
                 .attr('class', 'country-labels')
                 .selectAll('.label')
