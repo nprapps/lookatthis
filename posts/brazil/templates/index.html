@@ -1,33 +1,35 @@
 {% extends '%s/templates/_base.html' % slug %}
 {% block content %}
-<div class="section">
-    {% for row in COPY.content %}
-    {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
-    {% endfor %}
-</div>
-<!-- Add Arrows -->
-<div class="primary-navigation" style="opacity: 1;">
-    <div class="controlArrow prev"></div>
-    <div class="controlArrow next"></div>
-</div>
+<div class="wrapper">
+    <div class="section">
+        {% for row in COPY.content %}
+        {% include "%s/templates/slides/%s.html" % (slug, row.template) ignore missing %}
+        {% endfor %}
+    </div>
+    <!-- Add Arrows -->
+    <div class="primary-navigation" style="opacity: 1;">
+        <div class="controlArrow prev"></div>
+        <div class="controlArrow next"></div>
+    </div>
 
- <!-- start from beginning -->
-<div class="deep-link-notice">
-    <p><a href="#" class="close-modal start-over"><i class="fa fa-chevron-left"></i> <span class="txt">Start at the top. <b>Stories are better from the beginning.</b></span> </a> </p>
-    <span class="close-modal close-x"><i class="fa fa-times"></i></span>
-</div>
+     <!-- start from beginning -->
+    <div class="deep-link-notice">
+        <p><a href="#" class="close-modal start-over"><i class="fa fa-chevron-left"></i> <span class="txt">Start at the top. <b>Stories are better from the beginning.</b></span> </a> </p>
+        <span class="close-modal close-x"><i class="fa fa-times"></i></span>
+    </div>
 
-{% if PROGRESS_BAR %}
-<div class="progress-indicator">
-    <div class="current-progress"></div>
-</div>
-{% endif %}
+    {% if PROGRESS_BAR %}
+    <div class="progress-indicator">
+        <div class="current-progress"></div>
+    </div>
+    {% endif %}
 
-<div class="translate-persistent">
-    <span>Translate:</span>
+    <div class="translate-persistent">
+        <span>Translate:</span>
 
-    <button class="btn-translate" data-language="en">En</button>
-    <button class="btn-translate" data-language="es">Es</button>
-    <button class="btn-translate" data-language="pt">Por</button>
+        <button class="btn-translate" data-language="en">En</button>
+        <button class="btn-translate" data-language="es">Es</button>
+        <button class="btn-translate" data-language="pt">Por</button>
+    </div>
 </div>
 {% endblock %}
