@@ -1,6 +1,7 @@
 // jQuery vars
 var $document;
 var $body;
+var $wrapper;
 var $section;
 var $slides;
 var $arrows;
@@ -41,6 +42,7 @@ var templateList;
 var onDocumentReady = function() {
     $document = $(document);
     $body = $('body');
+    $wrapper = $('.wrapper')
     $section = $('.section');
     $slides = $('.slide');
     $navButton = $('.primary-navigation-btn');
@@ -106,9 +108,10 @@ var onDocumentReady = function() {
 }
 
 var onPageLoad = function() {
+    $thisSlide = $.deck('getSlide');
+
     var userLang = navigator.language || navigator.userLanguage;
     var languageCode = userLang.substring(0,2);
-
     if (languageCode === 'es' || languageCode === 'pt') {
         switchLanguage(languageCode);
     }
@@ -116,14 +119,15 @@ var onPageLoad = function() {
     GRAPHICS.loadGraphic('porto-velho');
     GRAPHICS.loadGraphic('amazon');
     GRAPHICS.loadGraphic('amazon-in-brazil');
+
     lazyLoad(0);
-    $section.css({
+    showNavigation(0);
+    checkModalStatus();
+
+    $wrapper.css({
         'opacity': 1,
         'visibility': 'visible'
     });
-    showNavigation(0);
-    $thisSlide = $.deck('getSlide');
-    checkModalStatus();
 }
 
 var trackCompletion = function(index) {
