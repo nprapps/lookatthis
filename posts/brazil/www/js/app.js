@@ -428,10 +428,10 @@ var onResize = function() {
      * Resize the content
      */
 
-    //w = $(window).width();
-    //h = $(window).height();
-    //$section.height(h);
-    //$slides.width(w);
+    w = $(window).width();
+    h = $(window).height();
+    $section.height(h);
+    $slides.width(w);
 
     if ($thisSlide.hasClass('graphic')) {
         var graphicID = $thisSlide.attr('id');
