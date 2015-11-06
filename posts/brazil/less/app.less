@@ -312,7 +312,7 @@ p {
 
 .credit {
     position: absolute;
-    bottom: 30px;
+    bottom: 40px;
     right: 10px;
 
     p {
@@ -462,7 +462,7 @@ p {
     text-shadow: 1px 1px 1px #000;
 
     span {
-        opacity: .4;
+        opacity: 0;
         @media @screen-small-above {
             opacity: 1;
         }
@@ -483,7 +483,7 @@ p {
         margin: 0 0 0 15px;
         padding: 0;
         border: 0;
-        color: rgba(255, 255, 255, .8);
+        color: rgba(255, 255, 255, 1);
         text-shadow: 1px 1px 1px #000;
         line-height: 1;
         outline: 0;
@@ -493,6 +493,7 @@ p {
         }
 
         @media @screen-small-above {
+            color: rgba(255, 255, 255, .8);
             color: #fff;
             margin: 0 0 0 5px;
         }
@@ -505,7 +506,7 @@ p {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 23px;
+    height: 32px;
     z-index: 99;
     display: none;
     background-color: #fff;
@@ -514,6 +515,7 @@ p {
         bottom: auto;
         top: 4px;
         width: auto;
+        height: auto;
         overflow: hidden;
     }
 
@@ -529,15 +531,16 @@ p {
         font-family: "Gotham SSm", helvetica, sans-serif;
         background-color: #fff;
         color: #000;
-        font-size: 9px;
+        font-size: 11px;
         text-shadow: none;
         font-weight: normal;
         line-height: 1;
         margin: 0;
-        padding: 6px 30px 6px 10px;
+        padding: 10px 30px 6px 10px;
 
         @media @screen-small-above {
             font-size: 10px;
+            padding: 6px 30px 6px 10px;
         }
 
         i {
@@ -561,9 +564,11 @@ p {
         position: absolute;
         top: 0;
         right: 0;
-        padding: 3px 10px 5px 10px;
+        height: 32px;
+        padding: 7px 10px 5px 10px;
         cursor: pointer;
         @media @screen-small-above {
+            height: auto;
             padding: 3px 5px 5px 5px;
         }
     }
