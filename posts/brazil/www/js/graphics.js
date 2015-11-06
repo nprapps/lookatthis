@@ -26,7 +26,7 @@ var GRAPHICS = (function() {
     }
 
     // Global config
-    var MOBILE_THRESHOLD = 500;
+    var MOBILE_THRESHOLD = 768;
 
     // Global vars
     var isMobile = false;
