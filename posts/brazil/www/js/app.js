@@ -13,6 +13,9 @@ var $deepLinkNotice;
 var $translatePersistent;
 var $thisSlide;
 var $startOver;
+var $translateBtns;
+var $look;
+var $deepLinkTxt;
 
 // constants
 var aspectWidth = 16;
@@ -50,11 +53,15 @@ var onDocumentReady = function() {
     $deepLinkNotice = $('.deep-link-notice');
     $translatePersistent = $('.translate-persistent');
     $startOver = $('.start-over');
+    $translateBtns = $('.btn-translate');
+    $look = $('.look-branding h5');
+    $deepLinkTxt = $('.deep-link-notice .txt');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $modalClose.on('click', onModalCloseClick);
     $startOver.on('click', onStartOverClick);
+    $translateBtns.on('click', onTranslateBtnClick);
 
     $document.on('deck.change', onSlideChange);
 
@@ -77,6 +84,11 @@ var onDocumentReady = function() {
     onResize();
 
     slideTemplateTextLocation = {
+        'start': {
+            'text1': '.lede',
+            'text2': '.look-branding h1',
+            'text3': '.btn-go .txt'
+        },
         'slide': {
             'text1': '.slide-content'
         },
@@ -200,6 +212,7 @@ var showNavigation = function(index) {
         $translatePersistent.hide();
         $previousArrow.css('left', 0);
         $nextArrow.css('right', 0);
+
     } else if ($slides.last().index() === index) {
         $arrows.show();
         $translatePersistent.hide();
@@ -434,6 +447,11 @@ var onStartOverClick = function() {
     $.deck('go', 0);
 }
 
+var onTranslateBtnClick = function() {
+    var language = $(this).data('language');
+    switchLanguage(language);
+}
+
 var switchLanguage = function(language) {
     for (var i = 0; i < $slides.length; i++) {
         var $currentSlide = $slides.eq(i);
@@ -447,12 +465,26 @@ var switchLanguage = function(language) {
 
                 for (var j = 0; j < COPY.content.length; j++) {
                     if ($currentSlide.attr('id') === COPY.content[j].id) {
-                        container.text(COPY.content[j][languageColumn]);
+                        var text = COPY.content[j][languageColumn];
+
+                        if (text && text[0] === '<') {
+                            container.html(text);
+                        } else {
+                            container.text(text)
+                        }
                     }
                 }
             }
         }
     }
+
+    // extra stuff
+    if (language === 'es') {
+        $look.text(COPY.spanish['look-branding']);
+        $deepLinkTxt.text(COPY.spanish['deep-link-notice']);
+    }
+
+
 }
 
 $(onDocumentReady);
