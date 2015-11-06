@@ -65,13 +65,15 @@ var GRAPHICS = (function() {
     }
 
     var renderLine = function(graphicID) {
-        var containerWidth = $(window).width() * 0.7;
-        if (containerWidth <= MOBILE_THRESHOLD) {
+        var w = $(window).width();
+
+        if (w <= MOBILE_THRESHOLD) {
             isMobile = true;
         } else {
             isMobile = false;
         }
 
+        var containerWidth = isMobile ? (w * 0.85) : (w * 0.6);
         var container = '#graphic-' + graphicID;
 
         $(container).empty();
@@ -91,7 +93,7 @@ var GRAPHICS = (function() {
         var dateColumn = 'date';
         var valueColumn = 'amt';
 
-        var aspectWidth = isMobile ? 1 : 2.1;
+        var aspectWidth = isMobile ? 1 : 2;
         var aspectHeight = isMobile ? 1 : 1;
 
         var margins = {
