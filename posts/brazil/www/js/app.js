@@ -80,9 +80,6 @@ var onDocumentReady = function() {
         touch: { swipeTolerance: swipeTolerance }
     });
 
-    onPageLoad();
-    onResize();
-
     slideTemplateTextLocation = {
         'start': {
             'text1': '.lede',
@@ -100,12 +97,22 @@ var onDocumentReady = function() {
         }
     }
 
+    onPageLoad();
+    onResize();
+
     $(window).on("orientationchange", onResize);
     $(window).resize(onResize);
     $document.keydown(onDocumentKeyDown);
 }
 
 var onPageLoad = function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    var languageCode = userLang.substring(0,2);
+
+    if (languageCode === 'es' || languageCode === 'pt') {
+        switchLanguage(languageCode);
+    }
+
     GRAPHICS.loadGraphic('porto-velho');
     GRAPHICS.loadGraphic('amazon');
     GRAPHICS.loadGraphic('amazon-in-brazil');
