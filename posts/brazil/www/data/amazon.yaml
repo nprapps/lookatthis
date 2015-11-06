@@ -1,4 +1,4 @@
-bbox: '-85.4 -55.4 -29.3 13.0'
+bbox: '-83.0 -55.4 -29.3 13.0'
 layers:
     continents:
         type: 'shp'
