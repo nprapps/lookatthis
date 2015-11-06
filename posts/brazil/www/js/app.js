@@ -91,6 +91,11 @@ var onDocumentReady = function() {
         'graphic': {
             'text1': '.graphic-text',
             'caption_and_credit': '.credit'
+        },
+        'next-post': {
+            'text1': '.up-next-description h3',
+            'text2': '.up-next-description p',
+            'media_credit': '.media-credit'
         }
     }
 
