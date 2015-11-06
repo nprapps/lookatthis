@@ -389,11 +389,12 @@ var switchLanguage = function(language) {
                 for (var j = 0; j < COPY.content.length; j++) {
                     if ($currentSlide.attr('id') === COPY.content[j].id) {
                         var text = COPY.content[j][languageColumn];
-
-                        if (text && text[0] === '<') {
-                            container.html(text);
-                        } else {
-                            container.text(text)
+                        if (text) {
+                            if (text[0] === '<' || text[0] === '(') {
+                                container.html(text);
+                            } else {
+                                container.text(text)
+                            }
                         }
                     }
                 }
