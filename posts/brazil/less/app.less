@@ -452,6 +452,12 @@ p {
     color: rgba(255, 255, 255, .8);
     text-shadow: 2px 2px 2px #111;
 
+    span {
+        visibility: hidden;
+        @media @screen-small-above {
+            visibility: visible;
+        }
+    }
 
     @media @screen-small-above {
         position: absolute;
@@ -465,16 +471,21 @@ p {
         display: inline-block;
         background-color: transparent;
         text-transform: uppercase;
-        margin: 0 0 0 5px;
+        margin: 0 0 0 15px;
         padding: 0;
         border: 0;
-        color: #fff;
-        text-shadow: 2px 2px 2px #111;
+        color: rgba(255, 255, 255, .8);
+        text-shadow: 1px 1px 1px #000;
         line-height: 1;
         outline: 0;
 
         &:hover {
             color: #ffcc33;
+        }
+
+        @media @screen-small-above {
+            color: #fff;
+            margin: 0 0 0 5px;
         }
     }
 }
