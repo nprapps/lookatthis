@@ -423,11 +423,10 @@ var onResize = function() {
     /*
      * Resize the content
      */
+
     w = $(window).width();
     h = $(window).height();
-    if ($section.height() < h) {
-        $section.height(h);
-    }
+    $section.height(h);
     $slides.width(w);
 
     if ($thisSlide.hasClass('graphic')) {
@@ -501,8 +500,6 @@ var switchLanguage = function(language) {
         $look.text(COPY.english['look-branding']);
         $deepLinkTxt.text(COPY.english['deep-link-notice']);
     }
-
-
 }
 
 $(onDocumentReady);
