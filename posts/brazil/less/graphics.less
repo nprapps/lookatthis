@@ -169,8 +169,8 @@
         &.primary {
             stroke: white;
             stroke-width: 1.5px;
-            // fill: black;
-            // fill-opacity: 0.3;
+            fill: black;
+            fill-opacity: 0.4;
         }
 
         &.costa-rica, &.nicaragua, &.panama { display: none; }
@@ -178,7 +178,6 @@
 
     .amazon path {
         fill: #D8931D;
-        fill-opacity: 0.75;
     }
 
     .states path {
@@ -187,8 +186,8 @@
     }
 
     .states .rondnia {
-        fill: #D8931D;
-        stroke: white;
+        fill: white;
+        stroke: transparent;
     }
 
     path.landmass { fill: transparent; }
@@ -212,6 +211,17 @@
         }
     }
 
+    .amazon-label text {
+        fill: white;
+        font-size: 65%;
+        text-anchor: start;
+        font-family: 'Gotham SSm', Helvetica, Arial,sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #graphic-porto-velho .amazon-label text {
+        display: none;
+    }
     .country-labels text {
         display: none;
         fill: #787878;
@@ -224,10 +234,13 @@
 
         &.primary {
             fill: white;
-            font-weight: 700;
-            font-size: 110%;
+            font-size: 125%;
         }
         &.brazil { display: block; }
+    }
+
+    #graphic-porto-velho .country-labels text {
+        fill-opacity: 0.7;
     }
 
     .scale-bar {
