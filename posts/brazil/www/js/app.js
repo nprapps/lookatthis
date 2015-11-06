@@ -461,7 +461,11 @@ var switchLanguage = function(language) {
         for (var column in textLocations) {
             if (textLocations.hasOwnProperty(column)) {
                 var container = $currentSlide.find(textLocations[column]);
-                var languageColumn = language + '_' + column;
+                if (language !== 'en') {
+                    var languageColumn = language + '_' + column;
+                } else {
+                    var languageColumn = column;
+                }
 
                 for (var j = 0; j < COPY.content.length; j++) {
                     if ($currentSlide.attr('id') === COPY.content[j].id) {
@@ -482,6 +486,12 @@ var switchLanguage = function(language) {
     if (language === 'es') {
         $look.text(COPY.spanish['look-branding']);
         $deepLinkTxt.text(COPY.spanish['deep-link-notice']);
+    } else if (language === 'pt') {
+        $look.text(COPY.portuguese['look-branding']);
+        $deepLinkTxt.text(COPY.portuguese['deep-link-notice']);
+    } else {
+        $look.text(COPY.english['look-branding']);
+        $deepLinkTxt.text(COPY.english['deep-link-notice']);
     }
 
 
