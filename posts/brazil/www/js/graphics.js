@@ -471,11 +471,7 @@ var GRAPHICS = (function() {
         'dy': '4'
     }
 
-    var CITY_LABEL_ADJUSTMENTS = {
-        'Porto Velho': {'dx': 15 }
-    }
-
-    var COUNTRY_LABEL_ADJUSTMENTS = {
+    var LABEL_ADJUSTMENTS = {
         'Brazil': { 'dx': 15, 'dy': 15 },
         'Rondônia': { 'dx': 6, 'dy': -20 },
         'AMAZON BASIN': { 'dx': -22 }
@@ -631,13 +627,13 @@ var GRAPHICS = (function() {
                         return 'translate(' + path.centroid(d) + ')';
                     })
                     .attr('text-anchor', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
                     })
                     .attr('dx', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dx');
                     })
                     .attr('dy', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
                         return 'Amazon Basin';
@@ -728,13 +724,13 @@ var GRAPHICS = (function() {
                         return 'translate(' + path.centroid(d) + ')';
                     })
                     .attr('text-anchor', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
                     })
                     .attr('dx', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dx');
                     })
                     .attr('dy', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
                         return d['properties']['country'];
@@ -754,13 +750,13 @@ var GRAPHICS = (function() {
                         return 'translate(' + path.centroid(d) + ')';
                     })
                     .attr('text-anchor', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'text-anchor');
                     })
                     .attr('dx', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dx');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dx');
                     })
                     .attr('dy', function(d) {
-                        return positionLabel(COUNTRY_LABEL_ADJUSTMENTS, d['id'], 'dy');
+                        return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
                         return d['properties']['state'];
