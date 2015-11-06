@@ -10,6 +10,7 @@ var $startCardButton;
 var isTouch = Modernizr.touch;
 var $modalClose
 var $deepLinkNotice;
+var $translatePersistent;
 var $thisSlide;
 var $startOver;
 
@@ -47,6 +48,7 @@ var onDocumentReady = function() {
     $upNext = $('.up-next');
     $modalClose = $('.close-modal');
     $deepLinkNotice = $('.deep-link-notice');
+    $translatePersistent = $('.translate-persistent');
     $startOver = $('.start-over');
 
     $startCardButton.on('click', onStartCardButtonClick);
@@ -195,13 +197,16 @@ var showNavigation = function(index) {
     */
     if (index === 0) {
         $arrows.hide();
+        $translatePersistent.hide();
         $previousArrow.css('left', 0);
         $nextArrow.css('right', 0);
     } else if ($slides.last().index() === index) {
         $arrows.show();
+        $translatePersistent.hide();
         $nextArrow.hide().css('right', 0);
     } else {
         $arrows.show();
+        $translatePersistent.show();
     }
 
     if (isTouch) {
