@@ -81,13 +81,16 @@ var onDocumentReady = function() {
             'text3': '.btn-go .txt'
         },
         'slide': {
-            'text1': '.slide-content'
+            'text1': '.slide-content',
+            'caption_and_credit': '.credit'
         },
         'slide-bottom': {
-            'text1': '.slide-content-bottom-item'
+            'text1': '.slide-content-bottom-item',
+            'caption_and_credit': '.credit'
         },
         'graphic': {
-            'text1': '.graphic-text'
+            'text1': '.graphic-text',
+            'caption_and_credit': '.credit'
         }
     }
 
