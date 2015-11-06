@@ -7,14 +7,16 @@
     </div>
 
     <div class="intro-text">
-        {{ row.text1|smarty }}
-        <button class="btn btn-go">{{ row.text3 }} <i class="fa fa-angle-right"></i></button>
+        <div class="lede">
+            {{ row.text1|smarty }}
+        </div>
+        <button class="btn btn-go"><span class="txt">{{ row.text3 }}</span> <i class="fa fa-angle-right"></i></button>
     </div>
 
     <div class="translate-start">
-        <button class="btn-translate eng">English</button>
-        <button class="btn-translate sp">Español</button>
-        <button class="btn-translate por">Português</button>
+        <button class="btn-translate" data-language="en">English</button>
+        <button class="btn-translate" data-language="es">Español</button>
+        <button class="btn-translate" data-language="pt">Português</button>
     </div>
 
 {% endblock %}
