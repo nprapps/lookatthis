@@ -50,11 +50,6 @@
 
 .slide.graphic {
 
-    p {
-        margin: 10px 0 0;
-        max-width: 700px;
-    }
-
     .nowrap {
         white-space: nowrap;
     }
@@ -93,12 +88,22 @@
     /* chart styles */
     .chart { position: relative; }
 
-    .graphic-text {
-        max-width: 300px;
-        margin: 0 auto;
+    .graphic-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding-bottom: 4rem;
 
-        @media @screen-small-above {
-            max-width: 30rem;
+        .graphic-text {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 0 20px;
+
+            @media @screen-small-above {
+                max-width: 30rem;
+                padding: 0;
+            }
         }
     }
 
@@ -148,6 +153,8 @@
 
     svg {
         font-size: 20px;
+        display: block;
+        margin: 0 auto;
     }
 
     .countries path, .continents path {
