@@ -91,7 +91,7 @@ var GRAPHICS = (function() {
         var dateColumn = 'date';
         var valueColumn = 'amt';
 
-        var aspectWidth = isMobile ? 1 : 2;
+        var aspectWidth = isMobile ? 1 : 2.1;
         var aspectHeight = isMobile ? 1 : 1;
 
         var margins = {
