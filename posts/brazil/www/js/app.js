@@ -31,7 +31,7 @@ var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/post
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var completion = 0;
-var swipeTolerance = 40;
+var swipeTolerance = 10;
 var touchFactor = 1;
 
 // global objects
@@ -69,14 +69,6 @@ var onDocumentReady = function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
-
-    if (isTouch) {
-        $arrows.on('touchstart', fakeMobileHover);
-        $arrows.on('touchend', rmFakeMobileHover);
-        $body.on('touchstart', onTouchStart);
-        $body.on('touchmove', onTouchMove);
-        $body.on('touchend', onTouchEnd);
-    }
 
     $.deck($slides, {
         touch: { swipeTolerance: swipeTolerance }
@@ -319,28 +311,6 @@ var onNextPostClick = function(e) {
     return true;
 }
 
-var fakeMobileHover = function() {
-    /*
-     * Fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': '#fff',
-        'color': '#000',
-        'opacity': .9
-    });
-}
-
-var rmFakeMobileHover = function() {
-    /*
-     * Remove fake hover when tapping buttons
-     */
-    $(this).css({
-        'background-color': 'rgba(0, 0, 0, 0.2)',
-        'color': '#fff',
-        'opacity': .3
-    });
-}
-
 var onNextArrowClick = function() {
     /*
      * Next arrow click
@@ -355,60 +325,6 @@ var onPreviousArrowClick = function() {
      */
     lastSlideExitEvent = 'exit-previous-button-click';
     $.deck('prev');
-}
-
-var onTouchStart = function(e) {
-    /*
-     * Capture start position when swipe initiated
-     */
-    if (!startTouch) {
-        startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
-    }
-}
-
-var onTouchMove = function(e) {
-    /*
-     * Track finger swipe
-     */
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (!startTouch || touch.identifier !== startTouch.identifier) {
-            return true;
-        }
-        var yDistance = touch.screenY - startTouch.screenY;
-        var xDistance = touch.screenX - startTouch.screenX;
-        var direction = (xDistance > 0) ? 'right' : 'left';
-
-        if (Math.abs(yDistance) < Math.abs(xDistance)) {
-            e.preventDefault();
-        }
-
-        if (direction == 'right' && xDistance > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-right';
-        } else if (direction == 'right' && xDistance < swipeTolerance) {
-            $previousArrow.filter(':visible').css({
-                'left': (xDistance * touchFactor) + 'px'
-            });
-        }
-
-        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
-            lastSlideExitEvent = 'exit-swipe-left';
-        } else if (direction == 'left' && Math.abs(xDistance) < swipeTolerance) {
-            $nextArrow.filter(':visible').css({
-                'right': (Math.abs(xDistance) * touchFactor) + 'px'
-            });
-        }
-    });
-}
-
-var onTouchEnd = function(e) {
-    /*
-     * Clear swipe start position when swipe ends
-     */
-    $.each(e.originalEvent.changedTouches, function(i, touch) {
-        if (startTouch && touch.identifier === startTouch.identifier) {
-            startTouch = undefined;
-        }
-    });
 }
 
 var resetArrows = function() {
