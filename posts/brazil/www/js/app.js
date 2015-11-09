@@ -40,6 +40,7 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var completion = 0;
 var swipeTolerance = 10;
 var touchFactor = 1;
+var slidesSeen = 1;
 
 // global objects
 var swiper;
@@ -283,10 +284,6 @@ var onSlideChange = function(e, fromIndex, toIndex) {
         PROGRESS_BAR.animateProgress(toIndex);
     }
 
-    if ($thisSlide.hasClass('fade')) {
-        $thisSlide.find('.imgLiquid.second').css('opacity', 1);
-    }
-
     // empty out the resize function
     var graphicID = $thisSlide.attr('id');
     if ($thisSlide.hasClass('graphic') && graphicID !== 'locator-map') {
@@ -295,6 +292,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+
+    ANALYTICS.trackEvent('slides-seen', null, slidesSeen);
 }
 
 var onStartCardButtonClick = function() {
