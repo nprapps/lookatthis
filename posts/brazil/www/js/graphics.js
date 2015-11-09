@@ -746,7 +746,9 @@ var GRAPHICS = (function() {
                         return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return translatedText[d['id']][activeLanguage];
+                        if (translatedText[d['id']]) {
+                            return translatedText[d['id']][activeLanguage];
+                        }
                     });
         }
 
