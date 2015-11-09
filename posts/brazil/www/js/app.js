@@ -32,6 +32,8 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var activeLanguage = 'en';
+var fromStart = true;
+var viaDeepLink = false;
 
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -39,6 +41,7 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var completion = 0;
 var swipeTolerance = 10;
 var touchFactor = 1;
+var slidesSeen = 1;
 
 // global objects
 var swiper;
@@ -80,6 +83,11 @@ var onDocumentReady = function() {
 
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
+
+    if (window.location.hash) {
+        fromStart = false;
+        viaDeepLink = true;
+    }
 
     $.deck($slides, {
         touch: { swipeTolerance: swipeTolerance }
@@ -125,6 +133,7 @@ var onPageLoad = function() {
     var languageCode = userLang.substring(0,2);
     if (languageCode === 'es' || languageCode === 'pt') {
         switchLanguage(languageCode);
+        ANALYTICS.trackEvent('language-detected', languageCode);
     }
 
     GRAPHICS.loadGraphic('porto-velho');
@@ -263,16 +272,19 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     $thisSlide = $slides.eq(toIndex);
     lazyLoad(toIndex);
     showNavigation(toIndex);
-    trackCompletion(toIndex);
     checkOverflow(toIndex);
     document.activeElement.blur();
 
-    if (APP_CONFIG.PROGRESS_BAR) {
-        PROGRESS_BAR.animateProgress(toIndex);
+    if (toIndex === 0) {
+        fromStart = true;
+        ANALYTICS.trackEvent('reached-first-slide');
+    }
+    if (fromStart) {
+        trackCompletion(toIndex);
     }
 
-    if ($thisSlide.hasClass('fade')) {
-        $thisSlide.find('.imgLiquid.second').css('opacity', 1);
+    if (APP_CONFIG.PROGRESS_BAR) {
+        PROGRESS_BAR.animateProgress(toIndex);
     }
 
     // empty out the resize function
@@ -283,6 +295,8 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 
     ANALYTICS.exitSlide(fromIndex.toString());
     ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+
+    ANALYTICS.trackEvent('slides-seen', null, slidesSeen);
 }
 
 var onStartCardButtonClick = function() {
@@ -290,6 +304,7 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
+    ANALYTICS.begin();
     $.deck('next');
 }
 
