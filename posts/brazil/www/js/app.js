@@ -33,6 +33,7 @@ var startTouch;
 var lastSlideExitEvent;
 var activeLanguage = 'en';
 var fromStart = true;
+var viaDeepLink = false;
 
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -85,6 +86,7 @@ var onDocumentReady = function() {
 
     if (window.location.hash) {
         fromStart = false;
+        viaDeepLink = true;
     }
 
     $.deck($slides, {
