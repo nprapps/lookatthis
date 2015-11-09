@@ -70,7 +70,6 @@ var onDocumentReady = function() {
     $publishedOnTxt = $('.project-credits .published-on');
     $publishedOnDate = $('.project-credits .date');
 
-
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
     $modalClose.on('click', onModalCloseClick);
@@ -94,15 +93,15 @@ var onDocumentReady = function() {
         },
         'slide': {
             'text1': '.slide-content',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'slide-bottom': {
             'text1': '.slide-content-bottom-item',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'graphic': {
             'text1': '.graphic-text',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'next-post': {
             'text1': '.up-next-description h3',
