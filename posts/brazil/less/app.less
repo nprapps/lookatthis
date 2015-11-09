@@ -139,6 +139,24 @@
     -webkit-flex-direction: column;
    flex-direction: column;
 }
+//map hack to align the maps with different amounts of text below them.
+
+.slide.widen-text {
+    .graphic-bottom {
+        padding-bottom: 3.9rem;
+
+        @media @screen-small-above {
+            padding-bottom: 4rem;
+        }
+
+        .graphic-text {
+            @media @screen-small-above {
+                max-width: 35rem;
+            }
+        }
+    }
+
+}
 
 //global styles
 
