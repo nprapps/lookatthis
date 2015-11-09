@@ -302,6 +302,7 @@ var onStartCardButtonClick = function() {
     * Called when clicking the "go" button.
     */
     lastSlideExitEvent = 'exit-start-card-button-click';
+    ANALYTICS.begin();
     $.deck('next');
 }
 
