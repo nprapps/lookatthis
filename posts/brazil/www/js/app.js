@@ -277,6 +277,7 @@ var onSlideChange = function(e, fromIndex, toIndex) {
 
     if (toIndex === 0) {
         fromStart = true;
+        ANALYTICS.trackEvent('reached-first-slide');
     }
     if (fromStart) {
         trackCompletion(toIndex);
