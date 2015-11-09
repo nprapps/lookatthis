@@ -164,19 +164,22 @@
         margin: 0 auto;
     }
 
-    .countries path, .continents path {
+    .continents path {
         fill: transparent;
         stroke: #ccc;
         stroke-width: 1px;
+    }
 
-        &.primary {
+    .countries path {
+        stroke: transparent;
+        fill: black;
+        fill-opacity: 0.4;
+        &.brazil {
             stroke: white;
             stroke-width: 1.5px;
-            fill: black;
+            fill: transparent;
             fill-opacity: 0.4;
         }
-
-        &.costa-rica, &.nicaragua, &.panama { display: none; }
     }
 
     .amazon path {
@@ -235,11 +238,11 @@
         font-weight: normal;
         -webkit-font-smoothing: antialiased;
 
-        &.primary {
+        &.brazil {
+            display: block;
             fill: white;
             font-size: 125%;
         }
-        &.brazil { display: block; }
     }
 
     #graphic-porto-velho .country-labels text {

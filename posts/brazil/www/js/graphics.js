@@ -40,13 +40,12 @@ var GRAPHICS = (function() {
     var loadGraphic = function(graphicID) {
         graphicData = GRAPHICS_CONFIG[graphicID]['data'];
 
-        if (!GRAPHICS_CONFIG[graphicID]['formatted']) {
+        if (GRAPHICS_CONFIG[graphicID]['type'] === 'line') {
             GRAPHICS_CONFIG[graphicID].format(graphicID);
             GRAPHICS_CONFIG[graphicID]['formatted'] = true;
-        }
-
-        if (!GRAPHICS_CONFIG[graphicID]['skipRender']) {
             GRAPHICS_CONFIG[graphicID].render(graphicID);
+        } else {
+            GRAPHICS_CONFIG[graphicID].format(graphicID);
         }
     }
 
@@ -477,6 +476,19 @@ var GRAPHICS = (function() {
         'AMAZON BASIN': { 'dx': -22 }
     }
 
+    var translatedText = {
+        'Brazil': {
+            'en': 'Brazil',
+            'es': 'Brasil',
+            'pt': 'Brasil'
+        },
+        'AMAZON BASIN': {
+            'en': 'Amazon Basin',
+            'es': 'Cuenca del Amazonas',
+            'pt': 'Bacia Amazônica'
+        }
+    }
+
     var geoData = null;
 
     var formatMapData = function(graphicID) {
@@ -636,7 +648,7 @@ var GRAPHICS = (function() {
                         return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return 'Amazon Basin';
+                        return translatedText[d['id']][activeLanguage];
                     });
         }
 
@@ -733,7 +745,9 @@ var GRAPHICS = (function() {
                         return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return d['properties']['country'];
+                        if (translatedText[d['id']]) {
+                            return translatedText[d['id']][activeLanguage];
+                        }
                     });
         }
 
@@ -788,6 +802,7 @@ var GRAPHICS = (function() {
     var GRAPHICS_CONFIG = {
         'deforestation-annual': {
             'data': COPY['deforestation-annual'],
+            'type': 'line',
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
@@ -798,6 +813,7 @@ var GRAPHICS = (function() {
         },
         'deforestation-cumulative': {
             'data': COPY['deforestation-cumulative'],
+            'type': 'line',
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
@@ -808,6 +824,7 @@ var GRAPHICS = (function() {
         },
         'deforestation-cumulative-2': {
             'data': COPY['deforestation-cumulative'],
+            'type': 'line',
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
@@ -818,6 +835,7 @@ var GRAPHICS = (function() {
         },
         'gdp': {
             'data': COPY['gdp'],
+            'type': 'line',
             'format': formatLineChart,
             'render': renderLine,
             'formatted': false,
@@ -828,23 +846,23 @@ var GRAPHICS = (function() {
         },
         'porto-velho': {
             'data': 'data/portovelho.json',
+            'type': 'map',
             'format': formatMapData,
             'render': renderMap,
-            'formatted': false,
             'skipRender': true
         },
         'amazon': {
             'data': 'data/amazon.json',
+            'type': 'map',
             'format': formatMapData,
             'render': renderMap,
-            'formatted': false,
             'skipRender': true
         },
         'amazon-in-brazil': {
             'data': 'data/amazon-in-brazil.json',
+            'type': 'map',
             'format': formatMapData,
             'render': renderMap,
-            'formatted': false,
             'skipRender': true
         },
     }

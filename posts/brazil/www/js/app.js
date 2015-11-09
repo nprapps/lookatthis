@@ -17,6 +17,11 @@ var $startOver;
 var $translateBtns;
 var $look;
 var $deepLinkTxt;
+var $translatePersistentTxt;
+var $projectCreditsTxt;
+var $upNextTxt
+var $publishedOnTxt;
+var $publishedOnDate;
 
 // constants
 var aspectWidth = 16;
@@ -26,6 +31,7 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var activeLanguage = 'en';
 
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -58,6 +64,11 @@ var onDocumentReady = function() {
     $translateBtns = $('.btn-translate');
     $look = $('.look-branding h5');
     $deepLinkTxt = $('.deep-link-notice .txt');
+    $translatePersistentTxt = $('.translate-persistent span');
+    $projectCreditsTxt = $('.project-credits h4');
+    $upNextTxt = $('.up-next-description h5');
+    $publishedOnTxt = $('.project-credits .published-on');
+    $publishedOnDate = $('.project-credits .date');
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -82,15 +93,15 @@ var onDocumentReady = function() {
         },
         'slide': {
             'text1': '.slide-content',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'slide-bottom': {
             'text1': '.slide-content-bottom-item',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'graphic': {
             'text1': '.graphic-text',
-            'caption_and_credit': '.credit'
+            'caption_and_credit': '.credit p'
         },
         'next-post': {
             'text1': '.up-next-description h3',
@@ -351,6 +362,7 @@ var onResize = function() {
 var onModalCloseClick = function() {
     $deepLinkNotice.css('display', 'none');
     $.cookie('npr_deeplink_status', '1', { expires: 1});
+    ANALYTICS.trackEvent('close-modal');
 }
 
 // If modal status is 1, hide the content warning on page load.
@@ -364,14 +376,26 @@ var checkModalStatus = function() {
 
 var onStartOverClick = function() {
     $.deck('go', 0);
+    lastSlideExitEvent = 'start-over-click'
 }
 
-var onTranslateBtnClick = function() {
+var onTranslateBtnClick = function(e) {
     var language = $(this).data('language');
     switchLanguage(language);
+    document.activeElement.blur();
+
+    if ($(this).parent('.translate-persistent').length > 0) {
+        ANALYTICS.trackEvent('persistent-translate-btn-click', language);
+    }
+
+    if ($(this).parent('.translate-start').length > 0) {
+        ANALYTICS.trackEvent('start-translate-btn-click', language);
+    }
 }
 
 var switchLanguage = function(language) {
+    activeLanguage = language;
+
     for (var i = 0; i < $slides.length; i++) {
         var $currentSlide = $slides.eq(i);
         var template = $currentSlide.data('template');
@@ -403,16 +427,19 @@ var switchLanguage = function(language) {
     }
 
     // extra stuff
-    if (language === 'es') {
-        $look.text(COPY.spanish['look-branding']);
-        $deepLinkTxt.text(COPY.spanish['deep-link-notice']);
-    } else if (language === 'pt') {
-        $look.text(COPY.portuguese['look-branding']);
-        $deepLinkTxt.text(COPY.portuguese['deep-link-notice']);
-    } else {
-        $look.text(COPY.english['look-branding']);
-        $deepLinkTxt.text(COPY.english['deep-link-notice']);
-    }
+    $look.text(COPY[language]['look_branding']);
+    $deepLinkTxt.html(COPY[language]['deep_link_notice']);
+    $translatePersistentTxt.text(COPY[language]['translate_persistent']);
+    $projectCreditsTxt.text(COPY[language]['project_credits']);
+    $upNextTxt.text(COPY[language]['up_next']);
+    $publishedOnTxt.text(COPY[language]['published_on']);
+    $publishedOnDate.text(COPY[language]['date']);
+    document.title = COPY[language]['title'];
+
+    // reload the maps with translated text
+    GRAPHICS.loadGraphic('porto-velho');
+    GRAPHICS.loadGraphic('amazon');
+    GRAPHICS.loadGraphic('amazon-in-brazil');
 }
 
 $(onDocumentReady);
