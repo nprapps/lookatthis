@@ -31,6 +31,7 @@ var w;
 var h;
 var startTouch;
 var lastSlideExitEvent;
+var activeLanguage = 'en';
 
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -384,6 +385,8 @@ var onTranslateBtnClick = function(e) {
 }
 
 var switchLanguage = function(language) {
+    activeLanguage = language;
+
     for (var i = 0; i < $slides.length; i++) {
         var $currentSlide = $slides.eq(i);
         var template = $currentSlide.data('template');
@@ -423,6 +426,11 @@ var switchLanguage = function(language) {
     $publishedOnTxt.text(COPY[language]['published_on']);
     $publishedOnDate.text(COPY[language]['date']);
     document.title = COPY[language]['title'];
+
+    // reload the maps with translated text
+    GRAPHICS.loadGraphic('porto-velho');
+    GRAPHICS.loadGraphic('amazon');
+    GRAPHICS.loadGraphic('amazon-in-brazil');
 }
 
 $(onDocumentReady);
