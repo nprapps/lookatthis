@@ -363,6 +363,7 @@ var onResize = function() {
 var onModalCloseClick = function() {
     $deepLinkNotice.css('display', 'none');
     $.cookie('npr_deeplink_status', '1', { expires: 1});
+    ANALYTICS.trackEvent('close-modal');
 }
 
 // If modal status is 1, hide the content warning on page load.
@@ -376,12 +377,21 @@ var checkModalStatus = function() {
 
 var onStartOverClick = function() {
     $.deck('go', 0);
+    lastSlideExitEvent = 'start-over-click'
 }
 
 var onTranslateBtnClick = function(e) {
     var language = $(this).data('language');
     switchLanguage(language);
     document.activeElement.blur();
+
+    if ($(this).parent('.translate-persistent').length > 0) {
+        ANALYTICS.trackEvent('persistent-translate-btn-click', language);
+    }
+
+    if ($(this).parent('.translate-start').length > 0) {
+        ANALYTICS.trackEvent('start-translate-btn-click', language);
+    }
 }
 
 var switchLanguage = function(language) {

@@ -648,7 +648,6 @@ var GRAPHICS = (function() {
                         return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        console.log(activeLanguage, translatedText[d['id']][activeLanguage]);
                         return translatedText[d['id']][activeLanguage];
                     });
         }
