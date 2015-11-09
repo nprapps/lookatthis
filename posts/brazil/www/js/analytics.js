@@ -151,6 +151,8 @@ var ANALYTICS = (function () {
             eventData['eventValue'] = value
         }
 
+        eventData['dimension4'] = activeLanguage;
+
         ga('send', eventData);
     }
 

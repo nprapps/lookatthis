@@ -125,6 +125,7 @@ var onPageLoad = function() {
     var languageCode = userLang.substring(0,2);
     if (languageCode === 'es' || languageCode === 'pt') {
         switchLanguage(languageCode);
+        ANALYTICS.trackEvent('language-detected', languageCode);
     }
 
     GRAPHICS.loadGraphic('porto-velho');
