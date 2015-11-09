@@ -6,7 +6,7 @@
     <a href="{{ row.text3|smarty }}" class="up-next-wrapper cf">
         <img src="{{ row.foreground_media }}">
         <div class="up-next-description">
-            <h5>Up Next</h5>
+            <h5>{{ COPY.en.up_next }}</h5>
             <h3>{{ row.text1|smarty }}</h3>
             <p>{{ row.text2|smarty }}</p>
         </div>
@@ -14,12 +14,12 @@
 
 
     <div class="project-credits">
-        <h4>Project Credits</h4>
+        <h4>{{ COPY.en.project_credits }}</h4>
         <div class="media-credit">
             {{ row.media_credit|smarty }}
         </div>
 
-        <h6>Published On: {{ COPY.post_metadata.publish_date|smarty }}</h6>
+        <h6><span class="published-on">{{ COPY.en.published_on }}</span> <span class="date">{{ COPY.en.date|smarty }}</span></h6>
     </div>
 
 </div>

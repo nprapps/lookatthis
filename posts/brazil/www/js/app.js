@@ -17,6 +17,11 @@ var $startOver;
 var $translateBtns;
 var $look;
 var $deepLinkTxt;
+var $translatePersistentTxt;
+var $projectCreditsTxt;
+var $upNextTxt
+var $publishedOnTxt;
+var $publishedOnDate;
 
 // constants
 var aspectWidth = 16;
@@ -58,6 +63,12 @@ var onDocumentReady = function() {
     $translateBtns = $('.btn-translate');
     $look = $('.look-branding h5');
     $deepLinkTxt = $('.deep-link-notice .txt');
+    $translatePersistentTxt = $('.translate-persistent span');
+    $projectCreditsTxt = $('.project-credits h4');
+    $upNextTxt = $('.up-next-description h5');
+    $publishedOnTxt = $('.project-credits .published-on');
+    $publishedOnDate = $('.project-credits .date');
+
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
@@ -366,9 +377,10 @@ var onStartOverClick = function() {
     $.deck('go', 0);
 }
 
-var onTranslateBtnClick = function() {
+var onTranslateBtnClick = function(e) {
     var language = $(this).data('language');
     switchLanguage(language);
+    document.activeElement.blur();
 }
 
 var switchLanguage = function(language) {
@@ -403,16 +415,14 @@ var switchLanguage = function(language) {
     }
 
     // extra stuff
-    if (language === 'es') {
-        $look.text(COPY.spanish['look-branding']);
-        $deepLinkTxt.text(COPY.spanish['deep-link-notice']);
-    } else if (language === 'pt') {
-        $look.text(COPY.portuguese['look-branding']);
-        $deepLinkTxt.text(COPY.portuguese['deep-link-notice']);
-    } else {
-        $look.text(COPY.english['look-branding']);
-        $deepLinkTxt.text(COPY.english['deep-link-notice']);
-    }
+    $look.text(COPY[language]['look_branding']);
+    $deepLinkTxt.html(COPY[language]['deep_link_notice']);
+    $translatePersistentTxt.text(COPY[language]['translate_persistent']);
+    $projectCreditsTxt.text(COPY[language]['project_credits']);
+    $upNextTxt.text(COPY[language]['up_next']);
+    $publishedOnTxt.text(COPY[language]['published_on']);
+    $publishedOnDate.text(COPY[language]['date']);
+    document.title = COPY[language]['title'];
 }
 
 $(onDocumentReady);
