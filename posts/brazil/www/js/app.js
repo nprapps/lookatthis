@@ -91,6 +91,7 @@ var onDocumentReady = function() {
     if (window.location.hash) {
         fromStart = false;
         viaDeepLink = true;
+        ANALYTICS.trackEvent('enter-deep-link', window.location.hash);
     }
 
     $.deck($slides, {
