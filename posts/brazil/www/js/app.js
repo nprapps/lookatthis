@@ -39,7 +39,7 @@ var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/post
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 
 var completion = 0;
-var swipeTolerance = 10;
+var swipeTolerance = 60;
 var touchFactor = 1;
 var slidesSeen = 1;
 
@@ -78,6 +78,11 @@ var onDocumentReady = function() {
     $modalClose.on('click', onModalCloseClick);
     $startOver.on('click', onStartOverClick);
     $translateBtns.on('click', onTranslateBtnClick);
+
+    $body.on('touchstart', onTouchStart);
+    $body.on('touchmove', onTouchMove);
+    $body.on('touchend', onTouchEnd);
+
 
     $document.on('deck.change', onSlideChange);
 
@@ -294,7 +299,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }
 
     ANALYTICS.exitSlide(fromIndex.toString());
-    ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    console.log(lastSlideExitEvent);
+    if (lastSlideExitEvent) {
+        ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
+    }
 
     ANALYTICS.trackEvent('slides-seen', null, slidesSeen);
 }
@@ -406,6 +414,56 @@ var onTranslateBtnClick = function(e) {
     if ($(this).parent('.translate-start').length > 0) {
         ANALYTICS.trackEvent('start-translate-btn-click', language);
     }
+}
+
+var onTouchStart = function(e) {
+    /*
+     * Capture start position when swipe initiated
+     */
+    if (!startTouch) {
+        startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
+    }
+}
+
+var onTouchMove = function(e) {
+    /*
+     * Track finger swipe
+     */
+
+
+    $.each(e.originalEvent.changedTouches, function(i, touch) {
+        if (!startTouch || touch.identifier !== startTouch.identifier) {
+            return true;
+        }
+
+
+        var yDistance = touch.screenY - startTouch.screenY;
+        var xDistance = touch.screenX - startTouch.screenX;
+        var direction = (xDistance > 0) ? 'right' : 'left';
+
+        if (Math.abs(yDistance) < Math.abs(xDistance)) {
+            e.preventDefault();
+        }
+
+        if (direction == 'right' && xDistance > swipeTolerance) {
+            lastSlideExitEvent = 'exit-swipe-right';
+        }
+
+        if (direction == 'left' && Math.abs(xDistance) > swipeTolerance) {
+            lastSlideExitEvent = 'exit-swipe-left';
+        }
+    });
+}
+
+var onTouchEnd = function(e) {
+    /*
+     * Clear swipe start position when swipe ends
+     */
+    $.each(e.originalEvent.changedTouches, function(i, touch) {
+        if (startTouch && touch.identifier === startTouch.identifier) {
+            startTouch = undefined;
+        }
+    });
 }
 
 var switchLanguage = function(language) {
