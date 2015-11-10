@@ -101,30 +101,40 @@
     }
     .translate-start {
         text-align: center;
-        max-width: 20rem;
-        margin: 0 auto;
+
+        margin: 40px auto 0 auto;
 
         @media @screen-small-above {
             max-width: 30rem;
+        }
+
+        span {
+            position: relative;
+            top: 1px;
+            font-size: 1rem;
+            text-shadow: 2px 2px 2px #111;
+            text-transform: uppercase;
+            color: #ffcc00;
+            font-style: italic;
         }
 
         .btn-translate {
             display: inline-block;
             text-transform: uppercase;
             background-color: transparent;
-            margin: 30px 15px;
+            margin: 0 15px;
             padding: 0 0 4px 0;
             border: 0;
-            border-bottom: 2px solid #fff;
-            color: #fff;
+            border-bottom: 2px solid #ffcc33;
+            color: #ffcc33;
             text-shadow: 2px 2px 2px #111;
             line-height: 1;
             outline: 0;
             font-size: .8rem;
 
             &:hover {
-                color: #ffcc33;
-                border-bottom: 2px solid #ffcc33;
+                color: #fff;
+                border-bottom: 2px solid #fff;
             }
         }
     }
