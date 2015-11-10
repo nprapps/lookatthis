@@ -9,12 +9,13 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
-var $modalClose
+var $modalClose;
 var $deepLinkNotice;
 var $translatePersistent;
 var $thisSlide;
 var $startOver;
 var $translateBtns;
+var $upNext;
 var $look;
 var $deepLinkTxt;
 var $translatePersistentTxt;
@@ -41,7 +42,6 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var completion = 0;
 var swipeTolerance = 60;
 var touchFactor = 1;
-var slidesSeen = 1;
 
 // global objects
 var swiper;
@@ -59,7 +59,7 @@ var onDocumentReady = function() {
     $arrows = $('.controlArrow');
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
-    $upNext = $('.up-next');
+    $upNext = $('.up-next-wrapper');
     $modalClose = $('.close-modal');
     $deepLinkNotice = $('.deep-link-notice');
     $translatePersistent = $('.translate-persistent');
@@ -78,11 +78,10 @@ var onDocumentReady = function() {
     $modalClose.on('click', onModalCloseClick);
     $startOver.on('click', onStartOverClick);
     $translateBtns.on('click', onTranslateBtnClick);
-
+    $upNext.on('click', onUpNextClick);
     $body.on('touchstart', onTouchStart);
     $body.on('touchmove', onTouchMove);
     $body.on('touchend', onTouchEnd);
-
 
     $document.on('deck.change', onSlideChange);
 
@@ -92,6 +91,7 @@ var onDocumentReady = function() {
     if (window.location.hash) {
         fromStart = false;
         viaDeepLink = true;
+        ANALYTICS.trackEvent('enter-deep-link', window.location.hash);
     }
 
     $.deck($slides, {
@@ -299,12 +299,11 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }
 
     ANALYTICS.exitSlide(fromIndex.toString());
-    console.log(lastSlideExitEvent);
     if (lastSlideExitEvent) {
         ANALYTICS.trackEvent(lastSlideExitEvent, fromIndex.toString());
     }
 
-    ANALYTICS.trackEvent('slides-seen', null, slidesSeen);
+    ANALYTICS.trackEvent('slides-seen', null, 1);
 }
 
 var onStartCardButtonClick = function() {
@@ -464,6 +463,13 @@ var onTouchEnd = function(e) {
             startTouch = undefined;
         }
     });
+}
+
+var onUpNextClick = function(e) {
+    e.preventDefault();
+    ANALYTICS.trackEvent('next-post');
+    window.top.location = NEXT_POST_URL;
+    return true;
 }
 
 var switchLanguage = function(language) {
