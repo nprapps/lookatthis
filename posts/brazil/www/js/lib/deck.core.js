@@ -320,7 +320,7 @@ that use the API provided by core.
       if (hash === window.location.hash) {
         setTimeout(function() {
           $.deck('go', i);
-        }, 1);
+        }, 100);
       }
       $fragmentLinks = $fragmentLinks.add('a[href="' + hash + '"]');
     });

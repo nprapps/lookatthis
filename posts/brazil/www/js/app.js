@@ -92,6 +92,7 @@ var onDocumentReady = function() {
         fromStart = false;
         viaDeepLink = true;
         ANALYTICS.trackEvent('enter-deep-link', window.location.hash);
+        $body.addClass('no-transition');
     }
 
     $.deck($slides, {
@@ -147,6 +148,7 @@ var onPageLoad = function() {
 
     lazyLoad(0);
     showNavigation(0);
+
     checkModalStatus();
 
     $wrapper.css({
@@ -307,6 +309,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     }
 
     ANALYTICS.trackEvent('slides-seen', null, 1);
+
+    setTimeout(function() {
+        $body.removeClass('no-transition');
+    }, 1000)
 }
 
 var onStartCardButtonClick = function() {

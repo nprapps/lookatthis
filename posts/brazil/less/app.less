@@ -204,6 +204,10 @@ body {
     .transition(opacity 3s ease);
 }
 
+.no-transition .wrapper {
+    .transition(none);
+}
+
 a {
     color: #fff;
     //font-weight: bold;
@@ -329,6 +333,14 @@ p {
                 font-size: 2rem;
             }
         }
+    }
+}
+
+.no-transition .slide {
+    .transition(none);
+
+    .animate-text {
+        .transition(none);
     }
 }
 //caption styles for slide bottom and graphic slides
