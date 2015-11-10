@@ -280,6 +280,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     checkOverflow(toIndex);
     document.activeElement.blur();
 
+    if($thisSlide.hasClass("section-start")) {
+        $thisSlide.addClass("fade-bg");
+    }
+
     if (toIndex === 0) {
         fromStart = true;
         ANALYTICS.trackEvent('reached-first-slide');

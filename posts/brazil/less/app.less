@@ -384,12 +384,30 @@ p {
     }
 }
 
-/*
-.section-end {
-    .transition(-webkit-filter 5s);
-    -webkit-filter: grayscale(80%);
+.section-start {
+        //.opacity(.1);
+
+        .imgLiquid, .full-block-cell {
+            -webkit-filter: grayscale(1) blur(8px);
+            filter: grayscale(1) blur(8px);
+        }
+
+
+
+
 }
-*/
+
+.fade-bg {
+
+    .imgLiquid, .full-block-cell {
+        .transition(3s);
+        //-webkit-transition : -webkit-filter 500ms
+        //.opacity(1);
+        -webkit-filter: grayscale(0) blur(0);
+        filter: grayscale(0) blur(0);
+    }
+}
+
 
 
 .deck-current {
