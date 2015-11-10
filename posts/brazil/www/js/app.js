@@ -261,7 +261,6 @@ var showNavigation = function(index) {
 }
 
 var checkOverflow = function(index) {
-    var $thisSlide = $slides.eq(index);
     var slideHeight = $thisSlide.height();
     var blockHeight = $thisSlide.find('.full-block').height();
 
@@ -474,6 +473,12 @@ var onUpNextClick = function(e) {
 
 var switchLanguage = function(language) {
     activeLanguage = language;
+
+    $translateBtns.removeClass('active');
+    var $thisBtn = $translateBtns.filter(function() {
+        return $(this).data('language') === language;
+    });
+    $thisBtn.addClass('active');
 
     for (var i = 0; i < $slides.length; i++) {
         var $currentSlide = $slides.eq(i);
