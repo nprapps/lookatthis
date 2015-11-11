@@ -262,7 +262,10 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     document.activeElement.blur();
 
     if($thisSlide.hasClass("section-start")) {
-        $thisSlide.addClass("fade-bg");
+
+        setTimeout(function() {
+            $thisSlide.addClass("fade-bg");
+        }, 500);
     }
 
     if (APP_CONFIG.PROGRESS_BAR) {
