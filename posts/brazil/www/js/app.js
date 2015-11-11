@@ -488,7 +488,6 @@ var switchLanguage = function(language) {
 
     // extra stuff
     $look.text(COPY[language]['look_branding']);
-    $translatePersistentTxt.text(COPY[language]['translate_persistent']);
     $projectCreditsTxt.text(COPY[language]['project_credits']);
     $upNextTxt.text(COPY[language]['up_next']);
     $publishedOnTxt.text(COPY[language]['published_on']);
