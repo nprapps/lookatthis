@@ -207,7 +207,7 @@
     .state-labels text {
         display: none;
         fill: white;
-        font-size: 65%;
+        font-size: 75%;
         text-anchor: start;
         font-family: 'Gotham SSm', Helvetica, Arial,sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -218,6 +218,7 @@
     }
 
     .amazon-label text {
+        display: none;
         fill: white;
         font-size: 65%;
         text-anchor: start;
@@ -225,8 +226,8 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    #graphic-porto-velho .amazon-label text {
-        display: none;
+    #graphic-amazon .amazon-label text {
+        display: block;
     }
     .country-labels text {
         display: none;
@@ -246,7 +247,7 @@
     }
 
     #graphic-porto-velho .country-labels text {
-        fill-opacity: 0.7;
+        display: none;
     }
 
     .scale-bar {
@@ -265,30 +266,28 @@
     // responsive styles
     @media screen and (max-width: 500px) {
         svg { font-size: 14px; }
-        .countries path { stroke-width: 2px; }
-        .country-labels text {
-            &.bangladesh,
-            &.bhutan {
-                display: none;
-            }
+        .amazon-label text {
+            font-size: 95%;
         }
-        // .city-labels text { letter-spacing: .5px; }
-        .city-labels.shadow { display: none; }
-        .city-labels text,
-        .cities path {
-            &.scalerank-5,
-            &.scalerank-6,
-            &.scalerank-7,
-            &.scalerank-8 {
-                display: none;
-            }
+        .country-labels text.brazil {
+            font-size: 150%;
+        }
+
+        .state-labels text.rondnia {
+            font-size: 100%;
         }
     }
 
+    @media screen and (max-height: 415px) {
+        .amazon-label text {
+            font-size: 35%;
+        }
+        .country-labels text.brazil {
+            font-size: 55%;
+        }
 
-    &#cattle {
-        .rondnia {
-            stroke-width: 5px;
+        .state-labels text.rondnia {
+            font-size: 40%;
         }
     }
 }
