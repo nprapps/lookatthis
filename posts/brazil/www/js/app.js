@@ -477,7 +477,7 @@ var onTouchEnd = function(e) {
 var onUpNextClick = function(e) {
     e.preventDefault();
     ANALYTICS.trackEvent('next-post');
-    window.top.location = NEXT_POST_URL;
+    window.top.location = $(this).attr('href');
     return true;
 }
 
