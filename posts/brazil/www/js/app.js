@@ -9,14 +9,10 @@ var $nextArrow;
 var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
-var $modalClose;
-var $translatePersistent;
 var $thisSlide;
-var $startOver;
 var $translateBtns;
 var $upNext;
 var $look;
-var $translatePersistentTxt;
 var $projectCreditsTxt;
 var $upNextTxt
 var $publishedOnTxt;
@@ -56,12 +52,8 @@ var onDocumentReady = function() {
     $previousArrow = $arrows.filter('.prev');
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next-wrapper');
-    $modalClose = $('.close-modal');
-    $translatePersistent = $('.translate-persistent');
-    $startOver = $('.start-over');
     $translateBtns = $('.btn-translate');
     $look = $('.look-branding h5');
-    $translatePersistentTxt = $('.translate-persistent span');
     $projectCreditsTxt = $('.project-credits h4');
     $upNextTxt = $('.up-next-description h5');
     $publishedOnTxt = $('.project-credits .published-on');
@@ -238,17 +230,14 @@ var showNavigation = function(index) {
     */
     if (index === 0) {
         $arrows.hide();
-        $translatePersistent.hide();
         $previousArrow.css('left', 0);
         $nextArrow.css('right', 0);
 
     } else if ($slides.last().index() === index) {
         $arrows.show();
-        $translatePersistent.hide();
         $nextArrow.hide().css('right', 0);
     } else {
         $arrows.show();
-        $translatePersistent.show();
     }
 }
 
@@ -398,13 +387,7 @@ var onTranslateBtnClick = function(e) {
     switchLanguage(language);
     document.activeElement.blur();
 
-    if ($(this).parent('.translate-persistent').length > 0) {
-        ANALYTICS.trackEvent('persistent-translate-btn-click', language);
-    }
-
-    if ($(this).parent('.translate-start').length > 0) {
-        ANALYTICS.trackEvent('start-translate-btn-click', language);
-    }
+    ANALYTICS.trackEvent('translate-btn-click', language);
 }
 
 var onTouchStart = function(e) {
