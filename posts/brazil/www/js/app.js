@@ -10,14 +10,12 @@ var $previousArrow;
 var $startCardButton;
 var isTouch = Modernizr.touch;
 var $modalClose;
-var $deepLinkNotice;
 var $translatePersistent;
 var $thisSlide;
 var $startOver;
 var $translateBtns;
 var $upNext;
 var $look;
-var $deepLinkTxt;
 var $translatePersistentTxt;
 var $projectCreditsTxt;
 var $upNextTxt
@@ -33,8 +31,6 @@ var h;
 var startTouch;
 var lastSlideExitEvent;
 var activeLanguage = 'en';
-var fromStart = true;
-var viaDeepLink = false;
 
 var ASSETS_PATH = APP_CONFIG.DEPLOYMENT_TARGET ? APP_CONFIG.S3_BASE_URL + '/posts/' + APP_CONFIG.DEPLOY_SLUG + '/assets/' : 'http://assets.apps.npr.org.s3.amazonaws.com/lookatthis/' + APP_CONFIG.DEPLOY_SLUG + '/';
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -61,12 +57,10 @@ var onDocumentReady = function() {
     $nextArrow = $arrows.filter('.next');
     $upNext = $('.up-next-wrapper');
     $modalClose = $('.close-modal');
-    $deepLinkNotice = $('.deep-link-notice');
     $translatePersistent = $('.translate-persistent');
     $startOver = $('.start-over');
     $translateBtns = $('.btn-translate');
     $look = $('.look-branding h5');
-    $deepLinkTxt = $('.deep-link-notice .txt');
     $translatePersistentTxt = $('.translate-persistent span');
     $projectCreditsTxt = $('.project-credits h4');
     $upNextTxt = $('.up-next-description h5');
@@ -75,8 +69,8 @@ var onDocumentReady = function() {
 
     $startCardButton.on('click', onStartCardButtonClick);
     $slides.on('click', onSlideClick);
-    $modalClose.on('click', onModalCloseClick);
-    $startOver.on('click', onStartOverClick);
+    // $modalClose.on('click', onModalCloseClick);
+    // $startOver.on('click', onStartOverClick);
     $translateBtns.on('click', onTranslateBtnClick);
     $upNext.on('click', onUpNextClick);
     $body.on('touchstart', onTouchStart);
@@ -88,11 +82,8 @@ var onDocumentReady = function() {
     $previousArrow.on('click', onPreviousArrowClick);
     $nextArrow.on('click', onNextArrowClick);
 
-    if (window.location.hash) {
-        fromStart = false;
-        viaDeepLink = true;
-        ANALYTICS.trackEvent('enter-deep-link', window.location.hash);
-        $body.addClass('no-transition');
+    if (APP_CONFIG.DEPLOYMENT_TARGET) {
+        Modernizr.history = null;
     }
 
     $.deck($slides, {
@@ -149,7 +140,7 @@ var onPageLoad = function() {
     lazyLoad(0);
     showNavigation(0);
 
-    checkModalStatus();
+    // checkModalStatus();
 
     $wrapper.css({
         'opacity': 1,
@@ -248,7 +239,6 @@ var showNavigation = function(index) {
     if (index === 0) {
         $arrows.hide();
         $translatePersistent.hide();
-        $deepLinkNotice.hide();
         $previousArrow.css('left', 0);
         $nextArrow.css('right', 0);
 
@@ -279,18 +269,11 @@ var onSlideChange = function(e, fromIndex, toIndex) {
     lazyLoad(toIndex);
     showNavigation(toIndex);
     checkOverflow(toIndex);
+    trackCompletion(toIndex);
     document.activeElement.blur();
 
     if($thisSlide.hasClass("section-start")) {
         $thisSlide.addClass("fade-bg");
-    }
-
-    if (toIndex === 0) {
-        fromStart = true;
-        ANALYTICS.trackEvent('reached-first-slide');
-    }
-    if (fromStart) {
-        trackCompletion(toIndex);
     }
 
     if (APP_CONFIG.PROGRESS_BAR) {
@@ -389,21 +372,21 @@ var onResize = function() {
     }
 };
 
-// When modal closes, make sure it's not clickable
-var onModalCloseClick = function() {
-    $deepLinkNotice.css('display', 'none');
-    $.cookie('npr_deeplink_status', '1', { expires: 1});
-    ANALYTICS.trackEvent('close-modal');
-}
+// // When modal closes, make sure it's not clickable
+// var onModalCloseClick = function() {
+//     $deepLinkNotice.css('display', 'none');
+//     $.cookie('npr_deeplink_status', '1', { expires: 1});
+//     ANALYTICS.trackEvent('close-modal');
+// }
 
-// If modal status is 1, hide the content warning on page load.
-var checkModalStatus = function() {
-    if (window.location.hash && window.location.hash !== '#s25') {
-        if ($.cookie('npr_deeplink_status') !== '1')  {
-            $deepLinkNotice.css('display', 'block');
-        }
-    }
-}
+// // If modal status is 1, hide the content warning on page load.
+// var checkModalStatus = function() {
+//     if (window.location.hash && window.location.hash !== '#s25') {
+//         if ($.cookie('npr_deeplink_status') !== '1')  {
+//             $deepLinkNotice.css('display', 'block');
+//         }
+//     }
+// }
 
 var onStartOverClick = function() {
     $.deck('go', 0);
@@ -522,7 +505,6 @@ var switchLanguage = function(language) {
 
     // extra stuff
     $look.text(COPY[language]['look_branding']);
-    $deepLinkTxt.html(COPY[language]['deep_link_notice']);
     $translatePersistentTxt.text(COPY[language]['translate_persistent']);
     $projectCreditsTxt.text(COPY[language]['project_credits']);
     $upNextTxt.text(COPY[language]['up_next']);

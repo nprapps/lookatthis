@@ -152,7 +152,6 @@ var ANALYTICS = (function () {
         }
 
         eventData['dimension4'] = activeLanguage;
-        eventData['dimension5'] = viaDeepLink;
 
         ga('send', eventData);
     }
