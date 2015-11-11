@@ -375,7 +375,7 @@ var GRAPHICS = (function() {
         if (landscape) {
             var defaultScale = 140;
         } else if (isMobile && !landscape) {
-            var defaultScale = 250;
+            var defaultScale = 200;
         } else {
             var defaultScale = 325;
         }
