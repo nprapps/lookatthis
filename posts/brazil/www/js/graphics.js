@@ -318,6 +318,11 @@ var GRAPHICS = (function() {
             'en': 'Amazon Basin',
             'es': 'Cuenca del Amazonas',
             'pt': 'Bacia Amazônica'
+        },
+        'Rondônia': {
+            'en': 'Rondonia',
+            'es': 'Rondonia',
+            'pt': 'Rondônia'
         }
     }
 
@@ -619,7 +624,9 @@ var GRAPHICS = (function() {
                         return positionLabel(LABEL_ADJUSTMENTS, d['id'], 'dy');
                     })
                     .text(function(d) {
-                        return d['properties']['state'];
+                        if (translatedText[d['id']]) {
+                            return translatedText[d['id']][activeLanguage];
+                        }
                     });
         }
 
