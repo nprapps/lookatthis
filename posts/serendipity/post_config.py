@@ -1,0 +1,9 @@
+COPY_GOOGLE_DOC_KEY = '1ezhN0a7xBqmwd2vqrqU_QWfDJjq9uh1T5jtFS2NNZT8'
+DEPLOY_SLUG = 'serendipity'
+NUM_SLIDES_AFTER_CONTENT = 2
+
+# Configuration
+AUDIO = False
+VIDEO = False
+FILMSTRIP = False
+PROGRESS_BAR = False
