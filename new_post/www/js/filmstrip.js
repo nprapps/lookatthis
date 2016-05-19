@@ -18,7 +18,7 @@ var FILMSTRIP = (function() {
 
     var _loadImages = function(folder, length, $slide) {
         var imageSlug = 'assets/filmstrips/' + folder + '/' + folder;
-        var $filmstripContainer = $slide.find('.imgLiquid');
+        var $filmstripContainer = $slide.find('.filmstrip-container');
         var $frames = $filmstripContainer.find('.frame');
 
         if ($frames.length !== length) {
@@ -37,7 +37,7 @@ var FILMSTRIP = (function() {
     }
 
     var animateFilmstrip = function(index) {
-        $filmstripContainer = $slides.eq(index).find('.imgLiquid');
+        $filmstripContainer = $slides.eq(index).find('.filmstrip-container');
         $filmstripContainer.imagesLoaded(function() {
             if (!animating) {
                 var imageCounter = 0;
@@ -60,7 +60,7 @@ var FILMSTRIP = (function() {
     var clearFilmstrip = function(index) {
         clearInterval(animation);
         animating = false;
-        $slides.eq(index).find('.imgLiquid .frame').css('opacity', 0);
+        $slides.eq(index).find('.filmstrip-container .frame').css('opacity', 0);
     }
 
     return {
