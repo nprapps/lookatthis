@@ -3,7 +3,7 @@ DEPLOY_SLUG = 'serendipity'
 NUM_SLIDES_AFTER_CONTENT = 2
 
 # Configuration
-AUDIO = False
+AUDIO = True
 VIDEO = False
 FILMSTRIP = False
 PROGRESS_BAR = False
