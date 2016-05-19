@@ -5,5 +5,5 @@ NUM_SLIDES_AFTER_CONTENT = 2
 # Configuration
 AUDIO = True
 VIDEO = False
-FILMSTRIP = False
+FILMSTRIP = True
 PROGRESS_BAR = False
