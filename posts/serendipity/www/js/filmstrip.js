@@ -65,7 +65,7 @@ var FILMSTRIP = (function() {
     var clearFilmstrip = function(index) {
         clearInterval(animation);
         animating = false;
-        $slides.eq(index).find('.imgLiquid .frame').css('opacity', 0);
+        $slides.eq(index).find('.filmstrip-container .frame').css('opacity', 0);
     }
 
     return {
