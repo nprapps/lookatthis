@@ -1,4 +1,4 @@
-COPY_GOOGLE_DOC_KEY = '0Ak3IIavLYTovdEp5YlF3d3dic1Jaa0VKbk8zR1p3Wmc'
+COPY_GOOGLE_DOC_KEY = '1SWE8ft4PZAJYALFJO-x8KA87tt7C4feLyZ-elGbxDYg'
 DEPLOY_SLUG = 'publichousing'
 
 #shared copy

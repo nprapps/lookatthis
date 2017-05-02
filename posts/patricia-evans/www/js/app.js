@@ -41,8 +41,8 @@ var resize = function() {
 
 var setUpFullPage = function() {
     var anchors = ['_'];
-    for (var i = 0; i < copy.content.length; i++) {
-        anchors.push(copy.content[i][0]);
+    for (var i = 0; i < COPY.content.length; i++) {
+        anchors.push(COPY.content[i][0]);
     }
     $.fn.fullpage({
         anchors: (!APP_CONFIG.DEPLOYMENT_TARGET) ? anchors : false,
