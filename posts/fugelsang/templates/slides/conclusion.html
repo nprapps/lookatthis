@@ -16,10 +16,18 @@
         <p class="share-story">
             <a href="http://twitter.com/share?text={{ COPY.sharing.twitter_text|urlencode }}&amp;url={{ COPY.sharing.share_url|urlencode }}" target="_blank" onclick="_gaq.push(['_trackEvent', '{{ DEPLOY_SLUG }}', 'tweet', 'share-discuss']);"><i class="fa fa-twitter icon-twitter share-icon"></i> <b> Twitter </b></a>
         </p>
+
+        <p class="share-story disclaimer">
+            This site is a product/service of NPR. Use is governed by NPR's <a target="_blank" href="http://www.npr.org/about-npr/179876898/terms-of-use">terms of use</a> and <a target="_blank" href="http://www.npr.org/about-npr/179878450/privacy-policy">privacy policy</a>.
+        </p>
     </div><!-- / share-panel-section -->
 
     <div class="project-credits">
-        <h6>Project Credits</h6>
+        <h6>Project Credits!</h6>
         {{ row.text2|smarty }}
+        <p class="disclaimer">
+            This site is a product/service of NPR. Use is governed by NPR's <a target="_blank" href="http://www.npr.org/about-npr/179876898/terms-of-use">terms of use</a> and <a target="_blank" href="http://www.npr.org/about-npr/179878450/privacy-policy">privacy policy</a>.
+        </p>
     </div>
+
 {% endblock %}
